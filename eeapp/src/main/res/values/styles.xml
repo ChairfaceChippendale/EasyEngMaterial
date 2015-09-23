@@ -29,11 +29,11 @@
 
 
     <style
-              name="PopupTheme"
-              perent="ThemeOverlay.AppCompat">
+            name="PopupTheme"
+            perent="ThemeOverlay.AppCompat">
 
-          <item name="android:textColor">@color/popup_text</item>
-          <item name="android:colorBackground">@color/popup_bgr</item>
+        <item name="android:textColor">@color/popup_text</item>
+        <item name="android:colorBackground">@color/popup_bgr</item>
 
 
     </style>

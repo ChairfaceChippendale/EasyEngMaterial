@@ -8,9 +8,9 @@
         <item name="android:colorPrimaryDark">@color/primary_dark</item>
         <item name="android:colorAccent">@color/accent</item>
 
-    <!--    <item name="android:textColorPrimary">@color/tool_bar_text</item>   -->
+        <!--    <item name="android:textColorPrimary">@color/tool_bar_text</item>   -->
 
-   <!--     <item name="android:navigationBarColor">@color/primary_dark</item>   -->
+        <!--     <item name="android:navigationBarColor">@color/primary_dark</item>   -->
 
     </style>
 
