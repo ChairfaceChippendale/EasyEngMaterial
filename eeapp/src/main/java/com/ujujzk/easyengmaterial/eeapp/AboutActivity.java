@@ -6,6 +6,7 @@ import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import com.ujujzk.easyengmaterial.eeapp.util.ActivityUtil;
 
 
 public class AboutActivity extends AppCompatActivity {
@@ -14,6 +15,7 @@ public class AboutActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ActivityUtil.setTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
 

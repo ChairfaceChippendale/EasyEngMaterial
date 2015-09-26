@@ -11,42 +11,207 @@
             />
 
     <LinearLayout
+            android:id="@+id/main_act_elements_holder"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/main_act_app_bar"
-            android:orientation="vertical"
+            android:layout_marginTop="@dimen/main_act_elements_margin"
+            android:layout_marginLeft="@dimen/main_act_elements_margin"
+            android:layout_marginRight="@dimen/main_act_elements_margin"
+            android:orientation="vertical">
 
 
-            >
-
-
-        <include
-                android:id="@+id/gramm_card"
-                layout="@layout/element"
+        <android.support.v7.widget.CardView
+                android:id="@+id/main_act_gramm_card"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="6dp"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:layout_marginBottom="@dimen/main_act_elements_margin"
+                android:clickable="true"
+                card_view:cardCornerRadius="@dimen/card_corner_radius"
+                card_view:cardElevation="@dimen/card_elevation">
 
-        <include
-                android:id="@+id/gramm_card"
-                layout="@layout/element"
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="?android:selectableItemBackground"
+                    android:orientation="horizontal">
+
+                <ImageView
+                        android:id="@+id/main_act_gramm_card_img"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:transitionName="tImage"
+                        android:layout_weight="3"
+                        android:src="@drawable/img_gramm"/>
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:layout_weight="2">
+
+                    <TextView
+                            android:id="@+id/main_act_gramm_card_title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="left"
+                            android:paddingTop="24dp"
+                            android:paddingLeft="16dp"
+                            android:paddingRight="16dp"
+                            android:paddingBottom="16dp"
+                            android:textSize="24dp"
+                            android:textColor="@color/element_title"
+                            android:text="@string/title_activity_grammar"/>
+
+                    <TextView
+                            android:id="@+id/main_act_gramm_card_subtext"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="left"
+                            android:paddingLeft="16dp"
+                            android:paddingRight="16dp"
+                            android:paddingBottom="24dp"
+                            android:textSize="14dp"
+                            android:textColor="@color/element_subtext"
+                            android:text="@string/main_act_gramm_card_subtext"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+                android:id="@+id/main_act_vocab_card"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginRight="6dp"
-                android:layout_marginLeft="6dp"
-                android:layout_marginBottom="6dp"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:layout_marginBottom="@dimen/main_act_elements_margin"
+                android:clickable="true"
+                card_view:cardCornerRadius="@dimen/card_corner_radius"
+                card_view:cardElevation="@dimen/card_elevation">
 
-        <include
-                android:id="@+id/gramm_card"
-                layout="@layout/element"
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="?android:selectableItemBackground"
+                    android:orientation="horizontal">
+
+                <ImageView
+                        android:id="@+id/main_act_vocab_card_img"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:transitionName="tImage"
+                        android:layout_weight="3"
+                        android:src="@drawable/img_vocab"/>
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:layout_weight="2">
+
+                    <TextView
+                            android:id="@+id/main_act_vocab_card_title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="left"
+                            android:paddingTop="24dp"
+                            android:paddingLeft="16dp"
+                            android:paddingRight="16dp"
+                            android:paddingBottom="16dp"
+                            android:textSize="24dp"
+                            android:textColor="@color/element_title"
+                            android:text="@string/title_activity_vocabulary"/>
+
+                    <TextView
+                            android:id="@+id/main_act_vocab_card_subtext"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="left"
+                            android:paddingLeft="16dp"
+                            android:paddingRight="16dp"
+                            android:paddingBottom="24dp"
+                            android:textSize="14dp"
+                            android:textColor="@color/element_subtext"
+                            android:text="@string/main_act_vocab_card_subtext"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+                android:id="@+id/main_act_dict_card"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginRight="6dp"
-                android:layout_marginLeft="6dp"
-                android:layout_marginBottom="6dp"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:layout_marginBottom="@dimen/main_act_elements_margin"
+                android:clickable="true"
+                card_view:cardCornerRadius="@dimen/card_corner_radius"
+                card_view:cardElevation="@dimen/card_elevation">
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="?android:selectableItemBackground"
+                    android:orientation="horizontal">
+
+                <ImageView
+                        android:id="@+id/main_act_dict_card_img"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:transitionName="tImage"
+                        android:layout_weight="3"
+                        android:src="@drawable/img_dict"/>
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:layout_weight="2">
+
+                    <TextView
+                            android:id="@+id/main_act_dict_card_title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="left"
+                            android:paddingTop="24dp"
+                            android:paddingLeft="16dp"
+                            android:paddingRight="16dp"
+                            android:paddingBottom="16dp"
+                            android:textSize="24dp"
+                            android:textColor="@color/element_title"
+                            android:text="@string/title_activity_dictionary"/>
+
+                    <TextView
+                            android:id="@+id/main_act_dict_card_subtext"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="left"
+                            android:paddingLeft="16dp"
+                            android:paddingRight="16dp"
+                            android:paddingBottom="24dp"
+                            android:textSize="14dp"
+                            android:textColor="@color/element_subtext"
+                            android:text="@string/main_act_dict_card_subtext"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
 
     </LinearLayout>
 

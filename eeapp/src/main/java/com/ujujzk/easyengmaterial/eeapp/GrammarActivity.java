@@ -4,16 +4,27 @@ import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import com.ujujzk.easyengmaterial.eeapp.util.ActivityUtil;
 
 
 public class GrammarActivity extends AppCompatActivity {
 
+    private Toolbar toolBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ActivityUtil.setTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grammar);
+
+        toolBar = (Toolbar) findViewById(R.id.gramm_act_app_bar);
+        setSupportActionBar(toolBar);
+
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
 

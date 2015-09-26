@@ -6,7 +6,7 @@
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme">
+            android:theme="@style/Theme.Light.AppTheme">
         <activity
                 android:name=".MainActivity"
                 android:label="@string/app_name">
@@ -18,21 +18,24 @@
         </activity>
         <activity
                 android:name=".AboutActivity"
-                android:label="@string/title_activity_about">
+                android:label="@string/title_activity_about"
+                android:parentActivityName=".MainActivity">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="com.ujujzk.easyengmaterial.eeapp.MainActivity"/>
         </activity>
         <activity
                 android:name=".SettingsActivity"
-                android:label="@string/title_activity_settings">
+                android:label="@string/title_activity_settings"
+                android:parentActivityName=".MainActivity">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="com.ujujzk.easyengmaterial.eeapp.MainActivity"/>
         </activity>
         <activity
                 android:name=".DictionaryActivity"
-                android:label="@string/title_activity_dictionary">
+                android:label="@string/title_activity_dictionary"
+                android:parentActivityName=".MainActivity">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="com.ujujzk.easyengmaterial.eeapp.MainActivity"/>
@@ -47,7 +50,8 @@
         </activity>
         <activity
                 android:name=".GrammarActivity"
-                android:label="@string/title_activity_grammar">
+                android:label="@string/title_activity_grammar"
+                android:parentActivityName=".MainActivity">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value="com.ujujzk.easyengmaterial.eeapp.MainActivity"/>
