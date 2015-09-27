@@ -14,8 +14,8 @@
     <string name="theme_dark">Custom.Dark</string>
     <string name="pref_list_themes_title">Change theme</string>
     <string name="pref_list_themes_title_dialog">Choise theme</string>
-    <string name="main_act_gramm_card_subtext">Grammar text</string>
-    <string name="main_act_vocab_card_subtext">Vocabulary text</string>
-    <string name="main_act_dict_card_subtext">Dictionary text</string>
+    <string name="main_act_gramm_tile_subtext">Grammar text</string>
+    <string name="main_act_vocab_tile_subtext">Vocabulary text</string>
+    <string name="main_act_dict_tile_subtext">Dictionary text</string>
 
 </resources>

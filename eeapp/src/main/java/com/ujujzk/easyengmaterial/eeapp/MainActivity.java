@@ -22,12 +22,10 @@ import java.util.Dictionary;
 public class MainActivity extends AppCompatActivity {
 
     private static final String MAIN_ACT_TAG = "mainActTag";
-    private static final String GRAMMAR_TITLE = "Grammar";
-    private static final String VOCABULARY_TITLE = "Vocabulary";
-    private static final String DICTIONARY_TITLE = "Dictionary";
 
 
     private Toolbar toolBar;
+    private CardView grammarTile, vocabularyTile, dictionaryTile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +38,35 @@ public class MainActivity extends AppCompatActivity {
         toolBar = (Toolbar) findViewById(R.id.main_act_app_bar);
         setSupportActionBar(toolBar);
 
+        grammarTile = (CardView) findViewById(R.id.main_act_gramm_tile);
+        vocabularyTile = (CardView) findViewById(R.id.main_act_vocab_tile);
+        dictionaryTile = (CardView) findViewById(R.id.main_act_dict_tile);
+
+        View.OnClickListener oclTile = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()) {
+
+                    case R.id.main_act_gramm_tile:
+                        startActivity(new Intent(MainActivity.this, GrammarActivity.class));
+                        break;
+
+                    case R.id.main_act_vocab_tile:
+                        startActivity(new Intent(MainActivity.this, VocabularyActivity.class));
+                        break;
+
+                    case R.id.main_act_dict_tile:
+                        startActivity(new Intent(MainActivity.this, DictionaryActivity.class));
+                        break;
+                }
+
+            }
+        };
+
+        grammarTile.setOnClickListener(oclTile);
+        vocabularyTile.setOnClickListener(oclTile);
+        dictionaryTile.setOnClickListener(oclTile);
+
     }
 
     @Override
@@ -48,24 +75,29 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         int id = item.getItemId();
         switch (id) {
             case R.id.main_act_action_settings:
-                startActivity(new Intent(this, SettingsActivity.class));
+                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
                 return true;
 
             case R.id.main_act_action_about:
-                startActivity(new Intent(this, AboutActivity.class));
+                startActivity(new Intent(MainActivity.this, AboutActivity.class));
                 return true;
 
             default:
                 return super.onOptionsItemSelected(item);
         }
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(MAIN_ACT_TAG, "onDestroy");
     }
 
 }

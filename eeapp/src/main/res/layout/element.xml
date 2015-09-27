@@ -5,10 +5,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:layout_marginBottom="@dimen/main_act_elements_margin"
+        android:layout_marginBottom="@dimen/main_act_tiles_margin"
         android:clickable="true"
-        card_view:cardCornerRadius="@dimen/card_corner_radius"
-        card_view:cardElevation="@dimen/card_elevation">
+        card_view:cardCornerRadius="@dimen/tile_corner_radius"
+        card_view:cardElevation="@dimen/tile_elevation">
 
     <LinearLayout
             android:layout_width="match_parent"
@@ -43,7 +43,7 @@
                     android:paddingRight="16dp"
                     android:paddingBottom="16dp"
                     android:textSize="24dp"
-                    android:textColor="@color/element_title"
+                    android:textColor="@color/tile_title"
                     android:text="Grammar"/>
 
             <TextView
@@ -55,7 +55,7 @@
                     android:paddingRight="16dp"
                     android:paddingBottom="24dp"
                     android:textSize="14dp"
-                    android:textColor="@color/element_subtext"
+                    android:textColor="@color/tile_subtext"
                     android:text="Grammar is very important, but it doesn't mean that it has to be difficult."/>
 
         </LinearLayout>

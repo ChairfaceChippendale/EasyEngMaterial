@@ -22,9 +22,9 @@
 
     <color name="divider">#B6B6B6</color>
 
-    <color name="element_title">#727272</color>
+    <color name="tile_title">#727272</color>
 
-    <color name="element_subtext">#B6B6B6</color>
+    <color name="tile_subtext">#B6B6B6</color>
 
 
 
