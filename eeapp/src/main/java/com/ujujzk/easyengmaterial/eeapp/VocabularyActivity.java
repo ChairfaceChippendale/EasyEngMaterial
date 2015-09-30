@@ -1,10 +1,13 @@
 package com.ujujzk.easyengmaterial.eeapp;
 
+import android.content.Intent;
+import android.os.Build;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.transition.TransitionInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import com.ujujzk.easyengmaterial.eeapp.util.ActivityUtil;
@@ -18,6 +21,9 @@ public class VocabularyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         ActivityUtil.setTheme(this);
         super.onCreate(savedInstanceState);
+        if (Build.VERSION.SDK_INT >= MainActivity.TARGET_SDK){
+            getWindow().setSharedElementEnterTransition(TransitionInflater.from(this).inflateTransition(R.transition.main_act_transition));
+        }
         setContentView(R.layout.activity_vocabulary);
 
         toolBar = (Toolbar) findViewById(R.id.vocab_act_app_bar);
@@ -30,27 +36,25 @@ public class VocabularyActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_vocabulary, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
+        switch (id){
+            case R.id.dict_act_action_settings:
+                startActivity(new Intent(VocabularyActivity.this, SettingsActivity.class));
+                return true;
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.vocab_act_action_settings) {
-            return true;
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
         }
-
-        if (id == android.R.id.home) {
-            NavUtils.navigateUpFromSameTask(this);
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }

@@ -4,14 +4,27 @@
                 android:layout_height="match_parent"
                 tools:context="com.ujujzk.easyengmaterial.eeapp.DictionaryActivity">
 
+    <ImageView
+                android:id="@+id/dict_act_title_img"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/title_img_height"
+                android:src="@drawable/img_dict"
+                android:scaleType="centerCrop"
+                android:transitionName="dictTitleImage"/>
+
     <include
             android:id="@+id/dict_act_app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/dict_act_title_img"
             layout="@layout/app_bar"/>
 
-    <TextView
-            android:layout_below="@id/dict_act_app_bar"
-            android:text="@string/hello_world"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+    <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/dict_act_app_bar">
+
+    </ListView>
+
 
 </RelativeLayout>

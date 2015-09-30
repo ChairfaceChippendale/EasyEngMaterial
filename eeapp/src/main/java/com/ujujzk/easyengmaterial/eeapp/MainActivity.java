@@ -1,16 +1,18 @@
 package com.ujujzk.easyengmaterial.eeapp;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.res.TypedArray;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
+import android.transition.TransitionInflater;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
+import android.view.*;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -22,6 +24,7 @@ import java.util.Dictionary;
 public class MainActivity extends AppCompatActivity {
 
     private static final String MAIN_ACT_TAG = "mainActTag";
+    public static final int TARGET_SDK = 21;
 
 
     private Toolbar toolBar;
@@ -35,6 +38,10 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d(MAIN_ACT_TAG, "onCreate");
 
+        if (Build.VERSION.SDK_INT >= TARGET_SDK) {
+            getWindow().setSharedElementExitTransition(TransitionInflater.from(this).inflateTransition(R.transition.main_act_transition));
+        }
+
         toolBar = (Toolbar) findViewById(R.id.main_act_app_bar);
         setSupportActionBar(toolBar);
 
@@ -43,29 +50,53 @@ public class MainActivity extends AppCompatActivity {
         dictionaryTile = (CardView) findViewById(R.id.main_act_dict_tile);
 
         View.OnClickListener oclTile = new View.OnClickListener() {
+            Intent intent;
+
             @Override
             public void onClick(View v) {
                 switch (v.getId()) {
 
                     case R.id.main_act_gramm_tile:
-                        startActivity(new Intent(MainActivity.this, GrammarActivity.class));
+                        startActivityWithAnimation(v, GrammarActivity.class, R.id.main_act_gramm_tile_img);
                         break;
 
                     case R.id.main_act_vocab_tile:
-                        startActivity(new Intent(MainActivity.this, VocabularyActivity.class));
+                        startActivityWithAnimation(v, VocabularyActivity.class, R.id.main_act_vocab_tile_img);
                         break;
 
                     case R.id.main_act_dict_tile:
-                        startActivity(new Intent(MainActivity.this, DictionaryActivity.class));
+                        startActivityWithAnimation(v, DictionaryActivity.class, R.id.main_act_dict_tile_img);
+                        break;
+
+                    default:
                         break;
                 }
-
             }
         };
 
         grammarTile.setOnClickListener(oclTile);
         vocabularyTile.setOnClickListener(oclTile);
         dictionaryTile.setOnClickListener(oclTile);
+
+    }
+
+    private void startActivityWithAnimation(View v, Class selectedClass, int imagViewId) {
+
+        Intent intent = new Intent(MainActivity.this, selectedClass);
+        if (Build.VERSION.SDK_INT >= TARGET_SDK) {
+            ImageView titleImage = (ImageView) v.findViewById(imagViewId);
+            View navigationBar = findViewById(android.R.id.navigationBarBackground);
+            View statusBar = findViewById(android.R.id.statusBarBackground);
+
+            Pair<View, String> imagePair = Pair.create((View) titleImage, titleImage.getTransitionName());
+            Pair<View, String> navPair = Pair.create(navigationBar, Window.NAVIGATION_BAR_BACKGROUND_TRANSITION_NAME);
+            Pair<View, String> statusPair = Pair.create(statusBar, Window.STATUS_BAR_BACKGROUND_TRANSITION_NAME);
+            Pair<View, String> toolbarPair = Pair.create((View) toolBar, toolBar.getTransitionName());
+            ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, imagePair, navPair, statusPair, toolbarPair);
+            startActivity(intent, optionsCompat.toBundle());
+        } else {
+            startActivity(intent);
+        }
 
     }
 

@@ -5,5 +5,5 @@
     <dimen name="activity_horizontal_margin">64dp</dimen>
     <dimen name="tile_corner_radius">0dp</dimen>
     <dimen name="tile_elevation">2dp</dimen>
-
+    <dimen name="title_img_height">200dp</dimen>
 </resources>

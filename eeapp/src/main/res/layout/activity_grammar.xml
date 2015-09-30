@@ -4,8 +4,20 @@
                 android:layout_height="match_parent"
                 tools:context="com.ujujzk.easyengmaterial.eeapp.GrammarActivity">
 
+    <ImageView
+            android:id="@+id/gramm_act_title_img"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/title_img_height"
+            android:src="@drawable/img_gramm"
+            android:scaleType="centerCrop"
+            android:transitionName="grammTitleImage"/>
+
+
     <include
             android:id="@+id/gramm_act_app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/gramm_act_title_img"
             layout="@layout/app_bar"/>
 
     <TextView
