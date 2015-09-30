@@ -12,7 +12,6 @@
             android:scaleType="centerCrop"
             android:transitionName="grammTitleImage"/>
 
-
     <include
             android:id="@+id/gramm_act_app_bar"
             android:layout_width="match_parent"

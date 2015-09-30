@@ -84,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = new Intent(MainActivity.this, selectedClass);
         if (Build.VERSION.SDK_INT >= TARGET_SDK) {
+
             ImageView titleImage = (ImageView) v.findViewById(imagViewId);
             View navigationBar = findViewById(android.R.id.navigationBarBackground);
             View statusBar = findViewById(android.R.id.statusBarBackground);
@@ -94,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
             Pair<View, String> toolbarPair = Pair.create((View) toolBar, toolBar.getTransitionName());
             ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, imagePair, navPair, statusPair, toolbarPair);
             startActivity(intent, optionsCompat.toBundle());
+
         } else {
             startActivity(intent);
         }
