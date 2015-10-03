@@ -4,7 +4,7 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <!--Elevations-->
     <dimen name="tool_bar_elevation">4dp</dimen>
-    <dimen name="tile_corner_radius">0dp</dimen>
+    <dimen name="tile_corner_radius">2dp</dimen>
     <dimen name="tile_elevation">2dp</dimen>
     <dimen name="main_act_tiles_margin">6dp</dimen>
     <dimen name="title_img_height">120dp</dimen>

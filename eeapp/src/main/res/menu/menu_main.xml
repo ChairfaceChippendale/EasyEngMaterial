@@ -7,13 +7,15 @@
     <item
             android:id="@+id/main_act_action_settings"
             android:title="@string/action_settings"
+            android:icon="@drawable/ic_settings_white_48dp"
             android:orderInCategory="100"
             app:showAsAction="never"/>
 
     <item
         android:id="@+id/main_act_action_about"
         android:title="@string/action_about"
-        android:orderInCategory="101"
+        android:icon="@drawable/ic_info_white_48dp"
+        android:orderInCategory="200"
         app:showAsAction="never"/>
 
 

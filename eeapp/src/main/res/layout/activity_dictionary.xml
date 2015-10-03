@@ -2,15 +2,16 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@color/basic_background"
                 tools:context="com.ujujzk.easyengmaterial.eeapp.DictionaryActivity">
 
     <ImageView
-                android:id="@+id/dict_act_title_img"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/title_img_height"
-                android:src="@drawable/img_dict"
-                android:scaleType="centerCrop"
-                android:transitionName="dictTitleImage"/>
+            android:id="@+id/dict_act_title_img"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/title_img_height"
+            android:src="@drawable/img_dict"
+            android:scaleType="centerCrop"
+            android:transitionName="dictTitleImage"/>
 
     <include
             android:id="@+id/dict_act_app_bar"
@@ -19,12 +20,6 @@
             android:layout_below="@+id/dict_act_title_img"
             layout="@layout/app_bar"/>
 
-    <ListView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/dict_act_app_bar">
-
-    </ListView>
 
 
 </RelativeLayout>

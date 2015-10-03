@@ -2,6 +2,7 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@color/basic_background"
                 tools:context="com.ujujzk.easyengmaterial.eeapp.VocabularyActivity">
 
     <ImageView
@@ -19,10 +20,32 @@
             android:layout_below="@+id/vocab_act_title_img"
             layout="@layout/app_bar"/>
 
-    <TextView
-            android:layout_below="@id/vocab_act_app_bar"
-            android:text="@string/hello_world"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/vocab_act_app_bar"
+            >
+
+        <ProgressBar
+                android:id="@+id/vocab_act_prorgress_bar"
+                style="@android:style/Widget.Holo.Light.ProgressBar.Large.Inverse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:visibility="gone"/>
+
+        <ListView
+                android:id="@+id/vocab_act_lv_packs_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="@color/divider"
+                android:dividerHeight="1dip"
+                android:visibility="visible">
+
+        </ListView>
+
+    </RelativeLayout>
+
+
 
 </RelativeLayout>

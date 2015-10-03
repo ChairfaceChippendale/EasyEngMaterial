@@ -23,7 +23,7 @@ import java.util.Dictionary;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String MAIN_ACT_TAG = "mainActTag";
+    private static final String MAIN_ACT_TAG = "mainActivityTag";
     public static final int TARGET_SDK = 21;
 
 
@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Log.d(MAIN_ACT_TAG, "onCreate");
+        Log.d(MAIN_ACT_TAG, "Main activity was created");
 
         if (Build.VERSION.SDK_INT >= TARGET_SDK) {
             getWindow().setSharedElementExitTransition(TransitionInflater.from(this).inflateTransition(R.transition.main_act_transition));
@@ -90,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
             View statusBar = findViewById(android.R.id.statusBarBackground);
 
             Pair<View, String> imagePair = Pair.create((View) titleImage, titleImage.getTransitionName());
+
             Pair<View, String> navPair = Pair.create(navigationBar, Window.NAVIGATION_BAR_BACKGROUND_TRANSITION_NAME);
             Pair<View, String> statusPair = Pair.create(statusBar, Window.STATUS_BAR_BACKGROUND_TRANSITION_NAME);
             Pair<View, String> toolbarPair = Pair.create((View) toolBar, toolBar.getTransitionName());
@@ -130,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.d(MAIN_ACT_TAG, "onDestroy");
+        Log.d(MAIN_ACT_TAG, "Main activity was destroyed");
     }
 
 }
