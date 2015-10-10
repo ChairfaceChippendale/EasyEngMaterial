@@ -16,7 +16,7 @@
 
     <color name="accent">#FF5722</color>
 
-    <color name="popup_text">#727272</color>
+    <color name="popup_text">@color/primary_dark</color>
 
     <color name="popup_icons">#727272</color>
 
@@ -24,11 +24,13 @@
 
     <color name="divider">#B6B6B6</color>
 
-    <color name="tile_title">#727272</color>
+    <color name="main_act_tile_title">#000000</color>
 
-    <color name="tile_subtext">#B6B6B6</color>
+    <color name="main_act_tile_subtext">#727272</color>
 
+    <color name="packs_list_item_title_color">#000000</color>
 
+    <color name="packs_list_item_cards_num_color">#727272</color>
 
 
 </resources>

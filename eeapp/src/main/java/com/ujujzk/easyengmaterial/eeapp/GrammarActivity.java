@@ -21,7 +21,7 @@ public class GrammarActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         ActivityUtil.setTheme(this);
         super.onCreate(savedInstanceState);
-        if (Build.VERSION.SDK_INT >= MainActivity.TARGET_SDK){
+        if (Build.VERSION.SDK_INT >= MainActivity.TARGET_SDK) {
             getWindow().setSharedElementEnterTransition(TransitionInflater.from(this).inflateTransition(R.transition.main_act_transition));
         }
         setContentView(R.layout.activity_grammar);
@@ -43,13 +43,13 @@ public class GrammarActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         int id = item.getItemId();
-        switch (id){
+        switch (id) {
             case R.id.dict_act_action_settings:
                 startActivity(new Intent(GrammarActivity.this, SettingsActivity.class));
                 return true;
 
             case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
+                onBackPressed();
                 return true;
 
             default:

@@ -58,8 +58,7 @@ public class DictionaryActivity extends AppCompatActivity {
                 return true;
 
             case android.R.id.home:
-
-                NavUtils.navigateUpFromSameTask(this);
+                onBackPressed();
                 return true;
 
             default:
@@ -73,5 +72,4 @@ public class DictionaryActivity extends AppCompatActivity {
         super.onDestroy();
         Log.d(DICTIONARY_ACT_TAG, "onDestroy");
     }
-
 }

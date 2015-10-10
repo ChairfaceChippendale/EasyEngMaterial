@@ -22,6 +22,7 @@
         <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorAccent">@color/accent</item>
 
+
     </style>
 
     <style
@@ -32,12 +33,9 @@
         <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorAccent">@color/accent</item>
 
+
+
     </style>
-
-
-
-
-
 
 
     <style
@@ -49,7 +47,6 @@
 
     </style>
 
-
     <style
             name="PopupTheme"
             perent="ThemeOverlay.AppCompat">
@@ -59,5 +56,8 @@
 
 
     </style>
+
+
+
 
 </resources>

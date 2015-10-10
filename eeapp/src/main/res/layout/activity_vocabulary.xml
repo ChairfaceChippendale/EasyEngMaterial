@@ -23,8 +23,7 @@
     <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/vocab_act_app_bar"
-            >
+            android:layout_below="@+id/vocab_act_app_bar">
 
         <ProgressBar
                 android:id="@+id/vocab_act_prorgress_bar"
@@ -34,15 +33,14 @@
                 android:layout_centerInParent="true"
                 android:visibility="gone"/>
 
-        <ListView
-                android:id="@+id/vocab_act_lv_packs_list"
+        <android.support.v7.widget.RecyclerView
+                android:id="@+id/vocab_act_rv_packs_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:divider="@color/divider"
-                android:dividerHeight="1dip"
                 android:visibility="visible">
 
-        </ListView>
+        </android.support.v7.widget.RecyclerView>
+
 
     </RelativeLayout>
 

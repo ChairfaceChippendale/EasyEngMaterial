@@ -3,11 +3,13 @@
       xmlns:tools="http://schemas.android.com/tools"
       tools:context="com.ujujzk.easyengmaterial.eeapp.VocabularyActivity">
 
+
     <item
             android:id="@+id/vocab_act_action_add_pack"
             android:title="@string/action_add_pack"
             android:icon="@drawable/ic_add_circle_white_48dp"
             android:orderInCategory="10"
+
             app:showAsAction="always"/>
 
     <item
