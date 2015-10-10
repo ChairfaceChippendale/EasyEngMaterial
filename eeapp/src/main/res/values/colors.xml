@@ -32,5 +32,7 @@
 
     <color name="packs_list_item_cards_num_color">#727272</color>
 
+    <color name="selected_overlay">#9fa8da</color>
+
 
 </resources>

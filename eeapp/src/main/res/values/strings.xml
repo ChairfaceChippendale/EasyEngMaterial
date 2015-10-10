@@ -19,6 +19,7 @@
     <string name="main_act_dict_tile_subtext">Dictionary text</string>
     <string name="action_add_pack">Add pack</string>
     <string name="action_remove_pack">Remove pack</string>
+    <string name="action_edit_pack">Edit pack</string>
     <string name="action_cloud_download">Download</string>
 
 </resources>

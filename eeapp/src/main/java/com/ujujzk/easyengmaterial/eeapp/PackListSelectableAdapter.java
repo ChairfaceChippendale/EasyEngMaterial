@@ -6,9 +6,7 @@ import android.util.SparseBooleanArray;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Юлия on 8.10.2015.
- */
+
 public abstract class PackListSelectableAdapter<VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> {
 
     private SparseBooleanArray selectedItems;
@@ -19,6 +17,7 @@ public abstract class PackListSelectableAdapter<VH extends RecyclerView.ViewHold
 
     /**
      * Indicates if the item at position position is selected
+     *
      * @param position Position of the item to check
      * @return true if the item is selected, false otherwise
      */
@@ -28,6 +27,7 @@ public abstract class PackListSelectableAdapter<VH extends RecyclerView.ViewHold
 
     /**
      * Toggle the selection status of the item at a given position
+     *
      * @param position Position of the item to toggle the selection status for
      */
     public void toggleSelection(int position) {
@@ -39,16 +39,21 @@ public abstract class PackListSelectableAdapter<VH extends RecyclerView.ViewHold
         notifyItemChanged(position);
     }
 
-    /**
-     * Count the selected items
-     * @return Selected items count
-     */
+    public void clearSelection() {
+        List<Integer> selection = getSelectedItems();
+        selectedItems.clear();
+        for (Integer i : selection) {
+            notifyItemChanged(i);
+        }
+    }
+
     public int getSelectedItemCount() {
         return selectedItems.size();
     }
 
     /**
      * Indicates the list of selected items
+     *
      * @return List of selected items ids
      */
     public List<Integer> getSelectedItems() {
@@ -58,8 +63,6 @@ public abstract class PackListSelectableAdapter<VH extends RecyclerView.ViewHold
         }
         return items;
     }
-
-
 
 
 }

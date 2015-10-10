@@ -21,7 +21,9 @@ import com.ujujzk.easyengmaterial.eeapp.util.ActivityUtil;
 
 public class DictionaryActivity extends AppCompatActivity {
 
-    private static final String DICTIONARY_ACT_TAG = "dictionaryActTag";
+    @SuppressWarnings("unused")
+    private static final String TAG = DictionaryActivity.class.getSimpleName();
+
     private Toolbar toolBar;
 
     @Override
@@ -70,6 +72,6 @@ public class DictionaryActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.d(DICTIONARY_ACT_TAG, "onDestroy");
+        Log.d(TAG, "onDestroy");
     }
 }

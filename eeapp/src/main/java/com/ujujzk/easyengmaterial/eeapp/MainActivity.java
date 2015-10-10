@@ -23,7 +23,9 @@ import java.util.Dictionary;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String MAIN_ACT_TAG = "mainActivityTag";
+    @SuppressWarnings("unused")
+    private static final String TAG = MainActivity.class.getSimpleName();
+
     public static final int TARGET_SDK = 21;
 
 
@@ -36,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Log.d(MAIN_ACT_TAG, "Main activity was created");
+        Log.d(TAG, "Main activity was created");
 
         if (Build.VERSION.SDK_INT >= TARGET_SDK) {
             getWindow().setSharedElementExitTransition(TransitionInflater.from(this).inflateTransition(R.transition.main_act_transition));
@@ -131,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.d(MAIN_ACT_TAG, "Main activity was destroyed");
+        Log.d(TAG, "Main activity was destroyed");
     }
 
 }
