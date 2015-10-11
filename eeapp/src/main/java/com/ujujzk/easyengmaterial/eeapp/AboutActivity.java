@@ -20,6 +20,7 @@ public class AboutActivity extends AppCompatActivity {
         setContentView(R.layout.activity_about);
 
         toolBar = (Toolbar) findViewById(R.id.about_act_app_bar);
+        ActivityUtil.setToolbarColor(this, toolBar.getId());
         setSupportActionBar(toolBar);
 
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -32,7 +33,7 @@ public class AboutActivity extends AppCompatActivity {
 
         int id = item.getItemId();
         if (id == android.R.id.home) {
-            NavUtils.navigateUpFromSameTask(this);
+            finish();
         }
 
         return super.onOptionsItemSelected(item);

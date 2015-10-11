@@ -43,7 +43,7 @@
                     android:paddingRight="16dp"
                     android:paddingBottom="16dp"
                     android:textSize="24dp"
-                    android:textColor="@color/main_act_tile_title"
+                    android:textColor="@color/main_window_tile_title_light"
                     android:text="Grammar"/>
 
             <TextView
@@ -55,7 +55,7 @@
                     android:paddingRight="16dp"
                     android:paddingBottom="24dp"
                     android:textSize="14dp"
-                    android:textColor="@color/main_act_tile_subtext"
+                    android:textColor="@color/main_window_tile_subtext_light"
                     android:text="Grammar is very important, but it doesn't mean that it has to be difficult."/>
 
         </LinearLayout>

@@ -36,6 +36,7 @@ public class SettingsActivity extends AppCompatActivity {
         }
 
         toolBar = (Toolbar) findViewById(R.id.set_act_app_bar);
+        ActivityUtil.setToolbarColor(this, toolBar.getId());
         setSupportActionBar(toolBar);
 
         getSupportActionBar().setHomeButtonEnabled(true);

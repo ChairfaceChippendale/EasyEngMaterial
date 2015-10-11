@@ -4,26 +4,28 @@
 
     <style name="Theme.Light.AppTheme" parent="Theme.Light">
 
-        <item name="android:colorPrimary">@color/primary</item>
-        <item name="android:colorPrimaryDark">@color/primary_dark</item>
-        <item name="android:colorAccent">@color/accent</item>
+        <item name="android:colorPrimary">@color/toolbar_bgr_light</item>
+        <item name="android:colorPrimaryDark">@color/status_bar_bgr_light</item>
+        <item name="android:colorAccent">@color/accent_light</item>
+        <item name="android:windowBackground">@color/main_window_bgr_light</item>
 
         <!--    <item name="android:textColorPrimary">@color/tool_bar_text</item>   -->
 
-        <item name="android:navigationBarColor">@color/primary_dark</item>
+        <item name="android:navigationBarColor">@color/navigation_bar_bgr_light</item>
 
     </style>
 
 
     <style name="Theme.Dark.AppTheme" parent="Theme.Dark">
 
-        <item name="android:colorPrimary">@color/primary</item>
-        <item name="android:colorPrimaryDark">@color/primary_dark</item>
-        <item name="android:colorAccent">@color/accent</item>
+        <item name="android:colorPrimary">@color/toolbar_bgr_dark</item>
+        <item name="android:colorPrimaryDark">@color/status_bar_bgr_dark</item>
+        <item name="android:colorAccent">@color/accent_dark</item>
+        <item name="android:windowBackground">@color/main_window_bgr_dark</item>
 
         <!--    <item name="android:textColorPrimary">@color/tool_bar_text</item>   -->
 
-        <item name="android:navigationBarColor">@color/primary_dark</item>
+        <item name="android:navigationBarColor">@color/navigation_bar_bgr_dark</item>
 
     </style>
 

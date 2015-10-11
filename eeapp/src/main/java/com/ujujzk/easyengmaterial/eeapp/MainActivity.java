@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
@@ -45,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         toolBar = (Toolbar) findViewById(R.id.main_act_app_bar);
+        ActivityUtil.setToolbarColor(this, toolBar.getId());
         setSupportActionBar(toolBar);
 
         grammarTile = (CardView) findViewById(R.id.main_act_gramm_tile);
@@ -135,5 +138,6 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         Log.d(TAG, "Main activity was destroyed");
     }
+
 
 }

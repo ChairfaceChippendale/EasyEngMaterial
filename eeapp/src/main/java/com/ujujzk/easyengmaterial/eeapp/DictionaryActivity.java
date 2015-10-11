@@ -36,6 +36,7 @@ public class DictionaryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_dictionary);
 
         toolBar = (Toolbar) findViewById(R.id.dict_act_app_bar);
+        ActivityUtil.setToolbarColor(this, toolBar.getId());
         setSupportActionBar(toolBar);
 
         getSupportActionBar().setHomeButtonEnabled(true);

@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -55,6 +57,7 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
         setContentView(R.layout.activity_vocabulary);
 
         toolBar = (Toolbar) findViewById(R.id.vocab_act_app_bar);
+        ActivityUtil.setToolbarColor(this, toolBar.getId());
         setSupportActionBar(toolBar);
 
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -141,6 +144,8 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
                 & Configuration.SCREENLAYOUT_SIZE_MASK)
                 >= Configuration.SCREENLAYOUT_SIZE_LARGE;
     }
+
+
 
 
 

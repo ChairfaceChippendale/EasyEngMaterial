@@ -3,7 +3,6 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/primary_light"
                 tools:context="${relativePackage}.${activityClass}">
 
     <include
@@ -35,7 +34,7 @@
             <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/basic_background"
+                    android:background="@color/main_window_tile_bgr_light"
                     android:orientation="horizontal">
 
                 <ImageView
@@ -64,7 +63,7 @@
                             android:paddingRight="16dp"
                             android:paddingBottom="16dp"
                             android:textSize="24dp"
-                            android:textColor="@color/main_act_tile_title"
+                            android:textColor="@color/main_window_tile_title_light"
                             android:text="@string/title_activity_grammar"/>
 
                     <TextView
@@ -76,7 +75,7 @@
                             android:paddingRight="16dp"
                             android:paddingBottom="24dp"
                             android:textSize="14dp"
-                            android:textColor="@color/main_act_tile_subtext"
+                            android:textColor="@color/main_window_tile_subtext_light"
                             android:text="@string/main_act_gramm_tile_subtext"/>
 
                 </LinearLayout>
@@ -100,7 +99,7 @@
             <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/basic_background"
+                    android:background="@color/main_window_tile_bgr_light"
                     android:orientation="horizontal">
 
                 <ImageView
@@ -129,7 +128,7 @@
                             android:paddingRight="16dp"
                             android:paddingBottom="16dp"
                             android:textSize="24dp"
-                            android:textColor="@color/main_act_tile_title"
+                            android:textColor="@color/main_window_tile_title_light"
                             android:text="@string/title_activity_vocabulary"/>
 
                     <TextView
@@ -141,7 +140,7 @@
                             android:paddingRight="16dp"
                             android:paddingBottom="24dp"
                             android:textSize="14dp"
-                            android:textColor="@color/main_act_tile_subtext"
+                            android:textColor="@color/main_window_tile_subtext_light"
                             android:text="@string/main_act_vocab_tile_subtext"/>
 
                 </LinearLayout>
@@ -165,7 +164,7 @@
             <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/basic_background"
+                    android:background="@color/main_window_tile_bgr_light"
                     android:orientation="horizontal">
 
                 <ImageView
@@ -194,7 +193,7 @@
                             android:paddingRight="16dp"
                             android:paddingBottom="16dp"
                             android:textSize="24dp"
-                            android:textColor="@color/main_act_tile_title"
+                            android:textColor="@color/main_window_tile_title_light"
                             android:text="@string/title_activity_dictionary"/>
 
                     <TextView
@@ -206,7 +205,7 @@
                             android:paddingRight="16dp"
                             android:paddingBottom="24dp"
                             android:textSize="14dp"
-                            android:textColor="@color/main_act_tile_subtext"
+                            android:textColor="@color/main_window_tile_subtext_light"
                             android:text="@string/main_act_dict_tile_subtext"/>
 
                 </LinearLayout>

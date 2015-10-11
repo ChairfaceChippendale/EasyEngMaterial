@@ -2,37 +2,60 @@
 <resources>
 
 
-    <color name="primary">#3F51B5</color>
+    <!-- Light theme -->
+    <color name="toolbar_bgr_light">#3F51B5</color>
+    <color name="toolbar_text_light">#FFFFFF</color>
+    <color name="toolbar_icons_light">#FFFFFF</color>
 
-    <color name="primary_dark">#303F9F</color>
+    <color name="status_bar_bgr_light">#303F9F</color>
+    <color name="navigation_bar_bgr_light">#303F9F</color>
 
-    <color name="primary_light">#C5CAE9</color>
+    <color name="main_window_bgr_light">#C5CAE9</color>
+    <color name="secondary_window_bgr_light">#e8eaf6</color>
 
-    <color name="basic_background">#e8eaf6</color>
-    
-    <color name="tool_bar_text">#FFFFFF</color>
+    <color name="accent_light">#FF5722</color>
 
-    <color name="tool_bar_icons">#FFFFFF</color>
+    <color name="popup_bgr_light">#FFFFFF</color>
+    <color name="popup_text_light">#303F9F</color>
+    <color name="popup_icons_light">#303F9F</color>
 
-    <color name="accent">#FF5722</color>
+    <color name="main_window_tile_bgr_light">#e8eaf6</color>
+    <color name="main_window_tile_title_light">#212121</color>
+    <color name="main_window_tile_subtext_light">#727272</color>
 
-    <color name="popup_text">@color/primary_dark</color>
+    <color name="vocab_list_item_bgr_light">#FFFFFF</color>
+    <color name="vocab_list_item_title_light">#212121</color>
+    <color name="vocab_list_item_subtext_light">#727272</color>
+    <color name="vocab_list_item_selected_overlay_light">#9fa8da</color>
+    <!-- Light theme -->
 
-    <color name="popup_icons">#727272</color>
 
-    <color name="popup_bgr">#FFFFFF</color>
+    <!-- Dark theme -->
+    <color name="toolbar_bgr_dark">#212121</color>
+    <color name="toolbar_text_dark">#FFFFFF</color>
+    <color name="toolbar_icons_dark">#FFFFFF</color>
 
-    <color name="divider">#B6B6B6</color>
+    <color name="status_bar_bgr_dark">#000000</color>
+    <color name="navigation_bar_bgr_dark">#000000</color>
 
-    <color name="main_act_tile_title">#000000</color>
+    <color name="main_window_bgr_dark">#303030</color>
+    <color name="secondary_window_bgr_dark">#424242</color>
 
-    <color name="main_act_tile_subtext">#727272</color>
+    <color name="accent_dark">#009688</color>
 
-    <color name="packs_list_item_title_color">#000000</color>
+    <color name="popup_bgr_dark">#212121</color>
+    <color name="popup_text_dark">#FFFFFF</color>
+    <color name="popup_icons_dark">#FFFFFF</color>
 
-    <color name="packs_list_item_cards_num_color">#727272</color>
+    <color name="main_window_tile_bgr_dark">#424242</color>
+    <color name="main_window_tile_title_dark">#FFFFFF</color>
+    <color name="main_window_tile_subtext_dark">#FFFFFF</color>
 
-    <color name="selected_overlay">#9fa8da</color>
+    <color name="vocab_list_item_bgr_dark">#212121</color>
+    <color name="vocab_list_item_title_dark">#FFFFFF</color>
+    <color name="vocab_list_item_subtext_dark">#FFFFFF</color>
+    <color name="vocab_list_item_selected_overlay_dark">#9e9e9e</color>
+    <!-- Dark theme -->
 
 
 </resources>

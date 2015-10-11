@@ -27,6 +27,7 @@ public class GrammarActivity extends AppCompatActivity {
         setContentView(R.layout.activity_grammar);
 
         toolBar = (Toolbar) findViewById(R.id.gramm_act_app_bar);
+        ActivityUtil.setToolbarColor(this, toolBar.getId());
         setSupportActionBar(toolBar);
 
         getSupportActionBar().setHomeButtonEnabled(true);
