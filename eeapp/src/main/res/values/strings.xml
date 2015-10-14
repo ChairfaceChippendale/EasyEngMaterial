@@ -22,4 +22,8 @@
     <string name="action_edit_pack">Edit pack</string>
     <string name="action_cloud_download">Download</string>
 
+    <string name="vocab_act_pack_remove_confirm_question">Remove selected packs?</string>
+    <string name="vocab_act_pack_remove_confirm_btn">CONFIRM</string>
+    <string name="vocab_act_pack_remove_cancel_btn">CANCEL</string>
+
 </resources>

@@ -9,6 +9,7 @@
         <item name="android:colorAccent">@color/accent_light</item>
         <item name="android:windowBackground">@color/main_window_bgr_light</item>
 
+
         <!--    <item name="android:textColorPrimary">@color/tool_bar_text</item>   -->
 
         <item name="android:navigationBarColor">@color/navigation_bar_bgr_light</item>
