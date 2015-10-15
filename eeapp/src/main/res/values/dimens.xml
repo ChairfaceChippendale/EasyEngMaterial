@@ -14,4 +14,6 @@
     <dimen name="main_act_tiles_margin">6dp</dimen>
 
     <dimen name="title_img_height">120dp</dimen>
+    <dimen name="edit_pack_act_pack_title_text_size">30sp</dimen>
+    <dimen name="edit_pack_act_pack_title_margin">10dp</dimen>
 </resources>

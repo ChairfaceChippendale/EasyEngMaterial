@@ -9,6 +9,7 @@
     <string name="title_activity_dictionary">Dictionary</string>
     <string name="title_activity_vocabulary">Vocabulary</string>
     <string name="title_activity_grammar">Grammar</string>
+    <string name="title_activity_edit_pack">Edit</string>
 
     <string name="theme_light">Custom.Light</string>
     <string name="theme_dark">Custom.Dark</string>
@@ -25,5 +26,7 @@
     <string name="vocab_act_pack_remove_confirm_question">Remove selected packs?</string>
     <string name="vocab_act_pack_remove_confirm_btn">CONFIRM</string>
     <string name="vocab_act_pack_remove_cancel_btn">CANCEL</string>
+
+
 
 </resources>

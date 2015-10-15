@@ -72,7 +72,6 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
         packsList.setItemAnimator(new DefaultItemAnimator());
 
         runCardsFab = (FloatingActionButton) findViewById(R.id.vacab_act_fab);
-
         runCardsFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -144,7 +143,10 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
                 return true;
 
             case R.id.vocab_act_action_edit_pack:
+
                 //TODO
+                startActivity(new Intent(VocabularyActivity.this, EditPackActivity.class));
+
                 return true;
 
             default:
