@@ -43,6 +43,10 @@
                 android:name=".GrammarActivity"
                 android:label="@string/title_activity_grammar">
         </activity>
+        <activity
+                android:name=".EditPackActivity"
+                android:label="@string/title_activity_edit_pack">
+        </activity>
     </application>
 
 </manifest>

@@ -31,11 +31,11 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
     private static final int GRIDS_ON_PHONE = 1;
 
     private Toolbar toolBar;
-    private RecyclerView packsList;
+    private RecyclerView packList;
     private ProgressBar progressBar;
     private ArrayList<Card> aggregateCardsToLearn;
 
-    private PacksListAdapter packsListAdapter;
+    private PacksListAdapter packListAdapter;
     private FloatingActionButton runCardsFab;
     private MaterialDialog confirmPackRemove;
 
@@ -56,23 +56,20 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         progressBar = (ProgressBar) findViewById(R.id.vocab_act_prorgress_bar);
-        packsList = (RecyclerView) findViewById(R.id.vocab_act_rv_packs_list);
 
-        packsListAdapter = new PacksListAdapter(this);
-        packsList.setAdapter(packsListAdapter);
-
+        packList = (RecyclerView) findViewById(R.id.vocab_act_rv_packs_list);
+        packListAdapter = new PacksListAdapter(this);
+        packList.setAdapter(packListAdapter);
         StaggeredGridLayoutManager packsGridLayoutManager;
         if (isTablet(this)) {
             packsGridLayoutManager = new StaggeredGridLayoutManager(GRIDS_ON_TABLET, StaggeredGridLayoutManager.VERTICAL);
         } else {
             packsGridLayoutManager = new StaggeredGridLayoutManager(GRIDS_ON_PHONE, StaggeredGridLayoutManager.VERTICAL);
         }
-        packsList.setLayoutManager(packsGridLayoutManager);
-
-        packsList.setItemAnimator(new DefaultItemAnimator());
+        packList.setLayoutManager(packsGridLayoutManager);
+        packList.setItemAnimator(new DefaultItemAnimator());
 
         runCardsFab = (FloatingActionButton) findViewById(R.id.vacab_act_fab);
-
         runCardsFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,15 +86,15 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        packsListAdapter.removePacks(packsListAdapter.getSelectedItems());
-                        packsListAdapter.clearSelection();
+                        packListAdapter.removePacks(packListAdapter.getSelectedItems());
+                        packListAdapter.clearSelection();
                         confirmPackRemove.dismiss();
                     }
                 })
                 .onNegative(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        packsListAdapter.clearSelection();
+                        packListAdapter.clearSelection();
                         confirmPackRemove.dismiss();
                     }
                 })
@@ -126,7 +123,7 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
                 return true;
 
             case R.id.vocab_act_action_add_pack:
-                packsListAdapter.addPack();
+                packListAdapter.addPack();
                 return true;
 
             case R.id.vocab_act_action_cloud_download:
@@ -135,7 +132,7 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
 
             case R.id.vocab_act_action_remove_pack:
 
-                if (packsListAdapter.getSelectedItemCount() > 0) {
+                if (packListAdapter.getSelectedItemCount() > 0) {
                     confirmPackRemove.show();
                 }
                 if (!runCardsFab.isHidden()) {
@@ -144,7 +141,9 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
                 return true;
 
             case R.id.vocab_act_action_edit_pack:
-                //TODO
+
+                startActivity(new Intent(VocabularyActivity.this, EditPackActivity.class));
+
                 return true;
 
             default:
@@ -155,9 +154,9 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
     @Override
     public void onItemClicked(int position) {
         //TODO aggregate cards to learn here perhaps
-        packsListAdapter.toggleSelection(position);
+        packListAdapter.toggleSelection(position);
 
-        if (packsListAdapter.getSelectedItemCount() > 0) {
+        if (packListAdapter.getSelectedItemCount() > 0) {
             if (runCardsFab.isHidden()) {
                 runCardsFab.show(true);
             }

@@ -159,17 +159,6 @@ public class PacksListAdapter
             public void onItemClicked(int position);
             public boolean onItemLongClicked(int position);
         }
-
-
     }
-
-
-
-
-
-
-
-
-
 }
 

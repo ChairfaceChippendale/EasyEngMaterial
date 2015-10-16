@@ -3,9 +3,7 @@ package com.ujujzk.easyengmaterial.eeapp.model;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Юлия on 06.10.2015.
- */
+
 public class MOC {
 
     public static ArrayList<Pack> getPacksMOC() {
@@ -22,5 +20,17 @@ public class MOC {
         newPacks.add(new Pack("more pets",cards));
 
         return (ArrayList<Pack>) newPacks;
+    }
+
+    public static Pack getPack() {
+        List<Card> cards = new ArrayList<Card>();
+
+        cards.add(new Card("hand", "arm"));
+        cards.add(new Card("lag", "foot"));
+        cards.add(new Card("head", "eyes"));
+        cards.add(new Card("hair", "nose"));
+
+        return new Pack("Limbs", cards);
+
     }
 }

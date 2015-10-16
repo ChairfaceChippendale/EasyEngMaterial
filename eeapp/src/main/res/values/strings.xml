@@ -9,9 +9,11 @@
     <string name="title_activity_dictionary">Dictionary</string>
     <string name="title_activity_vocabulary">Vocabulary</string>
     <string name="title_activity_grammar">Grammar</string>
+    <string name="title_activity_edit_pack">Edit pack</string>
 
     <string name="theme_light">Custom.Light</string>
     <string name="theme_dark">Custom.Dark</string>
+
     <string name="pref_list_themes_title">Change theme</string>
     <string name="pref_list_themes_title_dialog">Choise theme</string>
     <string name="main_act_gramm_tile_subtext">Grammar text</string>
@@ -23,7 +25,15 @@
     <string name="action_cloud_download">Download</string>
 
     <string name="vocab_act_pack_remove_confirm_question">Remove selected packs?</string>
-    <string name="vocab_act_pack_remove_confirm_btn">CONFIRM</string>
+    <string name="vocab_act_pack_remove_confirm_btn">REMOVE</string>
     <string name="vocab_act_pack_remove_cancel_btn">CANCEL</string>
+
+    <string name="edit_pack_act_edit_title_dialog_title">Pack title</string>
+    <string name="edit_pack_act_edit_title_dialog_subtext"></string>
+    <string name="dialog_edit_card_front_side">Front side</string>
+    <string name="dialog_edit_card_back_side">Back side</string>
+
+    <string name="ok">OK</string>
+
 
 </resources>
