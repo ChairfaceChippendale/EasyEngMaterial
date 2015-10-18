@@ -20,6 +20,10 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.CardVi
         this.cards = cards;
     }
 
+    public List<Card> getCards () {
+        return cards;
+    }
+
     public void removeCard(int position) {
 
         if (position < cards.size()) {
@@ -52,8 +56,6 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.CardVi
         }
         notifyDataSetChanged();
     }
-
-
 
 
     @Override

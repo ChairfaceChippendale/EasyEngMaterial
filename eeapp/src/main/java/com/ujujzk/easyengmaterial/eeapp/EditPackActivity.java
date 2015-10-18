@@ -1,6 +1,7 @@
 package com.ujujzk.easyengmaterial.eeapp;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -22,6 +23,8 @@ import com.ujujzk.easyengmaterial.eeapp.model.Pack;
 import com.ujujzk.easyengmaterial.eeapp.util.ActivityUtil;
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 
+import java.util.ArrayList;
+
 
 public class EditPackActivity extends AppCompatActivity implements CardListAdapter.CardViewHolder.ClickListener {
 
@@ -30,6 +33,7 @@ public class EditPackActivity extends AppCompatActivity implements CardListAdapt
     private CardListAdapter cardListAdapter;
     private FloatingActionButton addCardFab;
     private TextView packTitle;
+    private String packToEditId;
     private Pack packToEdit;
 
     @Override
@@ -38,7 +42,9 @@ public class EditPackActivity extends AppCompatActivity implements CardListAdapt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_pack);
 
-        packToEdit = MOC.getPack();
+        Intent intent = getIntent();
+        packToEditId = intent.getStringExtra(VocabularyActivity.SELECTED_PACK_ID);
+        packToEdit = Application.packLocalCrudDao.read(packToEditId);
 
         toolBar = (Toolbar) findViewById(R.id.edit_pack_act_app_bar);
         ActivityUtil.setToolbarColor(this, toolBar.getId());
@@ -55,18 +61,24 @@ public class EditPackActivity extends AppCompatActivity implements CardListAdapt
 
                 final TextView tv = (TextView) v;
 
-                new MaterialDialog.Builder(EditPackActivity.this)
-                        .title(R.string.edit_pack_act_edit_title_dialog_title)
-                                //.content(R.string.edit_pack_act_edit_title_dialog_subtext)
-                        .inputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_NORMAL)
-                        .input("", tv.getText().toString(), new MaterialDialog.InputCallback() {
+                MaterialDialog editTitleDialog = new MaterialDialog.Builder(EditPackActivity.this)
+                        .customView(R.layout.dialog_edit_card_title, true)
+                        .positiveText(R.string.ok)
+                        .onPositive(new MaterialDialog.SingleButtonCallback() {
                             @Override
-                            public void onInput(MaterialDialog dialog, CharSequence input) {
-                                if (input.length() > 0) {
-                                    tv.setText(input.toString());
+                            public void onClick(MaterialDialog dialog, DialogAction which) {
+
+                                String newPackTitle = ((EditText) dialog.getCustomView().findViewById(R.id.dialog_edit_card_et_title)).getText().toString();
+                                if (newPackTitle.length() > 0) {
+                                    packTitle.setText(newPackTitle);
                                 }
                             }
-                        }).show();
+                        }).build();
+
+                EditText titleInput = (EditText) editTitleDialog.getCustomView().findViewById(R.id.dialog_edit_card_et_title);
+                titleInput.setText(tv.getText().toString());
+
+                editTitleDialog.show();
 
             }
         });
@@ -88,19 +100,31 @@ public class EditPackActivity extends AppCompatActivity implements CardListAdapt
         });
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         int id = item.getItemId();
         if (id == android.R.id.home) {
-            packToEdit.setTitle(packTitle.getText().toString());
-            //TODO save all cards
+
             onBackPressed();
         }
 
         return super.onOptionsItemSelected(item);
     }
+
+
+    @Override
+    public void onBackPressed() {
+
+        packToEdit.setTitle(packTitle.getText().toString());
+        packToEdit.removeCards();
+        packToEdit.addCards((ArrayList<Card>)cardListAdapter.getCards());
+        Application.packLocalCrudDao.deleteWithRelations(packToEditId);
+        Application.packLocalCrudDao.createWithRelations(packToEdit);
+
+        super.onBackPressed();
+    }
+
 
     @Override
     public void onItemClicked(final int position) {
@@ -120,7 +144,6 @@ public class EditPackActivity extends AppCompatActivity implements CardListAdapt
                                         ((EditText) dialog.getCustomView().findViewById(R.id.dialog_edit_card_et_back_side)).getText().toString()
                                 )
                         );
-
                     }
                 }).build();
 

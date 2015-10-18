@@ -3,6 +3,7 @@ package com.ujujzk.easyengmaterial.eeapp;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.os.Bundle;
@@ -13,13 +14,19 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.CheckedTextView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.clans.fab.FloatingActionButton;
 import com.ujujzk.easyengmaterial.eeapp.model.Card;
+import com.ujujzk.easyengmaterial.eeapp.model.Pack;
 import com.ujujzk.easyengmaterial.eeapp.util.ActivityUtil;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class VocabularyActivity extends AppCompatActivity implements PacksListAdapter.PackViewHolder.ClickListener {
@@ -29,6 +36,8 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
 
     private static final int GRIDS_ON_TABLET = 2;
     private static final int GRIDS_ON_PHONE = 1;
+
+    public static final String SELECTED_PACK_ID = "selectedPackId";
 
     private Toolbar toolBar;
     private RecyclerView packList;
@@ -78,7 +87,6 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
             }
         });
 
-
         confirmPackRemove = new MaterialDialog.Builder(this)
                 .content(R.string.vocab_act_pack_remove_confirm_question)
                 .positiveText(R.string.vocab_act_pack_remove_confirm_btn)
@@ -86,6 +94,7 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+
                         packListAdapter.removePacks(packListAdapter.getSelectedItems());
                         packListAdapter.clearSelection();
                         confirmPackRemove.dismiss();
@@ -99,8 +108,38 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
                     }
                 })
                 .build();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        Log.d(TAG, "onStart");
+
+        new AsyncTask<Void, Void, List<Pack>>(){
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                progressBar.setVisibility(View.VISIBLE);
+                packList.setVisibility(View.GONE);
+            }
+            @Override
+            protected List<Pack> doInBackground(Void... params) {
+                return Application.packLocalCrudDao.readAllWithRelations();
+            }
+            @Override
+            protected void onPostExecute(List<Pack> packs) {
+
+                packListAdapter.updatePacks(packs);
+
+                progressBar.setVisibility(View.GONE);
+                packList.setVisibility(View.VISIBLE);
+
+            }
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -118,12 +157,11 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
                 return true;
 
             case android.R.id.home:
-                //TODO save packs on storage
                 onBackPressed();
                 return true;
 
             case R.id.vocab_act_action_add_pack:
-                packListAdapter.addPack();
+                packListAdapter.addPack( Application.packLocalCrudDao.create( new Pack ("NewPack",new ArrayList<Card>()) ) );
                 return true;
 
             case R.id.vocab_act_action_cloud_download:
@@ -142,7 +180,20 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
 
             case R.id.vocab_act_action_edit_pack:
 
-                startActivity(new Intent(VocabularyActivity.this, EditPackActivity.class));
+                if (packListAdapter.getSelectedItemCount() == 1) {
+
+                    List<String> ids = packListAdapter.getSelectedPacksId(packListAdapter.getSelectedItems());
+
+                    if (ids.size() > 0) {
+
+                        Intent intent = new Intent(VocabularyActivity.this, EditPackActivity.class);
+                        intent.putExtra(SELECTED_PACK_ID, ids.get(0));
+                        startActivity(intent);
+
+                    }
+
+                }
+                packListAdapter.clearSelection();
 
                 return true;
 
@@ -155,6 +206,8 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
     public void onItemClicked(int position) {
         //TODO aggregate cards to learn here perhaps
         packListAdapter.toggleSelection(position);
+
+        //Toast.makeText(this, ""+packListAdapter.getPack(position).getObjectId(), Toast.LENGTH_SHORT).show();
 
         if (packListAdapter.getSelectedItemCount() > 0) {
             if (runCardsFab.isHidden()) {
