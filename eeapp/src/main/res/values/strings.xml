@@ -10,6 +10,7 @@
     <string name="title_activity_vocabulary">Vocabulary</string>
     <string name="title_activity_grammar">Grammar</string>
     <string name="title_activity_edit_pack">Edit pack</string>
+    <string name="title_activity_learn_word"></string>
 
     <string name="theme_light">Custom.Light</string>
     <string name="theme_dark">Custom.Dark</string>
@@ -35,6 +36,9 @@
 
     <string name="ok">OK</string>
     <string name="dialog_edit_card_title">Pack title</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_pronunciation">Pronunciation</string>
 
 
 </resources>

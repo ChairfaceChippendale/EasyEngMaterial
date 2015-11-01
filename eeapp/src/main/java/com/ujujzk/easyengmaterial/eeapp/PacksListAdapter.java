@@ -85,8 +85,41 @@ public class PacksListAdapter
             }
         }
 
+        return ids;
+    }
 
+    public List<String> getSelectedPacksCardsIds (List<Integer> positions) {
+        List <String> ids = new ArrayList<String>();
 
+        Collections.sort(positions, new Comparator<Integer>() {
+            @Override
+            public int compare(Integer lhs, Integer rhs) {
+                return rhs - lhs;
+            }
+        });
+
+        while (!positions.isEmpty()) {
+            if (positions.size() == 1) {
+                ids.addAll(getPack(positions.get(0)).getAllCardIds());
+                positions.remove(0);
+            } else {
+                int count = 1;
+                while (positions.size() > count && positions.get(count).equals(positions.get(count - 1) - 1)) {
+                    ++count;
+                }
+
+                if (count == 1) {
+                    ids.addAll(getPack(positions.get(0)).getAllCardIds());
+                } else {
+                    for (int i = 0; i < count; ++i) {
+                        ids.addAll(getPack(positions.get(count - 1) ).getAllCardIds());
+                    }
+                }
+                for (int i = 0; i < count; ++i) {
+                    positions.remove(0);
+                }
+            }
+        }
         return ids;
     }
 
@@ -157,7 +190,6 @@ public class PacksListAdapter
 
         holder.packTitle.setText(packs.get(position).getTitle());
         holder.packSize.setText("" + packs.get(position).getCardsNumber() + " cards");
-
         holder.selectedOverlay.setVisibility(isSelected(position) ? View.VISIBLE : View.INVISIBLE);
     }
 
@@ -175,8 +207,6 @@ public class PacksListAdapter
     }
 
 
-
-
     public static class PackViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
 
         TextView packTitle;
@@ -184,7 +214,6 @@ public class PacksListAdapter
         View selectedOverlay;
 
         private PackViewHolder.ClickListener clickListener;
-
 
         public PackViewHolder(View itemView, ClickListener clickListener) {
             super(itemView);

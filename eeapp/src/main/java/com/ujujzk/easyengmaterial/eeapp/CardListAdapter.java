@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.ujujzk.easyengmaterial.eeapp.model.Card;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.CardViewHolder> {
@@ -17,7 +19,10 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.CardVi
     public CardListAdapter(List<Card> cards, CardViewHolder.ClickListener clickListener) {
         super();
         this.clickListener = clickListener;
-        this.cards = cards;
+        this.cards = new ArrayList<Card>();
+        if (cards.size() > 0) {
+            this.cards.addAll(cards);
+        }
     }
 
     public List<Card> getCards () {

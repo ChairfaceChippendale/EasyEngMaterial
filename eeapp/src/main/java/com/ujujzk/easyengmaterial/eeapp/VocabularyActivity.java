@@ -25,6 +25,8 @@ import com.github.clans.fab.FloatingActionButton;
 import com.ujujzk.easyengmaterial.eeapp.model.Card;
 import com.ujujzk.easyengmaterial.eeapp.model.Pack;
 import com.ujujzk.easyengmaterial.eeapp.util.ActivityUtil;
+import com.ujujzk.easyengmaterial.eeapp.util.LearnWordActivity;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,11 +40,12 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
     private static final int GRIDS_ON_PHONE = 1;
 
     public static final String SELECTED_PACK_ID = "selectedPackId";
+    public static final String SELECTED_CARD_IDS = "selectedCardIds";
 
     private Toolbar toolBar;
     private RecyclerView packList;
     private ProgressBar progressBar;
-    private ArrayList<Card> aggregateCardsToLearn;
+    //private ArrayList<Card> aggregateCardsToLearn;
 
     private PacksListAdapter packListAdapter;
     private FloatingActionButton runCardsFab;
@@ -83,7 +86,16 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
             @Override
             public void onClick(View v) {
 
-                //TODO start card learning
+                List<String> ids = packListAdapter.getSelectedPacksCardsIds(packListAdapter.getSelectedItems());
+
+                if (ids.size() > 0) {
+                    Intent intent = new Intent(VocabularyActivity.this, LearnWordActivity.class);
+                    intent.putStringArrayListExtra(SELECTED_CARD_IDS, (ArrayList<String>)ids);
+                    startActivity(intent);
+                }
+
+                packListAdapter.clearSelection();
+                runCardsFab.hide(true);
             }
         });
 
@@ -131,7 +143,6 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
             protected void onPostExecute(List<Pack> packs) {
 
                 packListAdapter.updatePacks(packs);
-
                 progressBar.setVisibility(View.GONE);
                 packList.setVisibility(View.VISIBLE);
 
@@ -139,7 +150,6 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -194,7 +204,7 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
 
                 }
                 packListAdapter.clearSelection();
-
+                runCardsFab.hide(true);
                 return true;
 
             default:
@@ -204,7 +214,6 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
 
     @Override
     public void onItemClicked(int position) {
-        //TODO aggregate cards to learn here perhaps
         packListAdapter.toggleSelection(position);
 
         //Toast.makeText(this, ""+packListAdapter.getPack(position).getObjectId(), Toast.LENGTH_SHORT).show();
