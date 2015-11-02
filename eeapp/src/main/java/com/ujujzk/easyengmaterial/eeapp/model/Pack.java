@@ -25,7 +25,14 @@ public class Pack extends Base {
 
     }
 
+    public List<String> getAllCardIds () {
+        List <String> ids = new ArrayList<String>();
 
+        for (Card i: cards) {
+            ids.add(i.getObjectId());
+        }
+        return ids;
+    }
 
     public int getCardsNumber () {
         return cards.size();

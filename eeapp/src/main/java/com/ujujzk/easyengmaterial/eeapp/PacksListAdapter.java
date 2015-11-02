@@ -1,5 +1,6 @@
 package com.ujujzk.easyengmaterial.eeapp;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
@@ -29,20 +30,105 @@ public class PacksListAdapter
         super();
         this.clickListener = clickListener;
 
-        packs = MOC.getPacksMOC(); //TODO get data from local storage
-    }
-
-    public void removePack(int position){
-
-        if(position < packs.size()) {
-            packs.remove(position);
-            notifyItemRemoved(position);
-        }
+        packs = new ArrayList<Pack>();
     }
 
     public void addPack(){
-        packs.add( new Pack("New Pack", new ArrayList<Card>()) );
+        addPack(new Pack("New Pack", new ArrayList<Card>()));
         notifyDataSetChanged();
+    }
+
+    public void addPack(Pack newPack) {
+        packs.add(newPack);
+        notifyDataSetChanged();
+    }
+
+    public void addPacks(List<Pack> newPacks) {
+        packs.addAll(newPacks);
+        notifyDataSetChanged();
+    }
+
+    public Pack getPack(int position) {
+        return packs.get(position);
+    }
+
+    public List<String> getSelectedPacksId (List<Integer> positions) {
+        List <String> ids = new ArrayList<String>();
+
+        Collections.sort(positions, new Comparator<Integer>() {
+            @Override
+            public int compare(Integer lhs, Integer rhs) {
+                return rhs - lhs;
+            }
+        });
+
+        while (!positions.isEmpty()) {
+            if (positions.size() == 1) {
+                ids.add(getPack(positions.get(0)).getObjectId());
+                positions.remove(0);
+            } else {
+                int count = 1;
+                while (positions.size() > count && positions.get(count).equals(positions.get(count - 1) - 1)) {
+                    ++count;
+                }
+
+                if (count == 1) {
+                    ids.add(getPack(positions.get(0)).getObjectId());
+                } else {
+                    for (int i = 0; i < count; ++i) {
+                        ids.add(getPack(positions.get(count - 1) ).getObjectId());
+                    }
+                }
+                for (int i = 0; i < count; ++i) {
+                    positions.remove(0);
+                }
+            }
+        }
+
+        return ids;
+    }
+
+    public List<String> getSelectedPacksCardsIds (List<Integer> positions) {
+        List <String> ids = new ArrayList<String>();
+
+        Collections.sort(positions, new Comparator<Integer>() {
+            @Override
+            public int compare(Integer lhs, Integer rhs) {
+                return rhs - lhs;
+            }
+        });
+
+        while (!positions.isEmpty()) {
+            if (positions.size() == 1) {
+                ids.addAll(getPack(positions.get(0)).getAllCardIds());
+                positions.remove(0);
+            } else {
+                int count = 1;
+                while (positions.size() > count && positions.get(count).equals(positions.get(count - 1) - 1)) {
+                    ++count;
+                }
+
+                if (count == 1) {
+                    ids.addAll(getPack(positions.get(0)).getAllCardIds());
+                } else {
+                    for (int i = 0; i < count; ++i) {
+                        ids.addAll(getPack(positions.get(count - 1) ).getAllCardIds());
+                    }
+                }
+                for (int i = 0; i < count; ++i) {
+                    positions.remove(0);
+                }
+            }
+        }
+        return ids;
+    }
+
+    public void removePack(int position){
+        if(position < packs.size()) {
+            Application.packLocalCrudDao.deleteWithRelations(packs.get(position).getObjectId());
+            packs.remove(position);
+            notifyItemRemoved(position);
+        }
     }
 
     public void removePacks(List<Integer> positions) {
@@ -79,9 +165,16 @@ public class PacksListAdapter
 
     private void removeRange(int positionStart, int packCount) {
         for (int i = 0; i < packCount; ++i) {
-            packs.remove(positionStart);
+            removePack(positionStart);
         }
         notifyItemRangeRemoved(positionStart, packCount);
+    }
+
+    public void updatePacks(List<Pack> newPacks){
+        packs.clear();
+        packs.addAll(newPacks);
+        notifyDataSetChanged();
+
     }
 
     @Override
@@ -97,7 +190,6 @@ public class PacksListAdapter
 
         holder.packTitle.setText(packs.get(position).getTitle());
         holder.packSize.setText("" + packs.get(position).getCardsNumber() + " cards");
-
         holder.selectedOverlay.setVisibility(isSelected(position) ? View.VISIBLE : View.INVISIBLE);
     }
 
@@ -115,7 +207,6 @@ public class PacksListAdapter
     }
 
 
-
     public static class PackViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
 
         TextView packTitle;
@@ -123,7 +214,6 @@ public class PacksListAdapter
         View selectedOverlay;
 
         private PackViewHolder.ClickListener clickListener;
-
 
         public PackViewHolder(View itemView, ClickListener clickListener) {
             super(itemView);
@@ -159,17 +249,6 @@ public class PacksListAdapter
             public void onItemClicked(int position);
             public boolean onItemLongClicked(int position);
         }
-
-
     }
-
-
-
-
-
-
-
-
-
 }
 

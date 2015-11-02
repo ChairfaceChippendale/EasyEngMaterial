@@ -3,6 +3,7 @@ package com.ujujzk.easyengmaterial.eeapp;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.os.Bundle;
@@ -13,13 +14,21 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.CheckedTextView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.clans.fab.FloatingActionButton;
 import com.ujujzk.easyengmaterial.eeapp.model.Card;
+import com.ujujzk.easyengmaterial.eeapp.model.Pack;
 import com.ujujzk.easyengmaterial.eeapp.util.ActivityUtil;
+import com.ujujzk.easyengmaterial.eeapp.util.LearnWordActivity;
+
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class VocabularyActivity extends AppCompatActivity implements PacksListAdapter.PackViewHolder.ClickListener {
@@ -30,12 +39,15 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
     private static final int GRIDS_ON_TABLET = 2;
     private static final int GRIDS_ON_PHONE = 1;
 
-    private Toolbar toolBar;
-    private RecyclerView packsList;
-    private ProgressBar progressBar;
-    private ArrayList<Card> aggregateCardsToLearn;
+    public static final String SELECTED_PACK_ID = "selectedPackId";
+    public static final String SELECTED_CARD_IDS = "selectedCardIds";
 
-    private PacksListAdapter packsListAdapter;
+    private Toolbar toolBar;
+    private RecyclerView packList;
+    private ProgressBar progressBar;
+    //private ArrayList<Card> aggregateCardsToLearn;
+
+    private PacksListAdapter packListAdapter;
     private FloatingActionButton runCardsFab;
     private MaterialDialog confirmPackRemove;
 
@@ -56,30 +68,36 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         progressBar = (ProgressBar) findViewById(R.id.vocab_act_prorgress_bar);
-        packsList = (RecyclerView) findViewById(R.id.vocab_act_rv_packs_list);
 
-        packsListAdapter = new PacksListAdapter(this);
-        packsList.setAdapter(packsListAdapter);
-
+        packList = (RecyclerView) findViewById(R.id.vocab_act_rv_packs_list);
+        packListAdapter = new PacksListAdapter(this);
+        packList.setAdapter(packListAdapter);
         StaggeredGridLayoutManager packsGridLayoutManager;
         if (isTablet(this)) {
             packsGridLayoutManager = new StaggeredGridLayoutManager(GRIDS_ON_TABLET, StaggeredGridLayoutManager.VERTICAL);
         } else {
             packsGridLayoutManager = new StaggeredGridLayoutManager(GRIDS_ON_PHONE, StaggeredGridLayoutManager.VERTICAL);
         }
-        packsList.setLayoutManager(packsGridLayoutManager);
-
-        packsList.setItemAnimator(new DefaultItemAnimator());
+        packList.setLayoutManager(packsGridLayoutManager);
+        packList.setItemAnimator(new DefaultItemAnimator());
 
         runCardsFab = (FloatingActionButton) findViewById(R.id.vacab_act_fab);
         runCardsFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                //TODO start card learning
+                List<String> ids = packListAdapter.getSelectedPacksCardsIds(packListAdapter.getSelectedItems());
+
+                if (ids.size() > 0) {
+                    Intent intent = new Intent(VocabularyActivity.this, LearnWordActivity.class);
+                    intent.putStringArrayListExtra(SELECTED_CARD_IDS, (ArrayList<String>)ids);
+                    startActivity(intent);
+                }
+
+                packListAdapter.clearSelection();
+                runCardsFab.hide(true);
             }
         });
-
 
         confirmPackRemove = new MaterialDialog.Builder(this)
                 .content(R.string.vocab_act_pack_remove_confirm_question)
@@ -88,19 +106,48 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        packsListAdapter.removePacks(packsListAdapter.getSelectedItems());
-                        packsListAdapter.clearSelection();
+
+                        packListAdapter.removePacks(packListAdapter.getSelectedItems());
+                        packListAdapter.clearSelection();
                         confirmPackRemove.dismiss();
                     }
                 })
                 .onNegative(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        packsListAdapter.clearSelection();
+                        packListAdapter.clearSelection();
                         confirmPackRemove.dismiss();
                     }
                 })
                 .build();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        Log.d(TAG, "onStart");
+
+        new AsyncTask<Void, Void, List<Pack>>(){
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                progressBar.setVisibility(View.VISIBLE);
+                packList.setVisibility(View.GONE);
+            }
+            @Override
+            protected List<Pack> doInBackground(Void... params) {
+                return Application.packLocalCrudDao.readAllWithRelations();
+            }
+            @Override
+            protected void onPostExecute(List<Pack> packs) {
+
+                packListAdapter.updatePacks(packs);
+                progressBar.setVisibility(View.GONE);
+                packList.setVisibility(View.VISIBLE);
+
+            }
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
     }
 
@@ -120,12 +167,11 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
                 return true;
 
             case android.R.id.home:
-                //TODO save packs on storage
                 onBackPressed();
                 return true;
 
             case R.id.vocab_act_action_add_pack:
-                packsListAdapter.addPack();
+                packListAdapter.addPack( Application.packLocalCrudDao.create( new Pack ("NewPack",new ArrayList<Card>()) ) );
                 return true;
 
             case R.id.vocab_act_action_cloud_download:
@@ -134,7 +180,7 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
 
             case R.id.vocab_act_action_remove_pack:
 
-                if (packsListAdapter.getSelectedItemCount() > 0) {
+                if (packListAdapter.getSelectedItemCount() > 0) {
                     confirmPackRemove.show();
                 }
                 if (!runCardsFab.isHidden()) {
@@ -144,9 +190,21 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
 
             case R.id.vocab_act_action_edit_pack:
 
-                //TODO
-                startActivity(new Intent(VocabularyActivity.this, EditPackActivity.class));
+                if (packListAdapter.getSelectedItemCount() == 1) {
 
+                    List<String> ids = packListAdapter.getSelectedPacksId(packListAdapter.getSelectedItems());
+
+                    if (ids.size() > 0) {
+
+                        Intent intent = new Intent(VocabularyActivity.this, EditPackActivity.class);
+                        intent.putExtra(SELECTED_PACK_ID, ids.get(0));
+                        startActivity(intent);
+
+                    }
+
+                }
+                packListAdapter.clearSelection();
+                runCardsFab.hide(true);
                 return true;
 
             default:
@@ -156,10 +214,11 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
 
     @Override
     public void onItemClicked(int position) {
-        //TODO aggregate cards to learn here perhaps
-        packsListAdapter.toggleSelection(position);
+        packListAdapter.toggleSelection(position);
 
-        if (packsListAdapter.getSelectedItemCount() > 0) {
+        //Toast.makeText(this, ""+packListAdapter.getPack(position).getObjectId(), Toast.LENGTH_SHORT).show();
+
+        if (packListAdapter.getSelectedItemCount() > 0) {
             if (runCardsFab.isHidden()) {
                 runCardsFab.show(true);
             }

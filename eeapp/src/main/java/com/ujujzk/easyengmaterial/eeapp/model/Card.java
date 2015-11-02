@@ -1,5 +1,10 @@
 package com.ujujzk.easyengmaterial.eeapp.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.io.Serializable;
+
 public class Card extends Base {
 
     private String front;
@@ -28,6 +33,7 @@ public class Card extends Base {
     public void setBack(String back) {
         this.back = back;
     }
+
 
     @Override
     public String toString() {

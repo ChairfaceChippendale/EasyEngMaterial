@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:context="com.ujujzk.easyengmaterial.eeapp.LearnWordActivity">
+
+    <item
+            android:id="@+id/learn_word_act_action_pronunciation"
+            android:title="@string/action_pronunciation"
+            android:icon="@drawable/ic_volume_up_white_48dp"
+            android:orderInCategory="100"
+            app:showAsAction="always"/>
+
+</menu>

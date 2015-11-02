@@ -48,6 +48,10 @@
             android:name=".EditPackActivity"
             android:label="@string/title_activity_edit_pack" >
         </activity>
+        <activity
+            android:name=".util.LearnWordActivity"
+            android:label="@string/title_activity_learn_word" >
+        </activity>
     </application>
 
 </manifest>
