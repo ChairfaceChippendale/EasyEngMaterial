@@ -39,6 +39,7 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_pronunciation">Pronunciation</string>
+    <string name="all_words_have_been_learned">You have learnt all words!</string>
 
 
 </resources>

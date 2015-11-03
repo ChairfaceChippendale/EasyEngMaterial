@@ -5,5 +5,6 @@
     <dimen name="activity_horizontal_margin">64dp</dimen>
     <dimen name="main_act_tiles_margin">16dp</dimen>
     <dimen name="title_img_height">200dp</dimen>
+    <dimen name="learn_word_act_tv_word_text_size">40sp</dimen>
 
 </resources>

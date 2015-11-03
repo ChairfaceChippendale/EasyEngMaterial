@@ -127,8 +127,9 @@ public class EditPackActivity extends AppCompatActivity implements CardListAdapt
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
+    protected void onPause() {
+        super.onPause();
+
         saveDataToLocalBase();
     }
 
@@ -167,11 +168,13 @@ public class EditPackActivity extends AppCompatActivity implements CardListAdapt
     }
 
     private void saveDataToLocalBase() {
+
         packToEdit.setTitle(packTitle.getText().toString());
         packToEdit.removeCards();
         packToEdit.addCards((ArrayList<Card>)cardListAdapter.getCards());
         Application.packLocalCrudDao.deleteWithRelations(packToEditId);
         Application.packLocalCrudDao.createWithRelations(packToEdit);
+
     }
 
 }

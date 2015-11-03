@@ -49,9 +49,14 @@
             android:label="@string/title_activity_edit_pack" >
         </activity>
         <activity
-            android:name=".util.LearnWordActivity"
+            android:name=".LearnWordActivity"
             android:label="@string/title_activity_learn_word" >
         </activity>
+        <service
+                android:name=".service.PronunciationService"
+                android:enabled="true"
+                android:exported="true" >
+        </service>
     </application>
 
 </manifest>
