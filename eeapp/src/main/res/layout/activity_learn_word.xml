@@ -25,23 +25,41 @@
                 android:id="@+id/learn_word_act_top_i_know"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:background="#FF0000"
+                android:background="@drawable/top_end"
                 android:layout_weight="1"
-                android:alpha=".5"></FrameLayout>
+                >
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textColor="#FFFFFF"
+                    android:textSize="40sp"
+
+                    android:text="I KNOW\n"/>
+        </FrameLayout>
 
         <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="4">
+                android:layout_weight="3">
         </FrameLayout>
 
         <FrameLayout
                 android:id="@+id/learn_word_act_bottom_i_forgot"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:background="#FF0000"
+                android:background="@drawable/bottom_end"
                 android:layout_weight="1"
-                android:alpha=".5"></FrameLayout>
+                >
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textColor="#FFFFFF"
+                    android:textSize="40sp"
+
+                    android:text="\nI FORGOT"/>
+        </FrameLayout>
 
     </LinearLayout>
 
