@@ -19,4 +19,5 @@
     <dimen name="edit_pack_act_pack_title_margin">10dp</dimen>
     <dimen name="edit_pack_act_card_list_margin">6dp</dimen>
     <dimen name="learn_word_act_tv_word_text_size">28sp</dimen>
+    <dimen name="learn_word_act_end_text_size">28sp</dimen>
 </resources>

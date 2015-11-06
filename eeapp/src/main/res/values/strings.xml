@@ -40,6 +40,8 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_pronunciation">Pronunciation</string>
     <string name="all_words_have_been_learned">You have learnt all words!</string>
+    <string name="learn_word_act_top_end">I KNOW\n</string>
+    <string name="learn_word_act_bottom_end">\nI FORGOT</string>
 
 
 </resources>

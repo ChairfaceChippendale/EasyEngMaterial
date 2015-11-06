@@ -15,7 +15,6 @@
             android:textSize="@dimen/learn_word_act_tv_word_text_size"
             android:text="WORD"/>
 
-
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -33,15 +32,14 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:textColor="#FFFFFF"
-                    android:textSize="40sp"
-
-                    android:text="I KNOW\n"/>
+                    android:textSize="@dimen/learn_word_act_end_text_size"
+                    android:text="@string/learn_word_act_top_end"/>
         </FrameLayout>
 
         <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="3">
+                android:layout_weight="4">
         </FrameLayout>
 
         <FrameLayout
@@ -56,9 +54,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:textColor="#FFFFFF"
-                    android:textSize="40sp"
-
-                    android:text="\nI FORGOT"/>
+                    android:textSize="@dimen/learn_word_act_end_text_size"
+                    android:text="@string/learn_word_act_bottom_end"/>
         </FrameLayout>
 
     </LinearLayout>
