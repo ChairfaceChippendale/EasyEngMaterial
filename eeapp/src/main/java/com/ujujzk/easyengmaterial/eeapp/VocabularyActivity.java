@@ -62,7 +62,7 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        progressBar = (ProgressBar) findViewById(R.id.vocab_act_prorgress_bar);
+        progressBar = (ProgressBar) findViewById(R.id.vocab_act_progress_bar);
 
         packList = (RecyclerView) findViewById(R.id.vocab_act_rv_packs_list);
         packListAdapter = new PacksListAdapter(this);

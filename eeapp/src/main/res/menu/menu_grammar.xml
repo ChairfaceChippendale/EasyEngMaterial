@@ -4,6 +4,13 @@
       tools:context="com.ujujzk.easyengmaterial.eeapp.GrammarActivity">
 
     <item
+            android:id="@+id/gramm_act_action_rule"
+            android:title="@string/action_rule"
+            android:icon="@drawable/ic_school_white_48dp"
+            android:orderInCategory="90"
+            app:showAsAction="ifRoom"/>
+
+    <item
             android:id="@+id/gramm_act_action_settings"
             android:title="@string/action_settings"
             android:icon="@drawable/ic_settings_white_48dp"
@@ -17,5 +24,4 @@
             android:orderInCategory="200"
             app:showAsAction="never"/>
 
-    <!-- TODO add items -->
 </menu>

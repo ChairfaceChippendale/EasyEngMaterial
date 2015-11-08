@@ -1,8 +1,11 @@
 package com.ujujzk.easyengmaterial.eeapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -11,10 +14,13 @@ import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.ujujzk.easyengmaterial.eeapp.model.Card;
 import com.ujujzk.easyengmaterial.eeapp.service.PronunciationService;
 import com.ujujzk.easyengmaterial.eeapp.util.ActivityUtil;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -157,6 +163,7 @@ public class LearnWordActivity extends AppCompatActivity implements View.OnTouch
                 currentCardSide = FRONT_SIDE;
             } else {
                 wordView.setText(R.string.all_words_have_been_learned);
+                wordView.setTextColor(ContextCompat.getColor(this, R.color.accent_light));
             }
         }
     }
@@ -221,17 +228,21 @@ public class LearnWordActivity extends AppCompatActivity implements View.OnTouch
                 return true;
 
             case R.id.learn_word_act_action_pronunciation:
-                if (currentCardNumber < cardsToLearn.size()) {
-                    wordToPronounce = cardsToLearn.get(currentCardNumber).getBack();
-                    if (currentCardSide == BACK_SIDE && !wordToPronounce.isEmpty()) {
-                        //word pronunciation
-                        //powered by Google
-                        //https://ssl.gstatic.com/dictionary/static/sounds/de/0/WORD.mp3
-                        wordToPronounce = validateWordToPronounce(wordToPronounce);
-                        Intent intent = new Intent(PronunciationService.PRONUNCIATION_TASK);
-                        intent.putExtra(PronunciationService.WORD, wordToPronounce);
-                        sendBroadcast(intent);
+                if (isNetworkConnected()) {
+                    if (currentCardNumber < cardsToLearn.size()) {
+                        wordToPronounce = cardsToLearn.get(currentCardNumber).getBack();
+                        if (currentCardSide == BACK_SIDE && !wordToPronounce.isEmpty()) {
+                            //word pronunciation
+                            //powered by Google
+                            //https://ssl.gstatic.com/dictionary/static/sounds/de/0/WORD.mp3
+                            wordToPronounce = validateWordToPronounce(wordToPronounce);
+                            Intent intent = new Intent(PronunciationService.PRONUNCIATION_TASK);
+                            intent.putExtra(PronunciationService.WORD, wordToPronounce);
+                            sendBroadcast(intent);
+                        }
                     }
+                } else {
+                    Toast.makeText(this, "Is not available", Toast.LENGTH_SHORT).show();
                 }
                 return true;
 
@@ -250,5 +261,9 @@ public class LearnWordActivity extends AppCompatActivity implements View.OnTouch
         return word;
     }
 
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
+        return cm.getActiveNetworkInfo() != null;
+    }
 }

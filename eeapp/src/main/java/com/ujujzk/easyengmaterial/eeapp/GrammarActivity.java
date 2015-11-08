@@ -45,8 +45,12 @@ public class GrammarActivity extends AppCompatActivity {
 
         int id = item.getItemId();
         switch (id) {
-            case R.id.dict_act_action_settings:
+            case R.id.gramm_act_action_settings:
                 startActivity(new Intent(GrammarActivity.this, SettingsActivity.class));
+                return true;
+
+            case R.id.gramm_act_action_rule:
+                //TODO
                 return true;
 
             case android.R.id.home:
