@@ -27,14 +27,12 @@
             android:layout_below="@+id/vocab_act_app_bar">
 
         <ProgressBar
-                android:id="@+id/vocab_act_prorgress_bar"
-                style="@android:style/Widget.Holo.Light.ProgressBar.Large.Inverse"
+                android:id="@+id/vocab_act_progress_bar"
+                style="@android:style/Widget.Holo.Light.ProgressBar.Large"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:layout_alignParentBottom="true"
-
-                android:visibility="gone"/>
+                android:visibility="visible"/>
 
         <android.support.v7.widget.RecyclerView
                 android:id="@+id/vocab_act_rv_packs_list"

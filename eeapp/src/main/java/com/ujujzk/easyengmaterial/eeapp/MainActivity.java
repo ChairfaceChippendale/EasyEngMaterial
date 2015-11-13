@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
 
     public static final int TARGET_SDK = 21;
 
-
     private Toolbar toolBar;
     private CardView grammarTile, vocabularyTile, dictionaryTile;
 
