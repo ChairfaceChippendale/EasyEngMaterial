@@ -1,6 +1,7 @@
 package com.ujujzk.easyengmaterial.eeapp;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -130,7 +131,15 @@ public class EditPackActivity extends AppCompatActivity implements CardListAdapt
     protected void onPause() {
         super.onPause();
 
-        saveDataToLocalBase();
+        new AsyncTask<Void, Void, Void>(){
+            @Override
+            protected Void doInBackground(Void... params) {
+                saveDataToLocalBase();
+                return null;
+            }
+        }.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
+
+        //saveDataToLocalBase();
     }
 
     @Override

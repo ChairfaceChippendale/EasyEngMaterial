@@ -21,10 +21,8 @@ import com.github.clans.fab.FloatingActionButton;
 import com.ujujzk.easyengmaterial.eeapp.model.Card;
 import com.ujujzk.easyengmaterial.eeapp.model.Pack;
 import com.ujujzk.easyengmaterial.eeapp.util.ActivityUtil;
-
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class VocabularyActivity extends AppCompatActivity implements PacksListAdapter.PackViewHolder.ClickListener {
 
@@ -39,10 +37,8 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
 
     private Toolbar toolBar;
     private RecyclerView packList;
-    private ProgressBar progressBar;
-    //private ArrayList<Card> aggregateCardsToLearn;
-
     private PacksListAdapter packListAdapter;
+    private ProgressBar progressBar;
     private FloatingActionButton runCardsFab;
     private MaterialDialog confirmPackRemove;
 
@@ -58,7 +54,6 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
         toolBar = (Toolbar) findViewById(R.id.vocab_act_app_bar);
         ActivityUtil.setToolbarColor(this, toolBar.getId());
         setSupportActionBar(toolBar);
-
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -143,7 +138,7 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
                 progressBar.setVisibility(View.GONE);
                 packList.setVisibility(View.VISIBLE);
             }
-        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        }.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
 
     }
 
