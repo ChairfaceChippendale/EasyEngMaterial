@@ -8,11 +8,10 @@
         android:foreground="?android:attr/selectableItemBackground"
         app:cardUseCompatPadding="true"
         app:cardElevation="@dimen/packs_list_item_elevation"
-        app:cardCornerRadius="@dimen/packs_list_item_corner_radius"
-        >
+        app:cardCornerRadius="@dimen/packs_list_item_corner_radius">
 
     <View
-            android:id="@+id/selected_overlay"
+            android:id="@+id/pack_list_item_selected_overlay"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/vocab_list_item_selected_overlay_light"

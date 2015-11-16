@@ -1,18 +1,20 @@
 package com.ujujzk.easyengmaterial.eeapp;
 
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.TextView;
 import com.ujujzk.easyengmaterial.eeapp.model.Topic;
-
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
-/**
- * Created by Юлия on 11.11.2015.
- */
-public class TopicListAdapter {
+
+public class TopicListAdapter
+        extends PackListSelectableAdapter<TopicListAdapter.TopicViewHolder>{
 
     private List<Topic> topics;
     private TopicViewHolder.ClickListener clickListener;
@@ -23,19 +25,104 @@ public class TopicListAdapter {
         topics = new ArrayList<Topic>();
     }
 
+    public void addTopic(Topic newPack) {
+        topics.add(newPack);
+        notifyDataSetChanged();
+    }
 
+    public boolean isTopicListEmpty(){
+        if (topics.isEmpty()){
+            return true;
+        }else {
+            return false;
+        }
+    }
 
+    public void addTopics(List<Topic> newPacks) {
+        topics.addAll(newPacks);
+        notifyDataSetChanged();
+    }
+
+    public Topic getTopic(int position) {
+        return topics.get(position);
+    }
+
+    public List<String> getSelectedTopicsIds (List<Integer> positions) {
+        List <String> ids = new ArrayList<String>();
+
+        Collections.sort(positions, new Comparator<Integer>() {
+            @Override
+            public int compare(Integer lhs, Integer rhs) {
+                return rhs - lhs;
+            }
+        });
+
+        while (!positions.isEmpty()) {
+            if (positions.size() == 1) {
+                ids.add(getTopic(positions.get(0)).getObjectId());
+                positions.remove(0);
+            } else {
+                int count = 1;
+                while (positions.size() > count && positions.get(count).equals(positions.get(count - 1) - 1)) {
+                    ++count;
+                }
+
+                if (count == 1) {
+                    ids.add(getTopic(positions.get(0)).getObjectId());
+                } else {
+                    for (int i = 0; i < count; ++i) {
+                        ids.add(getTopic(positions.get(count - 1)).getObjectId());
+                    }
+                }
+                for (int i = 0; i < count; ++i) {
+                    positions.remove(0);
+                }
+            }
+        }
+
+        return ids;
+    }
+
+    @Override
+    public TopicViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.topic_list_item, parent, false);
+        TopicViewHolder holder = new TopicViewHolder(v, clickListener);
+        return holder;
+    }
+
+    @Override
+    public void onBindViewHolder(TopicViewHolder holder, int position) {
+
+        holder.topicTitle.setText(topics.get(position).getTitle());
+        holder.selectedOverlay.setVisibility(isSelected(position) ? View.VISIBLE : View.INVISIBLE);
+    }
+
+    @Override
+    public int getItemCount() {
+        if (topics != null) {
+            return topics.size();
+        }
+        return 0;
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+    }
 
     public static class TopicViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
-
+        TextView topicTitle;
+        View selectedOverlay;
 
         private TopicViewHolder.ClickListener clickListener;
 
         public TopicViewHolder(View itemView, ClickListener clickListener) {
             super(itemView);
 
-
+            topicTitle = (TextView) itemView.findViewById(R.id.topic_list_item_title);
+            selectedOverlay = itemView.findViewById(R.id.topic_list_item_selected_overlay);
 
             this.clickListener = clickListener;
 

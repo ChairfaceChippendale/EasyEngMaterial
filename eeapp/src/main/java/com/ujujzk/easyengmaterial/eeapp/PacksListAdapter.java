@@ -1,35 +1,27 @@
 package com.ujujzk.easyengmaterial.eeapp;
 
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.ujujzk.easyengmaterial.eeapp.model.Card;
-import com.ujujzk.easyengmaterial.eeapp.model.MOC;
 import com.ujujzk.easyengmaterial.eeapp.model.Pack;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-
 public class PacksListAdapter
         extends PackListSelectableAdapter<PacksListAdapter.PackViewHolder> {
 
     private List<Pack> packs;
-    private ArrayList<Card> aggregateCardsToLearn;
-
     private PackViewHolder.ClickListener clickListener;
 
     public PacksListAdapter(PackViewHolder.ClickListener clickListener) {
         super();
         this.clickListener = clickListener;
-
         packs = new ArrayList<Pack>();
     }
 
@@ -206,7 +198,6 @@ public class PacksListAdapter
         super.onAttachedToRecyclerView(recyclerView);
     }
 
-
     public static class PackViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
 
         TextView packTitle;
@@ -220,9 +211,7 @@ public class PacksListAdapter
 
             packTitle = (TextView) itemView.findViewById(R.id.packs_list_item_title);
             packSize = (TextView) itemView.findViewById(R.id.packs_list_item_cards_number);
-            selectedOverlay = itemView.findViewById(R.id.selected_overlay);
-
-            selectedOverlay = itemView.findViewById(R.id.selected_overlay);
+            selectedOverlay = itemView.findViewById(R.id.pack_list_item_selected_overlay);
 
             this.clickListener = clickListener;
 
