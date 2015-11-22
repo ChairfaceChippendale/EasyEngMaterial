@@ -12,6 +12,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.transition.TransitionInflater;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,6 +32,7 @@ public class GrammarActivity extends AppCompatActivity implements TopicListAdapt
 
     public static final String SELECTED_TOPICS_IDS = "selectedTopicsIds";
     public static final String SELECTED_TOPIC_ID = "selectedTopicID";
+    public static final String SELECTED_TOPIC_NAME = "selectedTopicName";
 
     private Toolbar toolBar;
     private RecyclerView topicList;
@@ -126,16 +128,12 @@ public class GrammarActivity extends AppCompatActivity implements TopicListAdapt
                 return true;
 
             case R.id.gramm_act_action_rule:
-
                 if (topicListAdapter.getSelectedItemCount() == 1) {
-
                     List<String> ids = topicListAdapter.getSelectedTopicsIds(topicListAdapter.getSelectedItems());
                     if (ids.size() > 0) {
-
-                        //TODO
-                        //Intent intent = new Intent(GrammarActivity.this, RuleActivity.class);
-                        //intent.putExtra(SELECTED_TOPIC_ID, ids.get(0));
-                        //startActivity(intent);
+                        Intent intent = new Intent(GrammarActivity.this, RuleActivity.class);
+                        intent.putExtra(SELECTED_TOPIC_ID, ids.get(0));
+                        startActivity(intent);
                     }
                 }
                 runTopicsFab.hide(true);
@@ -165,7 +163,6 @@ public class GrammarActivity extends AppCompatActivity implements TopicListAdapt
                 runTopicsFab.hide(true);
             }
         }
-
     }
 
     @Override

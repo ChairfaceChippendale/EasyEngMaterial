@@ -167,7 +167,26 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
                 return true;
 
             case R.id.vocab_act_action_cloud_download:
-                // TODO
+
+                new AsyncTask<Void,Void,List<Pack>>() {
+                    @Override
+                    protected List<Pack> doInBackground(Void... params) {
+                        List<Pack> packsFromCloud = Application.packCloudCrudDao.readAllWithRelations();
+                        if (packsFromCloud != null && !packsFromCloud.isEmpty()) {
+                            for (Pack pack : packsFromCloud) {
+                                Application.packLocalCrudDao.createWithRelations(pack);
+                            }
+                        }
+                        return packsFromCloud;
+                    }
+
+                    @Override
+                    protected void onPostExecute(List<Pack> packsFromCloud) {
+                        if (packsFromCloud != null && !packsFromCloud.isEmpty()) {
+                            packListAdapter.addPacks(packsFromCloud);
+                        }
+                    }
+                }.execute();
                 return true;
 
             case R.id.vocab_act_action_remove_pack:

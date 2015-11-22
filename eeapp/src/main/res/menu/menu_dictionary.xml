@@ -17,5 +17,4 @@
             android:orderInCategory="200"
             app:showAsAction="never"/>
 
-      <!--TODO add items -->
 </menu>

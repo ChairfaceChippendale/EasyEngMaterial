@@ -53,11 +53,17 @@
             android:name=".LearnWordActivity"
             android:label="@string/title_activity_learn_word" >
         </activity>
+
         <service
-                android:name=".service.PronunciationService"
-                android:enabled="true"
-                android:exported="true" >
+            android:name=".service.PronunciationService"
+            android:enabled="true"
+            android:exported="true" >
         </service>
+
+        <activity
+            android:name=".RuleActivity"
+            android:label="@string/title_activity_rule" >
+        </activity>
     </application>
 
 </manifest>

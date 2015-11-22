@@ -64,5 +64,4 @@ public abstract class PackListSelectableAdapter<VH extends RecyclerView.ViewHold
         return items;
     }
 
-
 }

@@ -34,6 +34,8 @@ public class Application extends android.app.Application {
     public static CrudDao<Rule, String> ruleLocalCrudDao;
     public static CrudDao<Rule, String> ruleCloudCrudDao;
 
+    public static CrudDao<Answer, String> answerCloudCrudDao;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -58,6 +60,8 @@ public class Application extends android.app.Application {
 
         ruleLocalCrudDao = new ParseLocalCrudDaoImpl<Rule>(Rule.class);
         ruleCloudCrudDao = new ParseCloudCrudDaoImpl<Rule>(Rule.class);
+
+        answerCloudCrudDao = new ParseCloudCrudDaoImpl<Answer>(Answer.class);
 
     }
 }
