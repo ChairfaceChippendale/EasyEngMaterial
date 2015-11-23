@@ -1,8 +1,7 @@
 <resources>
-    <!-- Default screen margins, per the Android Design guidelines. -->
+
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-    <!--Elevations-->
     <dimen name="tool_bar_elevation">4dp</dimen>
 
     <dimen name="tile_corner_radius">2dp</dimen>
@@ -12,12 +11,17 @@
     <dimen name="packs_list_item_corner_radius">2dp</dimen>
 
     <dimen name="main_act_tiles_margin">6dp</dimen>
-
     <dimen name="title_img_height">120dp</dimen>
 
     <dimen name="edit_pack_act_pack_title_text_size">30sp</dimen>
     <dimen name="edit_pack_act_pack_title_margin">10dp</dimen>
     <dimen name="edit_pack_act_card_list_margin">6dp</dimen>
+
     <dimen name="learn_word_act_tv_word_text_size">28sp</dimen>
     <dimen name="learn_word_act_end_text_size">28sp</dimen>
+
+    <dimen name="topic_list_item_elevation">2dp</dimen>
+    <dimen name="topic_list_item_corner_radius">2dp</dimen>
+
+    <dimen name="rule_act_rule_text_margin">15dp</dimen>
 </resources>

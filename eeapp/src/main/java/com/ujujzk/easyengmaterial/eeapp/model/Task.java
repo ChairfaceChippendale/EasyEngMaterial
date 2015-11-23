@@ -1,50 +1,44 @@
 package com.ujujzk.easyengmaterial.eeapp.model;
 
+
+import java.util.ArrayList;
+import java.util.List;
+
+
 public class Task extends Base {
 
-    private String taskType;
     private String question;
-    private String answer;
-    private String ruleId;
+    private List<Answer> answers;
+    private Answer rightAnswer;
+    private String hint;
 
     public Task() {
+        question = "";
+        answers = new ArrayList<Answer>();
+        rightAnswer = new Answer();
+        hint = "";
     }
 
-    public Task(String taskType, String question, String answer, String ruleId) {
-
-        this.taskType = taskType;
+    public Task(String question, List<Answer> answers, Answer rightAnswer, String hint) {
         this.question = question;
-        this.answer = answer;
-        this.ruleId = ruleId;
+        this.answers = new ArrayList<Answer>(answers);
+        this.rightAnswer = rightAnswer;
+        this.hint = hint;
     }
-
-
-
-    public String getTaskType() { return taskType; }
-
-    public void setTaskType(String taskType) { this.taskType = taskType; }
-
 
     public String getQuestion() {
         return question;
     }
 
-    public void setQuestion(String question) {
-        this.question = question;
+    public List<Answer> getAnswers() {
+        return answers;
     }
 
-    public String getAnswer() {
-        return answer;
+    public Answer getRightAnswer() {
+        return rightAnswer;
     }
 
-    public void setAnswer(String answer) {
-        this.answer = answer;
+    public String getHint() {
+        return hint;
     }
-
-    public String getRuleId() {
-        return ruleId;
-    }
-
-
-
 }

@@ -8,4 +8,6 @@
     <dimen name="learn_word_act_tv_word_text_size">40sp</dimen>
     <dimen name="learn_word_act_end_text_size">42sp</dimen>
 
+    <dimen name="rule_act_rule_text_margin">15dp</dimen>
+
 </resources>

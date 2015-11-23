@@ -30,6 +30,9 @@
 
     <color name="eidt_pack_card_list_divider">#3F51B5</color>
     <color name="edit_pack_act_title_light">#000000</color>
+
+    <color name="gramm_list_item_title_light">#212121</color>
+    <color name="gramm_list_item_selected_overlay_light">#9fa8da</color>
     <!-- Light theme -->
 
 
@@ -58,6 +61,7 @@
     <color name="vocab_list_item_title_dark">#FFFFFF</color>
     <color name="vocab_list_item_subtext_dark">#FFFFFF</color>
     <color name="vocab_list_item_selected_overlay_dark">#424242</color>
+
 
     <!-- Dark theme -->
 
