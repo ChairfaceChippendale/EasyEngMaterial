@@ -52,7 +52,7 @@ dependencies {
     compile 'com.android.support:design:23.+'
     compile 'com.github.clans:fab:1.6.1'
     compile 'com.yqritc:recyclerview-flexibledivider:1.2.6'
-    compile 'com.github.AleksandrSavosh:SimpleStore:v1.1.0-alpha'
+    compile 'com.github.AleksandrSavosh:SimpleStore:v1.2.3-alpha'
     compile('com.afollestad.material-dialogs:core:0.8.3.0@aar') {
         transitive = true
     }

@@ -42,7 +42,7 @@ public class Application extends android.app.Application {
         });
 
         storeManager.useLog(true);
-        storeManager.initLocalStore(17);
+        storeManager.initLocalStore(18);
         localStore = storeManager.getLocalStore();
         storeManager.initCloudStore("a2FaVXXRxCiY0r61U0nZ6hS6VhuSDcQfC32Vhium", "b2aaFgro20MWP8t1sRGbjdsRrJrwBBm78cSDKxD8");
         cloudStore = storeManager.getCloudStore();
