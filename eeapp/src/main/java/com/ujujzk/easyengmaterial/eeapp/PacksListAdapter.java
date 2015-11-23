@@ -44,8 +44,8 @@ public class PacksListAdapter
         return packs.get(position);
     }
 
-    public List<String> getSelectedPacksId (List<Integer> positions) {
-        List <String> ids = new ArrayList<String>();
+    public List<Long> getSelectedPacksId (List<Integer> positions) {
+        List <Long> ids = new ArrayList<Long>();
 
         Collections.sort(positions, new Comparator<Integer>() {
             @Override
@@ -56,7 +56,7 @@ public class PacksListAdapter
 
         while (!positions.isEmpty()) {
             if (positions.size() == 1) {
-                ids.add(getPack(positions.get(0)).getObjectId());
+                ids.add(getPack(positions.get(0)).getLocalId());
                 positions.remove(0);
             } else {
                 int count = 1;
@@ -65,10 +65,10 @@ public class PacksListAdapter
                 }
 
                 if (count == 1) {
-                    ids.add(getPack(positions.get(0)).getObjectId());
+                    ids.add(getPack(positions.get(0)).getLocalId());
                 } else {
                     for (int i = 0; i < count; ++i) {
-                        ids.add(getPack(positions.get(count - 1) ).getObjectId());
+                        ids.add(getPack(positions.get(count - 1) ).getLocalId());
                     }
                 }
                 for (int i = 0; i < count; ++i) {
@@ -80,8 +80,8 @@ public class PacksListAdapter
         return ids;
     }
 
-    public List<String> getSelectedPacksCardsIds (List<Integer> positions) {
-        List <String> ids = new ArrayList<String>();
+    public List<Long> getSelectedPacksCardsIds (List<Integer> positions) {
+        List <Long> ids = new ArrayList<Long>();
 
         Collections.sort(positions, new Comparator<Integer>() {
             @Override
@@ -117,7 +117,7 @@ public class PacksListAdapter
 
     public void removePack(int position){
         if(position < packs.size()) {
-            Application.packLocalCrudDao.deleteWithRelations(packs.get(position).getObjectId());
+            Application.localStore.deleteWithRelations(packs.get(position).getLocalId(), Pack.class);
             packs.remove(position);
             notifyItemRemoved(position);
         }

@@ -76,11 +76,11 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
             @Override
             public void onClick(View v) {
 
-                List<String> ids = packListAdapter.getSelectedPacksCardsIds(packListAdapter.getSelectedItems());
+                List<Long> ids = packListAdapter.getSelectedPacksCardsIds(packListAdapter.getSelectedItems());
 
                 if (ids.size() > 0) {
                     Intent intent = new Intent(VocabularyActivity.this, LearnWordActivity.class);
-                    intent.putStringArrayListExtra(SELECTED_CARD_IDS, (ArrayList<String>)ids);
+                    intent.putExtra(SELECTED_CARD_IDS, (ArrayList<Long>)ids);
                     startActivity(intent);
                 }
 
@@ -128,7 +128,7 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
 
             @Override
             protected List<Pack> doInBackground(Void... params) {
-                return Application.packLocalCrudDao.readAllWithRelations();
+                return Application.localStore.readAllWithRelations(Pack.class);
             }
 
             @Override
@@ -163,7 +163,7 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
 
             case R.id.vocab_act_action_add_pack:
 
-                packListAdapter.addPack( Application.packLocalCrudDao.create( new Pack ("New pack",new ArrayList<Card>()) ) );
+                packListAdapter.addPack( Application.localStore.create( new Pack ("New pack",new ArrayList<Card>()) ) );
                 return true;
 
             case R.id.vocab_act_action_cloud_download:
@@ -171,10 +171,10 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
                 new AsyncTask<Void,Void,List<Pack>>() {
                     @Override
                     protected List<Pack> doInBackground(Void... params) {
-                        List<Pack> packsFromCloud = Application.packCloudCrudDao.readAllWithRelations();
+                        List<Pack> packsFromCloud = Application.cloudStore.readAllWithRelations(Pack.class);
                         if (packsFromCloud != null && !packsFromCloud.isEmpty()) {
                             for (Pack pack : packsFromCloud) {
-                                Application.packLocalCrudDao.createWithRelations(pack);
+                                Application.localStore.createWithRelations(pack);
                             }
                         }
                         return packsFromCloud;
@@ -203,7 +203,7 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
 
                 if (packListAdapter.getSelectedItemCount() == 1) {
 
-                    List<String> ids = packListAdapter.getSelectedPacksId(packListAdapter.getSelectedItems());
+                    List<Long> ids = packListAdapter.getSelectedPacksId(packListAdapter.getSelectedItems());
                     if (ids.size() > 0) {
 
                         Intent intent = new Intent(VocabularyActivity.this, EditPackActivity.class);

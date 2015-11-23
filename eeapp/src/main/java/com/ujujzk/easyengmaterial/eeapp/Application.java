@@ -2,12 +2,13 @@ package com.ujujzk.easyengmaterial.eeapp;
 
 import android.content.Context;
 import android.util.Log;
+import com.github.aleksandrsavosh.simplestore.SimpleStore;
+import com.github.aleksandrsavosh.simplestore.SimpleStoreManager;
 import com.parse.Parse;
 import com.parse.ParseCrashReporting;
-import com.ujujzk.easyengmaterial.eeapp.dao.CrudDao;
-import com.ujujzk.easyengmaterial.eeapp.dao.parse.ParseCloudCrudDaoImpl;
-import com.ujujzk.easyengmaterial.eeapp.dao.parse.ParseLocalCrudDaoImpl;
 import com.ujujzk.easyengmaterial.eeapp.model.*;
+
+import java.util.HashSet;
 
 public class Application extends android.app.Application {
 
@@ -15,26 +16,14 @@ public class Application extends android.app.Application {
 
     private static Context context;
 
+    SimpleStoreManager storeManager;
+    public static SimpleStore<Long> localStore;
+    public static SimpleStore<String> cloudStore;
+
     public static Context getContext(){
         return context;
     }
 
-    public static CrudDao<Card, String> cardLocalCrudDao;
-    public static CrudDao<Card, String> cardCloudCrudDao;
-
-    public static CrudDao<Pack, String> packLocalCrudDao;
-    public static CrudDao<Pack, String> packCloudCrudDao;
-
-    public static CrudDao<Task, String> taskLocalCrudDao;
-    public static CrudDao<Task, String> taskCloudCrudDao;
-
-    public static CrudDao<Topic, String> topicLocalCrudDao;
-    public static CrudDao<Topic, String> topicCloudCrudDao;
-
-    public static CrudDao<Rule, String> ruleLocalCrudDao;
-    public static CrudDao<Rule, String> ruleCloudCrudDao;
-
-    public static CrudDao<Answer, String> answerCloudCrudDao;
 
     @Override
     public void onCreate() {
@@ -42,26 +31,24 @@ public class Application extends android.app.Application {
 
         Log.d(APPLICATION_TAG, "Application was created");
 
-        Parse.enableLocalDatastore(this);
-        ParseCrashReporting.enable(this);
-        Parse.initialize(this, "a2FaVXXRxCiY0r61U0nZ6hS6VhuSDcQfC32Vhium", "b2aaFgro20MWP8t1sRGbjdsRrJrwBBm78cSDKxD8");
+        storeManager = SimpleStoreManager.instance(this, new HashSet<Class>(){{
+            add(Card.class);
+            add(Pack.class);
+            add(Topic.class);
+            add(Rule.class);
+            add(Task.class);
+            add(Answer.class);
+        }
+        });
 
-        cardLocalCrudDao = new ParseLocalCrudDaoImpl<Card>(Card.class);
-        cardCloudCrudDao = new ParseCloudCrudDaoImpl<Card>(Card.class);
+        storeManager.useLog(true);
+        storeManager.initLocalStore(17);
+        localStore = storeManager.getLocalStore();
+        storeManager.initCloudStore("a2FaVXXRxCiY0r61U0nZ6hS6VhuSDcQfC32Vhium", "b2aaFgro20MWP8t1sRGbjdsRrJrwBBm78cSDKxD8");
+        cloudStore = storeManager.getCloudStore();
 
-        packLocalCrudDao = new ParseLocalCrudDaoImpl<Pack>(Pack.class);
-        packCloudCrudDao = new ParseCloudCrudDaoImpl<Pack>(Pack.class);
-
-        taskLocalCrudDao = new ParseLocalCrudDaoImpl<Task>(Task.class);
-        taskCloudCrudDao = new ParseCloudCrudDaoImpl<Task>(Task.class);
-
-        topicLocalCrudDao = new ParseLocalCrudDaoImpl<Topic>(Topic.class);
-        topicCloudCrudDao = new ParseCloudCrudDaoImpl<Topic>(Topic.class);
-
-        ruleLocalCrudDao = new ParseLocalCrudDaoImpl<Rule>(Rule.class);
-        ruleCloudCrudDao = new ParseCloudCrudDaoImpl<Rule>(Rule.class);
-
-        answerCloudCrudDao = new ParseCloudCrudDaoImpl<Answer>(Answer.class);
+        //Parse.initialize(this, "a2FaVXXRxCiY0r61U0nZ6hS6VhuSDcQfC32Vhium", "b2aaFgro20MWP8t1sRGbjdsRrJrwBBm78cSDKxD8");
+        //ParseCrashReporting.enable(this);
 
     }
 }

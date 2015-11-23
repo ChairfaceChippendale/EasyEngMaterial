@@ -79,9 +79,9 @@ public class RuleActivity extends AppCompatActivity {
 
             @Override
             protected Pair<String,String> doInBackground(Void... params) {
-                Topic topic = Application.topicCloudCrudDao.read(topicId);
+                Topic topic = Application.cloudStore.read(topicId, Topic.class);
                 String topicTitle = topic.getTitle();
-                Rule rule = Application.ruleCloudCrudDao.read(topic.getRuleId());
+                Rule rule = Application.cloudStore.read(topic.getRuleId(), Rule.class);
                 String ruleString = rule.getRule();
                 return new Pair<String, String>(topicTitle, ruleString);
             }

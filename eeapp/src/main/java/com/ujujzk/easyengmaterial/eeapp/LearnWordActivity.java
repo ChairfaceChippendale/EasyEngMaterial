@@ -51,7 +51,7 @@ public class LearnWordActivity extends AppCompatActivity implements View.OnTouch
     private String wordToPronounce;
 
     List<Card> cardsToLearn;
-    List<String> cardIds;
+    List<Long> cardIds;
 
     private Toolbar toolBar;
 
@@ -69,11 +69,10 @@ public class LearnWordActivity extends AppCompatActivity implements View.OnTouch
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         cardsToLearn = new ArrayList<Card>();
-        cardIds = new ArrayList<String>();
         Intent intent = getIntent();
-        cardIds = intent.getStringArrayListExtra(VocabularyActivity.SELECTED_CARD_IDS);
-        for (String cardId: cardIds){
-            cardsToLearn.add(Application.cardLocalCrudDao.readWithRelations(cardId));
+        cardIds = (List<Long>)intent.getSerializableExtra(VocabularyActivity.SELECTED_CARD_IDS);
+        for (Long cardId: cardIds){
+            cardsToLearn.add(Application.localStore.readWithRelations(cardId, Card.class));
         }
 
         screenSize = new Point();

@@ -2,6 +2,7 @@ package com.ujujzk.easyengmaterial.eeapp.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import com.github.aleksandrsavosh.simplestore.Base;
 
 import java.io.Serializable;
 
