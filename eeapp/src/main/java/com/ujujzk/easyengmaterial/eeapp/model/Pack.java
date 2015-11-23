@@ -1,6 +1,8 @@
 package com.ujujzk.easyengmaterial.eeapp.model;
 
 
+import com.github.aleksandrsavosh.simplestore.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,11 +27,11 @@ public class Pack extends Base {
 
     }
 
-    public List<String> getAllCardIds () {
-        List <String> ids = new ArrayList<String>();
+    public List<Long> getAllCardIds () {
+        List <Long> ids = new ArrayList<Long>();
 
         for (Card i: cards) {
-            ids.add(i.getObjectId());
+            ids.add(i.getLocalId());
         }
         return ids;
     }

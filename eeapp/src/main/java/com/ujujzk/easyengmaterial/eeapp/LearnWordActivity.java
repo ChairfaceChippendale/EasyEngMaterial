@@ -19,6 +19,7 @@ import com.ujujzk.easyengmaterial.eeapp.model.Card;
 import com.ujujzk.easyengmaterial.eeapp.service.PronunciationService;
 import com.ujujzk.easyengmaterial.eeapp.util.ActivityUtil;
 
+import java.lang.reflect.Array;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -51,7 +52,7 @@ public class LearnWordActivity extends AppCompatActivity implements View.OnTouch
     private String wordToPronounce;
 
     List<Card> cardsToLearn;
-    List<String> cardIds;
+    List<Long> cardIds;
 
     private Toolbar toolBar;
 
@@ -69,11 +70,12 @@ public class LearnWordActivity extends AppCompatActivity implements View.OnTouch
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         cardsToLearn = new ArrayList<Card>();
-        cardIds = new ArrayList<String>();
+        cardIds = new ArrayList<Long>();
         Intent intent = getIntent();
-        cardIds = intent.getStringArrayListExtra(VocabularyActivity.SELECTED_CARD_IDS);
-        for (String cardId: cardIds){
-            cardsToLearn.add(Application.cardLocalCrudDao.readWithRelations(cardId));
+        cardIds = (List) intent.getSerializableExtra(VocabularyActivity.SELECTED_CARD_IDS);
+
+        for (Long cardId: cardIds){
+            cardsToLearn.add(Application.localStore.readWithRelations(cardId, Card.class));
         }
 
         screenSize = new Point();

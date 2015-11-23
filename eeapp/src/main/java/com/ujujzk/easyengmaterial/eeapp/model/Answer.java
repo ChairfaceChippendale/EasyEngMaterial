@@ -1,6 +1,8 @@
 package com.ujujzk.easyengmaterial.eeapp.model;
 
 
+import com.github.aleksandrsavosh.simplestore.Base;
+
 public class Answer extends Base {
 
     String answer;

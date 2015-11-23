@@ -99,7 +99,7 @@ public class GrammarActivity extends AppCompatActivity implements TopicListAdapt
 
                 @Override
                 protected List<Topic> doInBackground(Void... params) {
-                    return Application.topicCloudCrudDao.readAll();
+                    return Application.cloudStore.readAll(Topic.class);
                 }
 
                 @Override

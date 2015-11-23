@@ -59,7 +59,7 @@ public class TopicListAdapter
 
         while (!positions.isEmpty()) {
             if (positions.size() == 1) {
-                ids.add(getTopic(positions.get(0)).getObjectId());
+                ids.add(getTopic(positions.get(0)).getCloudId());
                 positions.remove(0);
             } else {
                 int count = 1;
@@ -68,10 +68,10 @@ public class TopicListAdapter
                 }
 
                 if (count == 1) {
-                    ids.add(getTopic(positions.get(0)).getObjectId());
+                    ids.add(getTopic(positions.get(0)).getCloudId());
                 } else {
                     for (int i = 0; i < count; ++i) {
-                        ids.add(getTopic(positions.get(count - 1)).getObjectId());
+                        ids.add(getTopic(positions.get(count - 1)).getCloudId());
                     }
                 }
                 for (int i = 0; i < count; ++i) {

@@ -33,7 +33,7 @@ public class EditPackActivity extends AppCompatActivity implements CardListAdapt
     private CardListAdapter cardListAdapter;
     private FloatingActionButton addCardFab;
     private TextView packTitle;
-    private String packToEditId;
+    private Long packToEditId;
     private Pack packToEdit;
 
     @Override
@@ -43,8 +43,8 @@ public class EditPackActivity extends AppCompatActivity implements CardListAdapt
         setContentView(R.layout.activity_edit_pack);
 
         Intent intent = getIntent();
-        packToEditId = intent.getStringExtra(VocabularyActivity.SELECTED_PACK_ID);
-        packToEdit = Application.packLocalCrudDao.readWithRelations(packToEditId);
+        packToEditId = intent.getLongExtra(VocabularyActivity.SELECTED_PACK_ID, 0l);
+        packToEdit = Application.localStore.readWithRelations(packToEditId, Pack.class);
 
         toolBar = (Toolbar) findViewById(R.id.edit_pack_act_app_bar);
         ActivityUtil.setToolbarColor(this, toolBar.getId());
@@ -181,8 +181,7 @@ public class EditPackActivity extends AppCompatActivity implements CardListAdapt
         packToEdit.setTitle(packTitle.getText().toString());
         packToEdit.removeCards();
         packToEdit.addCards((ArrayList<Card>)cardListAdapter.getCards());
-        Application.packLocalCrudDao.deleteWithRelations(packToEditId);
-        Application.packLocalCrudDao.createWithRelations(packToEdit);
+        Application.localStore.updateWithRelations(packToEdit);
 
     }
 
