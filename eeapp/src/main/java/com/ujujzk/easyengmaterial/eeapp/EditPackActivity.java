@@ -139,40 +139,15 @@ public class EditPackActivity extends AppCompatActivity implements CardListAdapt
             }
         }.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
 
-        //saveDataToLocalBase();
     }
 
     @Override
     public void onItemClicked(final int position) {
-
-        final int cardPosition = position;
-
-        MaterialDialog cardEditDialog = new MaterialDialog.Builder(this)
-                .customView(R.layout.dialog_edit_card, true)
-                .positiveText(R.string.ok)
-                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(MaterialDialog dialog, DialogAction which) {
-                        cardListAdapter.editCard(position,
-                                new Card(
-                                        ((EditText) dialog.getCustomView().findViewById(R.id.dialog_edit_card_et_front_side)).getText().toString(),
-                                        ((EditText) dialog.getCustomView().findViewById(R.id.dialog_edit_card_et_back_side)).getText().toString()
-                                )
-                        );
-                    }
-                }).build();
-
-        EditText frontInput = (EditText) cardEditDialog.getCustomView().findViewById(R.id.dialog_edit_card_et_front_side);
-        frontInput.setText(cardListAdapter.getCard(position).getFront().toString());
-        EditText backInput = (EditText) cardEditDialog.getCustomView().findViewById(R.id.dialog_edit_card_et_back_side);
-        backInput.setText(cardListAdapter.getCard(position).getBack().toString());
-
-        cardEditDialog.show();
+        showCardEditDialog(position);
     }
 
     @Override
     public boolean onItemLongClicked(int position) {
-        //TODO
         return true;
     }
 
@@ -183,6 +158,38 @@ public class EditPackActivity extends AppCompatActivity implements CardListAdapt
         packToEdit.addCards((ArrayList<Card>)cardListAdapter.getCards());
         Application.localStore.updateWithRelations(packToEdit);
 
+    }
+
+    private void showCardEditDialog (final int position) {
+        MaterialDialog cardEditDialog = new MaterialDialog.Builder(this)
+                .customView(R.layout.dialog_edit_card, true)
+                .positiveText(R.string.ok)
+                .neutralText(R.string.card_list_menu_delete)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(MaterialDialog dialog, DialogAction which) {
+                        cardListAdapter.editCard(position,
+                                new Card(
+                                        ((EditText) dialog.getCustomView().findViewById(R.id.dialog_edit_card_et_front_side)).getText().toString(),
+                                        ((EditText) dialog.getCustomView().findViewById(R.id.dialog_edit_card_et_back_side)).getText().toString()
+                                )
+                        );
+                    }
+                })
+                .onNeutral(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
+                        cardListAdapter.removeCard(position);
+                    }
+                })
+                .build();
+
+        EditText frontInput = (EditText) cardEditDialog.getCustomView().findViewById(R.id.dialog_edit_card_et_front_side);
+        frontInput.setText(cardListAdapter.getCard(position).getFront().toString());
+        EditText backInput = (EditText) cardEditDialog.getCustomView().findViewById(R.id.dialog_edit_card_et_back_side);
+        backInput.setText(cardListAdapter.getCard(position).getBack().toString());
+
+        cardEditDialog.show();
     }
 
 }
