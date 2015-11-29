@@ -59,6 +59,7 @@ public class RuleActivity extends AppCompatActivity {
                 List<String> ids = new ArrayList<String>();
                 ids.add(topicId);
                 //TODO start exercise
+                //TODO check is there tasks
 //                Intent intent = new Intent(RuleActivity.this, ExerciseActivity.class);
 //                intent.putStringArrayListExtra(GrammarActivity.SELECTED_TOPICS_IDS, (ArrayList<String>)ids);
 //                startActivity(intent);
@@ -76,7 +77,6 @@ public class RuleActivity extends AppCompatActivity {
                 ruleTextView.setVisibility(View.GONE);
                 progressBar.setVisibility(View.VISIBLE);
             }
-
             @Override
             protected Pair<String,String> doInBackground(Void... params) {
                 Topic topic = Application.cloudStore.read(topicId, Topic.class);
@@ -85,7 +85,6 @@ public class RuleActivity extends AppCompatActivity {
                 String ruleString = rule.getRule();
                 return new Pair<String, String>(topicTitle, ruleString);
             }
-
             @Override
             protected void onPostExecute(Pair<String,String> pair) {
                 super.onPostExecute(pair);

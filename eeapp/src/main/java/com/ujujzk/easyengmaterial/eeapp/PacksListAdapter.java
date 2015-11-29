@@ -35,6 +35,14 @@ public class PacksListAdapter
         notifyDataSetChanged();
     }
 
+    public void addPackOnPosition(int position, Pack newPack) {
+        if (position <= packs.size()) {
+            packs.add(position, newPack);
+            notifyDataSetChanged();
+        }
+    }
+
+
     public void addPacks(List<Pack> newPacks) {
         packs.addAll(newPacks);
         notifyDataSetChanged();

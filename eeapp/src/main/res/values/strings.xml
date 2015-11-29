@@ -48,10 +48,7 @@
     <string name="learn_word_act_top_end">I KNOW\n</string>
     <string name="learn_word_act_bottom_end">\nI FORGOT</string>
     <string name="title_activity_rule">Rule</string>
-
-
-
-
+    <string name="title_activity_exerrcise">Exercise</string>
 
 
 </resources>

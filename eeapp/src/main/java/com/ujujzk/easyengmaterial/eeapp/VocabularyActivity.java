@@ -162,13 +162,19 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
                 return true;
 
             case R.id.vocab_act_action_add_pack:
-
-                packListAdapter.addPack( Application.localStore.create( new Pack ("New pack",new ArrayList<Card>()) ) );
+                packListAdapter.addPackOnPosition(0,
+                        Application.localStore.create(new Pack("New pack", new ArrayList<Card>()))
+                );
                 return true;
 
             case R.id.vocab_act_action_cloud_download:
-
                 new AsyncTask<Void,Void,List<Pack>>() {
+                    @Override
+                    protected void onPreExecute() {
+                        super.onPreExecute();
+                        packList.setVisibility(View.INVISIBLE);
+                        progressBar.setVisibility(View.VISIBLE);
+                    }
                     @Override
                     protected List<Pack> doInBackground(Void... params) {
                         List<Pack> packsFromCloud = Application.cloudStore.readAllWithRelations(Pack.class);
@@ -179,18 +185,18 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
                         }
                         return packsFromCloud;
                     }
-
                     @Override
                     protected void onPostExecute(List<Pack> packsFromCloud) {
                         if (packsFromCloud != null && !packsFromCloud.isEmpty()) {
                             packListAdapter.addPacks(packsFromCloud);
                         }
+                        packList.setVisibility(View.VISIBLE);
+                        progressBar.setVisibility(View.GONE);
                     }
                 }.execute();
                 return true;
 
             case R.id.vocab_act_action_remove_pack:
-
                 if (packListAdapter.getSelectedItemCount() > 0) {
                     confirmPackRemove.show();
                 }
@@ -200,7 +206,6 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
                 return true;
 
             case R.id.vocab_act_action_edit_pack:
-
                 if (packListAdapter.getSelectedItemCount() == 1) {
 
                     List<Long> ids = packListAdapter.getSelectedPacksId(packListAdapter.getSelectedItems());
@@ -238,7 +243,6 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
 
     @Override
     public boolean onItemLongClicked(int position) {
-        //TODO
         return true;
     }
 

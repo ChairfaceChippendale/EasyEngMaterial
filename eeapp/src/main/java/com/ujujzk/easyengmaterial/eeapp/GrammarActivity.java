@@ -32,7 +32,6 @@ public class GrammarActivity extends AppCompatActivity implements TopicListAdapt
 
     public static final String SELECTED_TOPICS_IDS = "selectedTopicsIds";
     public static final String SELECTED_TOPIC_ID = "selectedTopicID";
-    public static final String SELECTED_TOPIC_NAME = "selectedTopicName";
 
     private Toolbar toolBar;
     private RecyclerView topicList;
@@ -71,10 +70,9 @@ public class GrammarActivity extends AppCompatActivity implements TopicListAdapt
                 List<String> ids = topicListAdapter.getSelectedTopicsIds(topicListAdapter.getSelectedItems());
 
                 if (ids.size() > 0) {
-                    //TODO
-                    //Intent intent = new Intent(GrammarActivity.this, ExerciseActivity.class);
-                    //intent.putStringArrayListExtra(SELECTED_TOPICS_IDS, (ArrayList<String>)ids);
-                    //startActivity(intent);
+                    Intent intent = new Intent(GrammarActivity.this, ExerciseActivity.class);
+                    intent.putStringArrayListExtra(SELECTED_TOPICS_IDS, (ArrayList<String>)ids);
+                    startActivity(intent);
                 }
 
                 topicListAdapter.clearSelection();

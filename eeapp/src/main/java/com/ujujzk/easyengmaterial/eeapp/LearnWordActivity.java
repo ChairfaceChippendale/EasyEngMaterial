@@ -262,7 +262,6 @@ public class LearnWordActivity extends AppCompatActivity implements View.OnTouch
 
     private boolean isNetworkConnected() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-
         return cm.getActiveNetworkInfo() != null;
     }
 }
