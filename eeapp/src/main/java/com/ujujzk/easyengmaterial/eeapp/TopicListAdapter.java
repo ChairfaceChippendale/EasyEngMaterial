@@ -56,30 +56,9 @@ public class TopicListAdapter
                 return rhs - lhs;
             }
         });
-
-        while (!positions.isEmpty()) {
-            if (positions.size() == 1) {
-                ids.add(getTopic(positions.get(0)).getCloudId());
-                positions.remove(0);
-            } else {
-                int count = 1;
-                while (positions.size() > count && positions.get(count).equals(positions.get(count - 1) - 1)) {
-                    ++count;
-                }
-
-                if (count == 1) {
-                    ids.add(getTopic(positions.get(0)).getCloudId());
-                } else {
-                    for (int i = 0; i < count; ++i) {
-                        ids.add(getTopic(positions.get(count - 1)).getCloudId());
-                    }
-                }
-                for (int i = 0; i < count; ++i) {
-                    positions.remove(0);
-                }
-            }
+        for (Integer i: positions){
+            ids.add(getTopic(i).getCloudId());
         }
-
         return ids;
     }
 

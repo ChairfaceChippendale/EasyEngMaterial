@@ -60,9 +60,9 @@ public class RuleActivity extends AppCompatActivity {
                 ids.add(topicId);
                 //TODO start exercise
                 //TODO check is there tasks
-//                Intent intent = new Intent(RuleActivity.this, ExerciseActivity.class);
-//                intent.putStringArrayListExtra(GrammarActivity.SELECTED_TOPICS_IDS, (ArrayList<String>)ids);
-//                startActivity(intent);
+                Intent intent = new Intent(RuleActivity.this, ExerciseActivity.class);
+                intent.putStringArrayListExtra(GrammarActivity.SELECTED_TOPICS_IDS, (ArrayList<String>)ids);
+                startActivity(intent);
 
             }
         });
@@ -75,6 +75,7 @@ public class RuleActivity extends AppCompatActivity {
             protected void onPreExecute() {
                 super.onPreExecute();
                 ruleTextView.setVisibility(View.GONE);
+                runTopicFab.hide(false);
                 progressBar.setVisibility(View.VISIBLE);
             }
             @Override
@@ -95,6 +96,7 @@ public class RuleActivity extends AppCompatActivity {
                 ruleTextView.setBackgroundColor(getResources().getColor(R.color.main_window_bgr_light));
                 ruleTextView.setVisibility(View.VISIBLE);
                 progressBar.setVisibility(View.GONE);
+                runTopicFab.show(true);
             }
         }.execute();
     }

@@ -27,7 +27,7 @@ public class ExerciseActivity extends AppCompatActivity {
 
     private Toolbar toolBar;
     private List<Task> tasksToLearn;
-    private LinearLayout taskBox;
+    private View taskBox;
     private ProgressBar progressBar;
     private TextView exerciseQuestion;
     private ListView exerciseAnswers;
@@ -35,6 +35,7 @@ public class ExerciseActivity extends AppCompatActivity {
     private int nextTaskNumber;
     private TextView hint;
     private FABToolbarLayout hintLayout;
+    private Button nextTask;
 
     @SuppressWarnings("unused")
     private static final String TAG = ExerciseActivity.class.getSimpleName();
@@ -61,6 +62,13 @@ public class ExerciseActivity extends AppCompatActivity {
             }
         });
         hintLayout = (FABToolbarLayout) findViewById(R.id.fabtoolbar);
+        nextTask = (Button) findViewById(R.id.exercise_act_next_btn);
+        nextTask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showTask();
+            }
+        });
 
         answerListAdapter = new ArrayAdapter<Answer>(this, R.layout.answer_list_item) {
             @Override
@@ -68,6 +76,7 @@ public class ExerciseActivity extends AppCompatActivity {
                 View view = super.getView(position, convertView, parent);
                 Answer answer = getItem(position);
                 ((TextView) view).setText(answer.getAnswer());
+                ((TextView) view).setTextColor(Color.BLACK);
                 return view;
             }
         };
@@ -84,10 +93,11 @@ public class ExerciseActivity extends AppCompatActivity {
                     //view.setBackgroundColor(Color.RED);
                     ((TextView)view).setTextColor(Color.RED);
                 }
+                nextTask.setVisibility(View.VISIBLE);
             }
         });
 
-        taskBox = (LinearLayout) findViewById(R.id.exercise_act_task_box);
+        taskBox = findViewById(R.id.exercise_act_task_box);
         progressBar = (ProgressBar) findViewById(R.id.exercise_act_progress_bar);
 
         Intent intent = getIntent();
@@ -146,11 +156,15 @@ public class ExerciseActivity extends AppCompatActivity {
         if (tasksToLearn.size() > nextTaskNumber) {
             Task task = tasksToLearn.get(nextTaskNumber);
             exerciseQuestion.setText(task.getQuestion());
-            hint.setText(task.getHint());
+            hint.setText(task.getHint().replaceAll("\\\\n", "\n"));
             answerListAdapter.clear();
             answerListAdapter.addAll(task.getAnswers());
             answerListAdapter.notifyDataSetChanged();
             nextTaskNumber++;
+            hintLayout.hide();
+            nextTask.setVisibility(View.GONE);
+        } else {
+            onBackPressed();
         }
     }
 

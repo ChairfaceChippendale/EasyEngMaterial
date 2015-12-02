@@ -22,7 +22,7 @@
                 android:layout_centerInParent="true"
                 android:visibility="gone"/>
 
-        <LinearLayout
+        <RelativeLayout
                 android:id="@+id/exercise_act_task_box"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -32,7 +32,7 @@
             <TextView
                     android:id="@+id/exercise_act_tv_question"
                     android:layout_width="match_parent"
-                    android:layout_height="150dp"
+                    android:layout_height="100dp"
                     android:gravity="center_vertical"
                     android:paddingLeft="30dp"
                     android:paddingRight="30dp"
@@ -43,14 +43,34 @@
             <ListView
                     android:id="@+id/exercise_act_lv_answer_list"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="330dp"
+                    android:layout_below="@+id/exercise_act_tv_question"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:choiceMode="singleChoice">
-
             </ListView>
 
-        </LinearLayout>
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/exercise_act_lv_answer_list"
+                    android:layout_alignParentBottom="true">
+
+                <Button
+                        android:id="@+id/exercise_act_next_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_marginRight="50dp"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:textColor="@color/accent_light"
+                        android:textSize="20sp"
+                        android:text="NEXT"
+                        android:visibility="gone"/>
+
+            </FrameLayout>
+
+        </RelativeLayout>
 
     </RelativeLayout>
 
@@ -60,9 +80,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:showDuration="600"
-            app:hideDuration="200"
-            app:rightMargin="30dp"
-            app:bottomMargin="30dp"
+            app:hideDuration="400"
+            app:rightMargin="24dp"
+            app:bottomMargin="24dp"
             app:fadeInFraction="0.2">
 
         <com.github.fafaldo.fabtoolbar.widget.FABContainer
@@ -86,8 +106,6 @@
                     android:layout_alignParentRight="true"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginBottom="16dp"
-                    android:layout_marginRight="16dp"
                     android:background="@drawable/circle"
                     android:src="@drawable/ic_help_outline_white_24dp"
                     android:tint="@android:color/white"/>
