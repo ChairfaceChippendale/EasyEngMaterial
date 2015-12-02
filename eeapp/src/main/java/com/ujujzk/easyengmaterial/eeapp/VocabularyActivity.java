@@ -3,6 +3,7 @@ package com.ujujzk.easyengmaterial.eeapp;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -15,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.clans.fab.FloatingActionButton;
@@ -168,32 +170,39 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
                 return true;
 
             case R.id.vocab_act_action_cloud_download:
-                new AsyncTask<Void,Void,List<Pack>>() {
-                    @Override
-                    protected void onPreExecute() {
-                        super.onPreExecute();
-                        packList.setVisibility(View.INVISIBLE);
-                        progressBar.setVisibility(View.VISIBLE);
-                    }
-                    @Override
-                    protected List<Pack> doInBackground(Void... params) {
-                        List<Pack> packsFromCloud = Application.cloudStore.readAllWithRelations(Pack.class);
-                        if (packsFromCloud != null && !packsFromCloud.isEmpty()) {
-                            for (Pack pack : packsFromCloud) {
-                                Application.localStore.createWithRelations(pack);
+
+                if (isNetworkConnected()) {
+                    new AsyncTask<Void, Void, List<Pack>>() {
+                        @Override
+                        protected void onPreExecute() {
+                            super.onPreExecute();
+                            packList.setVisibility(View.INVISIBLE);
+                            progressBar.setVisibility(View.VISIBLE);
+                        }
+
+                        @Override
+                        protected List<Pack> doInBackground(Void... params) {
+                            List<Pack> packsFromCloud = Application.cloudStore.readAllWithRelations(Pack.class);
+                            if (packsFromCloud != null && !packsFromCloud.isEmpty()) {
+                                for (Pack pack : packsFromCloud) {
+                                    Application.localStore.createWithRelations(pack);
+                                }
                             }
+                            return packsFromCloud;
                         }
-                        return packsFromCloud;
-                    }
-                    @Override
-                    protected void onPostExecute(List<Pack> packsFromCloud) {
-                        if (packsFromCloud != null && !packsFromCloud.isEmpty()) {
-                            packListAdapter.addPacks(packsFromCloud);
+
+                        @Override
+                        protected void onPostExecute(List<Pack> packsFromCloud) {
+                            if (packsFromCloud != null && !packsFromCloud.isEmpty()) {
+                                packListAdapter.addPacks(packsFromCloud);
+                            }
+                            packList.setVisibility(View.VISIBLE);
+                            progressBar.setVisibility(View.GONE);
                         }
-                        packList.setVisibility(View.VISIBLE);
-                        progressBar.setVisibility(View.GONE);
-                    }
-                }.execute();
+                    }.execute();
+                } else {
+                    Toast.makeText(this, "Can't connect to cloud", Toast.LENGTH_SHORT).show();
+                }
                 return true;
 
             case R.id.vocab_act_action_remove_pack:
@@ -250,6 +259,11 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
         return (context.getResources().getConfiguration().screenLayout
                 & Configuration.SCREENLAYOUT_SIZE_MASK)
                 >= Configuration.SCREENLAYOUT_SIZE_LARGE;
+    }
+
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        return cm.getActiveNetworkInfo() != null;
     }
 
 

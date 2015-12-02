@@ -1,6 +1,8 @@
 package com.ujujzk.easyengmaterial.eeapp;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.support.v4.app.NavUtils;
@@ -16,6 +18,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import com.github.clans.fab.FloatingActionButton;
 import com.ujujzk.easyengmaterial.eeapp.model.Topic;
@@ -38,6 +41,8 @@ public class GrammarActivity extends AppCompatActivity implements TopicListAdapt
     private TopicListAdapter topicListAdapter;
     private ProgressBar progressBar;
     private FloatingActionButton runTopicsFab;
+    private Button noConnectionBtn;
+    private View noConnectionMsg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +60,14 @@ public class GrammarActivity extends AppCompatActivity implements TopicListAdapt
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         progressBar = (ProgressBar) findViewById(R.id.gramm_act_progress_bar);
+        noConnectionBtn = (Button) findViewById(R.id.no_connect_btn);
+        noConnectionBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadData();
+            }
+        });
+        noConnectionMsg = findViewById(R.id.gramm_act_no_connect);
 
         topicList = (RecyclerView) findViewById(R.id.gramm_act_rv_topic_list);
         topicListAdapter = new TopicListAdapter(this);
@@ -84,30 +97,7 @@ public class GrammarActivity extends AppCompatActivity implements TopicListAdapt
     @Override
     protected void onStart() {
         super.onStart();
-
-        if (topicListAdapter.isTopicListEmpty()) {
-
-            new AsyncTask<Void, Void, List<Topic>>() {
-                @Override
-                protected void onPreExecute() {
-                    super.onPreExecute();
-                    progressBar.setVisibility(View.VISIBLE);
-                    topicList.setVisibility(View.GONE);
-                }
-
-                @Override
-                protected List<Topic> doInBackground(Void... params) {
-                    return Application.cloudStore.readAll(Topic.class);
-                }
-
-                @Override
-                protected void onPostExecute(List<Topic> topics) {
-                    topicListAdapter.addTopics(topics);
-                    progressBar.setVisibility(View.GONE);
-                    topicList.setVisibility(View.VISIBLE);
-                }
-            }.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
-        }
+        loadData();
     }
 
     @Override
@@ -166,5 +156,47 @@ public class GrammarActivity extends AppCompatActivity implements TopicListAdapt
     @Override
     public boolean onItemLongClicked(int position) {
         return true;
+    }
+
+
+    private void loadData() {
+
+        if (isNetworkConnected()) {
+
+            if (topicListAdapter.isTopicListEmpty()) {
+
+                new AsyncTask<Void, Void, List<Topic>>() {
+                    @Override
+                    protected void onPreExecute() {
+                        super.onPreExecute();
+                        progressBar.setVisibility(View.VISIBLE);
+                        topicList.setVisibility(View.GONE);
+                        noConnectionMsg.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    protected List<Topic> doInBackground(Void... params) {
+                        return Application.cloudStore.readAll(Topic.class);
+                    }
+
+                    @Override
+                    protected void onPostExecute(List<Topic> topics) {
+                        topicListAdapter.addTopics(topics);
+                        progressBar.setVisibility(View.GONE);
+                        topicList.setVisibility(View.VISIBLE);
+                        noConnectionMsg.setVisibility(View.GONE);
+                    }
+                }.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
+            }
+        } else {
+            progressBar.setVisibility(View.GONE);
+            topicList.setVisibility(View.GONE);
+            noConnectionMsg.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        return cm.getActiveNetworkInfo() != null;
     }
 }

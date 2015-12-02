@@ -49,6 +49,7 @@
     <string name="learn_word_act_bottom_end">\nI FORGOT</string>
     <string name="title_activity_rule">Rule</string>
     <string name="title_activity_exerrcise">Exercise</string>
+    <string name="internet_connection_is_not_available">Can not load grammar topics</string>
 
 
 </resources>

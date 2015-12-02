@@ -18,8 +18,7 @@ import com.ujujzk.easyengmaterial.eeapp.util.ActivityUtil;
 //http://geektimes.ru/post/120161/
 //http://web.archive.org/web/20110720142541/http://basharkokash.com/post/2010/04/19/Bing-Translator-for-developers.aspx
 
-//https://translate.googleapis.com/translate_a/single?client=gtx&sl=ru&tl=en&dt=t&q=привет
-//https://rupeshpatel.wordpress.com/2012/06/23/usage-of-google-translator-api-for-free/
+//http://mymemory.translated.net/doc/spec.php
 
 public class DictionaryActivity extends AppCompatActivity {
 

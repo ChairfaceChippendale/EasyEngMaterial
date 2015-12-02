@@ -1,6 +1,8 @@
 package com.ujujzk.easyengmaterial.eeapp;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,22 +13,33 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.clans.fab.FloatingActionButton;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import com.ujujzk.easyengmaterial.eeapp.model.Card;
+import com.ujujzk.easyengmaterial.eeapp.model.GlosbeResponse;
 import com.ujujzk.easyengmaterial.eeapp.model.Pack;
 import com.ujujzk.easyengmaterial.eeapp.util.ActivityUtil;
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
+
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 
 
 public class EditPackActivity extends AppCompatActivity implements CardListAdapter.CardViewHolder.ClickListener {
 
     @SuppressWarnings("unused")
-    private static final String TAG = VocabularyActivity.class.getSimpleName();
+    private static final String TAG = EditPackActivity.class.getSimpleName();
+    private static final String GLOSBE_QUERY = "https://glosbe.com/gapi/translate?from=rus&dest=eng&format=json&pretty=true&tm=false&phrase=";
 
     private Toolbar toolBar;
     private RecyclerView cardList;
@@ -35,6 +48,8 @@ public class EditPackActivity extends AppCompatActivity implements CardListAdapt
     private TextView packTitle;
     private Long packToEditId;
     private Pack packToEdit;
+    private Button translate;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,15 +109,15 @@ public class EditPackActivity extends AppCompatActivity implements CardListAdapt
             @Override
             public void onClick(View v) {
 
-                new MaterialDialog.Builder(EditPackActivity.this)
+                final MaterialDialog md = new MaterialDialog.Builder(EditPackActivity.this)
                         .customView(R.layout.dialog_edit_card, true)
                         .positiveText(R.string.ok)
                         .onPositive(new MaterialDialog.SingleButtonCallback() {
                             @Override
                             public void onClick(MaterialDialog dialog, DialogAction which) {
                                 cardListAdapter.addCard(
-                                                ((EditText) dialog.getCustomView().findViewById(R.id.dialog_edit_card_et_front_side)).getText().toString(),
-                                                ((EditText) dialog.getCustomView().findViewById(R.id.dialog_edit_card_et_back_side)).getText().toString()
+                                        ((EditText) dialog.getCustomView().findViewById(R.id.dialog_edit_card_et_front_side)).getText().toString(),
+                                        ((EditText) dialog.getCustomView().findViewById(R.id.dialog_edit_card_et_back_side)).getText().toString()
                                 );
                             }
                         })
@@ -112,9 +127,65 @@ public class EditPackActivity extends AppCompatActivity implements CardListAdapt
                                 materialDialog.dismiss();
                             }
                         })
-                        .show();
+                        .build();
+
+                md.getCustomView().findViewById(R.id.dialog_edit_card_translate).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        new AsyncTask<Void, Void, String>() {
+
+                            @Override
+                            protected void onPostExecute(String translatedWord) {
+                                super.onPostExecute(translatedWord);
+                                if (!translatedWord.isEmpty()) {
+                                    ((EditText) md.getCustomView().findViewById(R.id.dialog_edit_card_et_back_side)).setText(translatedWord);
+                                }
+                            }
+
+                            @Override
+                            protected String doInBackground(Void... params) {
+
+                                String wordToTranslate = ((EditText) md.getCustomView().findViewById(R.id.dialog_edit_card_et_front_side)).getText().toString();
+                                if (!wordToTranslate.isEmpty() && isNetworkConnected()) {
+                                    URL url;
+                                    HttpURLConnection urlConnection = null;
+                                    String translatedWordJSON = "";
+                                    try {
+                                        url = new URL(GLOSBE_QUERY + wordToTranslate);
+
+                                        urlConnection = (HttpURLConnection) url.openConnection();
+                                        InputStream in = urlConnection.getInputStream();
+                                        translatedWordJSON = readStream(in);
+
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    } finally {
+                                        if (urlConnection != null) {
+                                            urlConnection.disconnect();
+                                        }
+                                    }
+
+                                    GsonBuilder builder = new GsonBuilder();
+                                    Gson gson = builder.create();
+                                    GlosbeResponse glosbeResponse = gson.fromJson(translatedWordJSON, GlosbeResponse.class);
+                                    if (glosbeResponse.tuc.isEmpty()) {
+                                        return "";
+                                    }
+                                    return "" + glosbeResponse.tuc.get(0).phrase.text;
+                                }
+                                return "";
+
+                            }
+                        }.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
+
+                    }
+                });
+                md.show();
             }
         });
+
+
     }
 
     @Override
@@ -131,7 +202,7 @@ public class EditPackActivity extends AppCompatActivity implements CardListAdapt
     protected void onPause() {
         super.onPause();
 
-        new AsyncTask<Void, Void, Void>(){
+        new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... params) {
                 saveDataToLocalBase();
@@ -155,12 +226,12 @@ public class EditPackActivity extends AppCompatActivity implements CardListAdapt
 
         packToEdit.setTitle(packTitle.getText().toString());
         packToEdit.removeCards();
-        packToEdit.addCards((ArrayList<Card>)cardListAdapter.getCards());
+        packToEdit.addCards((ArrayList<Card>) cardListAdapter.getCards());
         Application.localStore.updateWithRelations(packToEdit);
 
     }
 
-    private void showCardEditDialog (final int position) {
+    private void showCardEditDialog(final int position) {
         MaterialDialog cardEditDialog = new MaterialDialog.Builder(this)
                 .customView(R.layout.dialog_edit_card, true)
                 .positiveText(R.string.ok)
@@ -184,12 +255,85 @@ public class EditPackActivity extends AppCompatActivity implements CardListAdapt
                 })
                 .build();
 
-        EditText frontInput = (EditText) cardEditDialog.getCustomView().findViewById(R.id.dialog_edit_card_et_front_side);
+        final EditText frontInput = (EditText) cardEditDialog.getCustomView().findViewById(R.id.dialog_edit_card_et_front_side);
         frontInput.setText(cardListAdapter.getCard(position).getFront().toString());
-        EditText backInput = (EditText) cardEditDialog.getCustomView().findViewById(R.id.dialog_edit_card_et_back_side);
+        final EditText backInput = (EditText) cardEditDialog.getCustomView().findViewById(R.id.dialog_edit_card_et_back_side);
         backInput.setText(cardListAdapter.getCard(position).getBack().toString());
 
+        cardEditDialog.getCustomView().findViewById(R.id.dialog_edit_card_translate).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                new AsyncTask<Void, Void, String>() {
+
+                    @Override
+                    protected void onPostExecute(String translatedWord) {
+                        super.onPostExecute(translatedWord);
+                        if (!translatedWord.isEmpty()) {
+                            backInput.setText(translatedWord);
+                        }
+                    }
+
+                    @Override
+                    protected String doInBackground(Void... params) {
+
+                        String wordToTranslate = frontInput.getText().toString();
+                        if (!wordToTranslate.isEmpty() && isNetworkConnected()) {
+                            URL url;
+                            HttpURLConnection urlConnection = null;
+                            String translatedWordJSON = "";
+                            try {
+                                url = new URL(GLOSBE_QUERY + wordToTranslate);
+
+                                urlConnection = (HttpURLConnection) url.openConnection();
+                                InputStream in = urlConnection.getInputStream();
+                                translatedWordJSON = readStream(in);
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            } finally {
+                                if (urlConnection != null) {
+                                    urlConnection.disconnect();
+                                }
+                            }
+
+                            GsonBuilder builder = new GsonBuilder();
+                            Gson gson = builder.create();
+                            GlosbeResponse glosbeResponse = gson.fromJson(translatedWordJSON, GlosbeResponse.class);
+                            if (glosbeResponse.tuc.isEmpty()) {
+                                return "";
+                            }
+                            return "" + glosbeResponse.tuc.get(0).phrase.text;
+                        }
+                        return "";
+
+                    }
+                }.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
+
+            }
+        });
+
         cardEditDialog.show();
+    }
+
+
+    private String readStream(InputStream is) {
+        try {
+            ByteArrayOutputStream bo = new ByteArrayOutputStream();
+            int i = is.read();
+            while (i != -1) {
+                bo.write(i);
+                i = is.read();
+            }
+            return bo.toString();
+        } catch (IOException e) {
+            return "";
+        }
+    }
+
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        return cm.getActiveNetworkInfo() != null;
     }
 
 }
