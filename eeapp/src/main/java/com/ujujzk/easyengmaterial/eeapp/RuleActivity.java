@@ -58,8 +58,6 @@ public class RuleActivity extends AppCompatActivity {
 
                 List<String> ids = new ArrayList<String>();
                 ids.add(topicId);
-                //TODO start exercise
-                //TODO check is there tasks
                 Intent intent = new Intent(RuleActivity.this, ExerciseActivity.class);
                 intent.putStringArrayListExtra(GrammarActivity.SELECTED_TOPICS_IDS, (ArrayList<String>)ids);
                 startActivity(intent);
@@ -94,6 +92,8 @@ public class RuleActivity extends AppCompatActivity {
                 }
                 ruleTextView.loadData(pair.second, "text/html", null);
                 ruleTextView.setBackgroundColor(getResources().getColor(R.color.main_window_bgr_light));
+                //to get context follow there:
+                //http://stackoverflow.com/questions/16920942/getting-context-in-asynctask
                 ruleTextView.setVisibility(View.VISIBLE);
                 progressBar.setVisibility(View.GONE);
                 runTopicFab.show(true);

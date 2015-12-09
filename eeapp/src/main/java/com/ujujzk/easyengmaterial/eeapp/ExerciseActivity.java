@@ -20,6 +20,7 @@ import com.ujujzk.easyengmaterial.eeapp.model.Topic;
 import com.ujujzk.easyengmaterial.eeapp.util.ActivityUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -137,6 +138,7 @@ public class ExerciseActivity extends AppCompatActivity {
                         tasks.add(task);
                     }
                 }
+                Collections.shuffle(tasks);
                 return tasks;
             }
             @Override

@@ -42,10 +42,14 @@ public class PacksListAdapter
         }
     }
 
-
     public void addPacks(List<Pack> newPacks) {
         packs.addAll(newPacks);
         notifyDataSetChanged();
+    }
+
+    public void updatePacks(List<Pack> newPacks){
+        packs.clear();
+        addPacks(newPacks);
     }
 
     public Pack getPack(int position) {
@@ -168,13 +172,6 @@ public class PacksListAdapter
             removePack(positionStart);
         }
         notifyItemRangeRemoved(positionStart, packCount);
-    }
-
-    public void updatePacks(List<Pack> newPacks){
-        packs.clear();
-        packs.addAll(newPacks);
-        notifyDataSetChanged();
-
     }
 
     @Override

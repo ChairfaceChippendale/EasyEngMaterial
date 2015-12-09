@@ -164,6 +164,7 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
                 return true;
 
             case R.id.vocab_act_action_add_pack:
+                packListAdapter.clearSelection();
                 packListAdapter.addPackOnPosition(0,
                         Application.localStore.create(new Pack("New pack", new ArrayList<Card>()))
                 );

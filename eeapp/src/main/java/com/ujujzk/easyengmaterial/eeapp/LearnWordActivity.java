@@ -22,6 +22,7 @@ import com.ujujzk.easyengmaterial.eeapp.util.ActivityUtil;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class LearnWordActivity extends AppCompatActivity implements View.OnTouchListener{
@@ -74,6 +75,7 @@ public class LearnWordActivity extends AppCompatActivity implements View.OnTouch
         for (Long cardId: cardIds){
             cardsToLearn.add(Application.localStore.readWithRelations(cardId, Card.class));
         }
+        Collections.shuffle(cardsToLearn);
 
         screenSize = new Point();
         getWindowManager().getDefaultDisplay().getSize(screenSize);
