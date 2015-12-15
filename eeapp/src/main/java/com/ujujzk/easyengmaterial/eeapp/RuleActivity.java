@@ -2,6 +2,7 @@ package com.ujujzk.easyengmaterial.eeapp;
 
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -91,7 +92,8 @@ public class RuleActivity extends AppCompatActivity {
                     getSupportActionBar().setTitle(pair.first);
                 }
                 ruleTextView.loadData(pair.second, "text/html", null);
-                ruleTextView.setBackgroundColor(getResources().getColor(R.color.main_window_bgr_light));
+                //ruleTextView.setBackgroundColor(getResources().getColor(R.color.main_window_bgr_light));
+                ruleTextView.setBackgroundColor(ContextCompat.getColor(RuleActivity.this, R.color.main_window_bgr_light));
                 //to get context follow there:
                 //http://stackoverflow.com/questions/16920942/getting-context-in-asynctask
                 ruleTextView.setVisibility(View.VISIBLE);
