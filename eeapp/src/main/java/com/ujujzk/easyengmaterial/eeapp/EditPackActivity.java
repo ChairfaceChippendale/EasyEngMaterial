@@ -41,15 +41,12 @@ public class EditPackActivity extends AppCompatActivity implements CardListAdapt
     private static final String TAG = EditPackActivity.class.getSimpleName();
     private static final String GLOSBE_QUERY = "https://glosbe.com/gapi/translate?from=rus&dest=eng&format=json&pretty=true&tm=false&phrase=";
 
-    private Toolbar toolBar;
     private RecyclerView cardList;
     private CardListAdapter cardListAdapter;
     private FloatingActionButton addCardFab;
     private TextView packTitle;
     private Long packToEditId;
     private Pack packToEdit;
-    private Button translate;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +58,7 @@ public class EditPackActivity extends AppCompatActivity implements CardListAdapt
         packToEditId = intent.getLongExtra(VocabularyActivity.SELECTED_PACK_ID, 0L);
         packToEdit = Application.localStore.readWithRelations(packToEditId, Pack.class);
 
-        toolBar = (Toolbar) findViewById(R.id.edit_pack_act_app_bar);
+        Toolbar toolBar = (Toolbar) findViewById(R.id.edit_pack_act_app_bar);
         ActivityUtil.setToolbarColor(this, toolBar.getId());
         setSupportActionBar(toolBar);
 
@@ -69,7 +66,7 @@ public class EditPackActivity extends AppCompatActivity implements CardListAdapt
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         packTitle = (TextView) findViewById(R.id.edit_pack_act_pack_title);
-        packTitle.setText(packToEdit.getTitle().toString());
+        packTitle.setText(packToEdit.getTitle());
         packTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -147,6 +144,7 @@ public class EditPackActivity extends AppCompatActivity implements CardListAdapt
                             protected String doInBackground(Void... params) {
 
                                 String wordToTranslate = ((EditText) md.getCustomView().findViewById(R.id.dialog_edit_card_et_front_side)).getText().toString();
+                                wordToTranslate = wordToTranslate.replace(" ", "_").toLowerCase();
                                 if (!wordToTranslate.isEmpty() && isNetworkConnected()) {
                                     URL url;
                                     HttpURLConnection urlConnection = null;
@@ -256,9 +254,9 @@ public class EditPackActivity extends AppCompatActivity implements CardListAdapt
                 .build();
 
         final EditText frontInput = (EditText) cardEditDialog.getCustomView().findViewById(R.id.dialog_edit_card_et_front_side);
-        frontInput.setText(cardListAdapter.getCard(position).getFront().toString());
+        frontInput.setText(cardListAdapter.getCard(position).getFront());
         final EditText backInput = (EditText) cardEditDialog.getCustomView().findViewById(R.id.dialog_edit_card_et_back_side);
-        backInput.setText(cardListAdapter.getCard(position).getBack().toString());
+        backInput.setText(cardListAdapter.getCard(position).getBack());
 
         cardEditDialog.getCustomView().findViewById(R.id.dialog_edit_card_translate).setOnClickListener(new View.OnClickListener() {
             @Override

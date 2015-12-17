@@ -61,6 +61,8 @@
     <color name="vocab_list_item_title_dark">#FFFFFF</color>
     <color name="vocab_list_item_subtext_dark">#FFFFFF</color>
     <color name="vocab_list_item_selected_overlay_dark">#424242</color>
+    <color name="eeapp_red">#f44336</color>
+    <color name="eeapp_green">#4caf50</color>
 
 
     <!-- Dark theme -->

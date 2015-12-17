@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -89,10 +90,10 @@ public class ExerciseActivity extends AppCompatActivity {
                 String rightAnswerId    = tasksToLearn.get(nextTaskNumber-1).getRightAnswerId();
                 if (selectedAnswerId.equals(rightAnswerId)){
                     //view.setBackgroundColor(Color.GREEN);
-                    ((TextView)view).setTextColor(Color.GREEN);
+                    ((TextView)view).setTextColor(ContextCompat.getColor(ExerciseActivity.this, R.color.eeapp_green));
                 } else {
                     //view.setBackgroundColor(Color.RED);
-                    ((TextView)view).setTextColor(Color.RED);
+                    ((TextView)view).setTextColor(ContextCompat.getColor(ExerciseActivity.this, R.color.eeapp_red));
                 }
                 nextTask.setVisibility(View.VISIBLE);
             }
