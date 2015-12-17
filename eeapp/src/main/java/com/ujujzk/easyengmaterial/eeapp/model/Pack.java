@@ -1,7 +1,7 @@
 package com.ujujzk.easyengmaterial.eeapp.model;
 
 
-import com.github.aleksandrsavosh.simplestore.*;
+import com.github.aleksandrsavosh.simplestore.Base;
 
 import java.util.ArrayList;
 import java.util.List;

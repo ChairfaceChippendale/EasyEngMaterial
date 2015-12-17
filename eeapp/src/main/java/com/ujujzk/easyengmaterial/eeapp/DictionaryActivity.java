@@ -15,9 +15,10 @@ import android.view.MenuItem;
 import com.ujujzk.easyengmaterial.eeapp.util.ActivityUtil;
 
 
-//http://translate.google.ru/translate_a/t?client=x&text={TEXT}&sl={LANG_FROM}&tl={LANG_TO}
 //http://geektimes.ru/post/120161/
 //http://web.archive.org/web/20110720142541/http://basharkokash.com/post/2010/04/19/Bing-Translator-for-developers.aspx
+
+//http://mymemory.translated.net/doc/spec.php
 
 public class DictionaryActivity extends AppCompatActivity {
 

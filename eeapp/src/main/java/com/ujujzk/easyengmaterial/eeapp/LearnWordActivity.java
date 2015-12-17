@@ -19,10 +19,10 @@ import com.ujujzk.easyengmaterial.eeapp.model.Card;
 import com.ujujzk.easyengmaterial.eeapp.service.PronunciationService;
 import com.ujujzk.easyengmaterial.eeapp.util.ActivityUtil;
 
-import java.lang.reflect.Array;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class LearnWordActivity extends AppCompatActivity implements View.OnTouchListener{
@@ -70,13 +70,12 @@ public class LearnWordActivity extends AppCompatActivity implements View.OnTouch
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         cardsToLearn = new ArrayList<Card>();
-        cardIds = new ArrayList<Long>();
         Intent intent = getIntent();
-        cardIds = (List) intent.getSerializableExtra(VocabularyActivity.SELECTED_CARD_IDS);
-
+        cardIds = (List<Long>)intent.getSerializableExtra(VocabularyActivity.SELECTED_CARD_IDS);
         for (Long cardId: cardIds){
             cardsToLearn.add(Application.localStore.readWithRelations(cardId, Card.class));
         }
+        Collections.shuffle(cardsToLearn);
 
         screenSize = new Point();
         getWindowManager().getDefaultDisplay().getSize(screenSize);
@@ -265,7 +264,6 @@ public class LearnWordActivity extends AppCompatActivity implements View.OnTouch
 
     private boolean isNetworkConnected() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-
         return cm.getActiveNetworkInfo() != null;
     }
 }

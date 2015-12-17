@@ -3,6 +3,7 @@ package com.ujujzk.easyengmaterial.eeapp;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -15,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.clans.fab.FloatingActionButton;
@@ -128,7 +130,7 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
 
             @Override
             protected List<Pack> doInBackground(Void... params) {
-                return Application.cloudStore.readAllWithRelations(Pack.class);
+                return Application.localStore.readAllWithRelations(Pack.class);
             }
 
             @Override
@@ -162,37 +164,49 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
                 return true;
 
             case R.id.vocab_act_action_add_pack:
-
-                packListAdapter.addPack( Application.localStore.createWithRelations(
-                        new Pack("New pack",new ArrayList<Card>())
-                ));
+                packListAdapter.clearSelection();
+                packListAdapter.addPackOnPosition(0,
+                        Application.localStore.create(new Pack("New pack", new ArrayList<Card>()))
+                );
                 return true;
 
             case R.id.vocab_act_action_cloud_download:
 
-                new AsyncTask<Void,Void,List<Pack>>() {
-                    @Override
-                    protected List<Pack> doInBackground(Void... params) {
-                        List<Pack> packsFromCloud = Application.cloudStore.readAll(Pack.class);
-                        if (packsFromCloud != null && !packsFromCloud.isEmpty()) {
-                            for (Pack pack : packsFromCloud) {
-                                Application.localStore.createWithRelations(pack);
-                            }
+                if (isNetworkConnected()) {
+                    new AsyncTask<Void, Void, List<Pack>>() {
+                        @Override
+                        protected void onPreExecute() {
+                            super.onPreExecute();
+                            packList.setVisibility(View.INVISIBLE);
+                            progressBar.setVisibility(View.VISIBLE);
                         }
-                        return packsFromCloud;
-                    }
 
-                    @Override
-                    protected void onPostExecute(List<Pack> packsFromCloud) {
-                        if (packsFromCloud != null && !packsFromCloud.isEmpty()) {
-                            packListAdapter.addPacks(packsFromCloud);
+                        @Override
+                        protected List<Pack> doInBackground(Void... params) {
+                            List<Pack> packsFromCloud = Application.cloudStore.readAllWithRelations(Pack.class);
+                            if (packsFromCloud != null && !packsFromCloud.isEmpty()) {
+                                for (Pack pack : packsFromCloud) {
+                                    Application.localStore.createWithRelations(pack);
+                                }
+                            }
+                            return packsFromCloud;
                         }
-                    }
-                }.execute();
+
+                        @Override
+                        protected void onPostExecute(List<Pack> packsFromCloud) {
+                            if (packsFromCloud != null && !packsFromCloud.isEmpty()) {
+                                packListAdapter.addPacks(packsFromCloud);
+                            }
+                            packList.setVisibility(View.VISIBLE);
+                            progressBar.setVisibility(View.GONE);
+                        }
+                    }.execute();
+                } else {
+                    Toast.makeText(this, "Can't connect to cloud", Toast.LENGTH_SHORT).show();
+                }
                 return true;
 
             case R.id.vocab_act_action_remove_pack:
-
                 if (packListAdapter.getSelectedItemCount() > 0) {
                     confirmPackRemove.show();
                 }
@@ -202,7 +216,6 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
                 return true;
 
             case R.id.vocab_act_action_edit_pack:
-
                 if (packListAdapter.getSelectedItemCount() == 1) {
 
                     List<Long> ids = packListAdapter.getSelectedPacksId(packListAdapter.getSelectedItems());
@@ -240,7 +253,6 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
 
     @Override
     public boolean onItemLongClicked(int position) {
-        //TODO
         return true;
     }
 
@@ -248,6 +260,11 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
         return (context.getResources().getConfiguration().screenLayout
                 & Configuration.SCREENLAYOUT_SIZE_MASK)
                 >= Configuration.SCREENLAYOUT_SIZE_LARGE;
+    }
+
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        return cm.getActiveNetworkInfo() != null;
     }
 
 

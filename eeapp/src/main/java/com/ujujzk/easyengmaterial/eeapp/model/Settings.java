@@ -3,7 +3,7 @@ package com.ujujzk.easyengmaterial.eeapp.model;
 
 import com.github.aleksandrsavosh.simplestore.Base;
 
-public class Settings extends Base {
+public class Settings {
 
     private int fontSize;
     private int mainColor;

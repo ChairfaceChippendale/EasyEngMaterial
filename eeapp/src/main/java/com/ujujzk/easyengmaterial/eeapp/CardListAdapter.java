@@ -2,9 +2,7 @@ package com.ujujzk.easyengmaterial.eeapp;
 
 
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.widget.TextView;
 import com.ujujzk.easyengmaterial.eeapp.model.Card;
 
@@ -62,7 +60,6 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.CardVi
         notifyDataSetChanged();
     }
 
-
     @Override
     public CardListAdapter.CardViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_list_item, parent, false);
@@ -102,7 +99,6 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.CardVi
             v.setOnClickListener(this);
             v.setOnLongClickListener(this);
         }
-
 
         @Override
         public void onClick(View v) {

@@ -24,4 +24,5 @@
     <dimen name="topic_list_item_corner_radius">2dp</dimen>
 
     <dimen name="rule_act_rule_text_margin">15dp</dimen>
+    <dimen name="no_connect_txt_size">16sp</dimen>
 </resources>

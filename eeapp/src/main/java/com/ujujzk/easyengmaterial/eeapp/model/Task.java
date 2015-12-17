@@ -11,20 +11,20 @@ public class Task extends Base {
 
     private String question;
     private List<Answer> answers;
-    private Answer rightAnswer;
+    private String rightAnswerId;
     private String hint;
 
     public Task() {
         question = "";
         answers = new ArrayList<Answer>();
-        rightAnswer = new Answer();
+        rightAnswerId = "";
         hint = "";
     }
 
-    public Task(String question, List<Answer> answers, Answer rightAnswer, String hint) {
+    public Task(String question, List<Answer> answers, String rightAnswerId, String hint) {
         this.question = question;
         this.answers = new ArrayList<Answer>(answers);
-        this.rightAnswer = rightAnswer;
+        this.rightAnswerId = rightAnswerId;
         this.hint = hint;
     }
 
@@ -36,8 +36,8 @@ public class Task extends Base {
         return answers;
     }
 
-    public Answer getRightAnswer() {
-        return rightAnswer;
+    public String getRightAnswerId() {
+        return rightAnswerId;
     }
 
     public String getHint() {
