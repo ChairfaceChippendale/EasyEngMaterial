@@ -38,6 +38,9 @@ public class ExerciseActivity extends AppCompatActivity {
     private TextView hint;
     private FABToolbarLayout hintLayout;
     private Button nextTask;
+    private TextView tasksLeftCounter;
+    private TextView tasksDoneCounter;
+
 
     @SuppressWarnings("unused")
     private static final String TAG = ExerciseActivity.class.getSimpleName();
@@ -56,6 +59,8 @@ public class ExerciseActivity extends AppCompatActivity {
 
         exerciseQuestion = (TextView) findViewById(R.id.exercise_act_tv_question);
         exerciseAnswers = (ListView) findViewById(R.id.exercise_act_lv_answer_list);
+        tasksLeftCounter = (TextView) findViewById(R.id.exercise_act_tv_tasks_left);
+        tasksDoneCounter = (TextView) findViewById(R.id.exercise_act_tv_tasks_done);
         hint = (TextView) findViewById(R.id.exercise_act_tv_hint);
         hint.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -165,7 +170,12 @@ public class ExerciseActivity extends AppCompatActivity {
             answerListAdapter.notifyDataSetChanged();
             nextTaskNumber++;
             hintLayout.hide();
+            if (tasksToLearn.size() == nextTaskNumber){
+                nextTask.setText("FINISH");
+            }
             nextTask.setVisibility(View.GONE);
+            tasksDoneCounter.setText("" + (nextTaskNumber-1));
+            tasksLeftCounter.setText("" + (tasksToLearn.size()-nextTaskNumber));
         } else {
             onBackPressed();
         }

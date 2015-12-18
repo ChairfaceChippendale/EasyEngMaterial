@@ -62,6 +62,7 @@ public class RuleActivity extends AppCompatActivity {
                 Intent intent = new Intent(RuleActivity.this, ExerciseActivity.class);
                 intent.putStringArrayListExtra(GrammarActivity.SELECTED_TOPICS_IDS, (ArrayList<String>)ids);
                 startActivity(intent);
+                finish();
 
             }
         });
