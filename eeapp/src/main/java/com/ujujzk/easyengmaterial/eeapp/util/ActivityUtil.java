@@ -1,12 +1,9 @@
 package com.ujujzk.easyengmaterial.eeapp.util;
 
 import android.app.Activity;
-import android.content.Context;
 import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import com.ujujzk.easyengmaterial.eeapp.MainActivity;
 import com.ujujzk.easyengmaterial.eeapp.R;
 
 public class ActivityUtil {
@@ -20,15 +17,15 @@ public class ActivityUtil {
         if (themeName.equals(activity.getResources().getString(R.string.theme_light))) {
             activity.setTheme(R.style.Theme_Light_AppTheme);
 
-            if (activity.findViewById(R.id.main_act_app_bar) != null) {
-                activity.findViewById(R.id.main_act_app_bar).setBackgroundColor(ContextCompat.getColor(activity, R.color.toolbar_bgr_light));
+            if (activity.findViewById(R.id.dict_act_app_bar) != null) {
+                activity.findViewById(R.id.dict_act_app_bar).setBackgroundColor(ContextCompat.getColor(activity, R.color.toolbar_bgr_light));
             }
 
         } else if (themeName.equals(activity.getResources().getString(R.string.theme_dark))) {
             activity.setTheme(R.style.Theme_Dark_AppTheme);
 
-            if (activity.findViewById(R.id.main_act_app_bar) != null) {
-                activity.findViewById(R.id.main_act_app_bar).setBackgroundColor(ContextCompat.getColor(activity, R.color.toolbar_bgr_dark));
+            if (activity.findViewById(R.id.dict_act_app_bar) != null) {
+                activity.findViewById(R.id.dict_act_app_bar).setBackgroundColor(ContextCompat.getColor(activity, R.color.toolbar_bgr_dark));
             }
 
         } else {

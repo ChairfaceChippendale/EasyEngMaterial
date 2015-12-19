@@ -1,19 +1,22 @@
 package com.ujujzk.easyengmaterial.eeapp;
 
 import android.content.Intent;
-import android.os.Build;
-
-import android.support.v4.app.NavUtils;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import com.mikepenz.google_material_typeface_library.GoogleMaterial;
+import com.mikepenz.materialdrawer.AccountHeaderBuilder;
+import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.model.DividerDrawerItem;
+import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
+import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.ujujzk.easyengmaterial.eeapp.util.ActivityUtil;
-
 
 //http://geektimes.ru/post/120161/
 //http://web.archive.org/web/20110720142541/http://basharkokash.com/post/2010/04/19/Bing-Translator-for-developers.aspx
@@ -26,22 +29,80 @@ public class DictionaryActivity extends AppCompatActivity {
     private static final String TAG = DictionaryActivity.class.getSimpleName();
 
     private Toolbar toolBar;
+    private Drawer navigationDrawer = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         ActivityUtil.setTheme(this);
         super.onCreate(savedInstanceState);
-        if (Build.VERSION.SDK_INT >= MainActivity.TARGET_SDK){
-            getWindow().setSharedElementEnterTransition(TransitionInflater.from(this).inflateTransition(R.transition.main_act_transition));
-        }
         setContentView(R.layout.activity_dictionary);
 
         toolBar = (Toolbar) findViewById(R.id.dict_act_app_bar);
         ActivityUtil.setToolbarColor(this, toolBar.getId());
         setSupportActionBar(toolBar);
-
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        navigationDrawer = new DrawerBuilder()
+                .withActivity(this)
+                .withToolbar(toolBar)
+                .withTranslucentStatusBar(true)
+                .withAccountHeader(
+                        new AccountHeaderBuilder()
+                                .withActivity(this)
+                                .withHeaderBackground(R.drawable.img_dict)
+                                .build()
+                )
+                .addDrawerItems(
+                        new PrimaryDrawerItem()
+                                .withName(R.string.title_activity_dictionary)
+                                .withIcon(GoogleMaterial.Icon.gmd_chrome_reader_mode)
+                                .withIdentifier(Application.IDENTIFIER_DICTIONARY),
+                        new PrimaryDrawerItem()
+                                .withName(R.string.title_activity_vocabulary)
+                                .withIcon(GoogleMaterial.Icon.gmd_style)
+                                .withIdentifier(Application.IDENTIFIER_VOCABULARY),
+                        new PrimaryDrawerItem()
+                                .withName(R.string.title_activity_grammar)
+                                .withIcon(GoogleMaterial.Icon.gmd_class)
+                                .withIdentifier(Application.IDENTIFIER_GRAMMAR),
+                        new DividerDrawerItem(),
+                        new SecondaryDrawerItem()
+                                .withName(R.string.title_activity_about)
+                                .withIcon(GoogleMaterial.Icon.gmd_info)
+                                .withIdentifier(Application.IDENTIFIER_ABOUT),
+                        new SecondaryDrawerItem()
+                                .withName(R.string.title_activity_settings)
+                                .withIcon(GoogleMaterial.Icon.gmd_settings)
+                                .withIdentifier(Application.IDENTIFIER_SETTING)
+                )
+                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                        switch(drawerItem.getIdentifier()){
+                            case Application.IDENTIFIER_DICTIONARY:
+                                break;
+                            case Application.IDENTIFIER_VOCABULARY:
+                                startActivity(new Intent(DictionaryActivity.this, VocabularyActivity.class));
+                                finish();
+                                break;
+                            case Application.IDENTIFIER_GRAMMAR:
+                                startActivity(new Intent(DictionaryActivity.this, GrammarActivity.class));
+                                finish();
+                                break;
+                            case Application.IDENTIFIER_ABOUT:
+                                startActivity(new Intent(DictionaryActivity.this, AboutActivity.class));
+                                break;
+                            case Application.IDENTIFIER_SETTING:
+                                startActivity(new Intent(DictionaryActivity.this, SettingsActivity.class));
+                                break;
+                            default:
+                                break;
+                        }
+                        navigationDrawer.closeDrawer();
+                        return true;
+                    }
+                })
+                .build();
+        navigationDrawer.setSelection(Application.IDENTIFIER_DICTIONARY);
     }
 
 
@@ -59,10 +120,6 @@ public class DictionaryActivity extends AppCompatActivity {
         switch (id){
             case R.id.dict_act_action_settings:
                 startActivity(new Intent(DictionaryActivity.this, SettingsActivity.class));
-                return true;
-
-            case android.R.id.home:
-                onBackPressed();
                 return true;
 
             default:

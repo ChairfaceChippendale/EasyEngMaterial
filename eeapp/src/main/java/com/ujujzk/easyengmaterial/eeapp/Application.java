@@ -14,6 +14,12 @@ public class Application extends android.app.Application {
 
     private static final String APPLICATION_TAG = "applicationTag";
 
+    public static final int IDENTIFIER_DICTIONARY = 1;
+    public static final int IDENTIFIER_VOCABULARY = 2;
+    public static final int IDENTIFIER_GRAMMAR = 3;
+    public static final int IDENTIFIER_ABOUT = 4;
+    public static final int IDENTIFIER_SETTING = 5;
+
     private static Context context;
 
     SimpleStoreManager storeManager;

@@ -5,12 +5,10 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.support.annotation.NonNull;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.*;
-import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,6 +18,14 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.clans.fab.FloatingActionButton;
+import com.mikepenz.google_material_typeface_library.GoogleMaterial;
+import com.mikepenz.materialdrawer.AccountHeaderBuilder;
+import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.model.DividerDrawerItem;
+import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
+import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.ujujzk.easyengmaterial.eeapp.model.Card;
 import com.ujujzk.easyengmaterial.eeapp.model.Pack;
 import com.ujujzk.easyengmaterial.eeapp.util.ActivityUtil;
@@ -38,6 +44,7 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
     public static final String SELECTED_CARD_IDS = "selectedCardIds";
 
     private Toolbar toolBar;
+    private Drawer navigationDrawer = null;
     private RecyclerView packList;
     private PacksListAdapter packListAdapter;
     private ProgressBar progressBar;
@@ -48,16 +55,73 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
     protected void onCreate(Bundle savedInstanceState) {
         ActivityUtil.setTheme(this);
         super.onCreate(savedInstanceState);
-        if (Build.VERSION.SDK_INT >= MainActivity.TARGET_SDK) {
-            getWindow().setSharedElementEnterTransition(TransitionInflater.from(this).inflateTransition(R.transition.main_act_transition));
-        }
         setContentView(R.layout.activity_vocabulary);
 
         toolBar = (Toolbar) findViewById(R.id.vocab_act_app_bar);
         ActivityUtil.setToolbarColor(this, toolBar.getId());
         setSupportActionBar(toolBar);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        navigationDrawer = new DrawerBuilder()
+                .withActivity(this)
+                .withToolbar(toolBar)
+                .withTranslucentStatusBar(true)
+                .withAccountHeader(
+                        new AccountHeaderBuilder()
+                                .withActivity(this)
+                                .withHeaderBackground(R.drawable.img_dict)
+                                .build()
+                )
+                .addDrawerItems(
+                        new PrimaryDrawerItem()
+                                .withName(R.string.title_activity_dictionary)
+                                .withIcon(GoogleMaterial.Icon.gmd_chrome_reader_mode)
+                                .withIdentifier(Application.IDENTIFIER_DICTIONARY),
+                        new PrimaryDrawerItem()
+                                .withName(R.string.title_activity_vocabulary)
+                                .withIcon(GoogleMaterial.Icon.gmd_style)
+                                .withIdentifier(Application.IDENTIFIER_VOCABULARY),
+                        new PrimaryDrawerItem()
+                                .withName(R.string.title_activity_grammar)
+                                .withIcon(GoogleMaterial.Icon.gmd_class)
+                                .withIdentifier(Application.IDENTIFIER_GRAMMAR),
+                        new DividerDrawerItem(),
+                        new SecondaryDrawerItem()
+                                .withName(R.string.title_activity_about)
+                                .withIcon(GoogleMaterial.Icon.gmd_info)
+                                .withIdentifier(Application.IDENTIFIER_ABOUT),
+                        new SecondaryDrawerItem()
+                                .withName(R.string.title_activity_settings)
+                                .withIcon(GoogleMaterial.Icon.gmd_settings)
+                                .withIdentifier(Application.IDENTIFIER_SETTING)
+                )
+                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                        switch(drawerItem.getIdentifier()){
+                            case Application.IDENTIFIER_DICTIONARY:
+                                startActivity(new Intent(VocabularyActivity.this, DictionaryActivity.class));
+                                finish();
+                                break;
+                            case Application.IDENTIFIER_VOCABULARY:
+                                break;
+                            case Application.IDENTIFIER_GRAMMAR:
+                                startActivity(new Intent(VocabularyActivity.this, GrammarActivity.class));
+                                finish();
+                                break;
+                            case Application.IDENTIFIER_ABOUT:
+                                startActivity(new Intent(VocabularyActivity.this, AboutActivity.class));
+                                break;
+                            case Application.IDENTIFIER_SETTING:
+                                startActivity(new Intent(VocabularyActivity.this, SettingsActivity.class));
+                                break;
+                            default:
+                                break;
+                        }
+                        navigationDrawer.closeDrawer();
+                        return true;
+                    }
+                })
+                .build();
+        navigationDrawer.setSelection(Application.IDENTIFIER_VOCABULARY);
 
         progressBar = (ProgressBar) findViewById(R.id.vocab_act_progress_bar);
 
@@ -157,10 +221,6 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
         switch (id) {
             case R.id.vocab_act_action_settings:
                 startActivity(new Intent(VocabularyActivity.this, SettingsActivity.class));
-                return true;
-
-            case android.R.id.home:
-                onBackPressed();
                 return true;
 
             case R.id.vocab_act_action_add_pack:
