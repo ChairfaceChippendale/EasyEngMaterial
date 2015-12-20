@@ -9,13 +9,15 @@
             android:id="@+id/rule_act_app_bar"
             layout="@layout/app_bar"/>
 
-    <ProgressBar
+    <com.github.rahatarmanahmed.cpv.CircularProgressView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/rule_act_progress_bar"
-            style="@android:style/Widget.Holo.Light.ProgressBar.Large.Inverse"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_centerInParent="true"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            app:cpv_animAutostart="true"
+            app:cpv_indeterminate="true" />
 
     <ScrollView
             android:layout_width="match_parent"

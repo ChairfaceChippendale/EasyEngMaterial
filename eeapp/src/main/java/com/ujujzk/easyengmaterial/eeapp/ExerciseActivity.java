@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.github.fafaldo.fabtoolbar.widget.FABToolbarLayout;
+import com.github.rahatarmanahmed.cpv.CircularProgressView;
 import com.ujujzk.easyengmaterial.eeapp.model.Answer;
 import com.ujujzk.easyengmaterial.eeapp.model.Task;
 import com.ujujzk.easyengmaterial.eeapp.model.Topic;
@@ -30,7 +31,7 @@ public class ExerciseActivity extends AppCompatActivity {
     private Toolbar toolBar;
     private List<Task> tasksToLearn;
     private View taskBox;
-    private ProgressBar progressBar;
+    private CircularProgressView progressBar;
     private TextView exerciseQuestion;
     private ListView exerciseAnswers;
     ArrayAdapter<Answer> answerListAdapter;
@@ -38,9 +39,6 @@ public class ExerciseActivity extends AppCompatActivity {
     private TextView hint;
     private FABToolbarLayout hintLayout;
     private Button nextTask;
-    private TextView tasksLeftCounter;
-    private TextView tasksDoneCounter;
-
 
     @SuppressWarnings("unused")
     private static final String TAG = ExerciseActivity.class.getSimpleName();
@@ -59,8 +57,6 @@ public class ExerciseActivity extends AppCompatActivity {
 
         exerciseQuestion = (TextView) findViewById(R.id.exercise_act_tv_question);
         exerciseAnswers = (ListView) findViewById(R.id.exercise_act_lv_answer_list);
-        tasksLeftCounter = (TextView) findViewById(R.id.exercise_act_tv_tasks_left);
-        tasksDoneCounter = (TextView) findViewById(R.id.exercise_act_tv_tasks_done);
         hint = (TextView) findViewById(R.id.exercise_act_tv_hint);
         hint.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,7 +101,7 @@ public class ExerciseActivity extends AppCompatActivity {
         });
 
         taskBox = findViewById(R.id.exercise_act_task_box);
-        progressBar = (ProgressBar) findViewById(R.id.exercise_act_progress_bar);
+        progressBar = (CircularProgressView) findViewById(R.id.exercise_act_progress_bar);
 
         Intent intent = getIntent();
         getData(intent);
@@ -174,8 +170,7 @@ public class ExerciseActivity extends AppCompatActivity {
                 nextTask.setText("FINISH");
             }
             nextTask.setVisibility(View.GONE);
-            tasksDoneCounter.setText("" + (nextTaskNumber-1));
-            tasksLeftCounter.setText("" + (tasksToLearn.size()-nextTaskNumber));
+            toolBar.setTitle("Task " + nextTaskNumber + "/" + tasksToLearn.size());
         } else {
             onBackPressed();
         }

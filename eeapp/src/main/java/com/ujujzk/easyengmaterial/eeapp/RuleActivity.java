@@ -15,6 +15,7 @@ import android.view.View;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
 import com.github.clans.fab.FloatingActionButton;
+import com.github.rahatarmanahmed.cpv.CircularProgressView;
 import com.ujujzk.easyengmaterial.eeapp.model.Rule;
 import com.ujujzk.easyengmaterial.eeapp.model.Settings;
 import com.ujujzk.easyengmaterial.eeapp.model.Topic;
@@ -31,7 +32,7 @@ public class RuleActivity extends AppCompatActivity {
 
     private Toolbar toolBar;
     private WebView ruleTextView;
-    private ProgressBar progressBar;
+    private CircularProgressView progressBar;
     private FloatingActionButton runTopicFab;
     private String topicId;
 
@@ -48,7 +49,7 @@ public class RuleActivity extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        progressBar = (ProgressBar) findViewById(R.id.rule_act_progress_bar);
+        progressBar = (CircularProgressView) findViewById(R.id.rule_act_progress_bar);
 
         ruleTextView = (WebView) findViewById(R.id.rule_act_wv_rule_text);
 

@@ -51,6 +51,8 @@
     <string name="title_activity_exerrcise">Exercise</string>
     <string name="internet_connection_is_not_available">Can not load grammar topics</string>
     <string name="exercise_act_next_btn_text">NEXT</string>
+    <string name="title_share">Share</string>
+    <string name="title_feedback">Feedback</string>
 
 
 </resources>

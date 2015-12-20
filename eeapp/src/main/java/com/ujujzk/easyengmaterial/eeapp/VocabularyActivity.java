@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.clans.fab.FloatingActionButton;
+import com.github.rahatarmanahmed.cpv.CircularProgressView;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
@@ -47,7 +48,7 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
     private Drawer navigationDrawer = null;
     private RecyclerView packList;
     private PacksListAdapter packListAdapter;
-    private ProgressBar progressBar;
+    private CircularProgressView progressBar;
     private FloatingActionButton runCardsFab;
     private MaterialDialog confirmPackRemove;
 
@@ -89,6 +90,14 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
                                 .withIcon(GoogleMaterial.Icon.gmd_info)
                                 .withIdentifier(Application.IDENTIFIER_ABOUT),
                         new SecondaryDrawerItem()
+                                .withName(R.string.title_share)
+                                .withIcon(GoogleMaterial.Icon.gmd_share)
+                                .withIdentifier(Application.IDENTIFIER_SHARE),
+                        new SecondaryDrawerItem()
+                                .withName(R.string.title_feedback)
+                                .withIcon(GoogleMaterial.Icon.gmd_feedback)
+                                .withIdentifier(Application.IDENTIFIER_FEEDBACK),
+                        new SecondaryDrawerItem()
                                 .withName(R.string.title_activity_settings)
                                 .withIcon(GoogleMaterial.Icon.gmd_settings)
                                 .withIdentifier(Application.IDENTIFIER_SETTING)
@@ -110,6 +119,12 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
                             case Application.IDENTIFIER_ABOUT:
                                 startActivity(new Intent(VocabularyActivity.this, AboutActivity.class));
                                 break;
+                            case Application.IDENTIFIER_SHARE:
+                                //TODO
+                                break;
+                            case Application.IDENTIFIER_FEEDBACK:
+                                //TODO
+                                break;
                             case Application.IDENTIFIER_SETTING:
                                 startActivity(new Intent(VocabularyActivity.this, SettingsActivity.class));
                                 break;
@@ -123,7 +138,7 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
                 .build();
         navigationDrawer.setSelection(Application.IDENTIFIER_VOCABULARY);
 
-        progressBar = (ProgressBar) findViewById(R.id.vocab_act_progress_bar);
+        progressBar = (CircularProgressView) findViewById(R.id.vocab_act_progress_bar);
 
         packList = (RecyclerView) findViewById(R.id.vocab_act_rv_packs_list);
         packListAdapter = new PacksListAdapter(this);
@@ -143,13 +158,11 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
             public void onClick(View v) {
 
                 List<Long> ids = packListAdapter.getSelectedPacksCardsIds(packListAdapter.getSelectedItems());
-
                 if (ids.size() > 0) {
                     Intent intent = new Intent(VocabularyActivity.this, LearnWordActivity.class);
                     intent.putExtra(SELECTED_CARD_IDS, (ArrayList<Long>)ids);
                     startActivity(intent);
                 }
-
                 packListAdapter.clearSelection();
                 runCardsFab.hide(true);
             }

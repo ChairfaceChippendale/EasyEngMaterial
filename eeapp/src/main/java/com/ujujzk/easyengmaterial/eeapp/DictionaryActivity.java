@@ -70,6 +70,14 @@ public class DictionaryActivity extends AppCompatActivity {
                                 .withIcon(GoogleMaterial.Icon.gmd_info)
                                 .withIdentifier(Application.IDENTIFIER_ABOUT),
                         new SecondaryDrawerItem()
+                                .withName(R.string.title_share)
+                                .withIcon(GoogleMaterial.Icon.gmd_share)
+                                .withIdentifier(Application.IDENTIFIER_SHARE),
+                        new SecondaryDrawerItem()
+                                .withName(R.string.title_feedback)
+                                .withIcon(GoogleMaterial.Icon.gmd_feedback)
+                                .withIdentifier(Application.IDENTIFIER_FEEDBACK),
+                        new SecondaryDrawerItem()
                                 .withName(R.string.title_activity_settings)
                                 .withIcon(GoogleMaterial.Icon.gmd_settings)
                                 .withIdentifier(Application.IDENTIFIER_SETTING)
@@ -90,6 +98,12 @@ public class DictionaryActivity extends AppCompatActivity {
                                 break;
                             case Application.IDENTIFIER_ABOUT:
                                 startActivity(new Intent(DictionaryActivity.this, AboutActivity.class));
+                                break;
+                            case Application.IDENTIFIER_SHARE:
+                                //TODO
+                                break;
+                            case Application.IDENTIFIER_FEEDBACK:
+                                //TODO
                                 break;
                             case Application.IDENTIFIER_SETTING:
                                 startActivity(new Intent(DictionaryActivity.this, SettingsActivity.class));

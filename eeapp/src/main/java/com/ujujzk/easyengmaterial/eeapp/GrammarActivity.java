@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import com.github.clans.fab.FloatingActionButton;
+import com.github.rahatarmanahmed.cpv.CircularProgressView;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
@@ -43,7 +44,7 @@ public class GrammarActivity extends AppCompatActivity implements TopicListAdapt
     private Drawer navigationDrawer = null;
     private RecyclerView topicList;
     private TopicListAdapter topicListAdapter;
-    private ProgressBar progressBar;
+    private CircularProgressView progressBar;
     private FloatingActionButton runTopicsFab;
     private Button noConnectionBtn;
     private View noConnectionMsg;
@@ -86,6 +87,14 @@ public class GrammarActivity extends AppCompatActivity implements TopicListAdapt
                                 .withIcon(GoogleMaterial.Icon.gmd_info)
                                 .withIdentifier(Application.IDENTIFIER_ABOUT),
                         new SecondaryDrawerItem()
+                                .withName(R.string.title_share)
+                                .withIcon(GoogleMaterial.Icon.gmd_share)
+                                .withIdentifier(Application.IDENTIFIER_SHARE),
+                        new SecondaryDrawerItem()
+                                .withName(R.string.title_feedback)
+                                .withIcon(GoogleMaterial.Icon.gmd_feedback)
+                                .withIdentifier(Application.IDENTIFIER_FEEDBACK),
+                        new SecondaryDrawerItem()
                                 .withName(R.string.title_activity_settings)
                                 .withIcon(GoogleMaterial.Icon.gmd_settings)
                                 .withIdentifier(Application.IDENTIFIER_SETTING)
@@ -107,6 +116,12 @@ public class GrammarActivity extends AppCompatActivity implements TopicListAdapt
                             case Application.IDENTIFIER_ABOUT:
                                 startActivity(new Intent(GrammarActivity.this, AboutActivity.class));
                                 break;
+                            case Application.IDENTIFIER_SHARE:
+                                //TODO
+                                break;
+                            case Application.IDENTIFIER_FEEDBACK:
+                                //TODO
+                                break;
                             case Application.IDENTIFIER_SETTING:
                                 startActivity(new Intent(GrammarActivity.this, SettingsActivity.class));
                                 break;
@@ -120,7 +135,7 @@ public class GrammarActivity extends AppCompatActivity implements TopicListAdapt
                 .build();
         navigationDrawer.setSelection(Application.IDENTIFIER_GRAMMAR);
 
-        progressBar = (ProgressBar) findViewById(R.id.gramm_act_progress_bar);
+        progressBar = (CircularProgressView) findViewById(R.id.gramm_act_progress_bar);
         noConnectionBtn = (Button) findViewById(R.id.no_connect_btn);
         noConnectionBtn.setOnClickListener(new View.OnClickListener() {
             @Override

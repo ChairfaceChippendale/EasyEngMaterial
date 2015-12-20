@@ -14,13 +14,15 @@
             android:layout_height="match_parent"
             android:layout_below="@id/exercise_act_app_bar">
 
-        <ProgressBar
+        <com.github.rahatarmanahmed.cpv.CircularProgressView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/exercise_act_progress_bar"
-                style="@android:style/Widget.Holo.Light.ProgressBar.Large.Inverse"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_centerInParent="true"
-                android:visibility="gone"/>
+                android:visibility="gone"
+                app:cpv_animAutostart="true"
+                app:cpv_indeterminate="true" />
 
         <RelativeLayout
                 android:id="@+id/exercise_act_task_box"
@@ -52,52 +54,18 @@
                     android:choiceMode="singleChoice">
             </ListView>
 
-            <LinearLayout
-                    android:id="@+id/exercise_act_ll_controls"
-                    android:layout_width="match_parent"
+            <Button
+                    android:id="@+id/exercise_act_next_btn"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
                     android:layout_below="@+id/exercise_act_lv_answer_list"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:padding="8dp"
-                    android:layout_alignParentBottom="true">
-
-                <TextView
-                        android:id="@+id/exercise_act_tv_tasks_done"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:padding="8dp"
-                        android:gravity="left"
-                        android:layout_weight="1"
-                        android:textSize="20sp"
-                        android:textColor="@color/eeapp_green"
-                        android:text="done"/>
-
-                <Button
-                        android:id="@+id/exercise_act_next_btn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="right"
-                        android:layout_marginRight="8dp"
-                        android:layout_marginLeft="8dp"
-                        style="?android:attr/borderlessButtonStyle"
-                        android:textColor="@color/accent_light"
-                        android:textSize="20sp"
-                        android:text="@string/exercise_act_next_btn_text"
-                        android:visibility="visible"/>
-
-                <TextView
-                        android:id="@+id/exercise_act_tv_tasks_left"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:padding="8dp"
-                        android:gravity="right"
-                        android:layout_weight="1"
-                        android:textSize="20sp"
-                        android:textColor="@color/eeapp_red"
-                        android:text="left"/>
-
-            </LinearLayout>
+                    android:layout_alignParentRight="true"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:textColor="@color/accent_light"
+                    android:textSize="20sp"
+                    android:text="@string/exercise_act_next_btn_text"
+                    android:visibility="visible"/>
 
         </RelativeLayout>
 

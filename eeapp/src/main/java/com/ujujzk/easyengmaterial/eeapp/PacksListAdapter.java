@@ -57,6 +57,7 @@ public class PacksListAdapter
     }
 
     public List<Long> getSelectedPacksId (List<Integer> positions) {
+
         List <Long> ids = new ArrayList<Long>();
 
         Collections.sort(positions, new Comparator<Integer>() {
@@ -66,27 +67,8 @@ public class PacksListAdapter
             }
         });
 
-        while (!positions.isEmpty()) {
-            if (positions.size() == 1) {
-                ids.add(getPack(positions.get(0)).getLocalId());
-                positions.remove(0);
-            } else {
-                int count = 1;
-                while (positions.size() > count && positions.get(count).equals(positions.get(count - 1) - 1)) {
-                    ++count;
-                }
-
-                if (count == 1) {
-                    ids.add(getPack(positions.get(0)).getLocalId());
-                } else {
-                    for (int i = 0; i < count; ++i) {
-                        ids.add(getPack(positions.get(count - 1) ).getLocalId());
-                    }
-                }
-                for (int i = 0; i < count; ++i) {
-                    positions.remove(0);
-                }
-            }
+        for (Integer i : positions) {
+            ids.add(getPack(i).getLocalId());
         }
 
         return ids;
@@ -102,27 +84,8 @@ public class PacksListAdapter
             }
         });
 
-        while (!positions.isEmpty()) {
-            if (positions.size() == 1) {
-                ids.addAll(getPack(positions.get(0)).getAllCardIds());
-                positions.remove(0);
-            } else {
-                int count = 1;
-                while (positions.size() > count && positions.get(count).equals(positions.get(count - 1) - 1)) {
-                    ++count;
-                }
-
-                if (count == 1) {
-                    ids.addAll(getPack(positions.get(0)).getAllCardIds());
-                } else {
-                    for (int i = 0; i < count; ++i) {
-                        ids.addAll(getPack(positions.get(count - 1) ).getAllCardIds());
-                    }
-                }
-                for (int i = 0; i < count; ++i) {
-                    positions.remove(0);
-                }
-            }
+        for (Integer pos: positions){
+            ids.addAll(getPack(pos).getAllCardIds());
         }
         return ids;
     }
@@ -144,34 +107,9 @@ public class PacksListAdapter
             }
         });
 
-        while (!positions.isEmpty()) {
-            if (positions.size() == 1) {
-                removePack(positions.get(0));
-                positions.remove(0);
-            } else {
-                int count = 1;
-                while (positions.size() > count && positions.get(count).equals(positions.get(count - 1) - 1)) {
-                    ++count;
-                }
-
-                if (count == 1) {
-                    removePack(positions.get(0));
-                } else {
-                    removeRange(positions.get(count - 1), count);
-                }
-
-                for (int i = 0; i < count; ++i) {
-                    positions.remove(0);
-                }
-            }
+        for (Integer pos: positions){
+            removePack(pos);
         }
-    }
-
-    private void removeRange(int positionStart, int packCount) {
-        for (int i = 0; i < packCount; ++i) {
-            removePack(positionStart);
-        }
-        notifyItemRangeRemoved(positionStart, packCount);
     }
 
     @Override
@@ -244,5 +182,8 @@ public class PacksListAdapter
             public boolean onItemLongClicked(int position);
         }
     }
+
+
+    char s = 064770;
 }
 
