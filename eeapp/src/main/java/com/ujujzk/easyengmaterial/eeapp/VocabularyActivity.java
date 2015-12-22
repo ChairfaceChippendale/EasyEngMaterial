@@ -7,6 +7,7 @@ import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.*;
 import android.util.Log;
@@ -20,6 +21,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
+import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
@@ -30,6 +32,7 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.ujujzk.easyengmaterial.eeapp.model.Card;
 import com.ujujzk.easyengmaterial.eeapp.model.Pack;
 import com.ujujzk.easyengmaterial.eeapp.util.ActivityUtil;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,6 +48,11 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
     public static final String SELECTED_CARD_IDS = "selectedCardIds";
 
     private Toolbar toolBar;
+
+
+    private ActionBarDrawerToggle toggle;
+
+
     private Drawer navigationDrawer = null;
     private RecyclerView packList;
     private PacksListAdapter packListAdapter;
@@ -61,10 +69,12 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
         toolBar = (Toolbar) findViewById(R.id.vocab_act_app_bar);
         ActivityUtil.setToolbarColor(this, toolBar.getId());
         setSupportActionBar(toolBar);
+
         navigationDrawer = new DrawerBuilder()
                 .withActivity(this)
                 .withToolbar(toolBar)
                 .withTranslucentStatusBar(true)
+                .withActionBarDrawerToggleAnimated(true)
                 .withAccountHeader(
                         new AccountHeaderBuilder()
                                 .withActivity(this)
@@ -160,7 +170,7 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
                 List<Long> ids = packListAdapter.getSelectedPacksCardsIds(packListAdapter.getSelectedItems());
                 if (ids.size() > 0) {
                     Intent intent = new Intent(VocabularyActivity.this, LearnWordActivity.class);
-                    intent.putExtra(SELECTED_CARD_IDS, (ArrayList<Long>)ids);
+                    intent.putExtra(SELECTED_CARD_IDS, (ArrayList<Long>) ids);
                     startActivity(intent);
                 }
                 packListAdapter.clearSelection();
@@ -295,8 +305,10 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
                     if (ids.size() > 0) {
 
                         Intent intent = new Intent(VocabularyActivity.this, EditPackActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION); //prevent the system from applying an activity transition animation
                         intent.putExtra(SELECTED_PACK_ID, ids.get(0));
                         startActivity(intent);
+
                     }
                 }
                 runCardsFab.hide(true);

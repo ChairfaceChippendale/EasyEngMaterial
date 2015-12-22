@@ -53,6 +53,11 @@
     <string name="exercise_act_next_btn_text">NEXT</string>
     <string name="title_share">Share</string>
     <string name="title_feedback">Feedback</string>
+    <string name="navigation_drawer_open">drawer open</string>
+    <string name="navigation_drawer_close">drawer close</string>
+
+    <string name="word_list_fragment_title">WORD</string>
+    <string name="word_article_fragment_title">TRANSLATION</string>
 
 
 </resources>

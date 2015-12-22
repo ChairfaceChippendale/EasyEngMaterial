@@ -2,6 +2,11 @@ package com.ujujzk.easyengmaterial.eeapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -18,6 +23,9 @@ import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.ujujzk.easyengmaterial.eeapp.util.ActivityUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+
 //http://geektimes.ru/post/120161/
 //http://web.archive.org/web/20110720142541/http://basharkokash.com/post/2010/04/19/Bing-Translator-for-developers.aspx
 
@@ -30,7 +38,8 @@ public class DictionaryActivity extends AppCompatActivity {
 
     private Toolbar toolBar;
     private Drawer navigationDrawer = null;
-
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,12 +126,25 @@ public class DictionaryActivity extends AppCompatActivity {
                 })
                 .build();
         navigationDrawer.setSelection(Application.IDENTIFIER_DICTIONARY);
+
+
+        viewPager = (ViewPager) findViewById(R.id.dict_act_viewpager);
+        setupViewPager(viewPager);
+
+        tabLayout = (TabLayout) findViewById(R.id.dict_act_tabs);
+        tabLayout.setupWithViewPager(viewPager);
+
     }
 
+    private void setupViewPager(ViewPager viewPager) {
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new WordListFragment(), getResources().getString(R.string.word_list_fragment_title));
+        adapter.addFragment(new WordArticleFragment(), getResources().getString(R.string.word_article_fragment_title));
+        viewPager.setAdapter(adapter);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_dictionary, menu);
         return true;
     }
@@ -132,19 +154,46 @@ public class DictionaryActivity extends AppCompatActivity {
 
         int id = item.getItemId();
         switch (id){
-            case R.id.dict_act_action_settings:
-                startActivity(new Intent(DictionaryActivity.this, SettingsActivity.class));
+            case R.id.dict_act_action_manager:
+                //TODO
                 return true;
-
             default:
                 return super.onOptionsItemSelected(item);
         }
-
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         Log.d(TAG, "onDestroy");
+    }
+
+    class ViewPagerAdapter extends FragmentPagerAdapter {
+        private final List<Fragment> mFragmentList = new ArrayList<Fragment>();
+        private final List<String> mFragmentTitleList = new ArrayList<String>();
+
+        public ViewPagerAdapter(FragmentManager manager) {
+            super(manager);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragmentList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragmentList.size();
+        }
+
+        public void addFragment(Fragment fragment, String title) {
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitleList.get(position);
+        }
     }
 }

@@ -4,17 +4,12 @@
       tools:context="com.ujujzk.easyengmaterial.eeapp.DictionaryActivity">
 
 
-    <item android:id="@+id/dict_act_action_settings"
+    <item android:id="@+id/dict_act_action_manager"
           android:title="@string/action_settings"
           android:icon="@drawable/ic_settings_white_48dp"
           android:orderInCategory="100"
-          app:showAsAction="never"/>
+          app:showAsAction="ifRoom"/>
 
-    <item
-            android:id="@+id/dict_act_action_about"
-            android:title="@string/action_about"
-            android:icon="@drawable/ic_info_white_48dp"
-            android:orderInCategory="200"
-            app:showAsAction="never"/>
+
 
 </menu>
