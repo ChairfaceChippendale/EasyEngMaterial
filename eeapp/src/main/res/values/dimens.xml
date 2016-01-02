@@ -25,4 +25,13 @@
 
     <dimen name="rule_act_rule_text_margin">15dp</dimen>
     <dimen name="no_connect_txt_size">16sp</dimen>
+    <dimen name="word_list_fr_list_margin">6dp</dimen>
+    <dimen name="word_list_fr_search_margin">10dp</dimen>
+    <dimen name="word_list_fr_search_elevation">2dp</dimen>
+    <dimen name="card_list_item_padding">8dp</dimen>
+    <dimen name="card_list_item_text_size">14sp</dimen>
+    <dimen name="answer_list_item_padding">8dp</dimen>
+    <dimen name="answer_list_item_text_size">20sp</dimen>
+    <dimen name="topic_list_item_text_size">16sp</dimen>
+
 </resources>

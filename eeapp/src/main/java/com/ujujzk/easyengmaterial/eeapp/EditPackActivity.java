@@ -90,7 +90,6 @@ public class EditPackActivity extends AppCompatActivity implements CardListAdapt
                 titleInput.setText(tv.getText().toString());
 
                 editTitleDialog.show();
-
             }
         });
 

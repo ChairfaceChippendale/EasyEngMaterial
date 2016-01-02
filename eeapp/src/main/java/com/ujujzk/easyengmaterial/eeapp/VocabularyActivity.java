@@ -78,7 +78,7 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
                 .withAccountHeader(
                         new AccountHeaderBuilder()
                                 .withActivity(this)
-                                .withHeaderBackground(R.drawable.img_dict)
+                                .withHeaderBackground(R.drawable.img_vocab)
                                 .build()
                 )
                 .addDrawerItems(

@@ -28,6 +28,8 @@ import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.ujujzk.easyengmaterial.eeapp.model.Topic;
 import com.ujujzk.easyengmaterial.eeapp.util.ActivityUtil;
+import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -117,7 +119,7 @@ public class GrammarActivity extends AppCompatActivity implements TopicListAdapt
                                 startActivity(new Intent(GrammarActivity.this, AboutActivity.class));
                                 break;
                             case Application.IDENTIFIER_SHARE:
-                                //TODO
+                                sendSharingMassage(getResources().getText(R.string.sharing_massage).toString());
                                 break;
                             case Application.IDENTIFIER_FEEDBACK:
                                 //TODO
@@ -146,6 +148,7 @@ public class GrammarActivity extends AppCompatActivity implements TopicListAdapt
         noConnectionMsg = findViewById(R.id.gramm_act_no_connect);
 
         topicList = (RecyclerView) findViewById(R.id.gramm_act_rv_topic_list);
+        topicList.addItemDecoration(new HorizontalDividerItemDecoration.Builder(this).build());
         topicListAdapter = new TopicListAdapter(this);
         topicList.setAdapter(topicListAdapter);
         topicList.setLayoutManager(new LinearLayoutManager(this));
@@ -270,5 +273,13 @@ public class GrammarActivity extends AppCompatActivity implements TopicListAdapt
     private boolean isNetworkConnected() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         return cm.getActiveNetworkInfo() != null;
+    }
+
+    private void sendSharingMassage(String massage){
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, massage);
+        sendIntent.setType("text/plain");
+        startActivity(sendIntent);
     }
 }

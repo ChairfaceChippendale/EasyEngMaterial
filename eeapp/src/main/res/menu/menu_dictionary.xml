@@ -5,11 +5,9 @@
 
 
     <item android:id="@+id/dict_act_action_manager"
-          android:title="@string/action_settings"
-          android:icon="@drawable/ic_settings_white_48dp"
+          android:title="@string/action_manager"
+          android:icon="@drawable/ic_library_books_white_48dp"
           android:orderInCategory="100"
           app:showAsAction="ifRoom"/>
-
-
 
 </menu>

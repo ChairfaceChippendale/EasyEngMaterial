@@ -34,7 +34,8 @@
             android:background="@color/toolbar_bgr_light"
             app:tabTextColor="@color/toolbar_text_light"
             app:tabSelectedTextColor="@color/toolbar_text_light"
-            app:tabGravity="fill"/>
+            app:tabGravity="fill"
+            app:tabMaxWidth="0dp"/>
 
 
     <android.support.v4.view.ViewPager

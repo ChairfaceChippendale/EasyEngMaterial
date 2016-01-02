@@ -1,11 +1,15 @@
 package com.ujujzk.easyengmaterial.eeapp;
 
+import android.content.Context;
+import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.TextView;
+import com.ujujzk.easyengmaterial.eeapp.model.Card;
 import com.ujujzk.easyengmaterial.eeapp.model.Topic;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,11 +22,14 @@ public class TopicListAdapter
 
     private List<Topic> topics;
     private TopicViewHolder.ClickListener clickListener;
+    private final Context mContext;
 
     public TopicListAdapter (TopicViewHolder.ClickListener clickListener) {
         super();
         this.clickListener = clickListener;
         topics = new ArrayList<Topic>();
+        this.mContext = (Context) clickListener;
+
     }
 
     public void addTopic(Topic newPack) {
@@ -65,7 +72,7 @@ public class TopicListAdapter
     @Override
     public TopicViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.topic_list_item, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.topic_list_item_2, parent, false);
         TopicViewHolder holder = new TopicViewHolder(v, clickListener);
         return holder;
     }
@@ -74,7 +81,11 @@ public class TopicListAdapter
     public void onBindViewHolder(TopicViewHolder holder, int position) {
 
         holder.topicTitle.setText(topics.get(position).getTitle());
-        holder.selectedOverlay.setVisibility(isSelected(position) ? View.VISIBLE : View.INVISIBLE);
+        if (isSelected(position)){
+            holder.topicTitle.setBackgroundColor(ContextCompat.getColor(mContext, R.color.gramm_list_item_selected_overlay_light));
+        } else {
+            holder.topicTitle.setBackgroundColor(ContextCompat.getColor(mContext, R.color.gramm_list_item_bgr_light));
+        }
     }
 
     @Override
@@ -93,7 +104,6 @@ public class TopicListAdapter
     public static class TopicViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
         TextView topicTitle;
-        View selectedOverlay;
 
         private TopicViewHolder.ClickListener clickListener;
 
@@ -101,7 +111,6 @@ public class TopicListAdapter
             super(itemView);
 
             topicTitle = (TextView) itemView.findViewById(R.id.topic_list_item_title);
-            selectedOverlay = itemView.findViewById(R.id.topic_list_item_selected_overlay);
 
             this.clickListener = clickListener;
 

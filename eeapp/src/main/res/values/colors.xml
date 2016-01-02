@@ -10,7 +10,7 @@
     <color name="status_bar_bgr_light">#303F9F</color>
     <color name="navigation_bar_bgr_light">#303F9F</color>
 
-    <color name="main_window_bgr_light">#ffd6dbfa</color>
+    <color name="main_window_bgr_light">#e8eaf6</color><!--#ffd6dbfa-->
     <color name="secondary_window_bgr_light">#e8eaf6</color>
 
     <color name="accent_light">#FF5722</color>
@@ -31,8 +31,9 @@
     <color name="eidt_pack_card_list_divider">#3F51B5</color>
     <color name="edit_pack_act_title_light">#000000</color>
 
+    <color name="gramm_list_item_bgr_light">#e8eaf6</color>
     <color name="gramm_list_item_title_light">#212121</color>
-    <color name="gramm_list_item_selected_overlay_light">#9fa8da</color>
+    <color name="gramm_list_item_selected_overlay_light">#c5cae9</color><!--#ffe0b2-->
     <!-- Light theme -->
 
 

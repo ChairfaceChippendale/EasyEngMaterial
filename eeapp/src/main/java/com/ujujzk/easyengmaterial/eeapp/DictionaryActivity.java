@@ -13,6 +13,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.SearchView;
+import android.widget.TextView;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
@@ -31,7 +34,7 @@ import java.util.List;
 
 //http://mymemory.translated.net/doc/spec.php
 
-public class DictionaryActivity extends AppCompatActivity {
+public class DictionaryActivity extends AppCompatActivity implements OnWordSelectedListener{
 
     @SuppressWarnings("unused")
     private static final String TAG = DictionaryActivity.class.getSimpleName();
@@ -127,7 +130,6 @@ public class DictionaryActivity extends AppCompatActivity {
                 .build();
         navigationDrawer.setSelection(Application.IDENTIFIER_DICTIONARY);
 
-
         viewPager = (ViewPager) findViewById(R.id.dict_act_viewpager);
         setupViewPager(viewPager);
 
@@ -163,9 +165,9 @@ public class DictionaryActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.d(TAG, "onDestroy");
+    public void OnWordSelected(long wordId) {
+        //TODO send wordId to WordAtricleFragment
+        //((ViewPagerAdapter) viewPager.getAdapter()).getItem(1);
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {

@@ -22,14 +22,12 @@
             android:text="Title"/>
 
     <android.support.v7.widget.RecyclerView
-            android:layout_below="@id/edit_pack_act_pack_title"
             android:id="@+id/edit_pack_act_card_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_below="@id/edit_pack_act_pack_title"
             android:layout_marginLeft="@dimen/edit_pack_act_card_list_margin"
-            android:layout_marginRight="@dimen/edit_pack_act_card_list_margin"
-
-            >
+            android:layout_marginRight="@dimen/edit_pack_act_card_list_margin">
     </android.support.v7.widget.RecyclerView>
 
     <com.github.clans.fab.FloatingActionButton
