@@ -162,7 +162,9 @@ public class ExerciseActivity extends AppCompatActivity {
             exerciseQuestion.setText(task.getQuestion());
             hint.setText(task.getHint().replaceAll("\\\\n", "\n"));
             answerListAdapter.clear();
-            answerListAdapter.addAll(task.getAnswers());
+            List<Answer> answers = task.getAnswers();
+            Collections.shuffle(answers);
+            answerListAdapter.addAll(answers);
             answerListAdapter.notifyDataSetChanged();
             nextTaskNumber++;
             hintLayout.hide();

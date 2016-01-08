@@ -112,10 +112,10 @@ public class DictionaryActivity extends AppCompatActivity implements OnWordSelec
                                 startActivity(new Intent(DictionaryActivity.this, AboutActivity.class));
                                 break;
                             case Application.IDENTIFIER_SHARE:
-                                //TODO
+                                sendSharingMassage(getResources().getString(R.string.sharing_massage));
                                 break;
                             case Application.IDENTIFIER_FEEDBACK:
-                                //TODO
+                                sendFeedBack("I like this app");
                                 break;
                             case Application.IDENTIFIER_SETTING:
                                 startActivity(new Intent(DictionaryActivity.this, SettingsActivity.class));
@@ -142,6 +142,7 @@ public class DictionaryActivity extends AppCompatActivity implements OnWordSelec
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new WordListFragment(), getResources().getString(R.string.word_list_fragment_title));
         adapter.addFragment(new WordArticleFragment(), getResources().getString(R.string.word_article_fragment_title));
+        adapter.addFragment(new WordHistoryFragment(), getResources().getString(R.string.word_history_fragment_title));
         viewPager.setAdapter(adapter);
     }
 
@@ -157,7 +158,8 @@ public class DictionaryActivity extends AppCompatActivity implements OnWordSelec
         int id = item.getItemId();
         switch (id){
             case R.id.dict_act_action_manager:
-                //TODO
+                startActivity(new Intent(DictionaryActivity.this, DicManagerActivity.class));
+                overridePendingTransition(R.animator.activity_appear_from_right, R.animator.activity_disappear_alpha); //custom activity transition animation
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -197,5 +199,22 @@ public class DictionaryActivity extends AppCompatActivity implements OnWordSelec
         public CharSequence getPageTitle(int position) {
             return mFragmentTitleList.get(position);
         }
+    }
+
+    private void sendSharingMassage(String massage){
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, massage);
+        sendIntent.setType("text/plain");
+        startActivity(sendIntent);
+    }
+
+    private void  sendFeedBack(String massage){
+        Intent email = new Intent(Intent.ACTION_SEND);
+        email.setType("text/email");
+        email.putExtra(Intent.EXTRA_EMAIL, new String[] { getResources().getString(R.string.feed_back_email) });
+        email.putExtra(Intent.EXTRA_SUBJECT, getResources().getString(R.string.feed_back_subject));
+        email.putExtra(Intent.EXTRA_TEXT, massage);
+        startActivity(Intent.createChooser(email, getResources().getString(R.string.feed_back_title)));
     }
 }

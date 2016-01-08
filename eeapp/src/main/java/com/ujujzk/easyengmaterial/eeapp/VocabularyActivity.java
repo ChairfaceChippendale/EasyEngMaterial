@@ -130,10 +130,10 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
                                 startActivity(new Intent(VocabularyActivity.this, AboutActivity.class));
                                 break;
                             case Application.IDENTIFIER_SHARE:
-                                //TODO
+                                sendSharingMassage(getResources().getString(R.string.sharing_massage));
                                 break;
                             case Application.IDENTIFIER_FEEDBACK:
-                                //TODO
+                                sendFeedBack("I like this app");
                                 break;
                             case Application.IDENTIFIER_SETTING:
                                 startActivity(new Intent(VocabularyActivity.this, SettingsActivity.class));
@@ -242,9 +242,6 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
 
         int id = item.getItemId();
         switch (id) {
-            case R.id.vocab_act_action_settings:
-                startActivity(new Intent(VocabularyActivity.this, SettingsActivity.class));
-                return true;
 
             case R.id.vocab_act_action_add_pack:
                 packListAdapter.clearSelection();
@@ -305,9 +302,10 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
                     if (ids.size() > 0) {
 
                         Intent intent = new Intent(VocabularyActivity.this, EditPackActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION); //prevent the system from applying an activity transition animation
+                        //intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION); //prevent the system from applying an activity transition animation
                         intent.putExtra(SELECTED_PACK_ID, ids.get(0));
                         startActivity(intent);
+                        overridePendingTransition(R.animator.activity_appear_from_right, R.animator.activity_disappear_alpha); //custom activity transition animation
 
                     }
                 }
@@ -352,5 +350,21 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
         return cm.getActiveNetworkInfo() != null;
     }
 
+    private void sendSharingMassage(String massage){
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, massage);
+        sendIntent.setType("text/plain");
+        startActivity(sendIntent);
+    }
+
+    private void  sendFeedBack(String massage){
+        Intent email = new Intent(Intent.ACTION_SEND);
+        email.setType("text/email");
+        email.putExtra(Intent.EXTRA_EMAIL, new String[] { getResources().getString(R.string.feed_back_email) });
+        email.putExtra(Intent.EXTRA_SUBJECT, getResources().getString(R.string.feed_back_subject));
+        email.putExtra(Intent.EXTRA_TEXT, massage);
+        startActivity(Intent.createChooser(email, getResources().getString(R.string.feed_back_title)));
+    }
 
 }

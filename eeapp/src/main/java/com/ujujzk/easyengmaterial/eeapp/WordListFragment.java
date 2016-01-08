@@ -8,21 +8,28 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.SearchView;
 import com.ujujzk.easyengmaterial.eeapp.model.Word;
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class WordListFragment extends Fragment implements WordListAdapter.WordViewHolder.ClickListener{
+public class WordListFragment extends Fragment implements
+        WordListAdapter.WordViewHolder.ClickListener,
+        android.support.v7.widget.SearchView.OnQueryTextListener{
 
-    SearchView searchView;
+    @SuppressWarnings("unused")
+    private static final String TAG = WordListFragment.class.getSimpleName();
+
+    android.support.v7.widget.SearchView searchView;
     private RecyclerView wordList;
     private WordListAdapter wordListAdapter;
+    private LinearLayoutManager wordListManager;
+    private List<Word> wordListContent;
     private Context context;
     private OnWordSelectedListener wordSelectedListener;
 
@@ -39,34 +46,40 @@ public class WordListFragment extends Fragment implements WordListAdapter.WordVi
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_word_list, container, false);
+        final View v = inflater.inflate(R.layout.fragment_word_list, container, false);
 
-        searchView = (SearchView) v.findViewById(R.id.word_list_fr_search);
+        searchView = (android.support.v7.widget.SearchView) v.findViewById(R.id.word_list_fr_search);
         searchView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 searchView.setIconified(false);
             }
         });
+        searchView.setOnQueryTextListener(this);
 
         wordList = (RecyclerView) v.findViewById(R.id.word_list_fr_list);
         wordList.addItemDecoration(new HorizontalDividerItemDecoration.Builder(getActivity()).build());
-        wordList.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        return v;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        wordListManager = new LinearLayoutManager(getActivity());
+        wordList.setLayoutManager(wordListManager);
 
         //--MOC--
-        List<Word> wordListContent = new ArrayList<Word>();
+        wordListContent = new ArrayList<Word>();
         for (int i = 0; i < 9000; i++){
-            wordListContent.add(new Word("Hello"+i));
+            wordListContent.add(new Word("Hi"+i));
         }
         //------------------
-
 
         wordListAdapter = new WordListAdapter(wordListContent, this);
         wordList.setAdapter(wordListAdapter);
         wordList.setItemAnimator(new DefaultItemAnimator());
 
-        return v;
     }
 
     @Override
@@ -100,5 +113,19 @@ public class WordListFragment extends Fragment implements WordListAdapter.WordVi
     public void onDestroy() {
         super.onDestroy();
         context = null;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String query) {
+        wordListManager.scrollToPositionWithOffset(
+                wordListAdapter.getPositionOf(query),
+                2
+        );
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
     }
 }

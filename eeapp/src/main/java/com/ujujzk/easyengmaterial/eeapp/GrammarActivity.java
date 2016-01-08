@@ -122,7 +122,7 @@ public class GrammarActivity extends AppCompatActivity implements TopicListAdapt
                                 sendSharingMassage(getResources().getText(R.string.sharing_massage).toString());
                                 break;
                             case Application.IDENTIFIER_FEEDBACK:
-                                //TODO
+                                sendFeedBack("I like this app");
                                 break;
                             case Application.IDENTIFIER_SETTING:
                                 startActivity(new Intent(GrammarActivity.this, SettingsActivity.class));
@@ -190,9 +190,6 @@ public class GrammarActivity extends AppCompatActivity implements TopicListAdapt
 
         int id = item.getItemId();
         switch (id) {
-            case R.id.gramm_act_action_settings:
-                startActivity(new Intent(GrammarActivity.this, SettingsActivity.class));
-                return true;
 
             case R.id.gramm_act_action_rule:
                 if (topicListAdapter.getSelectedItemCount() == 1) {
@@ -281,5 +278,14 @@ public class GrammarActivity extends AppCompatActivity implements TopicListAdapt
         sendIntent.putExtra(Intent.EXTRA_TEXT, massage);
         sendIntent.setType("text/plain");
         startActivity(sendIntent);
+    }
+
+    private void  sendFeedBack(String massage){
+        Intent email = new Intent(Intent.ACTION_SEND);
+        email.setType("text/email");
+        email.putExtra(Intent.EXTRA_EMAIL, new String[] { getResources().getString(R.string.feed_back_email) });
+        email.putExtra(Intent.EXTRA_SUBJECT, getResources().getString(R.string.feed_back_subject));
+        email.putExtra(Intent.EXTRA_TEXT, massage);
+        startActivity(Intent.createChooser(email, getResources().getString(R.string.feed_back_title)));
     }
 }

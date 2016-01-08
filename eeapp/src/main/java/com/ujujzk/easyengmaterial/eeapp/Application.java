@@ -1,6 +1,7 @@
 package com.ujujzk.easyengmaterial.eeapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import com.github.aleksandrsavosh.simplestore.SimpleStore;
 import com.github.aleksandrsavosh.simplestore.SimpleStoreManager;
@@ -59,7 +60,6 @@ public class Application extends android.app.Application {
         //ParseCrashReporting.enable(this);
 
     }
-
 
 }
 

@@ -191,7 +191,7 @@ public class EditPackActivity extends AppCompatActivity implements CardListAdapt
         int id = item.getItemId();
         if (id == android.R.id.home) {
             onBackPressed();
-            overridePendingTransition(0,0); //prevent the system from applying an activity transition animation
+            overridePendingTransition(R.animator.activity_appear_alpha, R.animator.activity_disappear_to_right); //custom activity transition animation
         }
         return super.onOptionsItemSelected(item);
     }

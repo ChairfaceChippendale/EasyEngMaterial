@@ -6,22 +6,12 @@
                 android:background="@color/main_window_bgr_light"
                 tools:context="info.androidhive.materialtabs.fragments.OneFragment">
 
-<android.support.v7.widget.SearchView
-        android:id="@+id/word_list_fr_search"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/word_list_fr_search_margin"
-        android:background="#FFF"
-        android:elevation="@dimen/word_list_fr_search_elevation"
-        android:queryHint="@string/word_list_fr_search_hint">
 
-</android.support.v7.widget.SearchView>
 
     <android.support.v7.widget.RecyclerView
-            android:id="@+id/word_list_fr_list"
+            android:id="@+id/word_history_fr_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/word_list_fr_search"
             android:layout_marginLeft="@dimen/word_list_fr_list_margin"
             android:layout_marginRight="@dimen/word_list_fr_list_margin">
     </android.support.v7.widget.RecyclerView>
