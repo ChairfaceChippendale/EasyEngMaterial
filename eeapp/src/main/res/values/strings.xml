@@ -22,7 +22,8 @@
     <string name="action_add_pack">Add pack</string>
     <string name="action_remove_pack">Remove pack</string>
     <string name="action_edit_pack">Edit pack</string>
-    <string name="action_cloud_download">Download</string>
+    <string name="action_cloud_download">Download from cloud</string>
+    <string name="action_folder_download">Download from folder</string>
     <string name="action_pronunciation">Pronunciation</string>
     <string name="action_settings">Settings</string>
     <string name="action_about">About</string>

@@ -36,9 +36,12 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordVi
             query = query.toLowerCase();
             final String word = mWords.get(i).getWordName().toLowerCase();
 
-            if (word.equalsIgnoreCase(query)){
+            if (word.startsWith(query)){
                 return i;
             }
+//            if (word.equalsIgnoreCase(query)){
+//                return i;
+//            }
         }
         return 0;
     }

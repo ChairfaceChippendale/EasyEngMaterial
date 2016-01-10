@@ -7,6 +7,8 @@ import com.github.aleksandrsavosh.simplestore.Base;
 public class Word extends Base implements Comparable {
     String wordName;
 
+    public Word () {}
+
     public Word(String wordName) {
         this.wordName = wordName;
     }

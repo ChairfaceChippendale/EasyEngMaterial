@@ -19,6 +19,13 @@
             app:showAsAction="ifRoom"/>
 
     <item
+            android:id="@+id/vocab_act_action_folder_download"
+            android:title="@string/action_folder_download"
+            android:icon="@drawable/ic_folder_download_white_48dp"
+            android:orderInCategory="35"
+            app:showAsAction="ifRoom"/>
+
+    <item
             android:id="@+id/vocab_act_action_remove_pack"
             android:title="@string/action_remove_pack"
             android:icon="@drawable/ic_delete_white_48dp"

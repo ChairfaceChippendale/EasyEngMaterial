@@ -8,6 +8,14 @@ public class WordArticle extends Base {
     long wordId;
     long dictionaryId;
 
+    public WordArticle(){}
+
+    public WordArticle(String article, long wordId, long dictionaryId) {
+        this.article = article;
+        this.wordId = wordId;
+        this.dictionaryId = dictionaryId;
+    }
+
     public void setArticle(String article) {
         this.article = article;
     }
@@ -30,5 +38,14 @@ public class WordArticle extends Base {
 
     public long getDictionaryId() {
         return dictionaryId;
+    }
+
+    @Override
+    public String toString() {
+        return "WordArticle{" +
+                "article='" + article + '\'' +
+                ", wordId=" + wordId +
+                ", dictionaryId=" + dictionaryId +
+                "} " + super.toString();
     }
 }

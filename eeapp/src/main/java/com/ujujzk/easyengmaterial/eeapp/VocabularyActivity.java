@@ -286,6 +286,10 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
                 }
                 return true;
 
+            case R.id.vocab_act_action_folder_download:
+                //TODO
+                return true;
+
             case R.id.vocab_act_action_remove_pack:
                 if (packListAdapter.getSelectedItemCount() > 0) {
                     confirmPackRemove.show();

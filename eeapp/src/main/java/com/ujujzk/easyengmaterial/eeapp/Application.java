@@ -47,11 +47,14 @@ public class Application extends android.app.Application {
             add(Rule.class);
             add(Task.class);
             add(Answer.class);
+            add(Dictionary.class);
+            add(Word.class);
+            add(WordArticle.class);
         }
         });
 
         storeManager.useLog(true);
-        storeManager.initLocalStore(18);
+        storeManager.initLocalStore(22);
         localStore = storeManager.getLocalStore();
         storeManager.initCloudStore("a2FaVXXRxCiY0r61U0nZ6hS6VhuSDcQfC32Vhium", "b2aaFgro20MWP8t1sRGbjdsRrJrwBBm78cSDKxD8");
         cloudStore = storeManager.getCloudStore();

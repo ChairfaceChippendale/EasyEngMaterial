@@ -34,6 +34,9 @@
     <color name="gramm_list_item_bgr_light">#e8eaf6</color>
     <color name="gramm_list_item_title_light">#212121</color>
     <color name="gramm_list_item_selected_overlay_light">#c5cae9</color><!--#ffe0b2-->
+
+    <color name="dictionary_list_item_title_light">#212121</color>
+
     <!-- Light theme -->
 
 
@@ -62,11 +65,13 @@
     <color name="vocab_list_item_title_dark">#FFFFFF</color>
     <color name="vocab_list_item_subtext_dark">#FFFFFF</color>
     <color name="vocab_list_item_selected_overlay_dark">#424242</color>
-    <color name="eeapp_red">#f44336</color>
-    <color name="eeapp_green">#4caf50</color>
 
 
     <!-- Dark theme -->
+
+
+    <color name="eeapp_red">#f44336</color>
+    <color name="eeapp_green">#4caf50</color>
 
 
 </resources>

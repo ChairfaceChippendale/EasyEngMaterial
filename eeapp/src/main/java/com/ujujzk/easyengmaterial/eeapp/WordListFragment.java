@@ -15,7 +15,9 @@ import android.view.ViewGroup;
 import com.ujujzk.easyengmaterial.eeapp.model.Word;
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class WordListFragment extends Fragment implements
@@ -71,8 +73,10 @@ public class WordListFragment extends Fragment implements
 
         //--MOC--
         wordListContent = new ArrayList<Word>();
-        for (int i = 0; i < 9000; i++){
-            wordListContent.add(new Word("Hi"+i));
+        String[] s = {"abandoned", "able", "absolute", "adorable", "adventurous", "academic", "acceptable", "acclaimed", "accomplished", "accurate", "aching", "acidic",
+                "acrobatic", "active", "actual", "adept", "admirable", "admired", "adolescent", "adorable", "adored", "advanced", "afraid", "affectionate", "aged", "aggravating"};
+        for (int i = 0; i < s.length; i++) {
+            wordListContent.add(new Word(s[i]));
         }
         //------------------
 
@@ -117,15 +121,20 @@ public class WordListFragment extends Fragment implements
 
     @Override
     public boolean onQueryTextChange(String query) {
-        wordListManager.scrollToPositionWithOffset(
-                wordListAdapter.getPositionOf(query),
-                2
-        );
-        return false;
+        int position = wordListAdapter.getPositionOf(query);
+        if (position > 0 && position < wordListAdapter.getItemCount()) {
+            wordListManager.scrollToPositionWithOffset(
+                    position,
+                    2
+            );
+        }
+        return true;
     }
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        return false;
+        //TODO check if there is this word and
+        //TODO go to WordArticleFragment
+        return true;
     }
 }

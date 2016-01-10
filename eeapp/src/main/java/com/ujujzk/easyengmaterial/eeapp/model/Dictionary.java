@@ -3,7 +3,14 @@ package com.ujujzk.easyengmaterial.eeapp.model;
 import com.github.aleksandrsavosh.simplestore.Base;
 
 public class Dictionary extends Base {
-    String dictionaryName;
+
+    private String dictionaryName;
+
+    public Dictionary() {}
+
+    public Dictionary(String dictionaryName) {
+        this.dictionaryName = dictionaryName;
+    }
 
     public void setDictionaryName(String dictionaryName) {
         this.dictionaryName = dictionaryName;
@@ -15,6 +22,6 @@ public class Dictionary extends Base {
 
     @Override
     public String toString() {
-        return "Dictionary :" + dictionaryName;
+        return "Dictionary :" + dictionaryName + " " + super.toString();
     }
 }
