@@ -53,15 +53,17 @@ dependencies {
     compile 'com.github.clans:fab:1.6.1'
     compile 'com.github.fafaldo:fab-toolbar:1.0.1'
     compile 'com.yqritc:recyclerview-flexibledivider:1.2.6'
-    compile 'com.github.AleksandrSavosh:SimpleStore:v1.2.3-alpha'
+    compile 'com.github.AleksandrSavosh:SimpleStore:v1.2.5-alpha'
     compile 'com.google.code.gson:gson:2.3.1'
     compile('com.afollestad.material-dialogs:core:0.8.3.0@aar') {
         transitive = true
     }
+    compile 'com.mikepenz:iconics-core:2.5.4@aar'
     compile 'com.mikepenz:google-material-typeface:2.1.0.1.original@aar'
     compile('com.mikepenz:materialdrawer:4.5.9@aar') {
         transitive = true
     }
     compile 'com.github.rahatarmanahmed:circularprogressview:2.4.0'
+    compile 'com.hudomju:swipe-to-dismiss-undo:1.0'
 
 }

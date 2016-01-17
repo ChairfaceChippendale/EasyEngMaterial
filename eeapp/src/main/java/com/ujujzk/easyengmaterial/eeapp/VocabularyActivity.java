@@ -70,7 +70,64 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
         ActivityUtil.setToolbarColor(this, toolBar.getId());
         setSupportActionBar(toolBar);
 
-        navigationDrawer = new DrawerBuilder()
+        navigationDrawer = makeNavigationDrawer();
+        navigationDrawer.setSelection(Application.IDENTIFIER_VOCABULARY);
+
+        progressBar = (CircularProgressView) findViewById(R.id.vocab_act_progress_bar);
+
+        packList = (RecyclerView) findViewById(R.id.vocab_act_rv_packs_list);
+        packListAdapter = new PacksListAdapter(this);
+        packList.setAdapter(packListAdapter);
+        StaggeredGridLayoutManager packsGridLayoutManager;
+        if (isTablet(this)) {
+            packsGridLayoutManager = new StaggeredGridLayoutManager(GRIDS_ON_TABLET, StaggeredGridLayoutManager.VERTICAL);
+        } else {
+            packsGridLayoutManager = new StaggeredGridLayoutManager(GRIDS_ON_PHONE, StaggeredGridLayoutManager.VERTICAL);
+        }
+        packList.setLayoutManager(packsGridLayoutManager);
+        packList.setItemAnimator(new DefaultItemAnimator());
+
+        runCardsFab = (FloatingActionButton) findViewById(R.id.vacab_act_fab);
+        runCardsFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                List<Long> ids = packListAdapter.getSelectedPacksCardsIds(packListAdapter.getSelectedItems());
+                if (ids.size() > 0) {
+                    Intent intent = new Intent(VocabularyActivity.this, LearnWordActivity.class);
+                    intent.putExtra(SELECTED_CARD_IDS, (ArrayList<Long>) ids);
+                    startActivity(intent);
+                }
+                packListAdapter.clearSelection();
+                runCardsFab.hide(true);
+            }
+        });
+
+        confirmPackRemove = new MaterialDialog.Builder(this)
+                .content(R.string.vocab_act_pack_remove_confirm_question)
+                .positiveText(R.string.vocab_act_pack_remove_confirm_btn)
+                .negativeText(R.string.vocab_act_pack_remove_cancel_btn)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+
+                        packListAdapter.removePacks(packListAdapter.getSelectedItems());
+                        packListAdapter.clearSelection();
+                        confirmPackRemove.dismiss();
+                    }
+                })
+                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        packListAdapter.clearSelection();
+                        confirmPackRemove.dismiss();
+                    }
+                })
+                .build();
+    }
+
+    private Drawer makeNavigationDrawer () {
+        return new DrawerBuilder()
                 .withActivity(this)
                 .withToolbar(toolBar)
                 .withTranslucentStatusBar(true)
@@ -143,59 +200,6 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
                         }
                         navigationDrawer.closeDrawer();
                         return true;
-                    }
-                })
-                .build();
-        navigationDrawer.setSelection(Application.IDENTIFIER_VOCABULARY);
-
-        progressBar = (CircularProgressView) findViewById(R.id.vocab_act_progress_bar);
-
-        packList = (RecyclerView) findViewById(R.id.vocab_act_rv_packs_list);
-        packListAdapter = new PacksListAdapter(this);
-        packList.setAdapter(packListAdapter);
-        StaggeredGridLayoutManager packsGridLayoutManager;
-        if (isTablet(this)) {
-            packsGridLayoutManager = new StaggeredGridLayoutManager(GRIDS_ON_TABLET, StaggeredGridLayoutManager.VERTICAL);
-        } else {
-            packsGridLayoutManager = new StaggeredGridLayoutManager(GRIDS_ON_PHONE, StaggeredGridLayoutManager.VERTICAL);
-        }
-        packList.setLayoutManager(packsGridLayoutManager);
-        packList.setItemAnimator(new DefaultItemAnimator());
-
-        runCardsFab = (FloatingActionButton) findViewById(R.id.vacab_act_fab);
-        runCardsFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                List<Long> ids = packListAdapter.getSelectedPacksCardsIds(packListAdapter.getSelectedItems());
-                if (ids.size() > 0) {
-                    Intent intent = new Intent(VocabularyActivity.this, LearnWordActivity.class);
-                    intent.putExtra(SELECTED_CARD_IDS, (ArrayList<Long>) ids);
-                    startActivity(intent);
-                }
-                packListAdapter.clearSelection();
-                runCardsFab.hide(true);
-            }
-        });
-
-        confirmPackRemove = new MaterialDialog.Builder(this)
-                .content(R.string.vocab_act_pack_remove_confirm_question)
-                .positiveText(R.string.vocab_act_pack_remove_confirm_btn)
-                .negativeText(R.string.vocab_act_pack_remove_cancel_btn)
-                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-
-                        packListAdapter.removePacks(packListAdapter.getSelectedItems());
-                        packListAdapter.clearSelection();
-                        confirmPackRemove.dismiss();
-                    }
-                })
-                .onNegative(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        packListAdapter.clearSelection();
-                        confirmPackRemove.dismiss();
                     }
                 })
                 .build();

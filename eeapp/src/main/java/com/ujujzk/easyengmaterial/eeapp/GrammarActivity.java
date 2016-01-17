@@ -60,7 +60,47 @@ public class GrammarActivity extends AppCompatActivity implements TopicListAdapt
         toolBar = (Toolbar) findViewById(R.id.gramm_act_app_bar);
         ActivityUtil.setToolbarColor(this, toolBar.getId());
         setSupportActionBar(toolBar);
-        navigationDrawer = new DrawerBuilder()
+        navigationDrawer = makeNavigationDrawer ();
+        navigationDrawer.setSelection(Application.IDENTIFIER_GRAMMAR);
+
+        progressBar = (CircularProgressView) findViewById(R.id.gramm_act_progress_bar);
+        noConnectionBtn = (Button) findViewById(R.id.no_connect_btn);
+        noConnectionBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadData();
+            }
+        });
+        noConnectionMsg = findViewById(R.id.gramm_act_no_connect);
+
+        topicList = (RecyclerView) findViewById(R.id.gramm_act_rv_topic_list);
+        topicList.addItemDecoration(new HorizontalDividerItemDecoration.Builder(this).build());
+        topicListAdapter = new TopicListAdapter(this);
+        topicList.setAdapter(topicListAdapter);
+        topicList.setLayoutManager(new LinearLayoutManager(this));
+        topicList.setItemAnimator(new DefaultItemAnimator());
+
+        runTopicsFab = (FloatingActionButton) findViewById(R.id.gramm_act_fab);
+        runTopicsFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                List<String> ids = topicListAdapter.getSelectedTopicsIds(topicListAdapter.getSelectedItems());
+
+                if (ids.size() > 0) {
+                    Intent intent = new Intent(GrammarActivity.this, ExerciseActivity.class);
+                    intent.putStringArrayListExtra(SELECTED_TOPICS_IDS, (ArrayList<String>)ids);
+                    startActivity(intent);
+                }
+
+                topicListAdapter.clearSelection();
+                runTopicsFab.hide(true);
+            }
+        });
+    }
+
+    private Drawer makeNavigationDrawer () {
+        return new DrawerBuilder()
                 .withActivity(this)
                 .withToolbar(toolBar)
                 .withTranslucentStatusBar(true)
@@ -135,42 +175,6 @@ public class GrammarActivity extends AppCompatActivity implements TopicListAdapt
                     }
                 })
                 .build();
-        navigationDrawer.setSelection(Application.IDENTIFIER_GRAMMAR);
-
-        progressBar = (CircularProgressView) findViewById(R.id.gramm_act_progress_bar);
-        noConnectionBtn = (Button) findViewById(R.id.no_connect_btn);
-        noConnectionBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadData();
-            }
-        });
-        noConnectionMsg = findViewById(R.id.gramm_act_no_connect);
-
-        topicList = (RecyclerView) findViewById(R.id.gramm_act_rv_topic_list);
-        topicList.addItemDecoration(new HorizontalDividerItemDecoration.Builder(this).build());
-        topicListAdapter = new TopicListAdapter(this);
-        topicList.setAdapter(topicListAdapter);
-        topicList.setLayoutManager(new LinearLayoutManager(this));
-        topicList.setItemAnimator(new DefaultItemAnimator());
-
-        runTopicsFab = (FloatingActionButton) findViewById(R.id.gramm_act_fab);
-        runTopicsFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                List<String> ids = topicListAdapter.getSelectedTopicsIds(topicListAdapter.getSelectedItems());
-
-                if (ids.size() > 0) {
-                    Intent intent = new Intent(GrammarActivity.this, ExerciseActivity.class);
-                    intent.putStringArrayListExtra(SELECTED_TOPICS_IDS, (ArrayList<String>)ids);
-                    startActivity(intent);
-                }
-
-                topicListAdapter.clearSelection();
-                runTopicsFab.hide(true);
-            }
-        });
     }
 
     @Override

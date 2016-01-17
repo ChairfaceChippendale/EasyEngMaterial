@@ -9,15 +9,13 @@
     <string name="title_activity_grammar">Grammar</string>
     <string name="title_activity_edit_pack">Edit pack</string>
     <string name="title_activity_learn_word"></string>
+    <string name="title_activity_dic_manager">Manager</string>
 
     <string name="theme_light">Custom.Light</string>
     <string name="theme_dark">Custom.Dark</string>
 
     <string name="pref_list_themes_title">Change theme</string>
     <string name="pref_list_themes_title_dialog">Choice theme</string>
-    <string name="main_act_gramm_tile_subtext">Grammar text</string>
-    <string name="main_act_vocab_tile_subtext">Vocabulary text</string>
-    <string name="main_act_dict_tile_subtext">Dictionary text</string>
 
     <string name="action_add_pack">Add pack</string>
     <string name="action_remove_pack">Remove pack</string>
@@ -69,8 +67,11 @@
     <string name="feed_back_email">easy.english.assist@gmail.com</string>
     <string name="feed_back_subject">Feedback</string>
     <string name="feed_back_title">Send Feedback:</string>
-    <string name="title_activity_dic_manager">Manager</string>
 
+    <string name="manager_act_dictionary_remove_confirm_question">Remove dictionary</string>
+    <string name="manager_act_dictionary_remove_confirm_btn">REMOVE</string>
+    <string name="manager_act_dictionary_remove_cancel_btn">CANCEL</string>
+    <string name="action_to_vocabulary">To vocabulary</string>
 
 
 </resources>

@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.ujujzk.easyengmaterial.eeapp.model.Word;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordViewHolder> {
@@ -19,6 +20,7 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordVi
     public WordListAdapter(List<Word> words, WordViewHolder.ClickListener clickListener) {
         super();
         this.clickListener = clickListener;
+        Collections.sort(words);
         mWords = new ArrayList<Word>(words);
 
     }

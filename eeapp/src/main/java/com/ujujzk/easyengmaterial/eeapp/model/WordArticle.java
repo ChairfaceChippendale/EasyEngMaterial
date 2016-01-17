@@ -5,12 +5,12 @@ import com.github.aleksandrsavosh.simplestore.Base;
 
 public class WordArticle extends Base {
     String article;
-    long wordId;
-    long dictionaryId;
+    Long wordId;
+    Long dictionaryId;
 
     public WordArticle(){}
 
-    public WordArticle(String article, long wordId, long dictionaryId) {
+    public WordArticle(String article, Long wordId, Long dictionaryId) {
         this.article = article;
         this.wordId = wordId;
         this.dictionaryId = dictionaryId;

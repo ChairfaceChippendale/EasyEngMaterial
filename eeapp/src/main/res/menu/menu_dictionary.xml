@@ -8,6 +8,12 @@
           android:title="@string/action_manager"
           android:icon="@drawable/ic_library_books_white_48dp"
           android:orderInCategory="100"
-          app:showAsAction="ifRoom"/>
+          app:showAsAction="always"/>
+
+      <item android:id="@+id/dict_act_action_to_vocabulary"
+            android:title="@string/action_to_vocabulary"
+            android:icon="@drawable/ic_style_white_48dp"
+            android:orderInCategory="200"
+            app:showAsAction="always"/>
 
 </menu>

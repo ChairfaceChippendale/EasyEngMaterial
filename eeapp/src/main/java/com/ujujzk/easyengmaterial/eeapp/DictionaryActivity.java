@@ -9,13 +9,10 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.SearchView;
-import android.widget.TextView;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
@@ -53,7 +50,19 @@ public class DictionaryActivity extends AppCompatActivity implements OnWordSelec
         toolBar = (Toolbar) findViewById(R.id.dict_act_app_bar);
         ActivityUtil.setToolbarColor(this, toolBar.getId());
         setSupportActionBar(toolBar);
-        navigationDrawer = new DrawerBuilder()
+        navigationDrawer = makeNavigationDrawer();
+        navigationDrawer.setSelection(Application.IDENTIFIER_DICTIONARY);
+
+        viewPager = (ViewPager) findViewById(R.id.dict_act_viewpager);
+        setupViewPager(viewPager);
+
+        tabLayout = (TabLayout) findViewById(R.id.dict_act_tabs);
+        tabLayout.setupWithViewPager(viewPager);
+
+    }
+
+    private Drawer makeNavigationDrawer () {
+        return new DrawerBuilder()
                 .withActivity(this)
                 .withToolbar(toolBar)
                 .withTranslucentStatusBar(true)
@@ -128,14 +137,6 @@ public class DictionaryActivity extends AppCompatActivity implements OnWordSelec
                     }
                 })
                 .build();
-        navigationDrawer.setSelection(Application.IDENTIFIER_DICTIONARY);
-
-        viewPager = (ViewPager) findViewById(R.id.dict_act_viewpager);
-        setupViewPager(viewPager);
-
-        tabLayout = (TabLayout) findViewById(R.id.dict_act_tabs);
-        tabLayout.setupWithViewPager(viewPager);
-
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -158,8 +159,14 @@ public class DictionaryActivity extends AppCompatActivity implements OnWordSelec
         int id = item.getItemId();
         switch (id){
             case R.id.dict_act_action_manager:
-                startActivity(new Intent(DictionaryActivity.this, DicManagerActivity.class));
+                startActivity(new Intent(DictionaryActivity.this, DictManagerActivity.class));
                 overridePendingTransition(R.animator.activity_appear_from_right, R.animator.activity_disappear_alpha); //custom activity transition animation
+                return true;
+            case R.id.dict_act_action_to_vocabulary:
+
+                //TODO through dialog
+                makeSendToVocabularyDialog("Hello");
+
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -168,7 +175,7 @@ public class DictionaryActivity extends AppCompatActivity implements OnWordSelec
 
     @Override
     public void OnWordSelected(long wordId) {
-        //TODO send wordId to WordAtricleFragment
+        //TODO send wordId to WordArticleFragment
         //((ViewPagerAdapter) viewPager.getAdapter()).getItem(1);
     }
 
@@ -199,6 +206,11 @@ public class DictionaryActivity extends AppCompatActivity implements OnWordSelec
         public CharSequence getPageTitle(int position) {
             return mFragmentTitleList.get(position);
         }
+    }
+
+    private MaterialDialog makeSendToVocabularyDialog (String word) {
+        //TODO
+        return null;
     }
 
     private void sendSharingMassage(String massage){

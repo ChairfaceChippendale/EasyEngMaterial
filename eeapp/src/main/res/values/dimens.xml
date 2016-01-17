@@ -34,4 +34,7 @@
     <dimen name="answer_list_item_text_size">20sp</dimen>
     <dimen name="topic_list_item_text_size">16sp</dimen>
 
+    <dimen name="dictionary_list_item_text_size">16sp</dimen>
+    <dimen name="dictionary_list_item_remove_btn_size">16dp</dimen>
+
 </resources>

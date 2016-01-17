@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        >
+
+    <TextView
+            android:id="@+id/dictionary_list_item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:textColor="@color/dictionary_list_item_title_light"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:textSize="@dimen/dictionary_list_item_text_size"
+            android:text="Dictionary"/>
+
+
+    <ImageButton
+            android:id="@+id/dictionary_list_item_remove_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            style="?android:attr/borderlessButtonStyle"/>
+
+
+</RelativeLayout>

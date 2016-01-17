@@ -65,7 +65,7 @@
         </service>
 
         <activity
-            android:name=".DicManagerActivity"
+            android:name=".DictManagerActivity"
             android:label="@string/title_activity_dic_manager" >
         </activity>
     </application>

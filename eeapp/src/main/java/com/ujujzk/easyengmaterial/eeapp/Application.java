@@ -5,10 +5,14 @@ import android.content.Intent;
 import android.util.Log;
 import com.github.aleksandrsavosh.simplestore.SimpleStore;
 import com.github.aleksandrsavosh.simplestore.SimpleStoreManager;
+import com.github.aleksandrsavosh.simplestore.proxy.LogProxy;
+import com.github.aleksandrsavosh.simplestore.sqlite.SQLiteSimpleStoreImpl;
+import com.github.aleksandrsavosh.simplestore.sqlite.TransactionProxy;
 import com.parse.Parse;
 import com.parse.ParseCrashReporting;
 import com.ujujzk.easyengmaterial.eeapp.model.*;
 
+import java.lang.reflect.Proxy;
 import java.util.HashSet;
 
 public class Application extends android.app.Application {
@@ -54,8 +58,13 @@ public class Application extends android.app.Application {
         });
 
         storeManager.useLog(true);
-        storeManager.initLocalStore(22);
+        storeManager.initLocalStore(23);
         localStore = storeManager.getLocalStore();
+
+//        localStore = new SQLiteSimpleStoreImpl();
+//        localStore = (SimpleStore) Proxy.newProxyInstance(getClass().getClassLoader(), new Class[]{SimpleStore.class}, new TransactionProxy(localStore, storeManager.getSqLiteHelper()));
+//        return (SimpleStore)Proxy.newProxyInstance(simpleStore1.getClass().getClassLoader(), new Class[]{SimpleStore.class}, new LogProxy(simpleStore1));
+
         storeManager.initCloudStore("a2FaVXXRxCiY0r61U0nZ6hS6VhuSDcQfC32Vhium", "b2aaFgro20MWP8t1sRGbjdsRrJrwBBm78cSDKxD8");
         cloudStore = storeManager.getCloudStore();
 
