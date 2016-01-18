@@ -1,4 +1,4 @@
-package com.ujujzk.easyengmaterial.eeapp;
+package com.ujujzk.easyengmaterial.eeapp.dictionary;
 
 
 import android.content.Context;
@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
+import com.ujujzk.easyengmaterial.eeapp.R;
 import com.ujujzk.easyengmaterial.eeapp.model.Word;
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 
@@ -59,6 +60,13 @@ public class WordHistoryFragment extends Fragment implements WordListAdapter.Wor
         wordHistoryList.setItemAnimator(new DefaultItemAnimator());
 
         return v;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+
     }
 
     @Override

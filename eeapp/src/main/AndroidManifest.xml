@@ -22,10 +22,10 @@
             android:label="@string/title_activity_settings" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.ujujzk.easyengmaterial.eeapp.DictionaryActivity" />
+                android:value=".dictionary.DictionaryActivity" />
         </activity>
         <activity
-            android:name=".DictionaryActivity"
+            android:name=".dictionary.DictionaryActivity"
             android:label="@string/title_activity_dictionary" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,27 +34,27 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".VocabularyActivity"
+            android:name=".vocabulary.VocabularyActivity"
             android:label="@string/title_activity_vocabulary" >
         </activity>
         <activity
-            android:name=".GrammarActivity"
+            android:name=".grammar.GrammarActivity"
             android:label="@string/title_activity_grammar" >
         </activity>
         <activity
-            android:name=".EditPackActivity"
+            android:name=".vocabulary.EditPackActivity"
             android:label="@string/title_activity_edit_pack" >
         </activity>
         <activity
-            android:name=".LearnWordActivity"
+            android:name=".vocabulary.LearnWordActivity"
             android:label="@string/title_activity_learn_word" >
         </activity>
         <activity
-            android:name=".ExerciseActivity"
+            android:name=".grammar.ExerciseActivity"
             android:label="@string/title_activity_exerrcise" >
         </activity>
         <activity
-            android:name=".RuleActivity"
+            android:name=".grammar.RuleActivity"
             android:label="@string/title_activity_rule" >
         </activity>
 
@@ -65,7 +65,7 @@
         </service>
 
         <activity
-            android:name=".DictManagerActivity"
+            android:name=".dictionary.DictManagerActivity"
             android:label="@string/title_activity_dic_manager" >
         </activity>
     </application>

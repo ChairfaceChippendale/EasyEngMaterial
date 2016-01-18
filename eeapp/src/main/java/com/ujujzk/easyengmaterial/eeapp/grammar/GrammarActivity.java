@@ -1,4 +1,4 @@
-package com.ujujzk.easyengmaterial.eeapp;
+package com.ujujzk.easyengmaterial.eeapp.grammar;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,12 +10,10 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ProgressBar;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
@@ -26,8 +24,14 @@ import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+import com.ujujzk.easyengmaterial.eeapp.AboutActivity;
+import com.ujujzk.easyengmaterial.eeapp.Application;
+import com.ujujzk.easyengmaterial.eeapp.R;
+import com.ujujzk.easyengmaterial.eeapp.SettingsActivity;
+import com.ujujzk.easyengmaterial.eeapp.dictionary.DictionaryActivity;
 import com.ujujzk.easyengmaterial.eeapp.model.Topic;
 import com.ujujzk.easyengmaterial.eeapp.util.ActivityUtil;
+import com.ujujzk.easyengmaterial.eeapp.vocabulary.VocabularyActivity;
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 
 import java.util.ArrayList;

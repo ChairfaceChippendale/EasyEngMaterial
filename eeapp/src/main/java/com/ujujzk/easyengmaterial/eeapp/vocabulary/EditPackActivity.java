@@ -1,4 +1,4 @@
-package com.ujujzk.easyengmaterial.eeapp;
+package com.ujujzk.easyengmaterial.eeapp.vocabulary;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,19 +10,18 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.clans.fab.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import com.ujujzk.easyengmaterial.eeapp.Application;
+import com.ujujzk.easyengmaterial.eeapp.R;
 import com.ujujzk.easyengmaterial.eeapp.model.Card;
 import com.ujujzk.easyengmaterial.eeapp.model.GlosbeResponse;
 import com.ujujzk.easyengmaterial.eeapp.model.Pack;

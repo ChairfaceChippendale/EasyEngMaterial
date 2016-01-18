@@ -1,11 +1,12 @@
-package com.ujujzk.easyengmaterial.eeapp;
+package com.ujujzk.easyengmaterial.eeapp.vocabulary;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import com.ujujzk.easyengmaterial.eeapp.Application;
+import com.ujujzk.easyengmaterial.eeapp.R;
 import com.ujujzk.easyengmaterial.eeapp.model.Card;
 import com.ujujzk.easyengmaterial.eeapp.model.Pack;
 import java.util.ArrayList;

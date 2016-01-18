@@ -4,7 +4,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/secondary_window_bgr_light"
-                tools:context="com.ujujzk.easyengmaterial.eeapp.VocabularyActivity">
+                tools:context="com.ujujzk.easyengmaterial.eeapp.vocabulary.VocabularyActivity">
 
     <include
             android:id="@+id/vocab_act_app_bar"

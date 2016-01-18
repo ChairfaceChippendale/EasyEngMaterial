@@ -1,4 +1,4 @@
-package com.ujujzk.easyengmaterial.eeapp;
+package com.ujujzk.easyengmaterial.eeapp.dictionary;
 
 
 import android.content.Context;
@@ -8,16 +8,14 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.ujujzk.easyengmaterial.eeapp.R;
 import com.ujujzk.easyengmaterial.eeapp.model.Word;
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class WordListFragment extends Fragment implements
@@ -71,6 +69,7 @@ public class WordListFragment extends Fragment implements
         wordListManager = new LinearLayoutManager(getActivity());
         wordList.setLayoutManager(wordListManager);
 
+        //TODO get data
         //--MOC--
         wordListContent = new ArrayList<Word>();
         String[] s = {"abandoned", "able", "absolute", "adorable", "adventurous", "academic", "acceptable", "acclaimed", "accomplished", "accurate", "aching", "acidic",
@@ -101,14 +100,16 @@ public class WordListFragment extends Fragment implements
         //TODO go to WordArticleFragment
 
         Word word = wordListAdapter.getWord(position);
-
+//TODO temp-------delete when "getting of data" done
+        word.setLocalId(15l);
+//----------------
         wordSelectedListener.OnWordSelected(word.getLocalId());
 
         if (context != null) {
-            TabLayout tabhost = (TabLayout) getActivity().findViewById(R.id.dict_act_tabs);
-            int wordArticleTabPosition = 1;
-            if (wordArticleTabPosition < tabhost.getTabCount()) {
-                tabhost.getTabAt(wordArticleTabPosition).select();
+            TabLayout tabLayout = (TabLayout) getActivity().findViewById(R.id.dict_act_tabs);
+            int wordArticleTabPosition = ((DictionaryActivity)getActivity()).getTabPositionByTitle(getResources().getString(R.string.word_article_fragment_title));
+            if (wordArticleTabPosition < tabLayout.getTabCount()) {
+                tabLayout.getTabAt(wordArticleTabPosition).select();
             }
         }
     }

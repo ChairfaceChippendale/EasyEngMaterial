@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto"
       xmlns:tools="http://schemas.android.com/tools"
-      tools:context="com.ujujzk.easyengmaterial.eeapp.GrammarActivity">
+      tools:context="com.ujujzk.easyengmaterial.eeapp.grammar.GrammarActivity">
 
     <item
             android:id="@+id/gramm_act_action_rule"

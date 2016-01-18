@@ -1,16 +1,16 @@
-package com.ujujzk.easyengmaterial.eeapp;
+package com.ujujzk.easyengmaterial.eeapp.grammar;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.TextView;
-import com.ujujzk.easyengmaterial.eeapp.model.Card;
+import com.ujujzk.easyengmaterial.eeapp.R;
 import com.ujujzk.easyengmaterial.eeapp.model.Topic;
+import com.ujujzk.easyengmaterial.eeapp.vocabulary.PackListSelectableAdapter;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -18,7 +18,7 @@ import java.util.List;
 
 
 public class TopicListAdapter
-        extends PackListSelectableAdapter<TopicListAdapter.TopicViewHolder>{
+        extends PackListSelectableAdapter<TopicListAdapter.TopicViewHolder> {
 
     private List<Topic> topics;
     private TopicViewHolder.ClickListener clickListener;

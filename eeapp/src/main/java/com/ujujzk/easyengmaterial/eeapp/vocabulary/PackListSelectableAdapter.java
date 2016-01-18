@@ -1,4 +1,4 @@
-package com.ujujzk.easyengmaterial.eeapp;
+package com.ujujzk.easyengmaterial.eeapp.vocabulary;
 
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseBooleanArray;

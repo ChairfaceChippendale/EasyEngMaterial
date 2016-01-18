@@ -1,4 +1,4 @@
-package com.ujujzk.easyengmaterial.eeapp;
+package com.ujujzk.easyengmaterial.eeapp.dictionary;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,7 +22,10 @@ import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+import com.ujujzk.easyengmaterial.eeapp.*;
+import com.ujujzk.easyengmaterial.eeapp.grammar.GrammarActivity;
 import com.ujujzk.easyengmaterial.eeapp.util.ActivityUtil;
+import com.ujujzk.easyengmaterial.eeapp.vocabulary.VocabularyActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +35,7 @@ import java.util.List;
 
 //http://mymemory.translated.net/doc/spec.php
 
-public class DictionaryActivity extends AppCompatActivity implements OnWordSelectedListener{
+public class DictionaryActivity extends AppCompatActivity implements OnWordSelectedListener {
 
     @SuppressWarnings("unused")
     private static final String TAG = DictionaryActivity.class.getSimpleName();
@@ -39,7 +43,7 @@ public class DictionaryActivity extends AppCompatActivity implements OnWordSelec
     private Toolbar toolBar;
     private Drawer navigationDrawer = null;
     private TabLayout tabLayout;
-    private ViewPager viewPager;
+    protected ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +63,10 @@ public class DictionaryActivity extends AppCompatActivity implements OnWordSelec
         tabLayout = (TabLayout) findViewById(R.id.dict_act_tabs);
         tabLayout.setupWithViewPager(viewPager);
 
+    }
+
+    public int getTabPositionByTitle (String title){
+        return ((ViewPagerAdapter)viewPager.getAdapter()).getFragmentPositionByTitle(title);
     }
 
     private Drawer makeNavigationDrawer () {
@@ -145,6 +153,8 @@ public class DictionaryActivity extends AppCompatActivity implements OnWordSelec
         adapter.addFragment(new WordArticleFragment(), getResources().getString(R.string.word_article_fragment_title));
         adapter.addFragment(new WordHistoryFragment(), getResources().getString(R.string.word_history_fragment_title));
         viewPager.setAdapter(adapter);
+
+
     }
 
     @Override
@@ -175,8 +185,11 @@ public class DictionaryActivity extends AppCompatActivity implements OnWordSelec
 
     @Override
     public void OnWordSelected(long wordId) {
-        //TODO send wordId to WordArticleFragment
-        //((ViewPagerAdapter) viewPager.getAdapter()).getItem(1);
+
+        //TODO send wordId to WordArticleFragment - CHECK
+        final int wordArticleFragmentPosition = ((ViewPagerAdapter) viewPager.getAdapter()).getFragmentPositionByTitle(getResources().getString(R.string.word_article_fragment_title));
+        ((WordArticleFragment)((ViewPagerAdapter) viewPager.getAdapter()).getItem(wordArticleFragmentPosition)).setSelectedWord(wordId);
+
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
@@ -190,6 +203,15 @@ public class DictionaryActivity extends AppCompatActivity implements OnWordSelec
         @Override
         public Fragment getItem(int position) {
             return mFragmentList.get(position);
+        }
+
+        public int getFragmentPositionByTitle(String title){
+            for (int i = 0; i < mFragmentTitleList.size(); i++) {
+                if (mFragmentTitleList.get(i).equals(title)){
+                    return i;
+                }
+            }
+            return 0;
         }
 
         @Override
@@ -221,7 +243,7 @@ public class DictionaryActivity extends AppCompatActivity implements OnWordSelec
         startActivity(sendIntent);
     }
 
-    private void  sendFeedBack(String massage){
+    private void sendFeedBack(String massage){
         Intent email = new Intent(Intent.ACTION_SEND);
         email.setType("text/email");
         email.putExtra(Intent.EXTRA_EMAIL, new String[] { getResources().getString(R.string.feed_back_email) });

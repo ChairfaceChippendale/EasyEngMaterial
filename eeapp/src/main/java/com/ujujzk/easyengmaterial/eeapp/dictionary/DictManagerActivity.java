@@ -1,4 +1,4 @@
-package com.ujujzk.easyengmaterial.eeapp;
+package com.ujujzk.easyengmaterial.eeapp.dictionary;
 
 import android.os.Environment;
 import android.support.annotation.NonNull;
@@ -16,6 +16,8 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.aleksandrsavosh.simplestore.KeyValue;
 import com.github.clans.fab.FloatingActionButton;
+import com.ujujzk.easyengmaterial.eeapp.Application;
+import com.ujujzk.easyengmaterial.eeapp.R;
 import com.ujujzk.easyengmaterial.eeapp.model.Dictionary;
 import com.ujujzk.easyengmaterial.eeapp.model.Word;
 import com.ujujzk.easyengmaterial.eeapp.model.WordArticle;

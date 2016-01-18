@@ -1,4 +1,4 @@
-package com.ujujzk.easyengmaterial.eeapp;
+package com.ujujzk.easyengmaterial.eeapp.grammar;
 
 
 import android.content.Intent;
@@ -6,16 +6,16 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.github.fafaldo.fabtoolbar.widget.FABToolbarLayout;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
+import com.ujujzk.easyengmaterial.eeapp.Application;
+import com.ujujzk.easyengmaterial.eeapp.R;
 import com.ujujzk.easyengmaterial.eeapp.model.Answer;
 import com.ujujzk.easyengmaterial.eeapp.model.Task;
 import com.ujujzk.easyengmaterial.eeapp.model.Topic;
