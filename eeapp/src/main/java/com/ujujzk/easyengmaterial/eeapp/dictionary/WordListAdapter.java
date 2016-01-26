@@ -49,7 +49,10 @@ public class WordListAdapter extends RecyclerView.Adapter<WordListAdapter.WordVi
     }
 
     public void setWords(List<Word> newWords){
+        Collections.sort(newWords);
         mWords = new ArrayList<Word>(newWords);
+
+        notifyDataSetChanged();
     }
 
     @Override

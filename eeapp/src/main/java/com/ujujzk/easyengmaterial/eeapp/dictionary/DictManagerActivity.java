@@ -1,8 +1,11 @@
 package com.ujujzk.easyengmaterial.eeapp.dictionary;
 
+import android.content.Intent;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -10,6 +13,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import com.afollestad.materialdialogs.DialogAction;
@@ -20,7 +24,7 @@ import com.ujujzk.easyengmaterial.eeapp.Application;
 import com.ujujzk.easyengmaterial.eeapp.R;
 import com.ujujzk.easyengmaterial.eeapp.model.Dictionary;
 import com.ujujzk.easyengmaterial.eeapp.model.Word;
-import com.ujujzk.easyengmaterial.eeapp.model.WordArticle;
+import com.ujujzk.easyengmaterial.eeapp.model.Article;
 import com.ujujzk.easyengmaterial.eeapp.util.ActivityUtil;
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 
@@ -36,6 +40,7 @@ public class DictManagerActivity extends AppCompatActivity implements Dictionary
 
     @SuppressWarnings("unused")
     private static final String TAG = DictManagerActivity.class.getSimpleName();
+    public static final String DATA_CHANGED = "data_changed";
 
     private static final String DICTIONARY_NAME_TAG_IN_FILE = "#NAME";
     private static final int DICTIONARY_NAME_SEARCHING_ROW_NUMBER = 10;
@@ -46,12 +51,14 @@ public class DictManagerActivity extends AppCompatActivity implements Dictionary
     private LinearLayoutManager dictionaryListManager;
     private DictionaryListAdapter dictionaryListAdapter;
     private MaterialDialog confirmDictionaryRemove;
+    private boolean isChanged;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         ActivityUtil.setTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dic_manager);
+        isChanged = false;
 
         toolBar = (Toolbar) findViewById(R.id.dic_manager_act_app_bar);
         ActivityUtil.setToolbarColor(this, toolBar.getId());
@@ -74,22 +81,24 @@ public class DictManagerActivity extends AppCompatActivity implements Dictionary
         initializeNewDictionariesFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 initializeNewDictionaries();
-
             }
         });
+
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         int id = item.getItemId();
         if (id == android.R.id.home) {
+            Intent intent = new Intent();
+            intent.putExtra(DATA_CHANGED, isChanged);
+            setResult(RESULT_OK, intent);
             onBackPressed();
             overridePendingTransition(R.animator.activity_appear_alpha, R.animator.activity_disappear_to_right); //custom activity transition animation
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -109,7 +118,7 @@ public class DictManagerActivity extends AppCompatActivity implements Dictionary
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        removeDictionary(dictPosition, dictName);
+                        removeDictionary(dictPosition);
                         confirmDictionaryRemove.dismiss();
                     }
                 })
@@ -122,30 +131,30 @@ public class DictManagerActivity extends AppCompatActivity implements Dictionary
                 .build();
     }
 
-    private void removeDictionary (int dictPosition, String dictName) {
+    private void removeDictionary (int dictPosition) {
         Long dictLocalId = dictionaryListAdapter.getDictionary(dictPosition).getLocalId();
 
-        //TODO remove all articles related to this dictionary - CHECK
-        List<WordArticle> articles = Application.localStore.readBy(WordArticle.class, new KeyValue("dictionaryId", dictLocalId));
+        List<Article> articles = Application.localStore.readBy(Article.class, new KeyValue("dictionaryId", dictLocalId));
         if (!articles.isEmpty()){
-            for (WordArticle article: articles){
-                Application.localStore.delete(article.getLocalId(), WordArticle.class);
+            for (Article article: articles){
+                Application.localStore.delete(article.getLocalId(), Article.class);
             }
         }
-        //TODO remove all words that don't have articles - CHECK
+
         List<Word> words = Application.localStore.readAll(Word.class);
-        for (Word word: words){
-            List<WordArticle> articleList = Application.localStore.readBy(WordArticle.class, new KeyValue("wordId", word.getLocalId()));
+
+        for (Word word: words) {
+            List<Article> articleList = Application.localStore.readBy(Article.class, new KeyValue("wordId", word.getLocalId()));
             if (articleList.isEmpty()){
-                Application.localStore.delete(word.getLocalId(),Word.class);
+                Application.localStore.delete(word.getLocalId(), Word.class);
             }
         }
 
         Application.localStore.delete(dictLocalId, Dictionary.class);
         dictionaryListAdapter.removeDictionary(dictPosition);
+
+        isChanged = true;
     }
-
-
 
 
 
@@ -170,8 +179,12 @@ public class DictManagerActivity extends AppCompatActivity implements Dictionary
         List<File> dslFiles = new ArrayList<File>();
 
         for (File f : allFiles) {
-            if (f.getName().endsWith(".dsl")) {
-                dslFiles.add(f);
+            final String fileName = f.getName();
+
+            if (fileName.endsWith(".dsl")) {
+                if (!fileName.endsWith("_abrv.dsl")) { //special files with abbreviations
+                    dslFiles.add(f);
+                }
             }
         }
 
@@ -187,7 +200,7 @@ public class DictManagerActivity extends AppCompatActivity implements Dictionary
             }
         }
 
-
+        isChanged = true;
     }
 
     private void addDictionaryToDataBase(File file) {
@@ -276,7 +289,7 @@ public class DictManagerActivity extends AppCompatActivity implements Dictionary
                 wordLocalId = existingWords.get(0).getLocalId();
             }
 
-            Application.localStore.create(new WordArticle(article, wordLocalId, dictLocalId));
+            Application.localStore.create(new Article(article, wordLocalId, dictLocalId));
 
         }
     }
@@ -296,15 +309,32 @@ public class DictManagerActivity extends AppCompatActivity implements Dictionary
         str = str.replaceAll("\\[(s|url)\\][^\\[]*\\[/(s|url)\\]", "");
         str = str.replaceAll("\\[/?lang[^\\[]*\\]", "");
 
-        str = str.replaceAll("\\[c\\](\\[com\\])?", "<span style='color:green'>");
-        str = str.replaceAll("(\\[/com\\])?\\[/c\\]", "</span>");
-        str = str.replace("[c]", "<span style='color:green'>");
-        str = str.replace("[p]", "<span style='color:green'><i>");
-        str = str.replace("[/p]", "</i></span>");
-        str = str.replaceAll("\\[(ex|c gray)\\]", "<span style='color:gray'>");
-        str = str.replaceAll("\\[/(ex|com)\\]", "</span>");
-        str = str.replace("[ref]", "<span style='color:blue'>");
-        str = str.replace("[/ref]", "</span>");
+        //str = str.replaceAll("\\[c\\](\\[com\\])?", "<span style='color:green'>");
+        str = str.replaceAll("\\[c\\](\\[com\\])?", "<font color=\'#2e7d32\'>");
+
+        //str = str.replaceAll("(\\[/com\\])?\\[/c\\]", "</span>");
+        str = str.replaceAll("(\\[/com\\])?\\[/c\\]", "</font>");
+
+        //str = str.replace("[c]", "<span style='color:green'>");
+        str = str.replace("[c]", "<font color=\'#2e7d32\'>");
+
+        //str = str.replace("[p]", "<span style='color:green'><i>");
+        str = str.replace("[p]", "<font color=\'#2e7d32\'><i>");
+
+        //str = str.replace("[/p]", "</i></span>");
+        str = str.replace("[/p]", "</i></font>");
+
+        //str = str.replaceAll("\\[(ex|c gray)\\]", "<span style='color:gray'>");
+        str = str.replaceAll("\\[(ex|c gray)\\]", "<font color=\'#757575\'>");
+
+        //str = str.replaceAll("\\[/(ex|com)\\]", "</span>");
+        str = str.replaceAll("\\[/(ex|com)\\]", "</font>");
+
+        //str = str.replace("[ref]", "<span style='color:blue'>");
+        str = str.replace("[ref]", "<font color=\'#283593\'>");
+
+        //str = str.replace("[/ref]", "</span>");
+        str = str.replace("[/ref]", "</font>");
 
         str = str.replaceAll("\\[m[1-9]?\\]", "");
         str = str.replace("[/m]", "<br>");

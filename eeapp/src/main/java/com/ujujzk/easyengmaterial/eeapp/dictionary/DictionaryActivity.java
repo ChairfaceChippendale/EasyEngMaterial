@@ -30,10 +30,6 @@ import com.ujujzk.easyengmaterial.eeapp.vocabulary.VocabularyActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-//http://geektimes.ru/post/120161/
-//http://web.archive.org/web/20110720142541/http://basharkokash.com/post/2010/04/19/Bing-Translator-for-developers.aspx
-
-//http://mymemory.translated.net/doc/spec.php
 
 public class DictionaryActivity extends AppCompatActivity implements OnWordSelectedListener {
 
@@ -169,9 +165,20 @@ public class DictionaryActivity extends AppCompatActivity implements OnWordSelec
         int id = item.getItemId();
         switch (id){
             case R.id.dict_act_action_manager:
-                startActivity(new Intent(DictionaryActivity.this, DictManagerActivity.class));
+                startActivityForResult(new Intent(DictionaryActivity.this, DictManagerActivity.class), 1);
                 overridePendingTransition(R.animator.activity_appear_from_right, R.animator.activity_disappear_alpha); //custom activity transition animation
+
+
+
+
+                final int wordListFragmentPosition = ((ViewPagerAdapter) viewPager.getAdapter()).getFragmentPositionByTitle(getResources().getString(R.string.word_list_fragment_title));
+                ((WordListFragment)((ViewPagerAdapter) viewPager.getAdapter()).getItem(wordListFragmentPosition)).updateWordList();
+
+
+
+
                 return true;
+
             case R.id.dict_act_action_to_vocabulary:
 
                 //TODO through dialog
@@ -184,9 +191,21 @@ public class DictionaryActivity extends AppCompatActivity implements OnWordSelec
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        boolean isChanged = true;
+        if (data != null) {
+            isChanged = data.getBooleanExtra(DictManagerActivity.DATA_CHANGED, true);
+        }
+        if (isChanged) {
+            final int wordListFragmentPosition = ((ViewPagerAdapter) viewPager.getAdapter()).getFragmentPositionByTitle(getResources().getString(R.string.word_list_fragment_title));
+            ((WordListFragment) ((ViewPagerAdapter) viewPager.getAdapter()).getItem(wordListFragmentPosition)).updateWordList();
+        }
+    }
+
+    @Override
     public void OnWordSelected(long wordId) {
 
-        //TODO send wordId to WordArticleFragment - CHECK
         final int wordArticleFragmentPosition = ((ViewPagerAdapter) viewPager.getAdapter()).getFragmentPositionByTitle(getResources().getString(R.string.word_article_fragment_title));
         ((WordArticleFragment)((ViewPagerAdapter) viewPager.getAdapter()).getItem(wordArticleFragmentPosition)).setSelectedWord(wordId);
 

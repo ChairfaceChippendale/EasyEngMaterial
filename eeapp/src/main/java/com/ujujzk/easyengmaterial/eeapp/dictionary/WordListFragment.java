@@ -2,6 +2,7 @@ package com.ujujzk.easyengmaterial.eeapp.dictionary;
 
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.github.rahatarmanahmed.cpv.CircularProgressView;
+import com.ujujzk.easyengmaterial.eeapp.Application;
 import com.ujujzk.easyengmaterial.eeapp.R;
 import com.ujujzk.easyengmaterial.eeapp.model.Word;
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
@@ -26,10 +29,10 @@ public class WordListFragment extends Fragment implements
     private static final String TAG = WordListFragment.class.getSimpleName();
 
     android.support.v7.widget.SearchView searchView;
+    private CircularProgressView progressBar;
     private RecyclerView wordList;
     private WordListAdapter wordListAdapter;
     private LinearLayoutManager wordListManager;
-    private List<Word> wordListContent;
     private Context context;
     private OnWordSelectedListener wordSelectedListener;
 
@@ -57,6 +60,8 @@ public class WordListFragment extends Fragment implements
         });
         searchView.setOnQueryTextListener(this);
 
+        progressBar = (CircularProgressView) v.findViewById(R.id.word_list_fr_progress_bar);
+
         wordList = (RecyclerView) v.findViewById(R.id.word_list_fr_list);
         wordList.addItemDecoration(new HorizontalDividerItemDecoration.Builder(getActivity()).build());
 
@@ -66,22 +71,13 @@ public class WordListFragment extends Fragment implements
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         wordListManager = new LinearLayoutManager(getActivity());
         wordList.setLayoutManager(wordListManager);
-
-        //TODO get data
-        //--MOC--
-        wordListContent = new ArrayList<Word>();
-        String[] s = {"abandoned", "able", "absolute", "adorable", "adventurous", "academic", "acceptable", "acclaimed", "accomplished", "accurate", "aching", "acidic",
-                "acrobatic", "active", "actual", "adept", "admirable", "admired", "adolescent", "adorable", "adored", "advanced", "afraid", "affectionate", "aged", "aggravating"};
-        for (int i = 0; i < s.length; i++) {
-            wordListContent.add(new Word(s[i]));
-        }
-        //------------------
-
-        wordListAdapter = new WordListAdapter(wordListContent, this);
+        wordListAdapter = new WordListAdapter(new ArrayList<Word>(), this);
         wordList.setAdapter(wordListAdapter);
         wordList.setItemAnimator(new DefaultItemAnimator());
+        updateWordList();
 
     }
 
@@ -100,9 +96,7 @@ public class WordListFragment extends Fragment implements
         //TODO go to WordArticleFragment
 
         Word word = wordListAdapter.getWord(position);
-//TODO temp-------delete when "getting of data" done
-        word.setLocalId(15l);
-//----------------
+
         wordSelectedListener.OnWordSelected(word.getLocalId());
 
         if (context != null) {
@@ -138,4 +132,32 @@ public class WordListFragment extends Fragment implements
         //TODO go to WordArticleFragment
         return true;
     }
+
+
+    public void updateWordList () {
+
+        new AsyncTask<Void, Void, List<Word>>() {
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                progressBar.setVisibility(View.VISIBLE);
+                wordList.setVisibility(View.GONE);
+            }
+
+            @Override
+            protected List<Word> doInBackground(Void... params) {
+                return Application.localStore.readAll(Word.class);
+            }
+
+            @Override
+            protected void onPostExecute(List<Word> words) {
+
+                wordListAdapter.setWords(words);
+                progressBar.setVisibility(View.GONE);
+                wordList.setVisibility(View.VISIBLE);
+            }
+        }.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
+    }
+
+
 }

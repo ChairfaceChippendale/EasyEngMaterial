@@ -1,11 +1,10 @@
 package com.ujujzk.easyengmaterial.eeapp.model;
 
-
-import android.media.audiofx.Equalizer;
 import com.github.aleksandrsavosh.simplestore.Base;
 
 public class Word extends Base implements Comparable {
-    String wordName;
+
+    private String wordName;
 
     public Word () {}
 
@@ -23,13 +22,13 @@ public class Word extends Base implements Comparable {
 
     @Override
     public String toString() {
-        return "Word :" + wordName;
+        return "Word :" + wordName + " " + super.toString();
     }
 
     @Override
     public int compareTo(Object anotherWord) {
         if (anotherWord instanceof Word){
-            return wordName.compareTo(((Word) anotherWord).getWordName());
+            return wordName.compareToIgnoreCase(((Word) anotherWord).getWordName());
         }
         return -1;
     }

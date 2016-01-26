@@ -1,26 +1,42 @@
 package com.ujujzk.easyengmaterial.eeapp.dictionary;
 
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.github.aleksandrsavosh.simplestore.KeyValue;
+import com.github.rahatarmanahmed.cpv.CircularProgressView;
 import com.ujujzk.easyengmaterial.eeapp.Application;
 import com.ujujzk.easyengmaterial.eeapp.R;
+import com.ujujzk.easyengmaterial.eeapp.model.Article;
 import com.ujujzk.easyengmaterial.eeapp.model.Word;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class WordArticleFragment extends Fragment{
 
-    private Word selectedWord;
+
+    private RecyclerView articleList;
+    private ArticleListAdapter articleListAdapter;
+    private CircularProgressView progressBar;
 
     public WordArticleFragment() {
     }
 
     public void setSelectedWord(Long wordId){
-        selectedWord = Application.localStore.read(wordId, Word.class);
-        //check if it null
-        //TODO create articles
+
+        //TODO create articles - CHECK
+        final Word selectedWord = Application.localStore.read(wordId, Word.class);
+        if (selectedWord != null) {
+            updateArticleList(wordId);
+        }
     }
 
     @Override
@@ -33,6 +49,8 @@ public class WordArticleFragment extends Fragment{
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_word_article, container, false);
 
+        progressBar = (CircularProgressView) v.findViewById(R.id.word_article_fr_progress_bar);
+        articleList = (RecyclerView) v.findViewById(R.id.word_article_fr_rv_article_list);
 
         return v;
     }
@@ -41,6 +59,34 @@ public class WordArticleFragment extends Fragment{
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        articleList.setLayoutManager(new LinearLayoutManager(getActivity()));
+        articleListAdapter = new ArticleListAdapter(new ArrayList<Article>());
+        articleList.setAdapter(articleListAdapter);
+        articleList.setItemAnimator(new DefaultItemAnimator());
 
+    }
+
+    private void updateArticleList(Long wordId) {
+        new AsyncTask<Long, Void, List<Article>>() {
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                progressBar.setVisibility(View.VISIBLE);
+                articleList.setVisibility(View.GONE);
+            }
+
+            @Override
+            protected List<Article> doInBackground(Long... params) {
+                return Application.localStore.readBy(Article.class, new KeyValue("wordId",params[0]));
+            }
+
+            @Override
+            protected void onPostExecute(List<Article> articles) {
+
+                articleListAdapter.setArticles(articles);
+                progressBar.setVisibility(View.GONE);
+                articleList.setVisibility(View.VISIBLE);
+            }
+        }.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR, wordId);
     }
 }

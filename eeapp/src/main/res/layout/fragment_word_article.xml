@@ -3,13 +3,24 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:context="info.androidhive.materialtabs.fragments.OneFragment">
+                tools:context="com.ujujzk.easyengmaterial.eeapp.dictionary.WordArticleFragment">
 
     <android.support.v7.widget.RecyclerView
-            android:id="@+id/word_article_fragment_rv_article_list"
+            android:id="@+id/word_article_fr_rv_article_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:visibility="visible">
     </android.support.v7.widget.RecyclerView>
+
+    <com.github.rahatarmanahmed.cpv.CircularProgressView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/word_article_fr_progress_bar"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_centerInParent="true"
+            android:visibility="gone"
+            app:cpv_animAutostart="true"
+            app:cpv_indeterminate="true" />
 
 
 </RelativeLayout>

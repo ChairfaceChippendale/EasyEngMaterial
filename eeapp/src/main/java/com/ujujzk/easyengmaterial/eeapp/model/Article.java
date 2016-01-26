@@ -3,14 +3,14 @@ package com.ujujzk.easyengmaterial.eeapp.model;
 
 import com.github.aleksandrsavosh.simplestore.Base;
 
-public class WordArticle extends Base {
+public class Article extends Base {
     String article;
     Long wordId;
     Long dictionaryId;
 
-    public WordArticle(){}
+    public Article(){}
 
-    public WordArticle(String article, Long wordId, Long dictionaryId) {
+    public Article(String article, Long wordId, Long dictionaryId) {
         this.article = article;
         this.wordId = wordId;
         this.dictionaryId = dictionaryId;

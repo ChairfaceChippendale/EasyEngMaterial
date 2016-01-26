@@ -1,18 +1,11 @@
 package com.ujujzk.easyengmaterial.eeapp;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 import com.github.aleksandrsavosh.simplestore.SimpleStore;
 import com.github.aleksandrsavosh.simplestore.SimpleStoreManager;
-import com.github.aleksandrsavosh.simplestore.proxy.LogProxy;
-import com.github.aleksandrsavosh.simplestore.sqlite.SQLiteSimpleStoreImpl;
-import com.github.aleksandrsavosh.simplestore.sqlite.TransactionProxy;
-import com.parse.Parse;
-import com.parse.ParseCrashReporting;
 import com.ujujzk.easyengmaterial.eeapp.model.*;
 
-import java.lang.reflect.Proxy;
 import java.util.HashSet;
 
 public class Application extends android.app.Application {
@@ -53,12 +46,12 @@ public class Application extends android.app.Application {
             add(Answer.class);
             add(Dictionary.class);
             add(Word.class);
-            add(WordArticle.class);
+            add(Article.class);
         }
         });
 
         storeManager.useLog(true);
-        storeManager.initLocalStore(23);
+        storeManager.initLocalStore(26);
         localStore = storeManager.getLocalStore();
 
 //        localStore = new SQLiteSimpleStoreImpl();

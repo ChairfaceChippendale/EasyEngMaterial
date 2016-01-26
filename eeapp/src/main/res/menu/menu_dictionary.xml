@@ -3,23 +3,22 @@
       xmlns:tools="http://schemas.android.com/tools"
       tools:context="com.ujujzk.easyengmaterial.eeapp.dictionary.DictionaryActivity">
 
+    <item android:id="@+id/dict_act_action_pronunciation"
+          android:title="@string/action_pronunciation"
+          android:icon="@drawable/ic_volume_up_white_48dp"
+          android:orderInCategory="300"
+          app:showAsAction="always"/>
+
+    <item android:id="@+id/dict_act_action_to_vocabulary"
+          android:title="@string/action_to_vocabulary"
+          android:icon="@drawable/ic_style_white_48dp"
+          android:orderInCategory="200"
+          app:showAsAction="always"/>
 
     <item android:id="@+id/dict_act_action_manager"
           android:title="@string/action_manager"
           android:icon="@drawable/ic_library_books_white_48dp"
           android:orderInCategory="100"
           app:showAsAction="always"/>
-
-      <item android:id="@+id/dict_act_action_to_vocabulary"
-            android:title="@string/action_to_vocabulary"
-            android:icon="@drawable/ic_style_white_48dp"
-            android:orderInCategory="200"
-            app:showAsAction="always"/>
-
-      <item android:id="@+id/dict_act_action_pronunciation"
-            android:title="@string/action_pronunciation"
-            android:icon="@drawable/ic_volume_up_white_48dp"
-            android:orderInCategory="300"
-            app:showAsAction="always"/>
 
 </menu>
