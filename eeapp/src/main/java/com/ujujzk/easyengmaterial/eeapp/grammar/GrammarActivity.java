@@ -95,6 +95,7 @@ public class GrammarActivity extends AppCompatActivity implements TopicListAdapt
                     Intent intent = new Intent(GrammarActivity.this, ExerciseActivity.class);
                     intent.putStringArrayListExtra(SELECTED_TOPICS_IDS, (ArrayList<String>)ids);
                     startActivity(intent);
+                    overridePendingTransition(R.animator.activity_appear_from_right, R.animator.activity_disappear_alpha); //custom activity transition animation
                 }
 
                 topicListAdapter.clearSelection();
@@ -206,6 +207,7 @@ public class GrammarActivity extends AppCompatActivity implements TopicListAdapt
                         Intent intent = new Intent(GrammarActivity.this, RuleActivity.class);
                         intent.putExtra(SELECTED_TOPIC_ID, ids.get(0));
                         startActivity(intent);
+                        overridePendingTransition(R.animator.activity_appear_from_right, R.animator.activity_disappear_alpha); //custom activity transition animation
                     }
                 }
                 runTopicsFab.hide(true);

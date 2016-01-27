@@ -98,6 +98,7 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
                     Intent intent = new Intent(VocabularyActivity.this, LearnWordActivity.class);
                     intent.putExtra(SELECTED_CARD_IDS, (ArrayList<Long>) ids);
                     startActivity(intent);
+                    overridePendingTransition(R.animator.activity_appear_from_right, R.animator.activity_disappear_alpha); //custom activity transition animation
                 }
                 packListAdapter.clearSelection();
                 runCardsFab.hide(true);
@@ -311,7 +312,6 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
                     if (ids.size() > 0) {
 
                         Intent intent = new Intent(VocabularyActivity.this, EditPackActivity.class);
-                        //intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION); //prevent the system from applying an activity transition animation
                         intent.putExtra(SELECTED_PACK_ID, ids.get(0));
                         startActivity(intent);
                         overridePendingTransition(R.animator.activity_appear_from_right, R.animator.activity_disappear_alpha); //custom activity transition animation

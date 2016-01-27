@@ -156,8 +156,6 @@ public class DictManagerActivity extends AppCompatActivity implements Dictionary
         isChanged = true;
     }
 
-
-
     private void initializeNewDictionaries() {
 
         if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
@@ -309,33 +307,15 @@ public class DictManagerActivity extends AppCompatActivity implements Dictionary
         str = str.replaceAll("\\[(s|url)\\][^\\[]*\\[/(s|url)\\]", "");
         str = str.replaceAll("\\[/?lang[^\\[]*\\]", "");
 
-        //str = str.replaceAll("\\[c\\](\\[com\\])?", "<span style='color:green'>");
         str = str.replaceAll("\\[c\\](\\[com\\])?", "<font color=\'#2e7d32\'>");
-
-        //str = str.replaceAll("(\\[/com\\])?\\[/c\\]", "</span>");
         str = str.replaceAll("(\\[/com\\])?\\[/c\\]", "</font>");
-
-        //str = str.replace("[c]", "<span style='color:green'>");
         str = str.replace("[c]", "<font color=\'#2e7d32\'>");
-
-        //str = str.replace("[p]", "<span style='color:green'><i>");
         str = str.replace("[p]", "<font color=\'#2e7d32\'><i>");
-
-        //str = str.replace("[/p]", "</i></span>");
         str = str.replace("[/p]", "</i></font>");
-
-        //str = str.replaceAll("\\[(ex|c gray)\\]", "<span style='color:gray'>");
         str = str.replaceAll("\\[(ex|c gray)\\]", "<font color=\'#757575\'>");
-
-        //str = str.replaceAll("\\[/(ex|com)\\]", "</span>");
         str = str.replaceAll("\\[/(ex|com)\\]", "</font>");
-
-        //str = str.replace("[ref]", "<span style='color:blue'>");
         str = str.replace("[ref]", "<font color=\'#283593\'>");
-
-        //str = str.replace("[/ref]", "</span>");
         str = str.replace("[/ref]", "</font>");
-
         str = str.replaceAll("\\[m[1-9]?\\]", "");
         str = str.replace("[/m]", "<br>");
 
@@ -353,6 +333,8 @@ public class DictManagerActivity extends AppCompatActivity implements Dictionary
 
         word = str.substring(0,str.indexOf("\t"));
         article = str.substring(str.indexOf("\t")+1);
+
+        article = article.replace("\t", "");
 
         if (word.isEmpty() || article.isEmpty()){
             return null;

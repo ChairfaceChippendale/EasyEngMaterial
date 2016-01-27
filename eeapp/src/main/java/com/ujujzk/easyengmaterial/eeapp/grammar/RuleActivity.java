@@ -60,6 +60,7 @@ public class RuleActivity extends AppCompatActivity {
                 Intent intent = new Intent(RuleActivity.this, ExerciseActivity.class);
                 intent.putStringArrayListExtra(GrammarActivity.SELECTED_TOPICS_IDS, (ArrayList<String>)ids);
                 startActivity(intent);
+                overridePendingTransition(R.animator.activity_appear_from_right, R.animator.activity_disappear_alpha); //custom activity transition animation
                 finish();
 
             }
@@ -107,6 +108,7 @@ public class RuleActivity extends AppCompatActivity {
         int id = item.getItemId();
         if (id == android.R.id.home) {
             finish();
+            overridePendingTransition(R.animator.activity_appear_alpha, R.animator.activity_disappear_to_right); //custom activity transition animation
         }
         return super.onOptionsItemSelected(item);
     }

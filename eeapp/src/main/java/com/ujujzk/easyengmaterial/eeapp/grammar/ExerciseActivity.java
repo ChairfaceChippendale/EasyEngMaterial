@@ -112,6 +112,7 @@ public class ExerciseActivity extends AppCompatActivity {
         int id = item.getItemId();
         if (id == android.R.id.home) {
             finish();
+            overridePendingTransition(R.animator.activity_appear_alpha, R.animator.activity_disappear_to_right); //custom activity transition animation
         }
         return super.onOptionsItemSelected(item);
     }
@@ -175,6 +176,7 @@ public class ExerciseActivity extends AppCompatActivity {
             toolBar.setTitle("Task " + nextTaskNumber + "/" + tasksToLearn.size());
         } else {
             onBackPressed();
+            overridePendingTransition(R.animator.activity_appear_alpha, R.animator.activity_disappear_to_right); //custom activity transition animation
         }
     }
 

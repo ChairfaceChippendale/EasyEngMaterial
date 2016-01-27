@@ -144,6 +144,7 @@ public class LearnWordActivity extends AppCompatActivity implements View.OnTouch
                         rotateWordCard();
                     } else {
                         onBackPressed();
+                        overridePendingTransition(R.animator.activity_appear_alpha, R.animator.activity_disappear_to_right); //custom activity transition animation
                     }
 
                 } else {
@@ -226,6 +227,7 @@ public class LearnWordActivity extends AppCompatActivity implements View.OnTouch
         switch (id){
             case android.R.id.home:
                 onBackPressed();
+                overridePendingTransition(R.animator.activity_appear_alpha, R.animator.activity_disappear_to_right); //custom activity transition animation
                 return true;
 
             case R.id.learn_word_act_action_pronunciation:
