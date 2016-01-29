@@ -13,9 +13,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
+import android.view.*;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.aleksandrsavosh.simplestore.KeyValue;
@@ -52,6 +50,7 @@ public class DictManagerActivity extends AppCompatActivity implements Dictionary
     private DictionaryListAdapter dictionaryListAdapter;
     private MaterialDialog confirmDictionaryRemove;
     private boolean isChanged;
+    private int moveY;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +74,6 @@ public class DictManagerActivity extends AppCompatActivity implements Dictionary
         dictionaryListAdapter = new DictionaryListAdapter(Application.localStore.readAll(Dictionary.class), this, this);
         dictionaryList.setAdapter(dictionaryListAdapter);
         dictionaryList.setItemAnimator(new DefaultItemAnimator());
-
 
         initializeNewDictionariesFab = (FloatingActionButton) findViewById(R.id.dic_manager_act_fab);
         initializeNewDictionariesFab.setOnClickListener(new View.OnClickListener() {
@@ -160,6 +158,7 @@ public class DictManagerActivity extends AppCompatActivity implements Dictionary
 
         if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             //TODO Massage that SD-card is not accessible
+            Snackbar.make(initializeNewDictionariesFab,"SD-card is not accessible",Snackbar.LENGTH_LONG).show();
             Log.d(TAG, "SD-card is not accessible");
             return;
         }
@@ -169,6 +168,7 @@ public class DictManagerActivity extends AppCompatActivity implements Dictionary
         if (!path.exists()) {
             path.mkdirs();
             //TODO Massage that there aren't new dictionaries
+            Snackbar.make(initializeNewDictionariesFab,"There are no new dictionaries.",Snackbar.LENGTH_LONG).show();
             Log.d(TAG, "There were no new dictionaries, a folder for dictionaries was mode");
             return;
         }
@@ -188,6 +188,7 @@ public class DictManagerActivity extends AppCompatActivity implements Dictionary
 
         if (dslFiles.isEmpty()) {
             //TODO Massage that there aren't new dictionaries. Notice that dictionary must have expansion .dsl
+            Snackbar.make(initializeNewDictionariesFab,"There are no new dictionaries.",Snackbar.LENGTH_LONG).show();
             Log.d(TAG, "There were no new dictionaries");
             return;
         }

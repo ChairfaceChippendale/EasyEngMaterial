@@ -6,8 +6,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:cardUseCompatPadding="true"
-        app:cardElevation="@dimen/packs_list_item_elevation"
-        app:cardCornerRadius="@dimen/packs_list_item_corner_radius">
+        app:cardElevation="@dimen/article_list_item_elevation"
+        app:cardCornerRadius="@dimen/article_list_item_corner_radius">
 
     <RelativeLayout
             android:layout_width="match_parent"
