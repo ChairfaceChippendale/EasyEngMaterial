@@ -51,7 +51,7 @@ public class Application extends android.app.Application {
         });
 
         storeManager.useLog(true);
-        storeManager.initLocalStore(26);
+        storeManager.initLocalStore(30);
         localStore = storeManager.getLocalStore();
 
 //        localStore = new SQLiteSimpleStoreImpl();

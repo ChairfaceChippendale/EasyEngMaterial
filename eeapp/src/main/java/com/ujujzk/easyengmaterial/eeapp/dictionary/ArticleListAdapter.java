@@ -50,12 +50,9 @@ public class ArticleListAdapter extends RecyclerView.Adapter<ArticleListAdapter.
     public void onBindViewHolder(ArticleViewHolder holder, int position) {
         final Article article = mArticles.get(position);
 
-        final String dictionaryName = Application.localStore.read(article.getDictionaryId(), Dictionary.class).getDictionaryName();
-        final String wordName = Application.localStore.read(article.getWordId(), Word.class).getWordName();
-
-        holder.dictionaryName.setText(dictionaryName);
-        holder.wordName.setText(wordName);
-        holder.wordArticle.setText( Html.fromHtml(article.getArticle()) );
+        holder.dictionaryName.setText(article.getDictionaryName());
+        holder.wordName.setText(article.getWordName());
+        holder.wordArticle.setText( Html.fromHtml(article.getArticleHTMLStyle()) );
     }
 
     @Override

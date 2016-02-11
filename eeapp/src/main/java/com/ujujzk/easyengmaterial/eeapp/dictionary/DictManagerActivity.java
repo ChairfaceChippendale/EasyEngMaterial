@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
@@ -28,13 +27,10 @@ import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 
 import java.io.*;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 
-public class DictManagerActivity extends AppCompatActivity implements DictionaryListAdapter.DictionaryViewHolder.ClickListener{
+public class DictManagerActivity extends AppCompatActivity implements DictionaryListAdapter.DictionaryViewHolder.ClickListener {
 
     @SuppressWarnings("unused")
     private static final String TAG = DictManagerActivity.class.getSimpleName();
@@ -42,6 +38,7 @@ public class DictManagerActivity extends AppCompatActivity implements Dictionary
 
     private static final String DICTIONARY_NAME_TAG_IN_FILE = "#NAME";
     private static final int DICTIONARY_NAME_SEARCHING_ROW_NUMBER = 10;
+    private static final int BUFFER_SIZE = 1000;//5000 - is too much
 
     private Toolbar toolBar;
     private FloatingActionButton initializeNewDictionariesFab;
@@ -50,7 +47,8 @@ public class DictManagerActivity extends AppCompatActivity implements Dictionary
     private DictionaryListAdapter dictionaryListAdapter;
     private MaterialDialog confirmDictionaryRemove;
     private boolean isChanged;
-    private int moveY;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +83,6 @@ public class DictManagerActivity extends AppCompatActivity implements Dictionary
 
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -106,7 +103,7 @@ public class DictManagerActivity extends AppCompatActivity implements Dictionary
         confirmDictionaryRemove.show();
     }
 
-    private MaterialDialog getDictionaryRemoveDialog (final int position){
+    private MaterialDialog getDictionaryRemoveDialog(final int position) {
         final int dictPosition = position;
         final String dictName = dictionaryListAdapter.getDictionary(dictPosition).getDictionaryName();
         return new MaterialDialog.Builder(this)
@@ -129,21 +126,22 @@ public class DictManagerActivity extends AppCompatActivity implements Dictionary
                 .build();
     }
 
-    private void removeDictionary (int dictPosition) {
+    private void removeDictionary(int dictPosition) {
+        //TODO revise all method
         Long dictLocalId = dictionaryListAdapter.getDictionary(dictPosition).getLocalId();
 
         List<Article> articles = Application.localStore.readBy(Article.class, new KeyValue("dictionaryId", dictLocalId));
-        if (!articles.isEmpty()){
-            for (Article article: articles){
+        if (!articles.isEmpty()) {
+            for (Article article : articles) {
                 Application.localStore.delete(article.getLocalId(), Article.class);
             }
         }
 
         List<Word> words = Application.localStore.readAll(Word.class);
 
-        for (Word word: words) {
+        for (Word word : words) {
             List<Article> articleList = Application.localStore.readBy(Article.class, new KeyValue("wordId", word.getLocalId()));
-            if (articleList.isEmpty()){
+            if (articleList.isEmpty()) {
                 Application.localStore.delete(word.getLocalId(), Word.class);
             }
         }
@@ -157,8 +155,7 @@ public class DictManagerActivity extends AppCompatActivity implements Dictionary
     private void initializeNewDictionaries() {
 
         if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-            //TODO Massage that SD-card is not accessible
-            Snackbar.make(initializeNewDictionariesFab,"SD-card is not accessible",Snackbar.LENGTH_LONG).show();
+            Snackbar.make(initializeNewDictionariesFab, "SD-card is not accessible", Snackbar.LENGTH_LONG).show();
             Log.d(TAG, "SD-card is not accessible");
             return;
         }
@@ -167,8 +164,7 @@ public class DictManagerActivity extends AppCompatActivity implements Dictionary
 
         if (!path.exists()) {
             path.mkdirs();
-            //TODO Massage that there aren't new dictionaries
-            Snackbar.make(initializeNewDictionariesFab,"There are no new dictionaries.",Snackbar.LENGTH_LONG).show();
+            Snackbar.make(initializeNewDictionariesFab, "There are no new dictionaries.", Snackbar.LENGTH_LONG).show();
             Log.d(TAG, "There were no new dictionaries, a folder for dictionaries was mode");
             return;
         }
@@ -188,8 +184,8 @@ public class DictManagerActivity extends AppCompatActivity implements Dictionary
 
         if (dslFiles.isEmpty()) {
             //TODO Massage that there aren't new dictionaries. Notice that dictionary must have expansion .dsl
-            Snackbar.make(initializeNewDictionariesFab,"There are no new dictionaries.",Snackbar.LENGTH_LONG).show();
-            Log.d(TAG, "There were no new dictionaries");
+            Snackbar.make(initializeNewDictionariesFab, "There are no new dictionaries.", Snackbar.LENGTH_LONG).show();
+            Log.d(TAG, "There are no new dictionaries in the Folder on ExternalStorage");
             return;
         }
 
@@ -204,7 +200,7 @@ public class DictManagerActivity extends AppCompatActivity implements Dictionary
 
     private void addDictionaryToDataBase(File file) {
 
-        String newDictionaryName = "";
+        String dictionaryName = "";
 
         try {
             Scanner scanner = new Scanner(file, Charset.forName("UTF-16").name());
@@ -215,11 +211,11 @@ public class DictManagerActivity extends AppCompatActivity implements Dictionary
                 line = line.trim();
                 Log.d(TAG, "Line " + i + " is " + line);
                 if (line.startsWith(DICTIONARY_NAME_TAG_IN_FILE)) {
-                    newDictionaryName = line;
-                    newDictionaryName = newDictionaryName.replace(DICTIONARY_NAME_TAG_IN_FILE, "");
-                    newDictionaryName = newDictionaryName.replace("\"", "");
-                    newDictionaryName = newDictionaryName.trim();
-                    Log.d(TAG, "Name of new dictionary is " + newDictionaryName);
+                    dictionaryName = line;
+                    dictionaryName = dictionaryName.replace(DICTIONARY_NAME_TAG_IN_FILE, "");
+                    dictionaryName = dictionaryName.replace("\"", "");
+                    dictionaryName = dictionaryName.trim();
+                    Log.d(TAG, "Name of new dictionary is " + dictionaryName);
                     break;
                 }
             }
@@ -228,40 +224,60 @@ public class DictManagerActivity extends AppCompatActivity implements Dictionary
             e.printStackTrace();
         }
 
-        if (newDictionaryName.isEmpty()) {
+        if (dictionaryName.isEmpty()) {
             Log.d(TAG, "File " + file.getAbsolutePath() + " doesn't have dictionary name.");
+            Snackbar.make(initializeNewDictionariesFab, "File " + file.getName() + " doesn't contain dictionary name.", Snackbar.LENGTH_LONG).show();
             return;
         }
 
-        List<Dictionary> existedDictionariesWithCurrentName = Application.localStore.readBy(Dictionary.class, new KeyValue("dictionaryName", newDictionaryName));
-        if (!existedDictionariesWithCurrentName.isEmpty()){
-            Log.d(TAG, "Dictionary " + newDictionaryName + " already exists.");
+        List<Dictionary> existedDictionariesWithCurrentName = Application.localStore.readBy(Dictionary.class, new KeyValue("dictionaryName", dictionaryName));
+        if (!existedDictionariesWithCurrentName.isEmpty()) {
+            Log.d(TAG, "Dictionary " + dictionaryName + " already exists.");
             return;
         }
 
-        Dictionary newDictionary = Application.localStore.create(new Dictionary(newDictionaryName));
+        Dictionary newDictionary = Application.localStore.create(new Dictionary(dictionaryName));
         dictionaryListAdapter.addDictionary(newDictionary);
-        Long newDictionaryLocalId = newDictionary.getLocalId();
-
 
         try {
             Scanner scanner = new Scanner(file, Charset.forName("UTF-16").name());
+
+            ArrayList<Word> wordBuffer = new ArrayList<Word>();
+            ArrayList<Article> rawArticleBuffer = new ArrayList<Article>();
             String line;
-            StringBuilder wordStr = new StringBuilder("");
+            StringBuilder rawArticle = new StringBuilder("");
 
             while (scanner.hasNext()) {
                 line = scanner.nextLine();
 
-                if (line.startsWith("#")) {
+                if (line.startsWith("#")) {//rows with dictionary name and languages
                     continue;
                 }
                 if (line.equals("\t")) {
-                    saveWordAndArticle(wordStr.toString(),newDictionaryLocalId);
-                    wordStr.setLength(0);
+
+                    String wordName = getWordNameFromRawArticle(rawArticle.toString());
+
+                    if (wordName.length() > 0) {
+                        wordBuffer.add( new Word (wordName, dictionaryName) );
+                        rawArticleBuffer.add( new Article (rawArticle.toString(), wordName, dictionaryName) );
+                    }
+                    if (wordBuffer.size() == BUFFER_SIZE) {
+                        saveWordsAndArticles(wordBuffer, rawArticleBuffer);
+                        wordBuffer.clear();
+                        rawArticleBuffer.clear();
+                    }
+
+                    rawArticle.setLength(0);
                 } else {
-                    wordStr.append(line);
+                    rawArticle.append(line);
                 }
 
+            }
+
+            if (!wordBuffer.isEmpty()) {
+                saveWordsAndArticles(wordBuffer, rawArticleBuffer);
+                wordBuffer.clear();
+                rawArticleBuffer.clear();
             }
 
             scanner.close();
@@ -271,77 +287,14 @@ public class DictManagerActivity extends AppCompatActivity implements Dictionary
 
     }
 
-    private void saveWordAndArticle (String string, Long dictLocalId){
-
-        final Pair<String,String> wordAndArticle = stringToWordAndArticle(string);
-
-        if (wordAndArticle != null){
-
-            final String wordName = wordAndArticle.first;
-            final String article = wordAndArticle.second;
-
-            List<Word> existingWords = Application.localStore.readBy(Word.class, new KeyValue("wordName",wordName));
-            Long wordLocalId;
-            if (existingWords.isEmpty()){
-                wordLocalId = (Application.localStore.create(new Word(wordName))).getLocalId();
-            } else {
-                wordLocalId = existingWords.get(0).getLocalId();
-            }
-
-            Application.localStore.create(new Article(article, wordLocalId, dictLocalId));
-
-        }
+    private void saveWordsAndArticles(ArrayList<Word> wordBuffer, ArrayList<Article> rawArticleBuffer) {
+            Application.localStore.createFast(wordBuffer, Word.class);
+            Application.localStore.createFast(rawArticleBuffer, Article.class);
     }
 
-    private Pair<String,String> stringToWordAndArticle(String str){
+    private String getWordNameFromRawArticle(String rawArticle) {
 
-        String word;
-        String article;
-
-        if (str.contains("[sub]")) {
-            return null;
-        }
-
-        str = str.replaceAll("\\[/?(\\*|!trs|'|trn|com)\\]", "");
-        str = str.replace("{", "");
-        str = str.replace("}", "");
-        str = str.replaceAll("\\[(s|url)\\][^\\[]*\\[/(s|url)\\]", "");
-        str = str.replaceAll("\\[/?lang[^\\[]*\\]", "");
-
-        str = str.replaceAll("\\[c\\](\\[com\\])?", "<font color=\'#2e7d32\'>");
-        str = str.replaceAll("(\\[/com\\])?\\[/c\\]", "</font>");
-        str = str.replace("[c]", "<font color=\'#2e7d32\'>");
-        str = str.replace("[p]", "<font color=\'#2e7d32\'><i>");
-        str = str.replace("[/p]", "</i></font>");
-        str = str.replaceAll("\\[(ex|c gray)\\]", "<font color=\'#757575\'>");
-        str = str.replaceAll("\\[/(ex|com)\\]", "</font>");
-        str = str.replace("[ref]", "<font color=\'#283593\'>");
-        str = str.replace("[/ref]", "</font>");
-        str = str.replaceAll("\\[m[1-9]?\\]", "");
-        str = str.replace("[/m]", "<br>");
-
-        str = str.replace("[b]", "<b>");
-        str = str.replace("[i]", "<i>");
-        str = str.replace("[u]", "<u>");
-        str = str.replace("[/b]", "</b>");
-        str = str.replace("[/i]", "</i>");
-        str = str.replace("[/u]", "</u>");
-
-        str = str.replace("\\[", "[");
-        str = str.replace("\\]", "]");
-
-        str = str.replaceAll("\\[\\[t\\][^\\[]*\\[/t\\]\\]", "");
-
-        word = str.substring(0,str.indexOf("\t"));
-        article = str.substring(str.indexOf("\t")+1);
-
-        article = article.replace("\t", "");
-
-        if (word.isEmpty() || article.isEmpty()){
-            return null;
-        }
-
-        return new Pair<String, String>(word, article);
+        return rawArticle.substring(0, rawArticle.indexOf("\t"));
     }
 
 }

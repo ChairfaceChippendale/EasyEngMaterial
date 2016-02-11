@@ -35,7 +35,7 @@ public class WordArticleFragment extends Fragment{
         //TODO create articles - CHECK
         final Word selectedWord = Application.localStore.read(wordId, Word.class);
         if (selectedWord != null) {
-            updateArticleList(wordId);
+            updateArticleList(selectedWord.getWordName());
         }
     }
 
@@ -66,8 +66,8 @@ public class WordArticleFragment extends Fragment{
 
     }
 
-    private void updateArticleList(Long wordId) {
-        new AsyncTask<Long, Void, List<Article>>() {
+    private void updateArticleList(String wordName) {
+        new AsyncTask<String, Void, List<Article>>() {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
@@ -76,8 +76,8 @@ public class WordArticleFragment extends Fragment{
             }
 
             @Override
-            protected List<Article> doInBackground(Long... params) {
-                return Application.localStore.readBy(Article.class, new KeyValue("wordId",params[0]));
+            protected List<Article> doInBackground(String... params) {
+                return Application.localStore.readBy(Article.class, new KeyValue("wordName",params[0]));
             }
 
             @Override
@@ -87,6 +87,6 @@ public class WordArticleFragment extends Fragment{
                 progressBar.setVisibility(View.GONE);
                 articleList.setVisibility(View.VISIBLE);
             }
-        }.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR, wordId);
+        }.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR, wordName);
     }
 }

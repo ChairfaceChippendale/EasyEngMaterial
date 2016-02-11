@@ -50,7 +50,7 @@ public class WordHistoryFragment extends Fragment implements WordListAdapter.Wor
         //--MOC--
         List<Word> wordListContent = new ArrayList<Word>();
         for (int i = 0; i < 9000; i++){
-            wordListContent.add(new Word("Hello"+i));
+            wordListContent.add(new Word("Hello"+i, "Dict"));
         }
         //------------------
 

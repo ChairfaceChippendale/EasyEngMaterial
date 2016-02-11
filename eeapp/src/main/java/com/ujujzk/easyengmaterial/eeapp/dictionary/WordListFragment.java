@@ -140,8 +140,10 @@ public class WordListFragment extends Fragment implements
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                progressBar.setVisibility(View.VISIBLE);
-                wordList.setVisibility(View.GONE);
+                if(progressBar != null && wordList != null) {
+                    progressBar.setVisibility(View.VISIBLE);
+                    wordList.setVisibility(View.GONE);
+                }
             }
 
             @Override
@@ -151,10 +153,11 @@ public class WordListFragment extends Fragment implements
 
             @Override
             protected void onPostExecute(List<Word> words) {
-
-                wordListAdapter.setWords(words);
-                progressBar.setVisibility(View.GONE);
-                wordList.setVisibility(View.VISIBLE);
+                if(progressBar != null && wordList != null) {
+                    wordListAdapter.setWords(words);
+                    progressBar.setVisibility(View.GONE);
+                    wordList.setVisibility(View.VISIBLE);
+                }
             }
         }.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
     }
