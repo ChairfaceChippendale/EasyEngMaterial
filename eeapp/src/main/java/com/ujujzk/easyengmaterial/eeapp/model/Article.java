@@ -7,30 +7,29 @@ public class Article extends Base {
 
     private String squareBracketText;
     private String wordName;
-    private String dictionaryName;
+    private Long dictionaryId;
 
     public Article(){}
 
-    public Article(String squareBracketText, String wordName, String dictionaryName) {
+    public Article(String squareBracketText, String wordName, Long dictionaryId) {
         this.squareBracketText = squareBracketText;
-        this.dictionaryName = dictionaryName;
+        this.dictionaryId = dictionaryId;
         this.wordName = wordName;
     }
-
 
     public String getWordName() {
         return wordName;
     }
 
-    public String getDictionaryName() {
-        return dictionaryName;
+    public Long getDictionaryId() {
+        return dictionaryId;
     }
 
     @Override
     public String toString() {
         return "WordArticle{" +
                 "article=" + squareBracketText +
-                ", dictionaryName=" + dictionaryName +
+                ", dictionaryName=" + dictionaryId +
                 "} " + super.toString();
     }
 
@@ -54,8 +53,7 @@ public class Article extends Base {
         article = article.replace("[ref]", "<font color=\'#283593\'>");
         article = article.replace("[/ref]", "</font>");
         article = article.replaceAll("\\[m[1-9]?\\]", "");
-        article = article.replace("[/m]", "<br>");
-
+        article = article.replace("[/m]", "");
         article = article.replace("[b]", "<b>");
         article = article.replace("[i]", "<i>");
         article = article.replace("[u]", "<u>");
@@ -71,6 +69,9 @@ public class Article extends Base {
         article = article.substring(article.indexOf("\t")+1);
 
         article = article.replace("\t", "");
+
+        article = article.replace("\n", "<br>");
+        article = article.trim();
 
         return article;
     }

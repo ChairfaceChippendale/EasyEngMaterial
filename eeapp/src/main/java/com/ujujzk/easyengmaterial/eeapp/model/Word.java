@@ -5,29 +5,29 @@ import com.github.aleksandrsavosh.simplestore.Base;
 public class Word extends Base implements Comparable {
 
     private String wordName;
-    private String dictionaryName;
+    private Long dictionaryId;
 
 
     public Word () {}
 
-    public Word(String wordName, String dictionaryName) {
+    public Word(String wordName, Long dictionaryId) {
         this.wordName = wordName;
-        this.dictionaryName = dictionaryName;
+        this.dictionaryId = dictionaryId;
     }
 
     public String getWordName() {
         return wordName;
     }
 
-    public String getDictionaryName() {
-        return dictionaryName;
+    public Long getDictionaryId() {
+        return dictionaryId;
     }
 
     @Override
     public String toString() {
         return "Word{" +
                 "wordName=" + wordName +
-                ", dictionaryName=" + dictionaryName +
+                ", dictionaryName=" + dictionaryId +
                 "} " + super.toString();
     }
 

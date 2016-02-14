@@ -1,6 +1,8 @@
 package com.ujujzk.easyengmaterial.eeapp;
 
 import android.content.Context;
+import android.database.Cursor;
+import android.support.v4.util.Pair;
 import android.util.Log;
 import com.github.aleksandrsavosh.simplestore.SimpleStore;
 import com.github.aleksandrsavosh.simplestore.SimpleStoreManager;
@@ -22,7 +24,7 @@ public class Application extends android.app.Application {
 
     private static Context context;
 
-    SimpleStoreManager storeManager;
+    static SimpleStoreManager storeManager;
     public static SimpleStore<Long> localStore;
     public static SimpleStore<String> cloudStore;
 
@@ -51,7 +53,7 @@ public class Application extends android.app.Application {
         });
 
         storeManager.useLog(true);
-        storeManager.initLocalStore(30);
+        storeManager.initLocalStore(33);
         localStore = storeManager.getLocalStore();
 
 //        localStore = new SQLiteSimpleStoreImpl();
@@ -64,6 +66,11 @@ public class Application extends android.app.Application {
         //Parse.initialize(this, "a2FaVXXRxCiY0r61U0nZ6hS6VhuSDcQfC32Vhium", "b2aaFgro20MWP8t1sRGbjdsRrJrwBBm78cSDKxD8");
         //ParseCrashReporting.enable(this);
 
+    }
+
+
+    public static SimpleStoreManager getStoreManager () {
+        return storeManager;
     }
 
 }

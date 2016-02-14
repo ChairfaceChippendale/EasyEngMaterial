@@ -46,8 +46,6 @@ public class DictManagerActivity extends AppCompatActivity implements Dictionary
     private LinearLayoutManager dictionaryListManager;
     private DictionaryListAdapter dictionaryListAdapter;
     private MaterialDialog confirmDictionaryRemove;
-    private boolean isChanged;
-
 
 
     @Override
@@ -55,7 +53,6 @@ public class DictManagerActivity extends AppCompatActivity implements Dictionary
         ActivityUtil.setTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dic_manager);
-        isChanged = false;
 
         toolBar = (Toolbar) findViewById(R.id.dic_manager_act_app_bar);
         ActivityUtil.setToolbarColor(this, toolBar.getId());
@@ -88,9 +85,6 @@ public class DictManagerActivity extends AppCompatActivity implements Dictionary
 
         int id = item.getItemId();
         if (id == android.R.id.home) {
-            Intent intent = new Intent();
-            intent.putExtra(DATA_CHANGED, isChanged);
-            setResult(RESULT_OK, intent);
             onBackPressed();
             overridePendingTransition(R.animator.activity_appear_alpha, R.animator.activity_disappear_to_right); //custom activity transition animation
         }
@@ -128,28 +122,27 @@ public class DictManagerActivity extends AppCompatActivity implements Dictionary
 
     private void removeDictionary(int dictPosition) {
         //TODO revise all method
-        Long dictLocalId = dictionaryListAdapter.getDictionary(dictPosition).getLocalId();
+        //TODO method deleteBy() is needed
 
-        List<Article> articles = Application.localStore.readBy(Article.class, new KeyValue("dictionaryId", dictLocalId));
-        if (!articles.isEmpty()) {
-            for (Article article : articles) {
+        Long dictToDeleteId = dictionaryListAdapter.getDictionary(dictPosition).getLocalId();
+
+        List<Article> articlesToDelete = Application.localStore.readBy(Article.class, new KeyValue("dictionaryId", dictToDeleteId));
+        if (!articlesToDelete.isEmpty()) {
+            for (Article article : articlesToDelete) {
                 Application.localStore.delete(article.getLocalId(), Article.class);
             }
         }
 
-        List<Word> words = Application.localStore.readAll(Word.class);
-
-        for (Word word : words) {
-            List<Article> articleList = Application.localStore.readBy(Article.class, new KeyValue("wordId", word.getLocalId()));
-            if (articleList.isEmpty()) {
+        List<Word> wordsToDelete = Application.localStore.readBy(Word.class, new KeyValue("dictionaryId", dictToDeleteId));
+        if (!wordsToDelete.isEmpty()){
+            for (Word word : wordsToDelete) {
                 Application.localStore.delete(word.getLocalId(), Word.class);
             }
         }
 
-        Application.localStore.delete(dictLocalId, Dictionary.class);
+        Application.localStore.delete(dictToDeleteId, Dictionary.class);
         dictionaryListAdapter.removeDictionary(dictPosition);
 
-        isChanged = true;
     }
 
     private void initializeNewDictionaries() {
@@ -194,8 +187,6 @@ public class DictManagerActivity extends AppCompatActivity implements Dictionary
                 addDictionaryToDataBase(file);
             }
         }
-
-        isChanged = true;
     }
 
     private void addDictionaryToDataBase(File file) {
@@ -238,6 +229,7 @@ public class DictManagerActivity extends AppCompatActivity implements Dictionary
 
         Dictionary newDictionary = Application.localStore.create(new Dictionary(dictionaryName));
         dictionaryListAdapter.addDictionary(newDictionary);
+        Long dictId = newDictionary.getLocalId();
 
         try {
             Scanner scanner = new Scanner(file, Charset.forName("UTF-16").name());
@@ -258,20 +250,19 @@ public class DictManagerActivity extends AppCompatActivity implements Dictionary
                     String wordName = getWordNameFromRawArticle(rawArticle.toString());
 
                     if (wordName.length() > 0) {
-                        wordBuffer.add( new Word (wordName, dictionaryName) );
-                        rawArticleBuffer.add( new Article (rawArticle.toString(), wordName, dictionaryName) );
+                        wordBuffer.add( new Word (wordName, dictId) );
+                        rawArticleBuffer.add( new Article (rawArticle.toString(), wordName, dictId) );
                     }
                     if (wordBuffer.size() == BUFFER_SIZE) {
                         saveWordsAndArticles(wordBuffer, rawArticleBuffer);
                         wordBuffer.clear();
                         rawArticleBuffer.clear();
                     }
-
                     rawArticle.setLength(0);
                 } else {
                     rawArticle.append(line);
+                    rawArticle.append("\n");
                 }
-
             }
 
             if (!wordBuffer.isEmpty()) {
@@ -284,7 +275,6 @@ public class DictManagerActivity extends AppCompatActivity implements Dictionary
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     private void saveWordsAndArticles(ArrayList<Word> wordBuffer, ArrayList<Article> rawArticleBuffer) {
@@ -293,8 +283,7 @@ public class DictManagerActivity extends AppCompatActivity implements Dictionary
     }
 
     private String getWordNameFromRawArticle(String rawArticle) {
-
-        return rawArticle.substring(0, rawArticle.indexOf("\t"));
+        return rawArticle.substring(0, rawArticle.indexOf("\t")).trim();
     }
 
 }

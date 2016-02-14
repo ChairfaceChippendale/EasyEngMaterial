@@ -19,11 +19,11 @@ import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WordHistoryFragment extends Fragment implements WordListAdapter.WordViewHolder.ClickListener{
+public class WordHistoryFragment extends Fragment implements WordListCursorAdapter.WordViewHolder.ClickListener{
 
     SearchView searchView;
-    private RecyclerView wordHistoryList;
-    private WordListAdapter wordHistoryListAdapter;
+    //private RecyclerView wordHistoryList;
+    //private WordHistoryListAdapter wordHistoryListAdapter;
     private Context context;
     private OnWordSelectedListener wordSelectedListener;
 
@@ -42,22 +42,22 @@ public class WordHistoryFragment extends Fragment implements WordListAdapter.Wor
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_word_history, container, false);
 
-        wordHistoryList = (RecyclerView) v.findViewById(R.id.word_history_fr_list);
-        wordHistoryList.addItemDecoration(new HorizontalDividerItemDecoration.Builder(getActivity()).build());
-        wordHistoryList.setLayoutManager(new LinearLayoutManager(getActivity()));
+        //wordHistoryList = (RecyclerView) v.findViewById(R.id.word_history_fr_list);
+        //wordHistoryList.addItemDecoration(new HorizontalDividerItemDecoration.Builder(getActivity()).build());
+        //wordHistoryList.setLayoutManager(new LinearLayoutManager(getActivity()));
 
 
         //--MOC--
         List<Word> wordListContent = new ArrayList<Word>();
         for (int i = 0; i < 9000; i++){
-            wordListContent.add(new Word("Hello"+i, "Dict"));
+            wordListContent.add(new Word("Hello"+i, new Long(5)));
         }
         //------------------
 
 
-        wordHistoryListAdapter = new WordListAdapter(wordListContent, this);
-        wordHistoryList.setAdapter(wordHistoryListAdapter);
-        wordHistoryList.setItemAnimator(new DefaultItemAnimator());
+        //wordHistoryListAdapter = new WordListCursorAdapter(wordListContent, this);
+        //wordHistoryList.setAdapter(wordHistoryListAdapter);
+        //wordHistoryList.setItemAnimator(new DefaultItemAnimator());
 
         return v;
     }
@@ -83,9 +83,9 @@ public class WordHistoryFragment extends Fragment implements WordListAdapter.Wor
     public void onItemClicked(int position) {
         //TODO go to WordArticleFragment
 
-        Word word = wordHistoryListAdapter.getWord(position);
+        //Long wordId = wordHistoryListAdapter.getWordId(position);
 
-        wordSelectedListener.OnWordSelected(word.getLocalId());
+        //wordSelectedListener.OnWordSelected(wordId);
 
         if (context != null) {
             TabLayout tabhost = (TabLayout) getActivity().findViewById(R.id.dict_act_tabs);

@@ -165,18 +165,8 @@ public class DictionaryActivity extends AppCompatActivity implements OnWordSelec
         int id = item.getItemId();
         switch (id){
             case R.id.dict_act_action_manager:
-                startActivityForResult(new Intent(DictionaryActivity.this, DictManagerActivity.class), 1);
+                startActivity(new Intent(DictionaryActivity.this, DictManagerActivity.class));
                 overridePendingTransition(R.animator.activity_appear_from_right, R.animator.activity_disappear_alpha); //custom activity transition animation
-
-
-
-
-                final int wordListFragmentPosition = ((ViewPagerAdapter) viewPager.getAdapter()).getFragmentPositionByTitle(getResources().getString(R.string.word_list_fragment_title));
-                ((WordListFragment)((ViewPagerAdapter) viewPager.getAdapter()).getItem(wordListFragmentPosition)).updateWordList();
-
-
-
-
                 return true;
 
             case R.id.dict_act_action_to_vocabulary:
@@ -187,19 +177,6 @@ public class DictionaryActivity extends AppCompatActivity implements OnWordSelec
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        boolean isChanged = true;
-        if (data != null) {
-            isChanged = data.getBooleanExtra(DictManagerActivity.DATA_CHANGED, true);
-        }
-        if (isChanged) {
-            final int wordListFragmentPosition = ((ViewPagerAdapter) viewPager.getAdapter()).getFragmentPositionByTitle(getResources().getString(R.string.word_list_fragment_title));
-            ((WordListFragment) ((ViewPagerAdapter) viewPager.getAdapter()).getItem(wordListFragmentPosition)).updateWordList();
         }
     }
 

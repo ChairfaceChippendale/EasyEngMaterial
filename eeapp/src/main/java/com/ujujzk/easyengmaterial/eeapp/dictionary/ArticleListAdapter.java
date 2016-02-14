@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import com.github.aleksandrsavosh.simplestore.KeyValue;
 import com.ujujzk.easyengmaterial.eeapp.Application;
 import com.ujujzk.easyengmaterial.eeapp.R;
 import com.ujujzk.easyengmaterial.eeapp.model.Article;
@@ -50,7 +51,9 @@ public class ArticleListAdapter extends RecyclerView.Adapter<ArticleListAdapter.
     public void onBindViewHolder(ArticleViewHolder holder, int position) {
         final Article article = mArticles.get(position);
 
-        holder.dictionaryName.setText(article.getDictionaryName());
+        String dictName = Application.localStore.read(article.getDictionaryId(), Dictionary.class).getDictionaryName();
+
+        holder.dictionaryName.setText(dictName);
         holder.wordName.setText(article.getWordName());
         holder.wordArticle.setText( Html.fromHtml(article.getArticleHTMLStyle()) );
     }
@@ -65,8 +68,6 @@ public class ArticleListAdapter extends RecyclerView.Adapter<ArticleListAdapter.
         TextView wordName;
         TextView dictionaryName;
         TextView wordArticle;
-
-
 
         public ArticleViewHolder(View v) {
             super(v);
