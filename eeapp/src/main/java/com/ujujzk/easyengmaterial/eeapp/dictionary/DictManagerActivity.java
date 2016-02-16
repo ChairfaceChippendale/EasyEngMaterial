@@ -122,23 +122,27 @@ public class DictManagerActivity extends AppCompatActivity implements Dictionary
 
     private void removeDictionary(int dictPosition) {
         //TODO revise all method
-        //TODO method deleteBy() is needed
 
         Long dictToDeleteId = dictionaryListAdapter.getDictionary(dictPosition).getLocalId();
 
-        List<Article> articlesToDelete = Application.localStore.readBy(Article.class, new KeyValue("dictionaryId", dictToDeleteId));
-        if (!articlesToDelete.isEmpty()) {
-            for (Article article : articlesToDelete) {
-                Application.localStore.delete(article.getLocalId(), Article.class);
-            }
-        }
+//        List<Article> articlesToDelete = Application.localStore.readBy(Article.class, new KeyValue("dictionaryId", dictToDeleteId));
+//        if (!articlesToDelete.isEmpty()) {
+//            for (Article article : articlesToDelete) {
+//                Application.localStore.delete(article.getLocalId(), Article.class);
+//            }
+//        }
+//
+//        List<Word> wordsToDelete = Application.localStore.readBy(Word.class, new KeyValue("dictionaryId", dictToDeleteId));
+//        if (!wordsToDelete.isEmpty()){
+//            for (Word word : wordsToDelete) {
+//                Application.localStore.delete(word.getLocalId(), Word.class);
+//            }
+//        }
 
-        List<Word> wordsToDelete = Application.localStore.readBy(Word.class, new KeyValue("dictionaryId", dictToDeleteId));
-        if (!wordsToDelete.isEmpty()){
-            for (Word word : wordsToDelete) {
-                Application.localStore.delete(word.getLocalId(), Word.class);
-            }
-        }
+        Application.localStore.deleteBy(Article.class, new KeyValue("dictionaryId", dictToDeleteId));
+        Application.localStore.deleteBy(Word.class, new KeyValue("dictionaryId", dictToDeleteId));
+
+
 
         Application.localStore.delete(dictToDeleteId, Dictionary.class);
         dictionaryListAdapter.removeDictionary(dictPosition);

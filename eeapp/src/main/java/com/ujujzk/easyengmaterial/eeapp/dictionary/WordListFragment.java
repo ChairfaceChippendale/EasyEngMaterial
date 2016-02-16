@@ -141,36 +141,6 @@ public class WordListFragment extends Fragment implements
     }
 
 
-//    public void updateWordList () {
-//
-//        new AsyncTask<Void, Void, List<Word>>() {
-//            @Override
-//            protected void onPreExecute() {
-//                super.onPreExecute();
-//                if(progressBar != null && wordList != null) {
-//                    progressBar.setVisibility(View.VISIBLE);
-//                    wordList.setVisibility(View.GONE);
-//                }
-//            }
-//
-//            @Override
-//            protected List<Word> doInBackground(Void... params) {
-//                return Application.localStore.readAll(Word.class);
-//            }
-//
-//            @Override
-//            protected void onPostExecute(List<Word> words) {
-//                if(progressBar != null && wordList != null) {
-//                    wordListAdapter.setWords(words);
-//                    progressBar.setVisibility(View.GONE);
-//                    wordList.setVisibility(View.VISIBLE);
-//                }
-//            }
-//        }.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
-//    }
-
-
-
     class AsyncQuerySearcher extends AsyncTask<Bundle,Void,Pair<Cursor,Integer>> {
 
         @Override
@@ -192,9 +162,7 @@ public class WordListFragment extends Fragment implements
                 return new Pair<Cursor, Integer>(null,0);
             }
 
-
             return getLimitedDataByQueryWord(queryWord, limit);
-
         }
 
         @Override
@@ -207,8 +175,6 @@ public class WordListFragment extends Fragment implements
                 wordListManager.scrollToPosition(0);
             }
         }
-
-
     }
 
 
@@ -221,12 +187,10 @@ public class WordListFragment extends Fragment implements
 
         String tableName = SimpleStoreUtil.getTableName(Word.class);
 
-        //Cursor cursor = mDB.query(DB_TABLE, null, selection, null, null, null, COLUMN_TXT, limit);
         Cursor cursor = Application.getStoreManager().getSqLiteHelper().getReadableDatabase().query(tableName, null, selection, null, null, null, "wordName", limit);
         int cursorCount = getLimitedDataByQueryWordCount(queryWord, limitNum);
 
         return new Pair<Cursor,Integer>(cursor, cursorCount);
-
     }
 
     private static int getLimitedDataByQueryWordCount (String queryWord, int limitNum) {
