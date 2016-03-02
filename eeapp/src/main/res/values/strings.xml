@@ -26,6 +26,7 @@
     <string name="action_settings">Settings</string>
     <string name="action_about">About</string>
     <string name="action_rule">Rule</string>
+    <string name="action_to_vocabulary">Add to vocab</string>
 
     <string name="vocab_act_pack_remove_confirm_question">Remove selected packs?</string>
     <string name="vocab_act_pack_remove_confirm_btn">REMOVE</string>
@@ -62,16 +63,16 @@
     <string name="action_manager">Dict manager</string>
     <string name="word_list_fr_search_hint">Search word$#8230</string>
 
-    <string name="sharing_massage">Try this awsame app [here must be link to Play Market]</string>
+    <string name="sharing_massage">Try this awsome app [here must be link to Play Market]</string>
 
     <string name="feed_back_email">easy.english.assist@gmail.com</string>
     <string name="feed_back_subject">Feedback</string>
     <string name="feed_back_title">Send Feedback:</string>
 
-    <string name="manager_act_dictionary_remove_confirm_question">Remove dictionary</string>
-    <string name="manager_act_dictionary_remove_confirm_btn">REMOVE</string>
-    <string name="manager_act_dictionary_remove_cancel_btn">CANCEL</string>
-    <string name="action_to_vocabulary">To vocabulary</string>
+    <string name="dict_manager_act_dictionary_remove_confirm_question">Remove dictionary</string>
+    <string name="dict_manager_act_dictionary_remove_confirm_btn">REMOVE</string>
+    <string name="dict_manager_act_dictionary_remove_cancel_btn">CANCEL</string>
+    <string name="dict_manager_act_progress_view_text">Installing new dictionaries...</string>
 
 
 </resources>

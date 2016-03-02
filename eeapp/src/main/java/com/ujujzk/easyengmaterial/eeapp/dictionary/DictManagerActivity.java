@@ -1,11 +1,9 @@
 package com.ujujzk.easyengmaterial.eeapp.dictionary;
 
-import android.content.Intent;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -41,7 +39,7 @@ public class DictManagerActivity extends AppCompatActivity implements Dictionary
     private static final int BUFFER_SIZE = 1000;//5000 - is too much
 
     private Toolbar toolBar;
-    private FloatingActionButton initializeNewDictionariesFab;
+    private FloatingActionButton insallNewDictionariesFab;
     private RecyclerView dictionaryList;
     private LinearLayoutManager dictionaryListManager;
     private DictionaryListAdapter dictionaryListAdapter;
@@ -70,11 +68,11 @@ public class DictManagerActivity extends AppCompatActivity implements Dictionary
         dictionaryList.setAdapter(dictionaryListAdapter);
         dictionaryList.setItemAnimator(new DefaultItemAnimator());
 
-        initializeNewDictionariesFab = (FloatingActionButton) findViewById(R.id.dic_manager_act_fab);
-        initializeNewDictionariesFab.setOnClickListener(new View.OnClickListener() {
+        insallNewDictionariesFab = (FloatingActionButton) findViewById(R.id.dic_manager_act_fab);
+        insallNewDictionariesFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                initializeNewDictionaries();
+                installNewDictionaries();
             }
         });
 
@@ -101,9 +99,9 @@ public class DictManagerActivity extends AppCompatActivity implements Dictionary
         final int dictPosition = position;
         final String dictName = dictionaryListAdapter.getDictionary(dictPosition).getDictionaryName();
         return new MaterialDialog.Builder(this)
-                .content(getResources().getString(R.string.manager_act_dictionary_remove_confirm_question) + " " + dictName + "?")
-                .positiveText(R.string.manager_act_dictionary_remove_confirm_btn)
-                .negativeText(R.string.manager_act_dictionary_remove_cancel_btn)
+                .content(getResources().getString(R.string.dict_manager_act_dictionary_remove_confirm_question) + " " + dictName + "?")
+                .positiveText(R.string.dict_manager_act_dictionary_remove_confirm_btn)
+                .negativeText(R.string.dict_manager_act_dictionary_remove_cancel_btn)
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
@@ -149,10 +147,10 @@ public class DictManagerActivity extends AppCompatActivity implements Dictionary
 
     }
 
-    private void initializeNewDictionaries() {
+    private void installNewDictionaries() {
 
         if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-            Snackbar.make(initializeNewDictionariesFab, "SD-card is not accessible", Snackbar.LENGTH_LONG).show();
+            Snackbar.make(insallNewDictionariesFab, "SD-card is not accessible", Snackbar.LENGTH_LONG).show();
             Log.d(TAG, "SD-card is not accessible");
             return;
         }
@@ -161,10 +159,28 @@ public class DictManagerActivity extends AppCompatActivity implements Dictionary
 
         if (!path.exists()) {
             path.mkdirs();
-            Snackbar.make(initializeNewDictionariesFab, "There are no new dictionaries.", Snackbar.LENGTH_LONG).show();
+            Snackbar.make(insallNewDictionariesFab, "There are no new dictionaries.", Snackbar.LENGTH_LONG).show();
             Log.d(TAG, "There were no new dictionaries, a folder for dictionaries was mode");
             return;
         }
+
+        List<File> dslFiles = getDictFiles(path);
+
+        if (dslFiles.isEmpty()) {
+            //TODO Massage that there aren't new dictionaries. Notice that dictionary must have expansion .dsl
+            Snackbar.make(insallNewDictionariesFab, "There are no new dictionaries.", Snackbar.LENGTH_LONG).show();
+            Log.d(TAG, "There are no new dictionaries in the Folder on ExternalStorage");
+            return;
+        }
+
+        for (File file : dslFiles) {
+            if (file.getName().endsWith(".dsl")) {
+                addDictionaryToDataBase(file);
+            }
+        }
+    }
+
+    List<File> getDictFiles (File path) {
 
         List<File> allFiles = Arrays.asList(path.listFiles());
         List<File> dslFiles = new ArrayList<File>();
@@ -179,18 +195,7 @@ public class DictManagerActivity extends AppCompatActivity implements Dictionary
             }
         }
 
-        if (dslFiles.isEmpty()) {
-            //TODO Massage that there aren't new dictionaries. Notice that dictionary must have expansion .dsl
-            Snackbar.make(initializeNewDictionariesFab, "There are no new dictionaries.", Snackbar.LENGTH_LONG).show();
-            Log.d(TAG, "There are no new dictionaries in the Folder on ExternalStorage");
-            return;
-        }
-
-        for (File file : dslFiles) {
-            if (file.getName().endsWith(".dsl")) {
-                addDictionaryToDataBase(file);
-            }
-        }
+        return dslFiles;
     }
 
     private void addDictionaryToDataBase(File file) {
@@ -221,7 +226,7 @@ public class DictManagerActivity extends AppCompatActivity implements Dictionary
 
         if (dictionaryName.isEmpty()) {
             Log.d(TAG, "File " + file.getAbsolutePath() + " doesn't have dictionary name.");
-            Snackbar.make(initializeNewDictionariesFab, "File " + file.getName() + " doesn't contain dictionary name.", Snackbar.LENGTH_LONG).show();
+            Snackbar.make(insallNewDictionariesFab, "File " + file.getName() + " doesn't contain dictionary name.", Snackbar.LENGTH_LONG).show();
             return;
         }
 
