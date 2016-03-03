@@ -72,7 +72,7 @@
     <string name="dict_manager_act_dictionary_remove_confirm_question">Remove dictionary</string>
     <string name="dict_manager_act_dictionary_remove_confirm_btn">REMOVE</string>
     <string name="dict_manager_act_dictionary_remove_cancel_btn">CANCEL</string>
-    <string name="dict_manager_act_progress_view_text">Installing new dictionaries...</string>
+    <string name="dict_manager_act_progress_view_text">Installing new words...</string>
 
 
 </resources>

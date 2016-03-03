@@ -3,14 +3,10 @@ package com.ujujzk.easyengmaterial.eeapp.service;
 
 import android.app.Service;
 import android.content.Intent;
-import android.os.Environment;
 import android.os.IBinder;
-import android.support.design.widget.Snackbar;
 import android.util.Log;
 import com.github.aleksandrsavosh.simplestore.KeyValue;
 import com.ujujzk.easyengmaterial.eeapp.Application;
-import com.ujujzk.easyengmaterial.eeapp.R;
-import com.ujujzk.easyengmaterial.eeapp.dictionary.DictManagerActivity;
 import com.ujujzk.easyengmaterial.eeapp.model.Article;
 import com.ujujzk.easyengmaterial.eeapp.model.Dictionary;
 import com.ujujzk.easyengmaterial.eeapp.model.Word;
@@ -19,7 +15,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -27,12 +22,13 @@ public class DictInstallService extends Service{
 
     static final String TAG = DictInstallService.class.getSimpleName();
 
-    Thread installDictsThread;
-
     private static final String DICTIONARY_NAME_TAG_IN_FILE = "#NAME";
     private static final int DICTIONARY_NAME_SEARCHING_ROW_NUMBER = 10;
     private static final int BUFFER_SIZE = 1000;//5000 - is too much
+
     public static final String DICT_FILE_PATHS = "dictFilesToInstall";
+
+    Thread installDictsThread;
 
     @Override
     public void onCreate() {

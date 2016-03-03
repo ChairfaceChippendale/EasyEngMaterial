@@ -23,6 +23,7 @@ import com.ujujzk.easyengmaterial.eeapp.model.Dictionary;
 import com.ujujzk.easyengmaterial.eeapp.model.Word;
 import com.ujujzk.easyengmaterial.eeapp.model.Article;
 import com.ujujzk.easyengmaterial.eeapp.service.DictInstallService;
+import com.ujujzk.easyengmaterial.eeapp.service.DictRemoveService;
 import com.ujujzk.easyengmaterial.eeapp.util.ActivityUtil;
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 
@@ -124,30 +125,15 @@ public class DictManagerActivity extends AppCompatActivity implements Dictionary
     }
 
     private void removeDictionary(int dictPosition) {
-        //TODO revise all method
 
-        Long dictToDeleteId = dictionaryListAdapter.getDictionary(dictPosition).getLocalId();
+        Long dictToRemoveId = dictionaryListAdapter.getDictionary(dictPosition).getLocalId();
 
-//        List<Article> articlesToDelete = Application.localStore.readBy(Article.class, new KeyValue("dictionaryId", dictToDeleteId));
-//        if (!articlesToDelete.isEmpty()) {
-//            for (Article article : articlesToDelete) {
-//                Application.localStore.delete(article.getLocalId(), Article.class);
-//            }
-//        }
-//
-//        List<Word> wordsToDelete = Application.localStore.readBy(Word.class, new KeyValue("dictionaryId", dictToDeleteId));
-//        if (!wordsToDelete.isEmpty()){
-//            for (Word word : wordsToDelete) {
-//                Application.localStore.delete(word.getLocalId(), Word.class);
-//            }
-//        }
 
-        Application.localStore.deleteBy(Article.class, new KeyValue("dictionaryId", dictToDeleteId));
-        Application.localStore.deleteBy(Word.class, new KeyValue("dictionaryId", dictToDeleteId));
+        Intent intent = new Intent(DictManagerActivity.this, DictRemoveService.class);
+        intent.putExtra(DictRemoveService.DICT_TO_REMOVE_ID, dictToRemoveId.longValue());
+        startService(intent);
 
-        Application.localStore.delete(dictToDeleteId, Dictionary.class);
         dictionaryListAdapter.removeDictionary(dictPosition);
-
     }
 
     private void installNewDictionaries() {
@@ -208,10 +194,8 @@ public class DictManagerActivity extends AppCompatActivity implements Dictionary
         intent.putStringArrayListExtra(DictInstallService.DICT_FILE_PATHS, dictFilePaths);
         startService(intent);
 
-        dictionaryList.setVisibility(View.GONE);
+        //dictionaryList.setVisibility(View.GONE);
         installNewDictionariesFab.hide(true);
-
-        progressView.setVisibility(View.VISIBLE);
-
+        //progressView.setVisibility(View.VISIBLE);
     }
 }
