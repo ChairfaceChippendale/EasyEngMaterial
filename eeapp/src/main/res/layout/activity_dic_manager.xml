@@ -11,7 +11,7 @@
             android:layout_height="wrap_content">
 
         <android.support.v7.widget.Toolbar
-                android:id="@+id/dic_manager_act_app_bar"
+                android:id="@+id/dict_manager_act_app_bar"
                 android:orientation="vertical"
                 android:background="@color/toolbar_bgr_light"
                 android:layout_width="match_parent"
@@ -25,11 +25,11 @@
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v7.widget.RecyclerView
-            android:id="@+id/dic_manager_act_rv_dic_list"
+            android:id="@+id/dict_manager_act_rv_dic_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/dic_manager_act_app_bar"
-            android:visibility="gone"
+            android:visibility="visible"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
     <LinearLayout
@@ -63,7 +63,7 @@
 
 
     <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/dic_manager_act_fab"
+            android:id="@+id/dict_manager_act_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"

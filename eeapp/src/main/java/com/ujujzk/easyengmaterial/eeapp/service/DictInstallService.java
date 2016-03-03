@@ -27,8 +27,12 @@ public class DictInstallService extends Service{
 
     static final String TAG = DictInstallService.class.getSimpleName();
 
+    Thread installDictsThread;
+
     private static final String DICTIONARY_NAME_TAG_IN_FILE = "#NAME";
     private static final int DICTIONARY_NAME_SEARCHING_ROW_NUMBER = 10;
+    private static final int BUFFER_SIZE = 1000;//5000 - is too much
+    public static final String DICT_FILE_PATHS = "dictFilesToInstall";
 
     @Override
     public void onCreate() {
@@ -50,18 +54,126 @@ public class DictInstallService extends Service{
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
+        List<String> dictFilePaths = intent.getStringArrayListExtra(DICT_FILE_PATHS);
+        addAllDictToDataBase(dictFilePaths);
 
         return super.onStartCommand(intent, flags, startId);
     }
 
+    private void addAllDictToDataBase (final List<String> dictFilePaths) {
 
+        installDictsThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
 
+                List<File> dictFiles = new ArrayList<File>();
 
+                if (dictFilePaths != null && !dictFilePaths.isEmpty()) {
+                    for (String filePath : dictFilePaths) {
+                        dictFiles.add(new File(filePath));
+                    }
+                }
 
+                if (!dictFiles.isEmpty()) {
 
+                    for (File file : dictFiles) {
+                        if (file.getName().endsWith(".dsl")) {
+                            addDictToDataBase(file);
+                        }
+                    }
+                }
+                stopSelf();
+            }
+        });
+        installDictsThread.start();
 
+    }
 
+    private void addDictToDataBase(File file) {
 
+        String dictionaryName = "";
+
+        try {
+            Scanner scanner = new Scanner(file, Charset.forName("UTF-16").name());
+            String line;
+
+            for (int i = 0; i < DICTIONARY_NAME_SEARCHING_ROW_NUMBER && scanner.hasNext(); i++) {
+                line = scanner.nextLine();
+                line = line.trim();
+                Log.d(TAG, "Line " + i + " is " + line);
+                if (line.startsWith(DICTIONARY_NAME_TAG_IN_FILE)) {
+                    dictionaryName = line;
+                    dictionaryName = dictionaryName.replace(DICTIONARY_NAME_TAG_IN_FILE, "");
+                    dictionaryName = dictionaryName.replace("\"", "");
+                    dictionaryName = dictionaryName.trim();
+                    Log.d(TAG, "Name of new dictionary is " + dictionaryName);
+                    break;
+                }
+            }
+            scanner.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if (dictionaryName.isEmpty()) {
+            Log.d(TAG, "File " + file.getAbsolutePath() + " doesn't have dictionary name.");
+            return;
+        }
+
+        List<Dictionary> existedDictionariesWithCurrentName = Application.localStore.readBy(Dictionary.class, new KeyValue("dictionaryName", dictionaryName));
+        if (!existedDictionariesWithCurrentName.isEmpty()) {
+            Log.d(TAG, "Dictionary " + dictionaryName + " already exists.");
+            return;
+        }
+
+        Dictionary newDictionary = Application.localStore.create(new Dictionary(dictionaryName));
+        Long dictId = newDictionary.getLocalId();
+
+        try {
+            Scanner scanner = new Scanner(file, Charset.forName("UTF-16").name());
+
+            ArrayList<Word> wordBuffer = new ArrayList<Word>();
+            ArrayList<Article> rawArticleBuffer = new ArrayList<Article>();
+            String line;
+            StringBuilder rawArticle = new StringBuilder("");
+
+            while (scanner.hasNext()) {
+                line = scanner.nextLine();
+
+                if (line.startsWith("#")) {//rows with dictionary name and languages
+                    continue;
+                }
+                if (line.equals("\t")) {
+
+                    String wordName = getWordNameFromRawArticle(rawArticle.toString());
+
+                    if (wordName.length() > 0) {
+                        wordBuffer.add( new Word (wordName, dictId) );
+                        rawArticleBuffer.add( new Article (rawArticle.toString(), wordName, dictId) );
+                    }
+                    if (wordBuffer.size() == BUFFER_SIZE) {
+                        saveWordsAndArticles(wordBuffer, rawArticleBuffer);
+                        wordBuffer.clear();
+                        rawArticleBuffer.clear();
+                    }
+                    rawArticle.setLength(0);
+                } else {
+                    rawArticle.append(line);
+                    rawArticle.append("\n");
+                }
+            }
+
+            if (!wordBuffer.isEmpty()) {
+                saveWordsAndArticles(wordBuffer, rawArticleBuffer);
+                wordBuffer.clear();
+                rawArticleBuffer.clear();
+            }
+
+            scanner.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     private void saveWordsAndArticles(ArrayList<Word> wordBuffer, ArrayList<Article> rawArticleBuffer) {
         Application.localStore.createFast(wordBuffer, Word.class);
