@@ -37,41 +37,41 @@ public class Article extends Base {
 
         String article = squareBracketText;
 
-        article = article.replaceAll("\\[/?(\\*|!trs|'|trn|com)\\]", "");
-        article = article.replace("{", "");
-        article = article.replace("}", "");
-        article = article.replaceAll("\\[(s|url)\\][^\\[]*\\[/(s|url)\\]", "");
-        article = article.replaceAll("\\[/?lang[^\\[]*\\]", "");
+        article = article.replaceAll("\\[/?(\\*|!trs|'|trn|com)\\]", "")
+                .replace("{", "")
+                .replace("}", "")
+                .replaceAll("\\[(s|url)\\][^\\[]*\\[/(s|url)\\]", "")
 
-        article = article.replaceAll("\\[c\\](\\[com\\])?", "<font color=\'#2e7d32\'>");
-        article = article.replaceAll("(\\[/com\\])?\\[/c\\]", "</font>");
-        article = article.replace("[c]", "<font color=\'#2e7d32\'>");
-        article = article.replace("[p]", "<font color=\'#2e7d32\'><i>");
-        article = article.replace("[/p]", "</i></font>");
-        article = article.replaceAll("\\[(ex|c gray)\\]", "<font color=\'#757575\'>");
-        article = article.replaceAll("\\[/(ex|com)\\]", "</font>");
-        article = article.replace("[ref]", "<font color=\'#283593\'>");
-        article = article.replace("[/ref]", "</font>");
-        article = article.replaceAll("\\[m[1-9]?\\]", "");
-        article = article.replace("[/m]", "");
-        article = article.replace("[b]", "<b>");
-        article = article.replace("[i]", "<i>");
-        article = article.replace("[u]", "<u>");
-        article = article.replace("[/b]", "</b>");
-        article = article.replace("[/i]", "</i>");
-        article = article.replace("[/u]", "</u>");
+                .replaceAll("\\[/?lang[^\\[]*\\]", "").replaceAll("\\[c\\](\\[com\\])?", "<font color=\'#2e7d32\'>") //green
+                .replace("[c]", "<font color=\'#2e7d32\'>")           //green
+                .replaceAll("(\\[/com\\])?\\[/c\\]", "</font>")
 
-        article = article.replace("\\[", "[");
-        article = article.replace("\\]", "]");
+                .replace("[p]", "<font color=\'#2e7d32\'><i>")        //green
+                .replace("[/p]", "</i></font>")
 
-        article = article.replaceAll("\\[\\[t\\][^\\[]*\\[/t\\]\\]", "");
+                .replaceAll("\\[(ex|c gray)\\]", "<font color=\'#757575\'>") //grey
+                .replaceAll("\\[ref[^\\]]*\\]", "<font color=\'#283593\'>") //blue
+                .replaceAll("\\[/(ex|com|ref)\\]", "</font>")
 
-        article = article.substring(article.indexOf("\t")+1);
+                .replaceAll("\\[m[1-9]?\\]", "")
+                .replace("[/m]", "")
 
-        article = article.replace("\t", "");
+                .replace("[b]", "<b>")
+                .replace("[i]", "<i>")
+                .replace("[u]", "<u>")
+                .replace("[/b]", "</b>")
+                .replace("[/i]", "</i>")
+                .replace("[/u]", "</u>")
 
-        article = article.replace("\n", "<br>");
-        article = article.trim();
+                .replace("\\[", "[")
+                .replace("\\]", "]")
+                .replaceAll("\\[\\[t\\][^\\[]*\\[/t\\]\\],?", "")
+
+                .substring(article.indexOf("\t")+1)
+
+                .replace("\t", "")
+                .trim()
+                .replace("\n", "<br>");;
 
         return article;
     }
