@@ -42,6 +42,9 @@ public class LearnWordActivity extends AppCompatActivity implements View.OnTouch
     private static final int FRONT_SIDE = 570001;
     private static final int BACK_SIDE = 570002;
 
+    private static final String CURRENT_CARD_NUMBER_KEY = "currentCardNumberKeyEasyEnglish";
+    private static final String CARDS_TO_LEARN_KEY = "cardsToLearnKeyEasyEnglish";
+
     private int currentCardSide;
     private int currentCardNumber;
 
@@ -121,16 +124,16 @@ public class LearnWordActivity extends AppCompatActivity implements View.OnTouch
     protected void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
 
-        savedInstanceState.putInt("CurrentCardSide", currentCardSide);
-        savedInstanceState.putSerializable("CardsToLearn", (ArrayList<Card>)cardsToLearn);
+        savedInstanceState.putSerializable(CARDS_TO_LEARN_KEY, (ArrayList<Card>)cardsToLearn);
+        savedInstanceState.putInt(CURRENT_CARD_NUMBER_KEY, currentCardNumber);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
-        cardsToLearn = (List<Card>)savedInstanceState.getSerializable("CardsToLearn");
-        currentCardNumber = savedInstanceState.getInt("CurrentCardNumber");
+        cardsToLearn = (List<Card>)savedInstanceState.getSerializable(CARDS_TO_LEARN_KEY);
+        currentCardNumber = savedInstanceState.getInt(CURRENT_CARD_NUMBER_KEY);
         showWordCard();
     }
 
