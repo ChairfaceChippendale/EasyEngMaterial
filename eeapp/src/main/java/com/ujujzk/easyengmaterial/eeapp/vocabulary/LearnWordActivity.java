@@ -2,7 +2,9 @@ package com.ujujzk.easyengmaterial.eeapp.vocabulary;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Point;
+import android.graphics.drawable.GradientDrawable;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -39,6 +41,7 @@ public class LearnWordActivity extends AppCompatActivity implements View.OnTouch
 
     private static final int FRONT_SIDE = 570001;
     private static final int BACK_SIDE = 570002;
+
     private int currentCardSide;
     private int currentCardNumber;
 
@@ -80,10 +83,28 @@ public class LearnWordActivity extends AppCompatActivity implements View.OnTouch
         screenSize = new Point();
         getWindowManager().getDefaultDisplay().getSize(screenSize);
         wordViewHeight = screenSize.y/2;
+        wordViewWidth = screenSize.x/2; //gg
+
+
+        Log.d(TAG, "screen.x = " + screenSize.x);
+        Log.d(TAG, "wordViewWidth = " + wordViewWidth);
+
+        RelativeLayout.LayoutParams layoutParams = null;
         wordView = (TextView) findViewById(R.id.learn_word_act_tv_word);
-        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, wordViewHeight);
-        layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, wordViewHeight);
+            layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
+        } else {
+            layoutParams = new RelativeLayout.LayoutParams(wordViewWidth, RelativeLayout.LayoutParams.MATCH_PARENT);
+            layoutParams.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
+        }
         layoutParams.topMargin = screenSize.y/4;
+        layoutParams.leftMargin = screenSize.x/4; //gg
+
+
+        Log.d(TAG, "layoutParams.leftMargin = " + layoutParams.leftMargin);
+
+
         wordView.setLayoutParams(layoutParams);
 
         currentCardNumber = 0;
@@ -105,9 +126,29 @@ public class LearnWordActivity extends AppCompatActivity implements View.OnTouch
     }
 
     @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+
+        savedInstanceState.putInt("CurrentCardNumber", currentCardNumber);
+        savedInstanceState.putInt("CurrentCardSide", currentCardSide);
+        savedInstanceState.putSerializable("CardsToLearnIds", (ArrayList<Card>)cardsToLearn);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        cardsToLearn = (List<Card>)savedInstanceState.getSerializable("CardsToLearnIds");
+        currentCardNumber = savedInstanceState.getInt("CurrentCardNumber");
+        showWordCard();
+
+    }
+
+    @Override
     public boolean onTouch(View wordView, MotionEvent event) {
 
         final int eventY = (int) event.getRawY(); //where finger is
+        final int eventX = (int) event.getRawX();
         RelativeLayout.LayoutParams wordViewParams = (RelativeLayout.LayoutParams) wordView.getLayoutParams();
 
         switch (event.getActionMasked()) {
@@ -115,47 +156,119 @@ public class LearnWordActivity extends AppCompatActivity implements View.OnTouch
             case MotionEvent.ACTION_DOWN:
 
                 moveY = eventY - wordViewParams.topMargin;
+                moveX = eventX - wordViewParams.leftMargin; //gg
                 break;
 
             case MotionEvent.ACTION_MOVE:
 
-                wordViewParams.topMargin = eventY - moveY;
+                if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) { //gg
+                    wordViewParams.topMargin = eventY - moveY;
+                } else {
+                    wordViewParams.leftMargin = eventX - moveX; //gg
+                }
+
                 wordView.setLayoutParams(wordViewParams);
                 break;
 
             case MotionEvent.ACTION_UP:
 
-                if (wordViewParams.topMargin < screenSize.y/8) { //upper part of the screen "I KNOW"
-
-                    if (currentCardNumber < cardsToLearn.size()) {
-                        moveWordViewAfterAction(wordView, MOVE_UP, (wordViewParams.topMargin - wordViewHeight / 2));
-                    }
-
-                } else if (wordViewParams.topMargin > (screenSize.y*3/8)) {  //lower part of the screen "I FORGOT"
-
-                    if (currentCardNumber < cardsToLearn.size()) {
-                        cardsToLearn.add(cardsToLearn.get(currentCardNumber));
-                        moveWordViewAfterAction(wordView, MOVE_DOWN, (wordViewParams.topMargin - wordViewHeight / 2));
-                    }
-
-                } else if ((wordViewParams.topMargin - screenSize.y/4) > -20 && (wordViewParams.topMargin - screenSize.y/4) < 20) { //very small step "Translate"
-
-                    if (currentCardNumber < cardsToLearn.size()) {
-                        rotateWordCard();
-                    } else {
-                        onBackPressed();
-                        overridePendingTransition(R.animator.activity_appear_alpha, R.animator.activity_disappear_to_right); //custom activity transition animation
-                    }
-
+                if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+                    portraitAction(wordViewParams);
                 } else {
-
+                    landscapeAction(wordViewParams);
                 }
-                wordViewParams.topMargin = screenSize.y/4;
-                wordView.setLayoutParams(wordViewParams);
+
+//                if (wordViewParams.topMargin < screenSize.y/8) { //upper part of the screen "I KNOW"
+//
+//                    if (currentCardNumber < cardsToLearn.size()) {
+//                        moveWordViewAfterAction(wordView, MOVE_UP, (wordViewParams.topMargin - wordViewHeight / 2));
+//                    }
+//
+//                } else if (wordViewParams.topMargin > (screenSize.y*3/8)) {  //lower part of the screen "I FORGOT"
+//
+//                    if (currentCardNumber < cardsToLearn.size()) {
+//                        cardsToLearn.add(cardsToLearn.get(currentCardNumber));
+//                        moveWordViewAfterAction(wordView, MOVE_DOWN, (wordViewParams.topMargin - wordViewHeight / 2));
+//                    }
+//
+//                } else if ((wordViewParams.topMargin - screenSize.y/4) > -20 && (wordViewParams.topMargin - screenSize.y/4) < 20) { //very small step "Translate"
+//
+//                    if (currentCardNumber < cardsToLearn.size()) {
+//                        rotateWordCard();
+//                    } else {
+//                        onBackPressed();
+//                        overridePendingTransition(R.animator.activity_appear_alpha, R.animator.activity_disappear_to_right); //custom activity transition animation
+//                    }
+//
+//                } else {
+//
+//                }
+//                wordViewParams.topMargin = screenSize.y/4;
+//                wordView.setLayoutParams(wordViewParams);
                 break;
         }
 
         return true;
+    }
+
+    private void landscapeAction(RelativeLayout.LayoutParams wordViewParams) {
+        if (wordViewParams.leftMargin < screenSize.x/8) { //left part of the screen "I KNOW"
+
+            if (currentCardNumber < cardsToLearn.size()) {
+                moveWordViewAfterAction(wordView, MOVE_LEFT, (wordViewParams.leftMargin - wordViewWidth / 2));
+            }
+
+        } else if (wordViewParams.leftMargin > (screenSize.x*3/8)) {  //right part of the screen "I FORGOT"
+
+            if (currentCardNumber < cardsToLearn.size()) {
+                cardsToLearn.add(cardsToLearn.get(currentCardNumber));
+                moveWordViewAfterAction(wordView, MOVE_RIGHT, (wordViewParams.leftMargin - wordViewWidth / 2));
+            }
+
+        } else if ((wordViewParams.leftMargin - screenSize.x/4) > -20 && (wordViewParams.leftMargin - screenSize.x/4) < 20) { //very small step "Translate"
+
+            if (currentCardNumber < cardsToLearn.size()) {
+                rotateWordCard();
+            } else {
+                onBackPressed();
+                overridePendingTransition(R.animator.activity_appear_alpha, R.animator.activity_disappear_to_right); //custom activity transition animation
+            }
+
+        } else {
+
+        }
+        wordViewParams.leftMargin = screenSize.x/4;
+        wordView.setLayoutParams(wordViewParams);
+    }
+
+    private void portraitAction(RelativeLayout.LayoutParams wordViewParams) {
+        if (wordViewParams.topMargin < screenSize.y/8) { //upper part of the screen "I KNOW"
+
+            if (currentCardNumber < cardsToLearn.size()) {
+                moveWordViewAfterAction(wordView, MOVE_UP, (wordViewParams.topMargin - wordViewHeight / 2));
+            }
+
+        } else if (wordViewParams.topMargin > (screenSize.y*3/8)) {  //lower part of the screen "I FORGOT"
+
+            if (currentCardNumber < cardsToLearn.size()) {
+                cardsToLearn.add(cardsToLearn.get(currentCardNumber));
+                moveWordViewAfterAction(wordView, MOVE_DOWN, (wordViewParams.topMargin - wordViewHeight / 2));
+            }
+
+        } else if ((wordViewParams.topMargin - screenSize.y/4) > -20 && (wordViewParams.topMargin - screenSize.y/4) < 20) { //very small step "Translate"
+
+            if (currentCardNumber < cardsToLearn.size()) {
+                rotateWordCard();
+            } else {
+                onBackPressed();
+                overridePendingTransition(R.animator.activity_appear_alpha, R.animator.activity_disappear_to_right); //custom activity transition animation
+            }
+
+        } else {
+
+        }
+        wordViewParams.topMargin = screenSize.y/4;
+        wordView.setLayoutParams(wordViewParams);
     }
 
     private void showWordCard() {
@@ -192,6 +305,14 @@ public class LearnWordActivity extends AppCompatActivity implements View.OnTouch
 
             case MOVE_DOWN:
                 anim = new TranslateAnimation(0,0, startPosition, startPosition + screenSize.y/2);
+                break;
+
+            case MOVE_LEFT:
+                anim = new TranslateAnimation(startPosition, startPosition - screenSize.x/2, 0, 0);
+                break;
+
+            case MOVE_RIGHT:
+                anim = new TranslateAnimation(startPosition, startPosition + screenSize.x/2,0,0);
                 break;
 
             default:

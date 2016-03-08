@@ -1,6 +1,7 @@
 package com.ujujzk.easyengmaterial.eeapp.model;
 
 
+import android.util.Log;
 import com.github.aleksandrsavosh.simplestore.Base;
 
 public class Article extends Base {
@@ -37,6 +38,8 @@ public class Article extends Base {
 
         String article = squareBracketText;
 
+        Log.d("Model Article", article);
+
         article = article.replaceAll("\\[/?(\\*|!trs|'|trn|com)\\]", "")
                 .replace("{", "")
                 .replace("}", "")
@@ -65,13 +68,12 @@ public class Article extends Base {
 
                 .replace("\\[", "[")
                 .replace("\\]", "]")
-                .replaceAll("\\[\\[t\\][^\\[]*\\[/t\\]\\],?", "")
+                .replaceAll("\\[\\[t\\][^\\[]*\\[/t\\]\\],?", "");
 
-                .substring(article.indexOf("\t")+1)
-
+        article = article.substring(article.indexOf("\t")+1)
                 .replace("\t", "")
                 .trim()
-                .replace("\n", "<br>");;
+                .replace("\n", "<br>");
 
         return article;
     }

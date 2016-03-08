@@ -43,4 +43,5 @@ public class Card extends Base {
                 ", back='" + back + '\'' +
                 "} " + super.toString();
     }
+
 }

@@ -55,6 +55,7 @@ public class DictRemoveService extends Service {
                 Application.localStore.deleteBy(Word.class, new KeyValue("dictionaryId", dictToDeleteId));
 
                 Application.localStore.delete(dictToDeleteId, Dictionary.class);
+                stopSelf();
             }
         });
         removeDictThread.start();

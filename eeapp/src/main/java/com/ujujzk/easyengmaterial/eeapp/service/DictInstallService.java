@@ -146,6 +146,7 @@ public class DictInstallService extends Service{
                     if (wordName.length() > 0) {
                         wordBuffer.add( new Word (wordName, dictId) );
                         rawArticleBuffer.add( new Article (rawArticle.toString(), wordName, dictId) );
+
                     }
                     if (wordBuffer.size() == BUFFER_SIZE) {
                         saveWordsAndArticles(wordBuffer, rawArticleBuffer);
