@@ -169,12 +169,10 @@ public class DictionaryActivity extends AppCompatActivity implements OnWordSelec
                 overridePendingTransition(R.animator.activity_appear_from_right, R.animator.activity_disappear_alpha); //custom activity transition animation
                 return true;
 
-            case R.id.dict_act_action_to_vocabulary:
-
-                //TODO through dialog
-                makeSendToVocabularyDialog("Hello");
-
+            case R.id.dict_act_action_pronunciation:
+                //TODO
                 return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -224,11 +222,6 @@ public class DictionaryActivity extends AppCompatActivity implements OnWordSelec
         public CharSequence getPageTitle(int position) {
             return mFragmentTitleList.get(position);
         }
-    }
-
-    private MaterialDialog makeSendToVocabularyDialog (String word) {
-        //TODO
-        return null;
     }
 
     private void sendSharingMassage(String massage){

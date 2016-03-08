@@ -83,11 +83,7 @@ public class LearnWordActivity extends AppCompatActivity implements View.OnTouch
         screenSize = new Point();
         getWindowManager().getDefaultDisplay().getSize(screenSize);
         wordViewHeight = screenSize.y/2;
-        wordViewWidth = screenSize.x/2; //gg
-
-
-        Log.d(TAG, "screen.x = " + screenSize.x);
-        Log.d(TAG, "wordViewWidth = " + wordViewWidth);
+        wordViewWidth = screenSize.x/2;
 
         RelativeLayout.LayoutParams layoutParams = null;
         wordView = (TextView) findViewById(R.id.learn_word_act_tv_word);
@@ -99,11 +95,7 @@ public class LearnWordActivity extends AppCompatActivity implements View.OnTouch
             layoutParams.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
         }
         layoutParams.topMargin = screenSize.y/4;
-        layoutParams.leftMargin = screenSize.x/4; //gg
-
-
-        Log.d(TAG, "layoutParams.leftMargin = " + layoutParams.leftMargin);
-
+        layoutParams.leftMargin = screenSize.x/4;
 
         wordView.setLayoutParams(layoutParams);
 
@@ -129,19 +121,17 @@ public class LearnWordActivity extends AppCompatActivity implements View.OnTouch
     protected void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
 
-        savedInstanceState.putInt("CurrentCardNumber", currentCardNumber);
         savedInstanceState.putInt("CurrentCardSide", currentCardSide);
-        savedInstanceState.putSerializable("CardsToLearnIds", (ArrayList<Card>)cardsToLearn);
+        savedInstanceState.putSerializable("CardsToLearn", (ArrayList<Card>)cardsToLearn);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
-        cardsToLearn = (List<Card>)savedInstanceState.getSerializable("CardsToLearnIds");
+        cardsToLearn = (List<Card>)savedInstanceState.getSerializable("CardsToLearn");
         currentCardNumber = savedInstanceState.getInt("CurrentCardNumber");
         showWordCard();
-
     }
 
     @Override
@@ -166,7 +156,6 @@ public class LearnWordActivity extends AppCompatActivity implements View.OnTouch
                 } else {
                     wordViewParams.leftMargin = eventX - moveX; //gg
                 }
-
                 wordView.setLayoutParams(wordViewParams);
                 break;
 
@@ -177,37 +166,8 @@ public class LearnWordActivity extends AppCompatActivity implements View.OnTouch
                 } else {
                     landscapeAction(wordViewParams);
                 }
-
-//                if (wordViewParams.topMargin < screenSize.y/8) { //upper part of the screen "I KNOW"
-//
-//                    if (currentCardNumber < cardsToLearn.size()) {
-//                        moveWordViewAfterAction(wordView, MOVE_UP, (wordViewParams.topMargin - wordViewHeight / 2));
-//                    }
-//
-//                } else if (wordViewParams.topMargin > (screenSize.y*3/8)) {  //lower part of the screen "I FORGOT"
-//
-//                    if (currentCardNumber < cardsToLearn.size()) {
-//                        cardsToLearn.add(cardsToLearn.get(currentCardNumber));
-//                        moveWordViewAfterAction(wordView, MOVE_DOWN, (wordViewParams.topMargin - wordViewHeight / 2));
-//                    }
-//
-//                } else if ((wordViewParams.topMargin - screenSize.y/4) > -20 && (wordViewParams.topMargin - screenSize.y/4) < 20) { //very small step "Translate"
-//
-//                    if (currentCardNumber < cardsToLearn.size()) {
-//                        rotateWordCard();
-//                    } else {
-//                        onBackPressed();
-//                        overridePendingTransition(R.animator.activity_appear_alpha, R.animator.activity_disappear_to_right); //custom activity transition animation
-//                    }
-//
-//                } else {
-//
-//                }
-//                wordViewParams.topMargin = screenSize.y/4;
-//                wordView.setLayoutParams(wordViewParams);
                 break;
         }
-
         return true;
     }
 

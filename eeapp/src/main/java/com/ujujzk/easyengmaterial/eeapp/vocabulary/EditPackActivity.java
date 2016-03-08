@@ -32,20 +32,24 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class EditPackActivity extends AppCompatActivity implements CardListAdapter.CardViewHolder.ClickListener {
 
     @SuppressWarnings("unused")
     private static final String TAG = EditPackActivity.class.getSimpleName();
+
     private static final String GLOSBE_QUERY = "https://glosbe.com/gapi/translate?from=rus&dest=eng&format=json&pretty=true&tm=false&phrase=";
+    private static final String CARDS_TO_EDIT_KEY = "cardsToEditKeyEasyEnglish";
+    private static final String PACK_TITLE_KEY = "packTitleKeyEasyEnglish";
 
     private RecyclerView cardList;
     private CardListAdapter cardListAdapter;
     private FloatingActionButton addCardFab;
     private TextView packTitle;
-    private Long packToEditId;
-    private Pack packToEdit;
+    Pack packToEdit;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +58,7 @@ public class EditPackActivity extends AppCompatActivity implements CardListAdapt
         setContentView(R.layout.activity_edit_pack);
 
         Intent intent = getIntent();
-        packToEditId = intent.getLongExtra(VocabularyActivity.SELECTED_PACK_ID, 0L);
+        Long packToEditId = intent.getLongExtra(VocabularyActivity.SELECTED_PACK_ID, 0L);
         packToEdit = Application.localStore.readWithRelations(packToEditId, Pack.class);
 
         Toolbar toolBar = (Toolbar) findViewById(R.id.edit_pack_act_app_bar);
@@ -65,7 +69,11 @@ public class EditPackActivity extends AppCompatActivity implements CardListAdapt
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         packTitle = (TextView) findViewById(R.id.edit_pack_act_pack_title);
-        packTitle.setText(packToEdit.getTitle());
+        if(savedInstanceState != null){
+            packTitle.setText(savedInstanceState.getString(PACK_TITLE_KEY));
+        } else {
+            packTitle.setText(packToEdit.getTitle());
+        }
         packTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,7 +103,11 @@ public class EditPackActivity extends AppCompatActivity implements CardListAdapt
         cardList = (RecyclerView) findViewById(R.id.edit_pack_act_card_list);
         cardList.addItemDecoration(new HorizontalDividerItemDecoration.Builder(this).build());
         cardList.setLayoutManager(new LinearLayoutManager(this));
-        cardListAdapter = new CardListAdapter(packToEdit.getAllCards(), this);
+        if (savedInstanceState != null) {
+            cardListAdapter = new CardListAdapter((List<Card>)savedInstanceState.getSerializable(CARDS_TO_EDIT_KEY), this);
+        } else {
+            cardListAdapter = new CardListAdapter(packToEdit.getAllCards(), this);
+        }
         cardList.setAdapter(cardListAdapter);
         cardList.setItemAnimator(new DefaultItemAnimator());
 
@@ -180,8 +192,6 @@ public class EditPackActivity extends AppCompatActivity implements CardListAdapt
                 md.show();
             }
         });
-
-
     }
 
     @Override
@@ -189,6 +199,9 @@ public class EditPackActivity extends AppCompatActivity implements CardListAdapt
 
         int id = item.getItemId();
         if (id == android.R.id.home) {
+
+            saveDataToLocalBase();
+
             onBackPressed();
             overridePendingTransition(R.animator.activity_appear_alpha, R.animator.activity_disappear_to_right); //custom activity transition animation
         }
@@ -196,17 +209,11 @@ public class EditPackActivity extends AppCompatActivity implements CardListAdapt
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
 
-        new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected Void doInBackground(Void... params) {
-                saveDataToLocalBase();
-                return null;
-            }
-        }.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
-
+        savedInstanceState.putString(PACK_TITLE_KEY, packTitle.getText().toString());
+        savedInstanceState.putSerializable(CARDS_TO_EDIT_KEY, (ArrayList<Card>)cardListAdapter.getCards());
     }
 
     @Override
@@ -221,11 +228,16 @@ public class EditPackActivity extends AppCompatActivity implements CardListAdapt
 
     private void saveDataToLocalBase() {
 
-        packToEdit.setTitle(packTitle.getText().toString());
-        packToEdit.removeCards();
-        packToEdit.addCards((ArrayList<Card>) cardListAdapter.getCards());
-        Application.localStore.updateWithRelations(packToEdit);
-
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+                packToEdit.setTitle(packTitle.getText().toString());
+                packToEdit.removeCards();
+                packToEdit.addCards((ArrayList<Card>) cardListAdapter.getCards());
+                Application.localStore.updateWithRelations(packToEdit);
+                return null;
+            }
+        }.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
     }
 
     private void showCardEditDialog(final int position) {
@@ -309,7 +321,6 @@ public class EditPackActivity extends AppCompatActivity implements CardListAdapt
 
             }
         });
-
         cardEditDialog.show();
     }
 
