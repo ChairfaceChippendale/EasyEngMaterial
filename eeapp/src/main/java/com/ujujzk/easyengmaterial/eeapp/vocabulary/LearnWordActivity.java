@@ -55,8 +55,6 @@ public class LearnWordActivity extends AppCompatActivity implements View.OnTouch
     private int moveX;
     private Point screenSize;
 
-    private String wordToPronounce;
-
     List<Card> cardsToLearn;
     List<Long> cardIds;
 
@@ -317,7 +315,7 @@ public class LearnWordActivity extends AppCompatActivity implements View.OnTouch
             case R.id.learn_word_act_action_pronunciation:
                 if (isNetworkConnected()) {
                     if (currentCardNumber < cardsToLearn.size()) {
-                        wordToPronounce = cardsToLearn.get(currentCardNumber).getBack();
+                        String wordToPronounce = cardsToLearn.get(currentCardNumber).getBack();
                         if (currentCardSide == BACK_SIDE && !wordToPronounce.isEmpty()) {
                             //word pronunciation
                             //powered by Google
@@ -329,7 +327,7 @@ public class LearnWordActivity extends AppCompatActivity implements View.OnTouch
                         }
                     }
                 } else {
-                    Toast.makeText(this, "Is not available", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Is not available", Toast.LENGTH_SHORT).show(); //TODO HardCode
                 }
                 return true;
 

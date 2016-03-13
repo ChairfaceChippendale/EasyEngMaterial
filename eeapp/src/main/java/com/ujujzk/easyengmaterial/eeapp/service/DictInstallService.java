@@ -31,18 +31,6 @@ public class DictInstallService extends Service{
     Thread installDictsThread;
 
     @Override
-    public void onCreate() {
-        super.onCreate();
-        Log.d(TAG, "onCreate");
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Log.d(TAG, "onDestroy");
-    }
-
-    @Override
     public IBinder onBind(Intent intent) {
         return null;
     }

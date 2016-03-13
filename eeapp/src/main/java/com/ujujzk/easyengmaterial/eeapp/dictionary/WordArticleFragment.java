@@ -27,6 +27,8 @@ public class WordArticleFragment extends Fragment{
     private ArticleListAdapter articleListAdapter;
     private CircularProgressView progressBar;
 
+    private String selectedWordName;
+
     public WordArticleFragment() {
     }
 
@@ -35,8 +37,13 @@ public class WordArticleFragment extends Fragment{
         //TODO create articles - CHECK
         final Word selectedWord = Application.localStore.read(wordId, Word.class);
         if (selectedWord != null) {
-            updateArticleList(selectedWord.getWordName());
+            selectedWordName = selectedWord.getWordName();
+            updateArticleList(selectedWordName);
         }
+    }
+
+    String getSelectedWordName(){
+        return selectedWordName;
     }
 
     @Override
