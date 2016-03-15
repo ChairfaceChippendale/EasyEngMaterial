@@ -37,7 +37,6 @@ public class WordListFragment extends Fragment implements
     private static final String QUERY_WORD_KEY = "word";
 
     android.support.v7.widget.SearchView searchView;
-    //private CircularProgressView progressBar;
     private RecyclerView wordList;
     private WordListCursorAdapter wordListAdapter;
     private LinearLayoutManager wordListManager;
@@ -69,8 +68,6 @@ public class WordListFragment extends Fragment implements
         });
         searchView.setOnQueryTextListener(this);
 
-        //progressBar = (CircularProgressView) v.findViewById(R.id.word_list_fr_progress_bar);
-
         wordList = (RecyclerView) v.findViewById(R.id.word_list_fr_list);
         wordList.addItemDecoration(new HorizontalDividerItemDecoration.Builder(getActivity()).build());
 
@@ -101,7 +98,7 @@ public class WordListFragment extends Fragment implements
     @Override
     public void onItemClicked(int position) {
 
-        wordSelectedListener.OnWordSelected(wordListAdapter.getWordId(position));
+        wordSelectedListener.onWordSelected(wordListAdapter.getWordId(position));
 
         if (context != null) {
             TabLayout tabLayout = (TabLayout) getActivity().findViewById(R.id.dict_act_tabs);
@@ -147,15 +144,12 @@ public class WordListFragment extends Fragment implements
         protected Pair<Cursor,Integer> doInBackground(Bundle... bndl) {
 
             if (bndl == null || bndl.length == 0){
-
-                //return new Pair<Cursor, Integer>(db.getAllData(),db.getAllData().getCount());
                 return new Pair<Cursor, Integer>(null,0);
             }
             final String queryWord = bndl[0].getString(QUERY_WORD_KEY);
             final int limit = bndl[0].getInt(QUERY_WORD_LIMIT_KEY);
 
             if (queryWord == null || limit <= 0) {
-                //return new Pair<Cursor, Integer>(db.getAllData(),db.getAllData().getCount());
                 return new Pair<Cursor, Integer>(null,0);
             }
             if (queryWord.length() == 0){

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -17,7 +16,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
@@ -32,6 +30,7 @@ import com.ujujzk.easyengmaterial.eeapp.service.PronunciationService;
 import com.ujujzk.easyengmaterial.eeapp.util.ActivityUtil;
 import com.ujujzk.easyengmaterial.eeapp.vocabulary.VocabularyActivity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,6 +65,24 @@ public class DictionaryActivity extends AppCompatActivity implements OnWordSelec
 
     }
 
+    private void setupViewPager(ViewPager viewPager) {
+
+        List<Fragment> fr = getSupportFragmentManager().getFragments();
+        if (fr != null && !fr.isEmpty()){
+            for (Fragment f: fr){
+                if(f != null)
+                    getSupportFragmentManager().beginTransaction().remove(f).commit();
+            }
+        }
+
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+        viewPagerAdapter.addFragment(new WordListFragment(), getResources().getString(R.string.word_list_fragment_title));
+        viewPagerAdapter.addFragment(new WordArticleFragment(), getResources().getString(R.string.word_article_fragment_title));
+        viewPagerAdapter.addFragment(new WordHistoryFragment(), getResources().getString(R.string.word_history_fragment_title));
+        viewPager.setAdapter(viewPagerAdapter);
+    }
+
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -76,10 +93,104 @@ public class DictionaryActivity extends AppCompatActivity implements OnWordSelec
     protected void onStop() {
         super.onStop();
         stopService(new Intent(this, PronunciationService.class));
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_dictionary, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.dict_act_action_manager:
+                startActivity(new Intent(DictionaryActivity.this, DictManagerActivity.class));
+                overridePendingTransition(R.animator.activity_appear_from_right, R.animator.activity_disappear_alpha); //custom activity transition animation
+                return true;
+
+            case R.id.dict_act_action_pronunciation:
+                if (isNetworkConnected()) {
+
+                    final int wordArticleFragmentPosition = ((ViewPagerAdapter) viewPager.getAdapter()).getFragmentPositionByTitle(getResources().getString(R.string.word_article_fragment_title));
+                    if (wordArticleFragmentPosition > 0) {
+                        String wordToPronounce = "";
+                        try {
+                            wordToPronounce = ((WordArticleFragment) ((ViewPagerAdapter) viewPager.getAdapter()).getItem(wordArticleFragmentPosition)).getSelectedWordName();
+                        } catch (IndexOutOfBoundsException e) {
+                            e.printStackTrace();
+                            return true;
+                        }
+                        if (!wordToPronounce.isEmpty()) {
+                            //word pronunciation
+                            //powered by Google
+                            //https://ssl.gstatic.com/dictionary/static/sounds/de/0/WORD.mp3
+                            Intent intent = new Intent(PronunciationService.PRONUNCIATION_TASK);
+                            intent.putExtra(PronunciationService.WORD, wordToPronounce);
+                            sendBroadcast(intent);
+                        }
+                    }
+                } else {
+                    Toast.makeText(this, "No internet connection", Toast.LENGTH_SHORT).show(); //TODO HardCode
+                }
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onWordSelected(long wordId) {
+
+        final int wordArticleFragmentPosition = ((ViewPagerAdapter) viewPager.getAdapter()).getFragmentPositionByTitle(getResources().getString(R.string.word_article_fragment_title));
+        ((WordArticleFragment) ((ViewPagerAdapter) viewPager.getAdapter()).getItem(wordArticleFragmentPosition)).setSelectedWord(wordId);
+
     }
 
     public int getTabPositionByTitle(String title) {
         return ((ViewPagerAdapter) viewPager.getAdapter()).getFragmentPositionByTitle(title);
+    }
+
+    class ViewPagerAdapter extends FragmentPagerAdapter implements Serializable {
+        private final List<Fragment> mFragmentList = new ArrayList<Fragment>();
+        private final List<String> mFragmentTitleList = new ArrayList<String>();
+
+        public ViewPagerAdapter(FragmentManager manager) {
+            super(manager);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragmentList.get(position);
+        }
+
+        public int getFragmentPositionByTitle(String title) {
+            for (int i = 0; i < mFragmentTitleList.size(); i++) {
+                if (mFragmentTitleList.get(i).equals(title)) {
+                    return i;
+                }
+            }
+            return 0;
+        }
+
+        @Override
+        public int getCount() {
+            return mFragmentList.size();
+        }
+
+        public void addFragment(Fragment fragment, String title) {
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitleList.get(position);
+        }
     }
 
     private Drawer makeNavigationDrawer() {
@@ -158,107 +269,6 @@ public class DictionaryActivity extends AppCompatActivity implements OnWordSelec
                     }
                 })
                 .build();
-    }
-
-    private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new WordListFragment(), getResources().getString(R.string.word_list_fragment_title));
-        adapter.addFragment(new WordArticleFragment(), getResources().getString(R.string.word_article_fragment_title));
-        adapter.addFragment(new WordHistoryFragment(), getResources().getString(R.string.word_history_fragment_title));
-        viewPager.setAdapter(adapter);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_dictionary, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        int id = item.getItemId();
-        switch (id) {
-            case R.id.dict_act_action_manager:
-                startActivity(new Intent(DictionaryActivity.this, DictManagerActivity.class));
-                overridePendingTransition(R.animator.activity_appear_from_right, R.animator.activity_disappear_alpha); //custom activity transition animation
-                return true;
-
-            case R.id.dict_act_action_pronunciation:
-                if (isNetworkConnected()) {
-
-                    final int wordArticleFragmentPosition = ((ViewPagerAdapter) viewPager.getAdapter()).getFragmentPositionByTitle(getResources().getString(R.string.word_article_fragment_title));
-                    if (wordArticleFragmentPosition > 0) {
-                        String wordToPronounce = "";
-                        try {
-                            wordToPronounce = ((WordArticleFragment) ((ViewPagerAdapter) viewPager.getAdapter()).getItem(wordArticleFragmentPosition)).getSelectedWordName();
-                        } catch (IndexOutOfBoundsException e) {
-                            e.printStackTrace();
-                            return true;
-                        }
-                        if (!wordToPronounce.isEmpty()) {
-                            //word pronunciation
-                            //powered by Google
-                            //https://ssl.gstatic.com/dictionary/static/sounds/de/0/WORD.mp3
-                            Intent intent = new Intent(PronunciationService.PRONUNCIATION_TASK);
-                            intent.putExtra(PronunciationService.WORD, wordToPronounce);
-                            sendBroadcast(intent);
-                        }
-                    }
-                } else {
-                    Toast.makeText(this, "No connection", Toast.LENGTH_SHORT).show(); //TODO HardCode
-                }
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    @Override
-    public void OnWordSelected(long wordId) {
-
-        final int wordArticleFragmentPosition = ((ViewPagerAdapter) viewPager.getAdapter()).getFragmentPositionByTitle(getResources().getString(R.string.word_article_fragment_title));
-        ((WordArticleFragment) ((ViewPagerAdapter) viewPager.getAdapter()).getItem(wordArticleFragmentPosition)).setSelectedWord(wordId);
-
-    }
-
-    class ViewPagerAdapter extends FragmentPagerAdapter {
-        private final List<Fragment> mFragmentList = new ArrayList<Fragment>();
-        private final List<String> mFragmentTitleList = new ArrayList<String>();
-
-        public ViewPagerAdapter(FragmentManager manager) {
-            super(manager);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return mFragmentList.get(position);
-        }
-
-        public int getFragmentPositionByTitle(String title) {
-            for (int i = 0; i < mFragmentTitleList.size(); i++) {
-                if (mFragmentTitleList.get(i).equals(title)) {
-                    return i;
-                }
-            }
-            return 0;
-        }
-
-        @Override
-        public int getCount() {
-            return mFragmentList.size();
-        }
-
-        public void addFragment(Fragment fragment, String title) {
-            mFragmentList.add(fragment);
-            mFragmentTitleList.add(title);
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mFragmentTitleList.get(position);
-        }
     }
 
     private void sendSharingMassage(String massage) {

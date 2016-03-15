@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,8 @@ import java.util.List;
 
 public class WordArticleFragment extends Fragment{
 
+    @SuppressWarnings("unused")
+    private static final String TAG = WordArticleFragment.class.getSimpleName();
 
     private RecyclerView articleList;
     private ArticleListAdapter articleListAdapter;
@@ -58,6 +61,8 @@ public class WordArticleFragment extends Fragment{
 
         progressBar = (CircularProgressView) v.findViewById(R.id.word_article_fr_progress_bar);
         articleList = (RecyclerView) v.findViewById(R.id.word_article_fr_rv_article_list);
+
+        Log.d(TAG, "progressBar " + progressBar==null?"null":progressBar.toString());
 
         return v;
     }
