@@ -14,11 +14,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.github.aleksandrsavosh.simplestore.KeyValue;
 import com.github.aleksandrsavosh.simplestore.SimpleStoreManager;
 import com.github.aleksandrsavosh.simplestore.sqlite.SimpleStoreUtil;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
 import com.ujujzk.easyengmaterial.eeapp.Application;
 import com.ujujzk.easyengmaterial.eeapp.R;
+import com.ujujzk.easyengmaterial.eeapp.model.Article;
 import com.ujujzk.easyengmaterial.eeapp.model.Word;
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 
@@ -97,16 +99,7 @@ public class WordListFragment extends Fragment implements
 
     @Override
     public void onItemClicked(int position) {
-
-        wordSelectedListener.onWordSelected(wordListAdapter.getWordId(position));
-
-        if (context != null) {
-            TabLayout tabLayout = (TabLayout) getActivity().findViewById(R.id.dict_act_tabs);
-            int wordArticleTabPosition = ((DictionaryActivity)getActivity()).getTabPositionByTitle(getResources().getString(R.string.word_article_fragment_title));
-            if (wordArticleTabPosition < tabLayout.getTabCount()) {
-                tabLayout.getTabAt(wordArticleTabPosition).select();
-            }
-        }
+        goToArticleTab(wordListAdapter.getWordId(position));
     }
 
     @Override
@@ -121,7 +114,6 @@ public class WordListFragment extends Fragment implements
         args.putString(QUERY_WORD_KEY, query);
         args.putInt(QUERY_WORD_LIMIT_KEY, QUERY_WORD_RESULT_LIMIT);
 
-
         if(querySearcher != null && querySearcher.getStatus() == AsyncTask.Status.RUNNING){
             querySearcher.cancel(true);
         }
@@ -132,11 +124,24 @@ public class WordListFragment extends Fragment implements
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        //TODO check if there is this word and
-        //TODO go to WordArticleFragment
+        List<Word> replyWords = Application.localStore.readBy(Word.class, new KeyValue("wordName", query));
+        if (replyWords.isEmpty()){
+            return true;
+        }
+        goToArticleTab(replyWords.get(0).getLocalId());
         return true;
     }
 
+    void goToArticleTab (Long wordLocalId){
+        wordSelectedListener.onWordSelected(wordLocalId);
+        if (context != null) {
+            TabLayout tabLayout = (TabLayout) getActivity().findViewById(R.id.dict_act_tabs);
+            int wordArticleTabPosition = ((DictionaryActivity)getActivity()).getTabPositionByTitle(getResources().getString(R.string.word_article_fragment_title));
+            if (wordArticleTabPosition < tabLayout.getTabCount()) {
+                tabLayout.getTabAt(wordArticleTabPosition).select();
+            }
+        }
+    }
 
     class AsyncQuerySearcher extends AsyncTask<Bundle,Void,Pair<Cursor,Integer>> {
 
@@ -171,27 +176,25 @@ public class WordListFragment extends Fragment implements
         }
     }
 
-
-    public static Pair<Cursor,Integer> getLimitedDataByQueryWord(String queryWord, int limitNum) {
-
-        //TODO add command "DISTINCT" to rawQuery
+    public static Pair<Cursor,Integer> getLimitedDataByQueryWord(final String queryWord, int limitNum) {
 
         String selection = "wordName" + " LIKE '" + queryWord + "%'";
-        String limit = "" + limitNum;
-
         String tableName = SimpleStoreUtil.getTableName(Word.class);
+        String rawQueryStr = "SELECT * FROM " + tableName + " WHERE " + selection + " ORDER BY wordName LIMIT " + limitNum;
+        String rawQueryStrDistinct = "SELECT _id, wordName, min(dictionaryId) FROM (" + rawQueryStr + ") GROUP BY wordName"; //min(dictionary) - is a hint to get unique records of wordName
 
-        Cursor cursor = Application.getStoreManager().getSqLiteHelper().getReadableDatabase().query(tableName, null, selection, null, null, null, "wordName", limit);
-        int cursorCount = getLimitedDataByQueryWordCount(queryWord, limitNum);
+        Cursor cursor = Application.getStoreManager().getSqLiteHelper().getReadableDatabase().rawQuery(rawQueryStrDistinct, null); //TODO Close cursor
+        int cursorCount = getLimitedDataByQueryWordCount(rawQueryStrDistinct, limitNum);
 
         return new Pair<Cursor,Integer>(cursor, cursorCount);
     }
 
-    private static int getLimitedDataByQueryWordCount (String queryWord, int limitNum) {
-        String tableName = SimpleStoreUtil.getTableName(Word.class);
+    private static int getLimitedDataByQueryWordCount (final String rawQueryStrDistinct, int limitNum) {
+
         int count;
-        String countQuery = "select count(*) from " + tableName + " WHERE " + "wordName" + " LIKE '" + queryWord + "%'";
-        Cursor c = Application.getStoreManager().getSqLiteHelper().getReadableDatabase().rawQuery(countQuery, null);
+        String countQuery = "SELECT count(wordName) FROM (" + rawQueryStrDistinct + ")";
+
+        Cursor c = Application.getStoreManager().getSqLiteHelper().getReadableDatabase().rawQuery(countQuery, null);   //TODO Close cursor
         c.moveToFirst();
         count = c.getInt(0);
         if (count > limitNum) {
