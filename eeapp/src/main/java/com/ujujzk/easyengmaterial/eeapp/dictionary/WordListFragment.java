@@ -2,6 +2,7 @@ package com.ujujzk.easyengmaterial.eeapp.dictionary;
 
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -29,7 +30,7 @@ import java.util.List;
 
 public class WordListFragment extends Fragment implements
         WordListCursorAdapter.WordViewHolder.ClickListener,
-        android.support.v7.widget.SearchView.OnQueryTextListener{
+        android.support.v7.widget.SearchView.OnQueryTextListener {
 
     @SuppressWarnings("unused")
     private static final String TAG = WordListFragment.class.getSimpleName();
@@ -114,7 +115,7 @@ public class WordListFragment extends Fragment implements
         args.putString(QUERY_WORD_KEY, query);
         args.putInt(QUERY_WORD_LIMIT_KEY, QUERY_WORD_RESULT_LIMIT);
 
-        if(querySearcher != null && querySearcher.getStatus() == AsyncTask.Status.RUNNING){
+        if (querySearcher != null && querySearcher.getStatus() == AsyncTask.Status.RUNNING) {
             querySearcher.cancel(true);
         }
         querySearcher = new AsyncQuerySearcher();
@@ -125,40 +126,44 @@ public class WordListFragment extends Fragment implements
     @Override
     public boolean onQueryTextSubmit(String query) {
         List<Word> replyWords = Application.localStore.readBy(Word.class, new KeyValue("wordName", query));
-        if (replyWords.isEmpty()){
+        if (replyWords.isEmpty()) {
             return true;
         }
         goToArticleTab(replyWords.get(0).getLocalId());
         return true;
     }
 
-    void goToArticleTab (Long wordLocalId){
+    void goToArticleTab(Long wordLocalId) {
         wordSelectedListener.onWordSelected(wordLocalId);
+
         if (context != null) {
-            TabLayout tabLayout = (TabLayout) getActivity().findViewById(R.id.dict_act_tabs);
-            int wordArticleTabPosition = ((DictionaryActivity)getActivity()).getTabPositionByTitle(getResources().getString(R.string.word_article_fragment_title));
-            if (wordArticleTabPosition < tabLayout.getTabCount()) {
-                tabLayout.getTabAt(wordArticleTabPosition).select();
+            if (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+
+                TabLayout tabLayout = (TabLayout) getActivity().findViewById(R.id.dict_act_tabs);
+                int wordArticleTabPosition = ((DictionaryActivity) getActivity()).getTabPositionByTitle(getResources().getString(R.string.word_article_fragment_title));
+                if (wordArticleTabPosition < tabLayout.getTabCount()) {
+                    tabLayout.getTabAt(wordArticleTabPosition).select();
+                }
             }
         }
     }
 
-    class AsyncQuerySearcher extends AsyncTask<Bundle,Void,Pair<Cursor,Integer>> {
+    class AsyncQuerySearcher extends AsyncTask<Bundle, Void, Pair<Cursor, Integer>> {
 
         @Override
-        protected Pair<Cursor,Integer> doInBackground(Bundle... bndl) {
+        protected Pair<Cursor, Integer> doInBackground(Bundle... bndl) {
 
-            if (bndl == null || bndl.length == 0){
-                return new Pair<Cursor, Integer>(null,0);
+            if (bndl == null || bndl.length == 0) {
+                return new Pair<Cursor, Integer>(null, 0);
             }
             final String queryWord = bndl[0].getString(QUERY_WORD_KEY);
             final int limit = bndl[0].getInt(QUERY_WORD_LIMIT_KEY);
 
             if (queryWord == null || limit <= 0) {
-                return new Pair<Cursor, Integer>(null,0);
+                return new Pair<Cursor, Integer>(null, 0);
             }
-            if (queryWord.length() == 0){
-                return new Pair<Cursor, Integer>(null,0);
+            if (queryWord.length() == 0) {
+                return new Pair<Cursor, Integer>(null, 0);
             }
 
             return getLimitedDataByQueryWord(queryWord, limit);
@@ -167,7 +172,7 @@ public class WordListFragment extends Fragment implements
         @Override
         protected void onPostExecute(Pair<Cursor, Integer> cursorAndSize) {
             super.onPostExecute(cursorAndSize);
-            if (cursorAndSize != null){
+            if (cursorAndSize != null) {
 
                 wordListAdapter.changeCursor(cursorAndSize.first);
                 wordListAdapter.setCursorSize(cursorAndSize.second);
@@ -176,7 +181,7 @@ public class WordListFragment extends Fragment implements
         }
     }
 
-    public static Pair<Cursor,Integer> getLimitedDataByQueryWord(final String queryWord, int limitNum) {
+    public static Pair<Cursor, Integer> getLimitedDataByQueryWord(final String queryWord, int limitNum) {
 
         String selection = "wordName" + " LIKE '" + queryWord + "%'";
         String tableName = SimpleStoreUtil.getTableName(Word.class);
@@ -186,10 +191,10 @@ public class WordListFragment extends Fragment implements
         Cursor cursor = Application.getStoreManager().getSqLiteHelper().getReadableDatabase().rawQuery(rawQueryStrDistinct, null); //TODO Close cursor
         int cursorCount = getLimitedDataByQueryWordCount(rawQueryStrDistinct, limitNum);
 
-        return new Pair<Cursor,Integer>(cursor, cursorCount);
+        return new Pair<Cursor, Integer>(cursor, cursorCount);
     }
 
-    private static int getLimitedDataByQueryWordCount (final String rawQueryStrDistinct, int limitNum) {
+    private static int getLimitedDataByQueryWordCount(final String rawQueryStrDistinct, int limitNum) {
 
         int count;
         String countQuery = "SELECT count(wordName) FROM (" + rawQueryStrDistinct + ")";

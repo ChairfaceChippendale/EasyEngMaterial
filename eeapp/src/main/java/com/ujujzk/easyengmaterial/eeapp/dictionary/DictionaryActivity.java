@@ -2,6 +2,7 @@ package com.ujujzk.easyengmaterial.eeapp.dictionary;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -57,11 +58,14 @@ public class DictionaryActivity extends AppCompatActivity implements OnWordSelec
         navigationDrawer = makeNavigationDrawer();
         navigationDrawer.setSelection(Application.IDENTIFIER_DICTIONARY);
 
-        viewPager = (ViewPager) findViewById(R.id.dict_act_viewpager);
-        setupViewPager(viewPager);
+        if (isPortrait(this)) {
 
-        tabLayout = (TabLayout) findViewById(R.id.dict_act_tabs);
-        tabLayout.setupWithViewPager(viewPager);
+            viewPager = (ViewPager) findViewById(R.id.dict_act_viewpager);
+            setupViewPager(viewPager);
+
+            tabLayout = (TabLayout) findViewById(R.id.dict_act_tabs);
+            tabLayout.setupWithViewPager(viewPager);
+        }
 
     }
 
@@ -78,7 +82,7 @@ public class DictionaryActivity extends AppCompatActivity implements OnWordSelec
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPagerAdapter.addFragment(new WordListFragment(), getResources().getString(R.string.word_list_fragment_title));
         viewPagerAdapter.addFragment(new WordArticleFragment(), getResources().getString(R.string.word_article_fragment_title));
-        viewPagerAdapter.addFragment(new WordHistoryFragment(), getResources().getString(R.string.word_history_fragment_title));
+        //viewPagerAdapter.addFragment(new WordHistoryFragment(), getResources().getString(R.string.word_history_fragment_title)); //TODO
         viewPager.setAdapter(viewPagerAdapter);
     }
 
@@ -145,10 +149,12 @@ public class DictionaryActivity extends AppCompatActivity implements OnWordSelec
 
     @Override
     public void onWordSelected(long wordId) {
-
-        final int wordArticleFragmentPosition = ((ViewPagerAdapter) viewPager.getAdapter()).getFragmentPositionByTitle(getResources().getString(R.string.word_article_fragment_title));
-        ((WordArticleFragment) ((ViewPagerAdapter) viewPager.getAdapter()).getItem(wordArticleFragmentPosition)).setSelectedWord(wordId);
-
+        if (isPortrait(this)) {
+            final int wordArticleFragmentPosition = ((ViewPagerAdapter) viewPager.getAdapter()).getFragmentPositionByTitle(getResources().getString(R.string.word_article_fragment_title));
+            ((WordArticleFragment) ((ViewPagerAdapter) viewPager.getAdapter()).getItem(wordArticleFragmentPosition)).setSelectedWord(wordId);
+        } else {
+            ((WordArticleFragment) getSupportFragmentManager().findFragmentById(R.id.word_article_fragment)).setSelectedWord(wordId);
+        }
     }
 
     public int getTabPositionByTitle(String title) {
@@ -291,5 +297,15 @@ public class DictionaryActivity extends AppCompatActivity implements OnWordSelec
     private boolean isNetworkConnected() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         return cm.getActiveNetworkInfo() != null;
+    }
+
+    public static boolean isTablet(Context context) {
+        return (context.getResources().getConfiguration().screenLayout
+                & Configuration.SCREENLAYOUT_SIZE_MASK)
+                >= Configuration.SCREENLAYOUT_SIZE_LARGE;
+    }
+
+    public static boolean isPortrait (Context context){
+        return (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT);
     }
 }

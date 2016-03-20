@@ -291,10 +291,10 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
                     Toast.makeText(this, "Can't connect to cloud", Toast.LENGTH_SHORT).show();
                 }
                 return true;
-
-            case R.id.vocab_act_action_folder_download:
-                //TODO
-                return true;
+//
+//            case R.id.vocab_act_action_folder_download:
+//                //TODO
+//                return true;
 
             case R.id.vocab_act_action_remove_pack:
                 if (packListAdapter.getSelectedItemCount() > 0) {
