@@ -80,7 +80,7 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
         packListAdapter = new PacksListAdapter(this);
         packList.setAdapter(packListAdapter);
         StaggeredGridLayoutManager packsGridLayoutManager;
-        if (isTablet(this)) {
+        if (isTablet(this) || isLandScape(this)) {
             packsGridLayoutManager = new StaggeredGridLayoutManager(GRIDS_ON_TABLET, StaggeredGridLayoutManager.VERTICAL);
         } else {
             packsGridLayoutManager = new StaggeredGridLayoutManager(GRIDS_ON_PHONE, StaggeredGridLayoutManager.VERTICAL);
@@ -352,6 +352,10 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
         return (context.getResources().getConfiguration().screenLayout
                 & Configuration.SCREENLAYOUT_SIZE_MASK)
                 >= Configuration.SCREENLAYOUT_SIZE_LARGE;
+    }
+
+    public static boolean isLandScape (Context context){
+        return (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE);
     }
 
     private boolean isNetworkConnected() {
