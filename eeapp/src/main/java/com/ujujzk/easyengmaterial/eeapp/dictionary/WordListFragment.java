@@ -58,7 +58,8 @@ public class WordListFragment extends Fragment implements
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater,
+                             ViewGroup container,
                              Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_word_list, container, false);
 
@@ -133,7 +134,7 @@ public class WordListFragment extends Fragment implements
         return true;
     }
 
-    void goToArticleTab(Long wordLocalId) {
+    private void goToArticleTab(Long wordLocalId) {
         wordSelectedListener.onWordSelected(wordLocalId);
 
         if (context != null) {
@@ -148,7 +149,7 @@ public class WordListFragment extends Fragment implements
         }
     }
 
-    class AsyncQuerySearcher extends AsyncTask<Bundle, Void, Pair<Cursor, Integer>> {
+    private class AsyncQuerySearcher extends AsyncTask<Bundle, Void, Pair<Cursor, Integer>> {
 
         @Override
         protected Pair<Cursor, Integer> doInBackground(Bundle... bndl) {
@@ -181,7 +182,7 @@ public class WordListFragment extends Fragment implements
         }
     }
 
-    public static Pair<Cursor, Integer> getLimitedDataByQueryWord(final String queryWord, int limitNum) {
+    private static Pair<Cursor, Integer> getLimitedDataByQueryWord(final String queryWord, int limitNum) {
 
         String selection = "wordName" + " LIKE '" + queryWord + "%'";
         String tableName = SimpleStoreUtil.getTableName(Word.class);

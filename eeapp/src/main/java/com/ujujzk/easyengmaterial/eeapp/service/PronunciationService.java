@@ -1,5 +1,9 @@
 package com.ujujzk.easyengmaterial.eeapp.service;
 
+//word pronunciation
+//powered by Google
+//https://ssl.gstatic.com/dictionary/static/sounds/de/0/WORD.mp3
+
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;

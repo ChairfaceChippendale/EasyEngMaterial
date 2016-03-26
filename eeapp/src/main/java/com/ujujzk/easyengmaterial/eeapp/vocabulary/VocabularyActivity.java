@@ -250,46 +250,11 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
         switch (id) {
 
             case R.id.vocab_act_action_add_pack:
-                packListAdapter.clearSelection();
-                packListAdapter.addPackOnPosition(0,
-                        Application.localStore.create(new Pack("New pack", new ArrayList<Card>()))
-                );
+                addNewPack();
                 return true;
 
             case R.id.vocab_act_action_cloud_download:
-
-                if (isNetworkConnected()) {
-                    new AsyncTask<Void, Void, List<Pack>>() {
-                        @Override
-                        protected void onPreExecute() {
-                            super.onPreExecute();
-                            packList.setVisibility(View.INVISIBLE);
-                            progressBar.setVisibility(View.VISIBLE);
-                        }
-
-                        @Override
-                        protected List<Pack> doInBackground(Void... params) {
-                            List<Pack> packsFromCloud = Application.cloudStore.readAllWithRelations(Pack.class);
-                            if (packsFromCloud != null && !packsFromCloud.isEmpty()) {
-                                for (Pack pack : packsFromCloud) {
-                                    Application.localStore.createWithRelations(pack);
-                                }
-                            }
-                            return packsFromCloud;
-                        }
-
-                        @Override
-                        protected void onPostExecute(List<Pack> packsFromCloud) {
-                            if (packsFromCloud != null && !packsFromCloud.isEmpty()) {
-                                packListAdapter.addPacks(packsFromCloud);
-                            }
-                            packList.setVisibility(View.VISIBLE);
-                            progressBar.setVisibility(View.GONE);
-                        }
-                    }.execute();
-                } else {
-                    Toast.makeText(this, "Can't connect to cloud", Toast.LENGTH_SHORT).show();
-                }
+                downloadPacksFromCloud();
                 return true;
 //
 //            case R.id.vocab_act_action_folder_download:
@@ -297,34 +262,84 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
 //                return true;
 
             case R.id.vocab_act_action_remove_pack:
-                if (packListAdapter.getSelectedItemCount() > 0) {
-                    confirmPackRemove.show();
-                }
-                if (!runCardsFab.isHidden()) {
-                    runCardsFab.hide(true);
-                }
+                removeSelectedPacks();
                 return true;
 
             case R.id.vocab_act_action_edit_pack:
-                if (packListAdapter.getSelectedItemCount() == 1) {
-
-                    List<Long> ids = packListAdapter.getSelectedPacksId(packListAdapter.getSelectedItems());
-                    if (ids.size() > 0) {
-
-                        Intent intent = new Intent(VocabularyActivity.this, EditPackActivity.class);
-                        intent.putExtra(SELECTED_PACK_ID, ids.get(0));
-                        startActivity(intent);
-                        overridePendingTransition(R.animator.activity_appear_from_right, R.animator.activity_disappear_alpha); //custom activity transition animation
-
-                    }
-                }
-                runCardsFab.hide(true);
-                packListAdapter.clearSelection();
+                runEditPack();
                 return true;
 
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void addNewPack () {
+        packListAdapter.clearSelection();
+        packListAdapter.addPackOnPosition(0,
+                Application.localStore.create(new Pack("New pack", new ArrayList<Card>()))
+        );
+    }
+
+    private void downloadPacksFromCloud () {
+        if (isNetworkConnected()) {
+            new AsyncTask<Void, Void, List<Pack>>() {
+                @Override
+                protected void onPreExecute() {
+                    super.onPreExecute();
+                    packList.setVisibility(View.INVISIBLE);
+                    progressBar.setVisibility(View.VISIBLE);
+                }
+
+                @Override
+                protected List<Pack> doInBackground(Void... params) {
+                    List<Pack> packsFromCloud = Application.cloudStore.readAllWithRelations(Pack.class);
+                    if (packsFromCloud != null && !packsFromCloud.isEmpty()) {
+                        for (Pack pack : packsFromCloud) {
+                            Application.localStore.createWithRelations(pack);
+                        }
+                    }
+                    return packsFromCloud;
+                }
+
+                @Override
+                protected void onPostExecute(List<Pack> packsFromCloud) {
+                    if (packsFromCloud != null && !packsFromCloud.isEmpty()) {
+                        packListAdapter.addPacks(packsFromCloud);
+                    }
+                    packList.setVisibility(View.VISIBLE);
+                    progressBar.setVisibility(View.GONE);
+                }
+            }.execute();
+        } else {
+            Toast.makeText(this, getResources().getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void removeSelectedPacks () {
+        if (packListAdapter.getSelectedItemCount() > 0) {
+            confirmPackRemove.show();
+        }
+        if (!runCardsFab.isHidden()) {
+            runCardsFab.hide(true);
+        }
+    }
+
+    private void runEditPack () {
+        if (packListAdapter.getSelectedItemCount() == 1) {
+
+            List<Long> ids = packListAdapter.getSelectedPacksId(packListAdapter.getSelectedItems());
+            if (ids.size() > 0) {
+
+                Intent intent = new Intent(VocabularyActivity.this, EditPackActivity.class);
+                intent.putExtra(SELECTED_PACK_ID, ids.get(0));
+                startActivity(intent);
+                overridePendingTransition(R.animator.activity_appear_from_right, R.animator.activity_disappear_alpha); //custom activity transition animation
+
+            }
+        }
+        runCardsFab.hide(true);
+        packListAdapter.clearSelection();
     }
 
     @Override

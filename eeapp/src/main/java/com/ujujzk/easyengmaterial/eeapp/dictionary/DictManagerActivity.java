@@ -165,7 +165,7 @@ public class DictManagerActivity extends AppCompatActivity implements Dictionary
         addAllDictToDataBase(dslFiles);
     }
 
-    List<File> getDictFiles (File path) {
+    private List<File> getDictFiles (File path) {
 
         List<File> allFiles = Arrays.asList(path.listFiles());
         List<File> dslFiles = new ArrayList<File>();

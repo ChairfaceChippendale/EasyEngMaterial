@@ -99,8 +99,6 @@
         <item name="android:textColor">@color/popup_text_dark</item>
         <item name="android:background">@color/popup_bgr_dark</item>
     </style>
-           
-
 
 
 

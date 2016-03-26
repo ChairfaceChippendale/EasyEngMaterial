@@ -201,22 +201,26 @@ public class GrammarActivity extends AppCompatActivity implements TopicListAdapt
         switch (id) {
 
             case R.id.gramm_act_action_rule:
-                if (topicListAdapter.getSelectedItemCount() == 1) {
-                    List<String> ids = topicListAdapter.getSelectedTopicsIds(topicListAdapter.getSelectedItems());
-                    if (ids.size() > 0) {
-                        Intent intent = new Intent(GrammarActivity.this, RuleActivity.class);
-                        intent.putExtra(SELECTED_TOPIC_ID, ids.get(0));
-                        startActivity(intent);
-                        overridePendingTransition(R.animator.activity_appear_from_right, R.animator.activity_disappear_alpha); //custom activity transition animation
-                    }
-                }
-                runTopicsFab.hide(true);
-                topicListAdapter.clearSelection();
+                runRule ();
                 return true;
 
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void runRule () {
+        if (topicListAdapter.getSelectedItemCount() == 1) {
+            List<String> ids = topicListAdapter.getSelectedTopicsIds(topicListAdapter.getSelectedItems());
+            if (ids.size() > 0) {
+                Intent intent = new Intent(GrammarActivity.this, RuleActivity.class);
+                intent.putExtra(SELECTED_TOPIC_ID, ids.get(0));
+                startActivity(intent);
+                overridePendingTransition(R.animator.activity_appear_from_right, R.animator.activity_disappear_alpha); //custom activity transition animation
+            }
+        }
+        runTopicsFab.hide(true);
+        topicListAdapter.clearSelection();
     }
 
     @Override

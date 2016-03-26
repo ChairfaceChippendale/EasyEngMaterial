@@ -313,26 +313,27 @@ public class LearnWordActivity extends AppCompatActivity implements View.OnTouch
                 return true;
 
             case R.id.learn_word_act_action_pronunciation:
-                if (isNetworkConnected()) {
-                    if (currentCardNumber < cardsToLearn.size()) {
-                        String wordToPronounce = cardsToLearn.get(currentCardNumber).getBack();
-                        if (currentCardSide == BACK_SIDE && !wordToPronounce.isEmpty()) {
-                            //word pronunciation
-                            //powered by Google
-                            //https://ssl.gstatic.com/dictionary/static/sounds/de/0/WORD.mp3
-                            wordToPronounce = validateWordToPronounce(wordToPronounce);
-                            Intent intent = new Intent(PronunciationService.PRONUNCIATION_TASK);
-                            intent.putExtra(PronunciationService.WORD, wordToPronounce);
-                            sendBroadcast(intent);
-                        }
-                    }
-                } else {
-                    Toast.makeText(this, "Is not available", Toast.LENGTH_SHORT).show(); //TODO HardCode
-                }
+                runPronounce ();
                 return true;
 
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void runPronounce () {
+        if (isNetworkConnected()) {
+            if (currentCardNumber < cardsToLearn.size()) {
+                String wordToPronounce = cardsToLearn.get(currentCardNumber).getBack();
+                if (currentCardSide == BACK_SIDE && !wordToPronounce.isEmpty()) {
+                    wordToPronounce = validateWordToPronounce(wordToPronounce);
+                    Intent intent = new Intent(PronunciationService.PRONUNCIATION_TASK);
+                    intent.putExtra(PronunciationService.WORD, wordToPronounce);
+                    sendBroadcast(intent);
+                }
+            }
+        } else {
+            Toast.makeText(this, getResources().getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -30,7 +30,7 @@ public class WordArticleFragment extends Fragment{
     private ArticleListAdapter articleListAdapter;
     private CircularProgressView progressBar;
 
-    private String selectedWordName;
+    private String selectedWordName = "";
 
     public WordArticleFragment() {
     }
@@ -55,15 +55,13 @@ public class WordArticleFragment extends Fragment{
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater,
+                             ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_word_article, container, false);
 
+        View v = inflater.inflate(R.layout.fragment_word_article, container, false);
         progressBar = (CircularProgressView) v.findViewById(R.id.word_article_fr_progress_bar);
         articleList = (RecyclerView) v.findViewById(R.id.word_article_fr_rv_article_list);
-
-        Log.d(TAG, "progressBar " + progressBar==null?"null":progressBar.toString());
-
         return v;
     }
 
@@ -75,7 +73,6 @@ public class WordArticleFragment extends Fragment{
         articleListAdapter = new ArticleListAdapter(new ArrayList<Article>());
         articleList.setAdapter(articleListAdapter);
         articleList.setItemAnimator(new DefaultItemAnimator());
-
     }
 
     private void updateArticleList(String wordName) {

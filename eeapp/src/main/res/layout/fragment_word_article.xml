@@ -5,10 +5,17 @@
                 android:layout_height="match_parent"
                 tools:context="com.ujujzk.easyengmaterial.eeapp.dictionary.WordArticleFragment">
 
+    <View
+            android:id="@+id/word_article_fr_left_shadow"
+            android:layout_width="4dp"
+            android:layout_height="fill_parent"
+            android:background="@drawable/shadow_left" />
+
     <android.support.v7.widget.RecyclerView
             android:id="@+id/word_article_fr_rv_article_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/word_article_fr_left_shadow"
             android:visibility="visible">
     </android.support.v7.widget.RecyclerView>
 
