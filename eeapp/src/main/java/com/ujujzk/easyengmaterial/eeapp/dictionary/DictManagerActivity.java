@@ -156,7 +156,6 @@ public class DictManagerActivity extends AppCompatActivity implements Dictionary
         List<File> dslFiles = getDictFiles(path);
 
         if (dslFiles.isEmpty()) {
-            //TODO Massage that there aren't new dictionaries. Notice that dictionary must have expansion .dsl
             Snackbar.make(installNewDictionariesFab, "There are no new dictionaries.", Snackbar.LENGTH_LONG).show();
             Log.d(TAG, "There are no new dictionaries in the Folder on ExternalStorage");
             return;

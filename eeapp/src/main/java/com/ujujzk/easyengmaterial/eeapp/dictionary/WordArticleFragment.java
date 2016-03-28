@@ -37,7 +37,6 @@ public class WordArticleFragment extends Fragment{
 
     public void setSelectedWord(Long wordId){
 
-        //TODO create articles - CHECK
         final Word selectedWord = Application.localStore.read(wordId, Word.class);
         if (selectedWord != null) {
             selectedWordName = selectedWord.getWordName();

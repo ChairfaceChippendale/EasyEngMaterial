@@ -76,6 +76,8 @@
     <string name="learn_word_act_left_end">I\nKNOW</string>
 
     <string name="no_internet_connection">No internet connection</string>
+    <string name="finish_exercise">FINISH</string>
+    <string name="exercise_title_start">Task</string>
 
 
 </resources>

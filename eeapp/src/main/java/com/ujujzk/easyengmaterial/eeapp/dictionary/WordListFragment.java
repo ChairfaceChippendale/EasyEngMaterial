@@ -189,7 +189,7 @@ public class WordListFragment extends Fragment implements
         String rawQueryStr = "SELECT * FROM " + tableName + " WHERE " + selection + " ORDER BY wordName LIMIT " + limitNum;
         String rawQueryStrDistinct = "SELECT _id, wordName, min(dictionaryId) FROM (" + rawQueryStr + ") GROUP BY wordName"; //min(dictionary) - is a hint to get unique records of wordName
 
-        Cursor cursor = Application.getStoreManager().getSqLiteHelper().getReadableDatabase().rawQuery(rawQueryStrDistinct, null); //TODO Close cursor
+        Cursor cursor = Application.getStoreManager().getSqLiteHelper().getReadableDatabase().rawQuery(rawQueryStrDistinct, null);
         int cursorCount = getLimitedDataByQueryWordCount(rawQueryStrDistinct, limitNum);
 
         return new Pair<Cursor, Integer>(cursor, cursorCount);
@@ -200,7 +200,7 @@ public class WordListFragment extends Fragment implements
         int count;
         String countQuery = "SELECT count(wordName) FROM (" + rawQueryStrDistinct + ")";
 
-        Cursor c = Application.getStoreManager().getSqLiteHelper().getReadableDatabase().rawQuery(countQuery, null);   //TODO Close cursor
+        Cursor c = Application.getStoreManager().getSqLiteHelper().getReadableDatabase().rawQuery(countQuery, null);
         c.moveToFirst();
         count = c.getInt(0);
         if (count > limitNum) {

@@ -168,6 +168,6 @@ public class DictInstallService extends Service{
     private String getWordNameFromRawArticle(String rawArticle) {
         return rawArticle.substring(0, rawArticle.indexOf("\t"))
                 .trim()
-                .replaceAll("[{}()]", ""); //TODO Check if it works: it must remove brackets {} () from word
+                .replaceAll("[{}()]", ""); //it removes brackets {} () from word
     }
 }
