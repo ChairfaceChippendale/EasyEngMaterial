@@ -18,14 +18,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class DictionaryListAdapter extends RecyclerView.Adapter<DictionaryListAdapter.DictionaryViewHolder>{
+    class DictionaryListAdapter extends RecyclerView.Adapter<DictionaryListAdapter.DictionaryViewHolder>{
 
     private List<Dictionary> dictionaries;
     private DictionaryViewHolder.ClickListener clickListener;
     private Context context;
     private String dictInProcess = "";
 
-    public DictionaryListAdapter(DictionaryViewHolder.ClickListener clickListener, Context context) {
+    DictionaryListAdapter(DictionaryViewHolder.ClickListener clickListener, Context context) {
         super();
         this.context = context;
         this.clickListener = clickListener;
@@ -33,9 +33,11 @@ public class DictionaryListAdapter extends RecyclerView.Adapter<DictionaryListAd
         dictionaries.addAll(Application.localStore.readAll(Dictionary.class));
     }
 
-    public void setDictInProcess (String dictInProcessName) {
-        dictInProcess = dictInProcessName;
-        updateDictionaries();
+    void setDictInProcess (String dictInProcessName) {
+        if (!dictInProcess.equals(dictInProcessName)) {
+            dictInProcess = dictInProcessName;
+            updateDictionaries();
+        }
     }
 
     private void updateDictionaries () {
@@ -44,11 +46,7 @@ public class DictionaryListAdapter extends RecyclerView.Adapter<DictionaryListAd
         notifyDataSetChanged();
     }
 
-    public List<Dictionary> getDictionaries () {
-        return dictionaries;
-    }
-
-    public void removeDictionary(int position) {
+    void removeDictionary(int position) {
 
         if (position < dictionaries.size()) {
             dictionaries.remove(position);
@@ -56,17 +54,7 @@ public class DictionaryListAdapter extends RecyclerView.Adapter<DictionaryListAd
         }
     }
 
-    public void addDictionary() {
-        addDictionary(new Dictionary("New Dictionary"));
-        notifyDataSetChanged();
-    }
-
-    public void addDictionary(Dictionary dictionary) {
-        dictionaries.add(dictionary);
-        notifyDataSetChanged();
-    }
-
-    public Dictionary getDictionary(int position) {
+    Dictionary getDictionary(int position) {
         if (position < dictionaries.size()) {
             return dictionaries.get(position);
         }
@@ -76,8 +64,7 @@ public class DictionaryListAdapter extends RecyclerView.Adapter<DictionaryListAd
     @Override
     public DictionaryListAdapter.DictionaryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.dictionary_list_item, parent, false);
-        DictionaryViewHolder holder = new DictionaryViewHolder(v, clickListener, context);
-        return holder;
+        return new DictionaryViewHolder(v, clickListener, context);
     }
 
     @Override
@@ -88,6 +75,9 @@ public class DictionaryListAdapter extends RecyclerView.Adapter<DictionaryListAd
         if (dict.getDictionaryName().equals(dictInProcess)) {
             holder.removeBtn.setVisibility(View.GONE);
             holder.progressView.setVisibility(View.VISIBLE);
+        } else {
+            holder.removeBtn.setVisibility(View.VISIBLE);
+            holder.progressView.setVisibility(View.GONE);
         }
 
     }
@@ -98,14 +88,14 @@ public class DictionaryListAdapter extends RecyclerView.Adapter<DictionaryListAd
     }
 
 
-    public static class DictionaryViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    static class DictionaryViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView dictionaryName;
         ImageButton removeBtn;
         CircularProgressView progressView;
         private DictionaryViewHolder.ClickListener clickListener;
 
-        public DictionaryViewHolder(View v, ClickListener clickListener, Context context) {
+        DictionaryViewHolder(View v, ClickListener clickListener, Context context) {
             super(v);
 
             dictionaryName = (TextView) v.findViewById(R.id.dictionary_list_item_title);

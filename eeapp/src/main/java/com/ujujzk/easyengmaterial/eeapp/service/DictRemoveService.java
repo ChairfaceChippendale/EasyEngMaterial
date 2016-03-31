@@ -12,11 +12,11 @@ import com.ujujzk.easyengmaterial.eeapp.model.Word;
 
 public class DictRemoveService extends Service {
 
-    static final String TAG = DictRemoveService.class.getSimpleName();
+    private static final String TAG = DictRemoveService.class.getSimpleName();
 
     public static final String DICT_TO_REMOVE_ID = "dictToRemoveId";
 
-    Thread removeDictThread;
+    private Thread removeDictThread;
 
     @Override
     public void onCreate() {
@@ -51,10 +51,10 @@ public class DictRemoveService extends Service {
         removeDictThread = new Thread(new Runnable() {
             @Override
             public void run() {
+                Application.localStore.delete(dictToDeleteId, Dictionary.class);
                 Application.localStore.deleteBy(Article.class, new KeyValue("dictionaryId", dictToDeleteId));
                 Application.localStore.deleteBy(Word.class, new KeyValue("dictionaryId", dictToDeleteId));
 
-                Application.localStore.delete(dictToDeleteId, Dictionary.class);
                 stopSelf();
             }
         });
