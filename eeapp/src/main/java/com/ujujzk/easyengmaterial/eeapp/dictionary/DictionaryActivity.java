@@ -86,7 +86,6 @@ public class DictionaryActivity extends AppCompatActivity implements OnWordSelec
         viewPager.setAdapter(viewPagerAdapter);
     }
 
-
     @Override
     protected void onStart() {
         super.onStart();

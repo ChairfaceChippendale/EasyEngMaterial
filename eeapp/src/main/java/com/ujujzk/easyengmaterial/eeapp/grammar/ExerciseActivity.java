@@ -29,6 +29,9 @@ import java.util.List;
 
 public class ExerciseActivity extends AppCompatActivity {
 
+    @SuppressWarnings("unused")
+    private static final String TAG = ExerciseActivity.class.getSimpleName();
+
     private static final String NEXT_TASK_NUMBER = "nextTaskNumberKeyEasyEnglish";
     private static final String TASKS_TO_LEARN = "tasksToLearnKeyEasyEnglish";
 
@@ -38,14 +41,12 @@ public class ExerciseActivity extends AppCompatActivity {
     private CircularProgressView progressBar;
     private TextView exerciseQuestion;
     private ListView exerciseAnswers;
-    ArrayAdapter<Answer> answerListAdapter;
+    private ArrayAdapter<Answer> answerListAdapter;
     private int nextTaskNumber;
     private TextView hint;
     private FABToolbarLayout hintLayout;
     private Button nextTaskBtn;
 
-    @SuppressWarnings("unused")
-    private static final String TAG = ExerciseActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

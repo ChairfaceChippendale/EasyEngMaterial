@@ -32,7 +32,8 @@
     <dimen name="topic_list_item_text_size">16sp</dimen>
 
     <dimen name="dictionary_list_item_text_size">16sp</dimen>
-    <dimen name="dictionary_list_item_remove_btn_size">16dp</dimen>
+    <dimen name="dictionary_list_item_remove_btn_size">12dp</dimen>
+
     <dimen name="article_list_item_elevation">2dp</dimen>
     <dimen name="article_list_item_corner_radius">2dp</dimen>
 

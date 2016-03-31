@@ -7,6 +7,7 @@ import android.os.IBinder;
 import android.util.Log;
 import com.github.aleksandrsavosh.simplestore.KeyValue;
 import com.ujujzk.easyengmaterial.eeapp.Application;
+import com.ujujzk.easyengmaterial.eeapp.dictionary.DictManagerActivity;
 import com.ujujzk.easyengmaterial.eeapp.model.Article;
 import com.ujujzk.easyengmaterial.eeapp.model.Dictionary;
 import com.ujujzk.easyengmaterial.eeapp.model.Word;
@@ -137,7 +138,7 @@ public class DictInstallService extends Service{
 
                     }
                     if (wordBuffer.size() == BUFFER_SIZE) {
-                        saveWordsAndArticles(wordBuffer, rawArticleBuffer);
+                        saveWordsAndArticles(wordBuffer, rawArticleBuffer, dictionaryName);
                         wordBuffer.clear();
                         rawArticleBuffer.clear();
                     }
@@ -149,7 +150,7 @@ public class DictInstallService extends Service{
             }
 
             if (!wordBuffer.isEmpty()) {
-                saveWordsAndArticles(wordBuffer, rawArticleBuffer);
+                saveWordsAndArticles(wordBuffer, rawArticleBuffer, "no");
                 wordBuffer.clear();
                 rawArticleBuffer.clear();
             }
@@ -160,9 +161,16 @@ public class DictInstallService extends Service{
         }
     }
 
-    private void saveWordsAndArticles(ArrayList<Word> wordBuffer, ArrayList<Article> rawArticleBuffer) {
+    private void saveWordsAndArticles(ArrayList<Word> wordBuffer, ArrayList<Article> rawArticleBuffer, String dictName) {
         Application.localStore.createFast(wordBuffer, Word.class);
         Application.localStore.createFast(rawArticleBuffer, Article.class);
+        sendBroadcastToDictManagerActivity(dictName);
+    }
+
+    private void sendBroadcastToDictManagerActivity(String dictName) {
+        Intent intent = new Intent(DictManagerActivity.DICT_INSTALL_SERVICE_STATUS);
+        intent.putExtra(DictManagerActivity.DICTIONARY_IN_PROCESS, dictName);
+        sendBroadcast(intent);
     }
 
     private String getWordNameFromRawArticle(String rawArticle) {

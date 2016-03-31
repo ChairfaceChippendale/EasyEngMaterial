@@ -1,6 +1,9 @@
 package com.ujujzk.easyengmaterial.eeapp.dictionary;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.os.Bundle;
@@ -36,11 +39,8 @@ public class DictManagerActivity extends AppCompatActivity implements Dictionary
 
     @SuppressWarnings("unused")
     private static final String TAG = DictManagerActivity.class.getSimpleName();
-    public static final String DATA_CHANGED = "data_changed";
-
-    private static final String DICTIONARY_NAME_TAG_IN_FILE = "#NAME";
-    private static final int DICTIONARY_NAME_SEARCHING_ROW_NUMBER = 10;
-    private static final int BUFFER_SIZE = 1000;//5000 - is too much
+    public static final String DICTIONARY_IN_PROCESS = "dictionaryInProcess";
+    public static final String DICT_INSTALL_SERVICE_STATUS = "dictInstallServiceStatus";
 
     private Toolbar toolBar;
     private FloatingActionButton installNewDictionariesFab;
@@ -69,7 +69,7 @@ public class DictManagerActivity extends AppCompatActivity implements Dictionary
         dictionaryListManager = new LinearLayoutManager(this);
         dictionaryList.setLayoutManager(dictionaryListManager);
 
-        dictionaryListAdapter = new DictionaryListAdapter(Application.localStore.readAll(Dictionary.class), this, this);
+        dictionaryListAdapter = new DictionaryListAdapter(this, this);
         dictionaryList.setAdapter(dictionaryListAdapter);
         dictionaryList.setItemAnimator(new DefaultItemAnimator());
 
@@ -82,6 +82,8 @@ public class DictManagerActivity extends AppCompatActivity implements Dictionary
                 installNewDictionaries();
             }
         });
+
+        makeDictInstallBroadcastReceiver ();
     }
 
     @Override
@@ -99,6 +101,19 @@ public class DictManagerActivity extends AppCompatActivity implements Dictionary
     public void onItemClicked(int position) {
         confirmDictionaryRemove = getDictionaryRemoveDialog(position);
         confirmDictionaryRemove.show();
+    }
+
+    private void makeDictInstallBroadcastReceiver () {
+        BroadcastReceiver dictInstallBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String dictName = intent.getStringExtra(DICTIONARY_IN_PROCESS);
+                dictionaryListAdapter.setDictInProcess(dictName);
+                dictionaryListAdapter.notifyDataSetChanged();
+                Log.d(TAG, "" + dictName);
+            }
+        };
+        registerReceiver(dictInstallBroadcastReceiver, new IntentFilter(DICT_INSTALL_SERVICE_STATUS) );
     }
 
     private MaterialDialog getDictionaryRemoveDialog(final int position) {

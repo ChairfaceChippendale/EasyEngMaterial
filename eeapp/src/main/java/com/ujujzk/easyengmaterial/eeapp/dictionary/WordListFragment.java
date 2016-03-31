@@ -36,8 +36,8 @@ public class WordListFragment extends Fragment implements
     private static final String TAG = WordListFragment.class.getSimpleName();
 
     private static final int QUERY_WORD_RESULT_LIMIT = 100;
-    private static final String QUERY_WORD_LIMIT_KEY = "limit";
-    private static final String QUERY_WORD_KEY = "word";
+    private static final String QUERY_WORD_LIMIT_KEY = "limitKeyEasyEnglish";
+    private static final String QUERY_WORD_KEY = "queryWordKeyEasyEnglish";
 
     android.support.v7.widget.SearchView searchView;
     private RecyclerView wordList;

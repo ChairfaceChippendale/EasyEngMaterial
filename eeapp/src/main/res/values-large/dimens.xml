@@ -10,4 +10,6 @@
 
     <dimen name="rule_act_rule_text_margin">15dp</dimen>
 
+    <dimen name="dictionary_list_item_remove_btn_size">16dp</dimen>
+
 </resources>
