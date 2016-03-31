@@ -35,7 +35,6 @@ public class AboutActivity extends AppCompatActivity {
         if (id == android.R.id.home) {
             onBackPressed();
         }
-
         return super.onOptionsItemSelected(item);
     }
 

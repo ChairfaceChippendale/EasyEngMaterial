@@ -25,7 +25,7 @@ import android.support.v7.widget.RecyclerView;
 
 
 public abstract class CursorRecyclerViewAdapter<VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> {
-    private Context mContext;
+
 
     private Cursor mCursor;
 
@@ -35,8 +35,7 @@ public abstract class CursorRecyclerViewAdapter<VH extends RecyclerView.ViewHold
 
     private DataSetObserver mDataSetObserver;
 
-    public CursorRecyclerViewAdapter(Context context, Cursor cursor) {
-        mContext = context;
+    CursorRecyclerViewAdapter(Context context, Cursor cursor) {
         mCursor = cursor;
         mDataValid = cursor != null;
         mRowIdColumn = mDataValid ? mCursor.getColumnIndex("_id") : -1;
@@ -47,7 +46,7 @@ public abstract class CursorRecyclerViewAdapter<VH extends RecyclerView.ViewHold
         }
     }
 
-    public Cursor getCursor() {
+    Cursor getCursor() {
         return mCursor;
     }
 
@@ -89,7 +88,7 @@ public abstract class CursorRecyclerViewAdapter<VH extends RecyclerView.ViewHold
      * Change the underlying cursor to a new cursor. If there is an existing cursor it will be
      * closed.
      */
-    public void changeCursor(Cursor cursor) {
+    void changeCursor(Cursor cursor) {
         Cursor old = swapCursor(cursor);
         if (old != null) {
             old.close();
@@ -101,7 +100,7 @@ public abstract class CursorRecyclerViewAdapter<VH extends RecyclerView.ViewHold
      * {@link #changeCursor(Cursor)}, the returned old Cursor is <em>not</em>
      * closed.
      */
-    public Cursor swapCursor(Cursor newCursor) {
+    private Cursor swapCursor(Cursor newCursor) {
         if (newCursor == mCursor) {
             return null;
         }

@@ -17,14 +17,14 @@ import java.util.Comparator;
 import java.util.List;
 
 
-public class TopicListAdapter
+class TopicListAdapter
         extends PackListSelectableAdapter<TopicListAdapter.TopicViewHolder> {
 
     private List<Topic> topics;
     private TopicViewHolder.ClickListener clickListener;
     private final Context mContext;
 
-    public TopicListAdapter (TopicViewHolder.ClickListener clickListener) {
+    TopicListAdapter (TopicViewHolder.ClickListener clickListener) {
         super();
         this.clickListener = clickListener;
         topics = new ArrayList<Topic>();
@@ -37,24 +37,20 @@ public class TopicListAdapter
         notifyDataSetChanged();
     }
 
-    public boolean isTopicListEmpty(){
-        if (topics.isEmpty()){
-            return true;
-        }else {
-            return false;
-        }
+    boolean isTopicListEmpty(){
+        return topics.isEmpty();
     }
 
-    public void addTopics(List<Topic> newPacks) {
+    void addTopics(List<Topic> newPacks) {
         topics.addAll(newPacks);
         notifyDataSetChanged();
     }
 
-    public Topic getTopic(int position) {
+    private Topic getTopic(int position) {
         return topics.get(position);
     }
 
-    public List<String> getSelectedTopicsIds (List<Integer> positions) {
+    List<String> getSelectedTopicsIds (List<Integer> positions) {
         List <String> ids = new ArrayList<String>();
 
         Collections.sort(positions, new Comparator<Integer>() {
@@ -73,8 +69,7 @@ public class TopicListAdapter
     public TopicViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.topic_list_item_2, parent, false);
-        TopicViewHolder holder = new TopicViewHolder(v, clickListener);
-        return holder;
+        return new TopicViewHolder(v, clickListener);
     }
 
     @Override
@@ -101,13 +96,13 @@ public class TopicListAdapter
         super.onAttachedToRecyclerView(recyclerView);
     }
 
-    public static class TopicViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
+    static class TopicViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
         TextView topicTitle;
 
         private TopicViewHolder.ClickListener clickListener;
 
-        public TopicViewHolder(View itemView, ClickListener clickListener) {
+        TopicViewHolder(View itemView, ClickListener clickListener) {
             super(itemView);
 
             topicTitle = (TextView) itemView.findViewById(R.id.topic_list_item_title);
@@ -134,8 +129,8 @@ public class TopicListAdapter
         }
 
         public interface ClickListener {
-            public void onItemClicked(int position);
-            public boolean onItemLongClicked(int position);
+            void onItemClicked(int position);
+            boolean onItemLongClicked(int position);
         }
     }
 }

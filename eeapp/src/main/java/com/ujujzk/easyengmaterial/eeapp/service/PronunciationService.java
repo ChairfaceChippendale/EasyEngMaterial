@@ -24,9 +24,9 @@ public class PronunciationService extends Service implements MediaPlayer.OnPrepa
     private final static String SRC_END = ".mp3";
 
 
-    static MediaPlayer mediaPlayer;
+    private static MediaPlayer mediaPlayer;
 
-    BroadcastReceiver br;
+    private BroadcastReceiver br;
 
 
     @Override
@@ -105,18 +105,13 @@ public class PronunciationService extends Service implements MediaPlayer.OnPrepa
             mediaPlayer.setOnPreparedListener(this);
             mediaPlayer.prepareAsync();
 
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-
-
     @Override
     public IBinder onBind(Intent intent) {
         return null;
-
     }
 }

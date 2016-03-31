@@ -10,12 +10,12 @@ import com.ujujzk.easyengmaterial.eeapp.model.Card;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.CardViewHolder> {
+class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.CardViewHolder> {
 
     private List<Card> cards;
     private CardViewHolder.ClickListener clickListener;
 
-    public CardListAdapter(List<Card> cards, CardViewHolder.ClickListener clickListener) {
+    CardListAdapter(List<Card> cards, CardViewHolder.ClickListener clickListener) {
         super();
         this.clickListener = clickListener;
         this.cards = new ArrayList<Card>();
@@ -24,11 +24,11 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.CardVi
         }
     }
 
-    public List<Card> getCards () {
+    List<Card> getCards () {
         return cards;
     }
 
-    public void removeCard(int position) {
+    void removeCard(int position) {
 
         if (position < cards.size()) {
             cards.remove(position);
@@ -36,24 +36,19 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.CardVi
         }
     }
 
-    public void addCard() {
-        addCard("front", "back");
-        notifyDataSetChanged();
-    }
-
-    public void addCard(String front, String back) {
+    void addCard(String front, String back) {
         cards.add(new Card(front, back));
         notifyDataSetChanged();
     }
 
-    public Card getCard(int position) {
+    Card getCard(int position) {
         if (position < cards.size()) {
             return cards.get(position);
         }
         return null;
     }
 
-    public void editCard (int position, Card newCard) {
+    void editCard (int position, Card newCard) {
         if (position < cards.size() && newCard != null) {
             cards.get(position).setFront(newCard.getFront());
             cards.get(position).setBack(newCard.getBack());
@@ -64,8 +59,7 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.CardVi
     @Override
     public CardListAdapter.CardViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_list_item, parent, false);
-        CardViewHolder holder = new CardViewHolder(v, clickListener);
-        return holder;
+        return new CardViewHolder(v, clickListener);
     }
 
     @Override
@@ -81,7 +75,7 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.CardVi
     }
 
 
-    public static class CardViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,
+    static class CardViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,
             View.OnLongClickListener {
 
         TextView front;
@@ -89,7 +83,7 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.CardVi
 
         private CardViewHolder.ClickListener clickListener;
 
-        public CardViewHolder(View v, ClickListener clickListener) {
+        CardViewHolder(View v, ClickListener clickListener) {
             super(v);
 
             front = (TextView) v.findViewById(R.id.card_list_item_front);
@@ -117,8 +111,8 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.CardVi
         }
 
         public interface ClickListener {
-            public void onItemClicked(int position);
-            public boolean onItemLongClicked(int position);
+            void onItemClicked(int position);
+            boolean onItemLongClicked(int position);
         }
     }
 }

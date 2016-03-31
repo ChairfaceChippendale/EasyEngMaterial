@@ -32,36 +32,6 @@
             android:visibility="visible"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
-    <LinearLayout
-            android:id="@+id/dict_manager_act_progress_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_gravity="center"
-            android:visibility="gone">
-
-        <com.github.rahatarmanahmed.cpv.CircularProgressView
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/dict_manager_act_progress_bar"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_gravity="center"
-                android:visibility="visible"
-                app:cpv_animAutostart="true"
-                app:cpv_indeterminate="true"/>
-
-        <TextView
-                android:id="@+id/dict_manager_act_progress_view_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:paddingTop="14dp"
-                android:textSize="20sp"
-                android:text="@string/dict_manager_act_progress_view_text"/>
-
-    </LinearLayout>
-
-
     <com.github.clans.fab.FloatingActionButton
             android:id="@+id/dict_manager_act_fab"
             android:layout_width="wrap_content"

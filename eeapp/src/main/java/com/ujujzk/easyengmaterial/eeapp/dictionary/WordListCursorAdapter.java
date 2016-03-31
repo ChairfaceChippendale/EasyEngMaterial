@@ -10,20 +10,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-public class WordListCursorAdapter extends CursorRecyclerViewAdapter<WordListCursorAdapter.WordViewHolder> {
+class WordListCursorAdapter extends CursorRecyclerViewAdapter<WordListCursorAdapter.WordViewHolder> {
 
     private static final String TAG = WordListCursorAdapter.class.getSimpleName();
 
-    int cursorSize;
+    private int cursorSize;
     private WordViewHolder.ClickListener clickListener;
 
-    public WordListCursorAdapter(Context context, Cursor cursor, WordViewHolder.ClickListener clickListener) {
+    WordListCursorAdapter(Context context, Cursor cursor, WordViewHolder.ClickListener clickListener) {
         super(context, cursor);
         this.clickListener = clickListener;
 
     }
 
-    public Long getWordId(int position) {
+    Long getWordId(int position) {
 
         if (position < cursorSize) {
 
@@ -58,13 +58,13 @@ public class WordListCursorAdapter extends CursorRecyclerViewAdapter<WordListCur
         return cursorSize;
     }
 
-    public static class WordViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    static class WordViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView text;
         private WordViewHolder.ClickListener clickListener;
 
 
-        public WordViewHolder(View v, ClickListener clickListener) {
+        WordViewHolder(View v, ClickListener clickListener) {
             super(v);
 
             text = (TextView) v;
@@ -81,7 +81,7 @@ public class WordListCursorAdapter extends CursorRecyclerViewAdapter<WordListCur
         }
 
         public interface ClickListener {
-            public void onItemClicked(int position);
+            void onItemClicked(int position);
         }
     }
 }

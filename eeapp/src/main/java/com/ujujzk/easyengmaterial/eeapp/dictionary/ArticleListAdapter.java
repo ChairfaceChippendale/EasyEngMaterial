@@ -17,11 +17,11 @@ import com.ujujzk.easyengmaterial.eeapp.model.Word;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ArticleListAdapter extends RecyclerView.Adapter<ArticleListAdapter.ArticleViewHolder>{
+class ArticleListAdapter extends RecyclerView.Adapter<ArticleListAdapter.ArticleViewHolder>{
 
     private List<Article> mArticles;
 
-    public ArticleListAdapter(List<Article> articles) {
+    ArticleListAdapter(List<Article> articles) {
         super();
 
         mArticles = new ArrayList<Article>(articles);
@@ -35,7 +35,7 @@ public class ArticleListAdapter extends RecyclerView.Adapter<ArticleListAdapter.
         return null;
     }
 
-    public void setArticles(List<Article> newWords){
+    void setArticles(List<Article> newWords){
         mArticles = new ArrayList<Article>(newWords);
         notifyDataSetChanged();
     }
@@ -43,8 +43,7 @@ public class ArticleListAdapter extends RecyclerView.Adapter<ArticleListAdapter.
     @Override
     public ArticleListAdapter.ArticleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.article_list_item, parent, false);
-        ArticleViewHolder holder = new ArticleViewHolder(v);
-        return holder;
+        return new ArticleViewHolder(v);
     }
 
     @Override
@@ -63,13 +62,13 @@ public class ArticleListAdapter extends RecyclerView.Adapter<ArticleListAdapter.
         return mArticles.size();
     }
 
-    public static class ArticleViewHolder extends RecyclerView.ViewHolder {
+    static class ArticleViewHolder extends RecyclerView.ViewHolder {
 
         TextView wordName;
         TextView dictionaryName;
         TextView wordArticle;
 
-        public ArticleViewHolder(View v) {
+        ArticleViewHolder(View v) {
             super(v);
 
             dictionaryName = (TextView) v.findViewById(R.id.article_list_item_dictionary_name);

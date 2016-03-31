@@ -169,44 +169,43 @@ public class DictionaryActivity extends AppCompatActivity implements OnWordSelec
         return ((ViewPagerAdapter) viewPager.getAdapter()).getFragmentPositionByTitle(title);
     }
 
-private class ViewPagerAdapter extends FragmentPagerAdapter implements Serializable {
-    private final List<Fragment> mFragmentList = new ArrayList<Fragment>();
-    private final List<String> mFragmentTitleList = new ArrayList<String>();
+    private class ViewPagerAdapter extends FragmentPagerAdapter implements Serializable {
+        private final List<Fragment> mFragmentList = new ArrayList<Fragment>();
+        private final List<String> mFragmentTitleList = new ArrayList<String>();
 
-    public ViewPagerAdapter(FragmentManager manager) {
-        super(manager);
-    }
-
-    @Override
-    public Fragment getItem(int position) {
-        return mFragmentList.get(position);
-    }
-
-    public int getFragmentPositionByTitle(String title) {
-        for (int i = 0; i < mFragmentTitleList.size(); i++) {
-            if (mFragmentTitleList.get(i).equals(title)) {
-                return i;
-            }
+        ViewPagerAdapter(FragmentManager manager) {
+            super(manager);
         }
-        return 0;
-    }
 
-    @Override
-    public int getCount() {
-        return mFragmentList.size();
-    }
+        @Override
+        public Fragment getItem(int position) {
+            return mFragmentList.get(position);
+        }
 
-    public void addFragment(Fragment fragment, String title) {
-        mFragmentList.add(fragment);
-        mFragmentTitleList.add(title);
-    }
+        int getFragmentPositionByTitle(String title) {
+            for (int i = 0; i < mFragmentTitleList.size(); i++) {
+                if (mFragmentTitleList.get(i).equals(title)) {
+                    return i;
+                }
+            }
+            return 0;
+        }
 
-    @Override
-    public CharSequence getPageTitle(int position) {
-        return mFragmentTitleList.get(position);
-    }
+        @Override
+        public int getCount() {
+            return mFragmentList.size();
+        }
 
-}
+        void addFragment(Fragment fragment, String title) {
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitleList.get(position);
+        }
+    }
 
     private Drawer makeNavigationDrawer() {
         return new DrawerBuilder()
@@ -244,11 +243,11 @@ private class ViewPagerAdapter extends FragmentPagerAdapter implements Serializa
                         new SecondaryDrawerItem()
                                 .withName(R.string.title_feedback)
                                 .withIcon(GoogleMaterial.Icon.gmd_feedback)
-                                .withIdentifier(Application.IDENTIFIER_FEEDBACK),
-                        new SecondaryDrawerItem()
-                                .withName(R.string.title_activity_settings)
-                                .withIcon(GoogleMaterial.Icon.gmd_settings)
-                                .withIdentifier(Application.IDENTIFIER_SETTING)
+                                .withIdentifier(Application.IDENTIFIER_FEEDBACK)
+//                        new SecondaryDrawerItem()
+//                                .withName(R.string.title_activity_settings)
+//                                .withIcon(GoogleMaterial.Icon.gmd_settings)
+//                                .withIdentifier(Application.IDENTIFIER_SETTING)
                 )
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override

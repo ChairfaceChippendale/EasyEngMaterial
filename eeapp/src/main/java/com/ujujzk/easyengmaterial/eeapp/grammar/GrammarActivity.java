@@ -43,8 +43,8 @@ public class GrammarActivity extends AppCompatActivity implements TopicListAdapt
     @SuppressWarnings("unused")
     private static final String TAG = GrammarActivity.class.getSimpleName();
 
-    public static final String SELECTED_TOPICS_IDS = "selectedTopicsIds";
-    public static final String SELECTED_TOPIC_ID = "selectedTopicID";
+    static final String SELECTED_TOPICS_IDS = "selectedTopicsIds";
+    static final String SELECTED_TOPIC_ID = "selectedTopicID";
 
     private Toolbar toolBar;
     private Drawer navigationDrawer = null;
@@ -140,11 +140,11 @@ public class GrammarActivity extends AppCompatActivity implements TopicListAdapt
                         new SecondaryDrawerItem()
                                 .withName(R.string.title_feedback)
                                 .withIcon(GoogleMaterial.Icon.gmd_feedback)
-                                .withIdentifier(Application.IDENTIFIER_FEEDBACK),
-                        new SecondaryDrawerItem()
-                                .withName(R.string.title_activity_settings)
-                                .withIcon(GoogleMaterial.Icon.gmd_settings)
-                                .withIdentifier(Application.IDENTIFIER_SETTING)
+                                .withIdentifier(Application.IDENTIFIER_FEEDBACK)
+//                        new SecondaryDrawerItem()
+//                                .withName(R.string.title_activity_settings)
+//                                .withIcon(GoogleMaterial.Icon.gmd_settings)
+//                                .withIdentifier(Application.IDENTIFIER_SETTING)
                 )
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override

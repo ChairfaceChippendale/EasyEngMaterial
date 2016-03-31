@@ -55,8 +55,8 @@ public class LearnWordActivity extends AppCompatActivity implements View.OnTouch
     private int moveX;
     private Point screenSize;
 
-    List<Card> cardsToLearn;
-    List<Long> cardIds;
+    private List<Card> cardsToLearn;
+    private List<Long> cardIds;
 
     private Toolbar toolBar;
 
@@ -195,8 +195,6 @@ public class LearnWordActivity extends AppCompatActivity implements View.OnTouch
                 overridePendingTransition(R.animator.activity_appear_alpha, R.animator.activity_disappear_to_right); //custom activity transition animation
             }
 
-        } else {
-
         }
         wordViewParams.leftMargin = screenSize.x/4;
         wordView.setLayoutParams(wordViewParams);
@@ -224,8 +222,6 @@ public class LearnWordActivity extends AppCompatActivity implements View.OnTouch
                 onBackPressed();
                 overridePendingTransition(R.animator.activity_appear_alpha, R.animator.activity_disappear_to_right); //custom activity transition animation
             }
-
-        } else {
 
         }
         wordViewParams.topMargin = screenSize.y/4;

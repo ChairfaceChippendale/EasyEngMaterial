@@ -165,11 +165,11 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
                         new SecondaryDrawerItem()
                                 .withName(R.string.title_feedback)
                                 .withIcon(GoogleMaterial.Icon.gmd_feedback)
-                                .withIdentifier(Application.IDENTIFIER_FEEDBACK),
-                        new SecondaryDrawerItem()
-                                .withName(R.string.title_activity_settings)
-                                .withIcon(GoogleMaterial.Icon.gmd_settings)
-                                .withIdentifier(Application.IDENTIFIER_SETTING)
+                                .withIdentifier(Application.IDENTIFIER_FEEDBACK)
+//                        new SecondaryDrawerItem()
+//                                .withName(R.string.title_activity_settings)
+//                                .withIcon(GoogleMaterial.Icon.gmd_settings)
+//                                .withIdentifier(Application.IDENTIFIER_SETTING)
                 )
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override

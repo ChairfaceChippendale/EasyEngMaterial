@@ -35,7 +35,7 @@ public class WordArticleFragment extends Fragment{
     public WordArticleFragment() {
     }
 
-    public void setSelectedWord(Long wordId){
+    void setSelectedWord(Long wordId){
 
         final Word selectedWord = Application.localStore.read(wordId, Word.class);
         if (selectedWord != null) {

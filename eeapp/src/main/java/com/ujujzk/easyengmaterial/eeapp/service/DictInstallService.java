@@ -21,7 +21,7 @@ import java.util.Scanner;
 
 public class DictInstallService extends Service{
 
-    static final String TAG = DictInstallService.class.getSimpleName();
+    private static final String TAG = DictInstallService.class.getSimpleName();
 
     private static final String DICTIONARY_NAME_TAG_IN_FILE = "#NAME";
     private static final int DICTIONARY_NAME_SEARCHING_ROW_NUMBER = 10;
@@ -29,7 +29,7 @@ public class DictInstallService extends Service{
 
     public static final String DICT_FILE_PATHS = "dictFilesToInstall";
 
-    Thread installDictsThread;
+    private Thread installDictsThread;
 
     @Override
     public IBinder onBind(Intent intent) {

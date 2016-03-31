@@ -54,7 +54,6 @@ public class RuleActivity extends AppCompatActivity {
         runTopicFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 List<String> ids = new ArrayList<String>();
                 ids.add(topicId);
                 Intent intent = new Intent(RuleActivity.this, ExerciseActivity.class);
@@ -62,7 +61,6 @@ public class RuleActivity extends AppCompatActivity {
                 startActivity(intent);
                 overridePendingTransition(R.animator.activity_appear_from_right, R.animator.activity_disappear_alpha); //custom activity transition animation
                 finish();
-
             }
         });
 
@@ -92,7 +90,6 @@ public class RuleActivity extends AppCompatActivity {
                     getSupportActionBar().setTitle(pair.first);
                 }
                 ruleTextView.loadData(pair.second, "text/html", null);
-                //ruleTextView.setBackgroundColor(getResources().getColor(R.color.main_window_bgr_light));
                 ruleTextView.setBackgroundColor(ContextCompat.getColor(RuleActivity.this, R.color.main_window_bgr_light));
                 //to get context follow there:
                 //http://stackoverflow.com/questions/16920942/getting-context-in-asynctask

@@ -14,13 +14,13 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class PacksListAdapter
+class PacksListAdapter
         extends PackListSelectableAdapter<PacksListAdapter.PackViewHolder> {
 
     private List<Pack> packs;
     private PackViewHolder.ClickListener clickListener;
 
-    public PacksListAdapter(PackViewHolder.ClickListener clickListener) {
+    PacksListAdapter(PackViewHolder.ClickListener clickListener) {
         super();
         this.clickListener = clickListener;
         packs = new ArrayList<Pack>();
@@ -31,33 +31,33 @@ public class PacksListAdapter
         notifyDataSetChanged();
     }
 
-    public void addPack(Pack newPack) {
+    private void addPack(Pack newPack) {
         packs.add(newPack);
         notifyDataSetChanged();
     }
 
-    public void addPackOnPosition(int position, Pack newPack) {
+    void addPackOnPosition(int position, Pack newPack) {
         if (position <= packs.size()) {
             packs.add(position, newPack);
             notifyDataSetChanged();
         }
     }
 
-    public void addPacks(List<Pack> newPacks) {
+    void addPacks(List<Pack> newPacks) {
         packs.addAll(newPacks);
         notifyDataSetChanged();
     }
 
-    public void updatePacks(List<Pack> newPacks){
+    void updatePacks(List<Pack> newPacks){
         packs.clear();
         addPacks(newPacks);
     }
 
-    public Pack getPack(int position) {
+    private Pack getPack(int position) {
         return packs.get(position);
     }
 
-    public List<Long> getSelectedPacksId (List<Integer> positions) {
+    List<Long> getSelectedPacksId (List<Integer> positions) {
 
         List <Long> ids = new ArrayList<Long>();
 
@@ -75,7 +75,7 @@ public class PacksListAdapter
         return ids;
     }
 
-    public List<Long> getSelectedPacksCardsIds (List<Integer> positions) {
+    List<Long> getSelectedPacksCardsIds (List<Integer> positions) {
         List <Long> ids = new ArrayList<Long>();
 
         Collections.sort(positions, new Comparator<Integer>() {
@@ -91,7 +91,7 @@ public class PacksListAdapter
         return ids;
     }
 
-    public void removePack(int position){
+    private void removePack(int position){
         if(position < packs.size()) {
             Application.localStore.deleteWithRelations(packs.get(position).getLocalId(), Pack.class);
             packs.remove(position);
@@ -99,7 +99,7 @@ public class PacksListAdapter
         }
     }
 
-    public void removePacks(List<Integer> positions) {
+    void removePacks(List<Integer> positions) {
         // Reverse-sort the list
         Collections.sort(positions, new Comparator<Integer>() {
             @Override
@@ -117,15 +117,15 @@ public class PacksListAdapter
     public PackViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.packs_list_item, parent, false);
-        PackViewHolder holder = new PackViewHolder(v, clickListener);
-        return holder;
+        return new PackViewHolder(v, clickListener);
     }
 
     @Override
     public void onBindViewHolder(PackViewHolder holder, int position) {
 
         holder.packTitle.setText(packs.get(position).getTitle());
-        holder.packSize.setText("" + packs.get(position).getCardsNumber() + " cards");
+        String packSize = packs.get(position).getCardsNumber() + " cards";
+        holder.packSize.setText(packSize);
         holder.selectedOverlay.setVisibility(isSelected(position) ? View.VISIBLE : View.INVISIBLE);
     }
 
@@ -142,15 +142,14 @@ public class PacksListAdapter
         super.onAttachedToRecyclerView(recyclerView);
     }
 
-    public static class PackViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
+    static class PackViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
 
         TextView packTitle;
         TextView packSize;
         View selectedOverlay;
-
         private PackViewHolder.ClickListener clickListener;
 
-        public PackViewHolder(View itemView, ClickListener clickListener) {
+        PackViewHolder(View itemView, ClickListener clickListener) {
             super(itemView);
 
             packTitle = (TextView) itemView.findViewById(R.id.packs_list_item_title);
@@ -179,12 +178,9 @@ public class PacksListAdapter
         }
 
         public interface ClickListener {
-            public void onItemClicked(int position);
-            public boolean onItemLongClicked(int position);
+            void onItemClicked(int position);
+            boolean onItemLongClicked(int position);
         }
     }
-
-
-    char s = 064770;
 }
 

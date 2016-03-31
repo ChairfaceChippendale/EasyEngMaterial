@@ -48,7 +48,6 @@ public class DictManagerActivity extends AppCompatActivity implements Dictionary
     private LinearLayoutManager dictionaryListManager;
     private DictionaryListAdapter dictionaryListAdapter;
     private MaterialDialog confirmDictionaryRemove;
-    private LinearLayout progressView;
 
 
     @Override
@@ -72,8 +71,6 @@ public class DictManagerActivity extends AppCompatActivity implements Dictionary
         dictionaryListAdapter = new DictionaryListAdapter(this, this);
         dictionaryList.setAdapter(dictionaryListAdapter);
         dictionaryList.setItemAnimator(new DefaultItemAnimator());
-
-        progressView = (LinearLayout) findViewById(R.id.dict_manager_act_progress_view);
 
         installNewDictionariesFab = (FloatingActionButton) findViewById(R.id.dict_manager_act_fab);
         installNewDictionariesFab.setOnClickListener(new View.OnClickListener() {
@@ -116,8 +113,7 @@ public class DictManagerActivity extends AppCompatActivity implements Dictionary
         registerReceiver(dictInstallBroadcastReceiver, new IntentFilter(DICT_INSTALL_SERVICE_STATUS) );
     }
 
-    private MaterialDialog getDictionaryRemoveDialog(final int position) {
-        final int dictPosition = position;
+    private MaterialDialog getDictionaryRemoveDialog(final int dictPosition) {
         final String dictName = dictionaryListAdapter.getDictionary(dictPosition).getDictionaryName();
         return new MaterialDialog.Builder(this)
                 .content(getResources().getString(R.string.dict_manager_act_dictionary_remove_confirm_question) + " " + dictName + "?")

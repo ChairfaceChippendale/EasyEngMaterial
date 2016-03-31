@@ -143,14 +143,6 @@ public class EditPackActivity extends AppCompatActivity implements CardListAdapt
                         new AsyncTask<Void, Void, String>() {
 
                             @Override
-                            protected void onPostExecute(String translatedWord) {
-                                super.onPostExecute(translatedWord);
-                                if (!translatedWord.isEmpty()) {
-                                    ((EditText) md.getCustomView().findViewById(R.id.dialog_edit_card_et_back_side)).setText(translatedWord);
-                                }
-                            }
-
-                            @Override
                             protected String doInBackground(Void... params) {
 
                                 String wordToTranslate = ((EditText) md.getCustomView().findViewById(R.id.dialog_edit_card_et_front_side)).getText().toString();
@@ -183,8 +175,16 @@ public class EditPackActivity extends AppCompatActivity implements CardListAdapt
                                     return "" + glosbeResponse.tuc.get(0).phrase.text;
                                 }
                                 return "";
-
                             }
+
+                            @Override
+                            protected void onPostExecute(String translatedWord) {
+                                super.onPostExecute(translatedWord);
+                                if (!translatedWord.isEmpty()) {
+                                    ((EditText) md.getCustomView().findViewById(R.id.dialog_edit_card_et_back_side)).setText(translatedWord);
+                                }
+                            }
+
                         }.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
 
                     }
@@ -342,5 +342,4 @@ public class EditPackActivity extends AppCompatActivity implements CardListAdapt
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         return cm.getActiveNetworkInfo() != null;
     }
-
 }

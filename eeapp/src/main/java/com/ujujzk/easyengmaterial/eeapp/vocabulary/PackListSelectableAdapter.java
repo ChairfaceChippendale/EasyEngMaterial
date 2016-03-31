@@ -21,7 +21,7 @@ public abstract class PackListSelectableAdapter<VH extends RecyclerView.ViewHold
      * @param position Position of the item to check
      * @return true if the item is selected, false otherwise
      */
-    public boolean isSelected(int position) {
+    protected boolean isSelected(int position) {
         return getSelectedItems().contains(position);
     }
 
