@@ -53,8 +53,12 @@ public class Article extends Base {
                 .replace("[/p]", "</i></font>")
 
                 .replaceAll("\\[(ex|c gray)\\]", "<font color=\'#757575\'>") //grey
-                .replaceAll("\\[ref[^\\]]*\\]", "<font color=\'#283593\'>") //blue
-                .replaceAll("\\[/(ex|com|ref)\\]", "</font>")
+                .replaceAll("\\[/(ex|com)\\]", "</font>")
+
+
+//                .replaceAll("\\[ref[^\\]]*\\]", "<font color=\'#283593\'>") //blue
+//                .replaceAll("\\[/ref\\]", "</font>")
+                .replaceAll("\\[ref[^\\]]*\\]([^\\]]*)\\[/ref\\]","<a href='$1'>$1</a>")
 
                 .replaceAll("\\[m[1-9]?\\]", "")
                 .replace("[/m]", "")

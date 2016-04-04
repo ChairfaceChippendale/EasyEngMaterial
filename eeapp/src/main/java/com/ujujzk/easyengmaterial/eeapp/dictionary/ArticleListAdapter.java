@@ -1,8 +1,16 @@
 package com.ujujzk.easyengmaterial.eeapp.dictionary;
 
 
+import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.text.SpannableStringBuilder;
+import android.text.TextPaint;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
+import android.text.style.URLSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,12 +27,17 @@ import java.util.List;
 
 class ArticleListAdapter extends RecyclerView.Adapter<ArticleListAdapter.ArticleViewHolder>{
 
-    private List<Article> mArticles;
+    @SuppressWarnings("unused")
+    private static final String TAG = ArticleListAdapter.class.getSimpleName();
 
-    ArticleListAdapter(List<Article> articles) {
+    private List<Article> mArticles;
+    private WordLinkClickListener mWordLinkClickListener;
+
+    ArticleListAdapter(List<Article> articles, WordLinkClickListener cl) {
         super();
 
         mArticles = new ArrayList<Article>(articles);
+        mWordLinkClickListener = cl;
 
     }
 
@@ -54,7 +67,10 @@ class ArticleListAdapter extends RecyclerView.Adapter<ArticleListAdapter.Article
 
         holder.dictionaryName.setText(dictName);
         holder.wordName.setText(article.getWordName());
-        holder.wordArticle.setText( Html.fromHtml(article.getArticleHTMLStyle()) );
+
+        setTextViewHTML(holder.wordArticle, article.getArticleHTMLStyle());
+        holder.wordArticle.setMovementMethod(LinkMovementMethod.getInstance());
+//        holder.wordArticle.setText( Html.fromHtml(article.getArticleHTMLStyle()) );
     }
 
     @Override
@@ -75,6 +91,40 @@ class ArticleListAdapter extends RecyclerView.Adapter<ArticleListAdapter.Article
             wordName = (TextView) v.findViewById(R.id.article_list_item_word_name);
             wordArticle = (TextView) v.findViewById(R.id.article_list_item_word_article);
         }
+    }
+
+    private void makeLinkClickable(SpannableStringBuilder strBuilder, final URLSpan span)
+    {
+        int start = strBuilder.getSpanStart(span);
+        int end = strBuilder.getSpanEnd(span);
+        int flags = strBuilder.getSpanFlags(span);
+        ClickableSpan clickable = new ClickableSpan() {
+            public void onClick(View view) {
+                // Do something with span.getURL() to handle the link click...
+                Log.d(TAG, span.getURL());
+                mWordLinkClickListener.onWordLinkClicked(span.getURL());
+            }
+            @Override
+            public void updateDrawState(TextPaint ds) {
+                super.updateDrawState(ds);
+                //set an appearance of a link
+                ds.setUnderlineText(false);
+                ds.setColor(Color.parseColor("#303F9F"));
+            }
+        };
+        strBuilder.setSpan(clickable, start, end, flags);
+        strBuilder.removeSpan(span);
+    }
+
+    private void setTextViewHTML(TextView text, String html)
+    {
+        CharSequence sequence = Html.fromHtml(html);
+        SpannableStringBuilder strBuilder = new SpannableStringBuilder(sequence);
+        URLSpan[] urls = strBuilder.getSpans(0, sequence.length(), URLSpan.class);
+        for(URLSpan span : urls) {
+            makeLinkClickable(strBuilder, span);
+        }
+        text.setText(strBuilder);
     }
 
 }

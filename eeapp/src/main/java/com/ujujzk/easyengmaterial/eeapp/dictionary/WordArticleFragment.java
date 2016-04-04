@@ -21,7 +21,7 @@ import com.ujujzk.easyengmaterial.eeapp.model.Word;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WordArticleFragment extends Fragment{
+public class WordArticleFragment extends Fragment implements WordLinkClickListener{
 
     @SuppressWarnings("unused")
     private static final String TAG = WordArticleFragment.class.getSimpleName();
@@ -69,9 +69,15 @@ public class WordArticleFragment extends Fragment{
         super.onViewCreated(view, savedInstanceState);
 
         articleList.setLayoutManager(new LinearLayoutManager(getActivity()));
-        articleListAdapter = new ArticleListAdapter(new ArrayList<Article>());
+        articleListAdapter = new ArticleListAdapter(new ArrayList<Article>(), this);
         articleList.setAdapter(articleListAdapter);
         articleList.setItemAnimator(new DefaultItemAnimator());
+    }
+
+    @Override
+    public void onWordLinkClicked(String wordName) {
+        selectedWordName = wordName;
+        updateArticleList(selectedWordName);
     }
 
     private void updateArticleList(String wordName) {
