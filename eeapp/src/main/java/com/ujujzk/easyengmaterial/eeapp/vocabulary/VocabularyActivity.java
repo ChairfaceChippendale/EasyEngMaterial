@@ -211,8 +211,6 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
     protected void onStart() {
         super.onStart();
 
-        Log.d(TAG, "onStart");
-
         new AsyncTask<Void, Void, List<Pack>>() {
             @Override
             protected void onPreExecute() {
