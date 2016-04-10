@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -49,17 +50,15 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
     public static final String SELECTED_CARD_IDS = "selectedCardIds";
 
     private Toolbar toolBar;
-
-
-    private ActionBarDrawerToggle toggle;
-
-
     private Drawer navigationDrawer = null;
     private RecyclerView packList;
     private PacksListAdapter packListAdapter;
     private CircularProgressView progressBar;
     private FloatingActionButton runCardsFab;
     private MaterialDialog confirmPackRemove;
+    private Button addPackBtn;
+    private View withPacksView;
+    private View withoutPacksView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +73,18 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
         navigationDrawer = makeNavigationDrawer();
         navigationDrawer.setSelection(Application.IDENTIFIER_VOCABULARY);
 
+        withPacksView = findViewById(R.id.vocab_act_full_data);
+        withoutPacksView = findViewById(R.id.vocab_act_empty_data);
+
         progressBar = (CircularProgressView) findViewById(R.id.vocab_act_progress_bar);
+
+        addPackBtn = (Button) findViewById(R.id.vocab_act_empty_data_btn);
+        addPackBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addNewPack();
+            }
+        });
 
         packList = (RecyclerView) findViewById(R.id.vocab_act_rv_packs_list);
         packListAdapter = new PacksListAdapter(this);
@@ -92,7 +102,6 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
         runCardsFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 List<Long> ids = packListAdapter.getSelectedPacksCardsIds(packListAdapter.getSelectedItems());
                 if (ids.size() > 0) {
                     Intent intent = new Intent(VocabularyActivity.this, LearnWordActivity.class);
@@ -230,6 +239,7 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
                 packListAdapter.updatePacks(packs);
                 progressBar.setVisibility(View.GONE);
                 packList.setVisibility(View.VISIBLE);
+                setEmptyOrFullDataState();
             }
         }.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
 
@@ -277,6 +287,7 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
         packListAdapter.addPackOnPosition(0,
                 Application.localStore.create(new Pack("New pack", new ArrayList<Card>()))
         );
+        setEmptyOrFullDataState();
     }
 
     private void downloadPacksFromCloud () {
@@ -312,6 +323,7 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
         } else {
             Toast.makeText(this, getResources().getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show();
         }
+        setEmptyOrFullDataState();
     }
 
     private void removeSelectedPacks () {
@@ -321,6 +333,7 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
         if (!runCardsFab.isHidden()) {
             runCardsFab.hide(true);
         }
+        setEmptyOrFullDataState();
     }
 
     private void runEditPack () {
@@ -384,13 +397,23 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
         startActivity(sendIntent);
     }
 
-    private void  sendFeedBack(String massage){
+    private void sendFeedBack(String massage){
         Intent email = new Intent(Intent.ACTION_SEND);
         email.setType("text/email");
         email.putExtra(Intent.EXTRA_EMAIL, new String[] { getResources().getString(R.string.feed_back_email) });
         email.putExtra(Intent.EXTRA_SUBJECT, getResources().getString(R.string.feed_back_subject));
         email.putExtra(Intent.EXTRA_TEXT, massage);
         startActivity(Intent.createChooser(email, getResources().getString(R.string.feed_back_title)));
+    }
+
+    private void setEmptyOrFullDataState () {
+        if (packListAdapter.getItemCount() > 0) {
+            withPacksView.setVisibility(View.VISIBLE);
+            withoutPacksView.setVisibility(View.GONE);
+        } else {
+            withPacksView.setVisibility(View.GONE);
+            withoutPacksView.setVisibility(View.VISIBLE);
+        }
     }
 
 }

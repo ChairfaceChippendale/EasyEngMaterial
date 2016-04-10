@@ -30,8 +30,7 @@
         <RelativeLayout
                 android:id="@+id/gramm_act_no_connect"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                >
+                android:layout_height="match_parent">
 
             <ImageView
                     android:id="@+id/no_connect_img"
@@ -51,8 +50,7 @@
                     android:textColor="@color/accent_light"
                     android:textSize="@dimen/no_connect_txt_size"
                     android:text="TRY AGAIN"
-                    style="?android:attr/borderlessButtonStyle"
-                    />
+                    style="?android:attr/borderlessButtonStyle"/>
 
             <TextView
                     android:id="@+id/no_connect_txt"
@@ -70,8 +68,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:visibility="gone">
-
-
         </android.support.v7.widget.RecyclerView>
 
         <com.github.clans.fab.FloatingActionButton

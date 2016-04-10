@@ -12,7 +12,6 @@
             android:layout_height="wrap_content"
             layout="@layout/app_bar"/>
 
-
     <RelativeLayout
             android:id="@+id/vocab_act_empty_data"
             android:layout_width="match_parent"
@@ -24,26 +23,20 @@
                 android:id="@+id/vocab_act_empty_data_img"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/empty_state_portrait"
+                android:src="@drawable/empty_state"
                 android:scaleType="centerCrop"
-                android:contentDescription="@string/no_packs"/>
+                android:contentDescription="@string/vocab_act_no_packs_txt"/>
 
         <Button
                 android:id="@+id/vocab_act_empty_data_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="30dp"
+                android:layout_centerInParent="true"
                 android:textColor="@color/accent_light"
-
-
                 android:textSize="@dimen/no_connect_txt_size"
-                android:text="Make new"
-
-
-                style="?android:attr/borderlessButtonStyle"
-        />
+                android:text="@string/vocab_act_no_packs_btn"
+                style="?android:attr/borderlessButtonStyle"/>
 
         <TextView
                 android:id="@+id/vocab_act_empty_data_txt"
@@ -51,16 +44,13 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_above="@id/vocab_act_empty_data_btn"
-
-
                 android:textSize="@dimen/no_connect_txt_size"
-
-
-                android:text="@string/no_packs"/>
+                android:text="@string/vocab_act_no_packs_txt"/>
 
     </RelativeLayout>
 
     <RelativeLayout
+            android:id="@+id/vocab_act_full_data"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/vocab_act_app_bar">
@@ -104,11 +94,6 @@
                 app:fab_hideAnimation="@animator/fab_scale_down"
                 android:visibility="invisible"/>
 
-
     </RelativeLayout>
-
-
-
-
 
 </RelativeLayout>
