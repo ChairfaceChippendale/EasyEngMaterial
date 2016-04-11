@@ -100,6 +100,7 @@ public class WordArticleFragment extends Fragment implements WordLinkClickListen
                 articleListAdapter.setArticles(articles);
                 progressBar.setVisibility(View.GONE);
                 articleList.setVisibility(View.VISIBLE);
+                articleList.scrollToPosition(0);
             }
         }.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR, wordName);
     }

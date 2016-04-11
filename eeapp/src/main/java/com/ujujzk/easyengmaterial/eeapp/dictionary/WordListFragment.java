@@ -27,6 +27,7 @@ import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ThreadPoolExecutor;
 
 public class WordListFragment extends Fragment implements
         WordListCursorAdapter.WordViewHolder.ClickListener,
@@ -39,7 +40,7 @@ public class WordListFragment extends Fragment implements
     private static final String QUERY_WORD_LIMIT_KEY = "limitKeyEasyEnglish";
     private static final String QUERY_WORD_KEY = "queryWordKeyEasyEnglish";
 
-    android.support.v7.widget.SearchView searchView;
+    private android.support.v7.widget.SearchView searchView;
     private RecyclerView wordList;
     private WordListCursorAdapter wordListAdapter;
     private LinearLayoutManager wordListManager;
@@ -121,16 +122,22 @@ public class WordListFragment extends Fragment implements
         }
         querySearcher = new AsyncQuerySearcher();
         querySearcher.execute(args);
+
         return true;
     }
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        List<Word> replyWords = Application.localStore.readBy(Word.class, new KeyValue("wordName", query));
-        if (replyWords.isEmpty()) {
-            return true;
+
+        if (querySearcher.getStatus() == AsyncTask.Status.FINISHED) { //you must be sure that aren't making other request to dataBase at this moment
+
+            List<Word> replyWords = Application.localStore.readBy(Word.class, new KeyValue("wordName", query));
+            if (replyWords.isEmpty()) {
+                return true;
+            }
+
+            goToArticleTab(replyWords.get(0).getLocalId());
         }
-        goToArticleTab(replyWords.get(0).getLocalId());
         return true;
     }
 
@@ -211,6 +218,5 @@ public class WordListFragment extends Fragment implements
             return count;
         }
     }
-
 
 }

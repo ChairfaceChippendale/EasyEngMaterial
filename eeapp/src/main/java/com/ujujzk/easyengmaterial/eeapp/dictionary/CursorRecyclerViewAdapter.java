@@ -24,7 +24,7 @@ import android.database.DataSetObserver;
 import android.support.v7.widget.RecyclerView;
 
 
-public abstract class CursorRecyclerViewAdapter<VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> {
+abstract class CursorRecyclerViewAdapter<VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> {
 
 
     private Cursor mCursor;
@@ -75,13 +75,15 @@ public abstract class CursorRecyclerViewAdapter<VH extends RecyclerView.ViewHold
 
     @Override
     public void onBindViewHolder(VH viewHolder, int position) {
-        if (!mDataValid) {
-            throw new IllegalStateException("this should only be called when the cursor is valid");
-        }
-        if (!mCursor.moveToPosition(position)) {
-            throw new IllegalStateException("couldn't move cursor to position " + position);
-        }
-        onBindViewHolder(viewHolder, mCursor);
+
+            if (!mDataValid) {
+                throw new IllegalStateException("this should only be called when the cursor is valid");
+            }
+            if (!mCursor.moveToPosition(position)) {
+                throw new IllegalStateException("couldn't move cursor to position " + position);
+            }
+            onBindViewHolder(viewHolder, mCursor);
+
     }
 
     /**
