@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
@@ -72,7 +73,11 @@ public class GrammarActivity extends AppCompatActivity implements TopicListAdapt
         noConnectionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadData();
+                if ((isNetworkConnected())) {
+                    loadData();
+                } else {
+                    showNoConnectionToast();
+                }
             }
         });
         noConnectionMsg = findViewById(R.id.gramm_act_no_connect);
@@ -104,6 +109,10 @@ public class GrammarActivity extends AppCompatActivity implements TopicListAdapt
         });
     }
 
+    private void showNoConnectionToast () {
+        Toast.makeText(this, getResources().getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show();
+    }
+
     private Drawer makeNavigationDrawer () {
         return new DrawerBuilder()
                 .withActivity(this)
@@ -112,7 +121,7 @@ public class GrammarActivity extends AppCompatActivity implements TopicListAdapt
                 .withAccountHeader(
                         new AccountHeaderBuilder()
                                 .withActivity(this)
-                                .withHeaderBackground(R.drawable.img_dict)
+                                .withHeaderBackground(R.drawable.img_gramm)
                                 .build()
                 )
                 .addDrawerItems(
