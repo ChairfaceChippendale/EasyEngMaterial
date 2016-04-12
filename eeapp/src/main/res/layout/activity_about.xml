@@ -2,16 +2,51 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:context="com.ujujzk.easyengmaterial.eeapp.AboutActivity">
+                tools:context="com.ujujzk.easyengmaterial.eeapp.AboutActivity"
+                android:background="@color/toolbar_bgr_light">
 
-    <include
+    <android.support.v7.widget.Toolbar
             android:id="@+id/about_act_app_bar"
-            layout="@layout/app_bar"/>
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:orientation="vertical"
+            android:background="@color/toolbar_bgr_light"
+            android:layout_width="match_parent"
+            android:layout_height="?android:actionBarSize"
+            app:theme="?attr/mToolBarTheme"
+            app:popupTheme="?attr/mPopupTheme"/>
+
 
     <TextView
-            android:layout_below="@id/about_act_app_bar"
-            android:text="hello_world"
+            android:id="@+id/about_act_app_name"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_above="@+id/about_act_version"
+            android:textColor="@color/toolbar_text_light"
+            android:textSize="30sp"
+            android:text="ET"/>
+
+    <TextView
+            android:id="@+id/about_act_version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/toolbar_text_light"
+            android:textSize="20sp"
+            android:text="@string/about_act_app_version_number"/>
+
+    <TextView
+            android:id="@+id/about_act_author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/about_act_version"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="30dp"
+            android:textColor="@color/toolbar_text_light"
+            android:textSize="20sp"
+            android:text="@string/about_act_author_name"/>
+
 
 </RelativeLayout>

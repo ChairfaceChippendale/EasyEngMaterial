@@ -6,12 +6,13 @@ import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.TextView;
 import com.ujujzk.easyengmaterial.eeapp.util.ActivityUtil;
 
 
 public class AboutActivity extends AppCompatActivity {
 
-    private Toolbar toolBar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,12 +20,15 @@ public class AboutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
 
-        toolBar = (Toolbar) findViewById(R.id.about_act_app_bar);
+        Toolbar toolBar = (Toolbar) findViewById(R.id.about_act_app_bar);
         ActivityUtil.setToolbarColor(this, toolBar.getId());
         setSupportActionBar(toolBar);
 
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        TextView appName = (TextView) findViewById(R.id.about_act_app_name);
+        appName.setText(getResources().getString(R.string.app_name));
 
     }
 

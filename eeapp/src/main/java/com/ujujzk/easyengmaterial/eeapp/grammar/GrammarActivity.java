@@ -94,23 +94,21 @@ public class GrammarActivity extends AppCompatActivity implements TopicListAdapt
             @Override
             public void onClick(View v) {
 
-                List<String> ids = topicListAdapter.getSelectedTopicsIds(topicListAdapter.getSelectedItems());
-
-                if (ids.size() > 0) {
-                    Intent intent = new Intent(GrammarActivity.this, ExerciseActivity.class);
-                    intent.putStringArrayListExtra(SELECTED_TOPICS_IDS, (ArrayList<String>)ids);
-                    startActivity(intent);
-                    overridePendingTransition(R.animator.activity_appear_from_right, R.animator.activity_disappear_alpha); //custom activity transition animation
+                if (isNetworkConnected()) {
+                    List<String> ids = topicListAdapter.getSelectedTopicsIds(topicListAdapter.getSelectedItems());
+                    if (ids.size() > 0) {
+                        Intent intent = new Intent(GrammarActivity.this, ExerciseActivity.class);
+                        intent.putStringArrayListExtra(SELECTED_TOPICS_IDS, (ArrayList<String>) ids);
+                        startActivity(intent);
+                        overridePendingTransition(R.animator.activity_appear_from_right, R.animator.activity_disappear_alpha); //custom activity transition animation
+                    }
+                } else {
+                    showNoConnectionToast();
                 }
-
                 topicListAdapter.clearSelection();
                 runTopicsFab.hide(true);
             }
         });
-    }
-
-    private void showNoConnectionToast () {
-        Toast.makeText(this, getResources().getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show();
     }
 
     private Drawer makeNavigationDrawer () {
@@ -219,14 +217,18 @@ public class GrammarActivity extends AppCompatActivity implements TopicListAdapt
     }
 
     private void runRule () {
-        if (topicListAdapter.getSelectedItemCount() == 1) {
-            List<String> ids = topicListAdapter.getSelectedTopicsIds(topicListAdapter.getSelectedItems());
-            if (ids.size() > 0) {
-                Intent intent = new Intent(GrammarActivity.this, RuleActivity.class);
-                intent.putExtra(SELECTED_TOPIC_ID, ids.get(0));
-                startActivity(intent);
-                overridePendingTransition(R.animator.activity_appear_from_right, R.animator.activity_disappear_alpha); //custom activity transition animation
+        if  (isNetworkConnected()) {
+            if (topicListAdapter.getSelectedItemCount() == 1) {
+                List<String> ids = topicListAdapter.getSelectedTopicsIds(topicListAdapter.getSelectedItems());
+                if (ids.size() > 0) {
+                    Intent intent = new Intent(GrammarActivity.this, RuleActivity.class);
+                    intent.putExtra(SELECTED_TOPIC_ID, ids.get(0));
+                    startActivity(intent);
+                    overridePendingTransition(R.animator.activity_appear_from_right, R.animator.activity_disappear_alpha); //custom activity transition animation
+                }
             }
+        } else {
+            showNoConnectionToast();
         }
         runTopicsFab.hide(true);
         topicListAdapter.clearSelection();
@@ -252,7 +254,6 @@ public class GrammarActivity extends AppCompatActivity implements TopicListAdapt
     public boolean onItemLongClicked(int position) {
         return true;
     }
-
 
     private void loadData() {
 
@@ -293,6 +294,10 @@ public class GrammarActivity extends AppCompatActivity implements TopicListAdapt
     private boolean isNetworkConnected() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         return cm.getActiveNetworkInfo() != null;
+    }
+
+    private void showNoConnectionToast () {
+        Toast.makeText(this, getResources().getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show();
     }
 
     private void sendSharingMassage(String massage){
