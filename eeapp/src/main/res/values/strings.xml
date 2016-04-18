@@ -83,6 +83,7 @@
 
     <string name="about_act_app_version_number">v. 1.0</string>
     <string name="about_act_author_name">Alexander Taran</string>
+    <string name="no_connect_btn">Try again</string>
 
 
 </resources>

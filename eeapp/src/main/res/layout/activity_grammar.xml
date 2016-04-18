@@ -49,7 +49,7 @@
                     android:layout_marginBottom="30dp"
                     android:textColor="@color/accent_light"
                     android:textSize="@dimen/no_connect_txt_size"
-                    android:text="TRY AGAIN"
+                    android:text="@string/no_connect_btn"
                     style="?android:attr/borderlessButtonStyle"/>
 
             <TextView

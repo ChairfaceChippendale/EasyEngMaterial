@@ -24,7 +24,7 @@
             android:layout_centerInParent="true"
             android:layout_above="@+id/about_act_version"
             android:textColor="@color/toolbar_text_light"
-            android:textSize="30sp"
+            android:textSize="@dimen/about_act_app_name_text_size"
             android:text="ET"/>
 
     <TextView
@@ -34,7 +34,7 @@
             android:layout_centerInParent="true"
             android:layout_marginTop="5dp"
             android:textColor="@color/toolbar_text_light"
-            android:textSize="20sp"
+            android:textSize="@dimen/about_act_version_text_size"
             android:text="@string/about_act_app_version_number"/>
 
     <TextView
@@ -45,7 +45,7 @@
             android:layout_centerInParent="true"
             android:layout_marginTop="30dp"
             android:textColor="@color/toolbar_text_light"
-            android:textSize="20sp"
+            android:textSize="@dimen/about_act_author_text_size"
             android:text="@string/about_act_author_name"/>
 
 
