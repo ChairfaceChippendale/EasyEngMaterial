@@ -102,6 +102,7 @@ public class ExerciseActivity extends AppCompatActivity {
                     ((TextView)view).setTextColor(ContextCompat.getColor(ExerciseActivity.this, R.color.eeapp_red));
                 }
                 nextTaskBtn.setVisibility(View.VISIBLE);
+                hintLayout.hide();
             }
         });
 

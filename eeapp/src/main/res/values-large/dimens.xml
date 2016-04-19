@@ -14,4 +14,13 @@
 
     <dimen name="no_connect_txt_size">24sp</dimen>
 
+    <dimen name="topic_list_item_text_size">20sp</dimen>
+
+    <dimen name="exercise_act_question_text_size">20sp</dimen>
+    <dimen name="exercise_act_tv_question_padding">30dp</dimen>
+    <dimen name="answer_list_item_padding">8dp</dimen>
+    <dimen name="answer_list_item_text_size">20sp</dimen>
+    <dimen name="exercise_act_tv_hint_text_size">20sp</dimen>
+    <dimen name="exercise_act_hint_bar_height">100dp</dimen>
+
 </resources>
