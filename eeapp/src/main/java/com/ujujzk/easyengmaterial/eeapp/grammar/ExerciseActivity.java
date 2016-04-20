@@ -1,6 +1,5 @@
 package com.ujujzk.easyengmaterial.eeapp.grammar;
 
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -26,7 +25,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-
 public class ExerciseActivity extends AppCompatActivity {
 
     @SuppressWarnings("unused")
@@ -46,7 +44,6 @@ public class ExerciseActivity extends AppCompatActivity {
     private TextView hint;
     private FABToolbarLayout hintLayout;
     private Button nextTaskBtn;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
