@@ -154,7 +154,6 @@ public class DictionaryActivity extends AppCompatActivity implements OnWordSelec
         }
     }
 
-
     @Override
     public void onWordSelected(long wordId) {
         if (isPortrait(this)) {
