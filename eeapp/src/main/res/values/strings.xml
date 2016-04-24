@@ -63,7 +63,7 @@
     <string name="action_manager">Dict manager</string>
     <string name="word_list_fr_search_hint">Search word$#8230</string>
 
-    <string name="sharing_massage">Try this awsome app [here must be link to Play Market]</string>
+    <string name="sharing_massage">Try this awsome app https://play.google.com/store/apps/details?id=com.ujujzk.easyengmaterial.eeapp</string>
 
     <string name="feed_back_email">easy.english.assist@gmail.com</string>
     <string name="feed_back_subject">Feedback</string>

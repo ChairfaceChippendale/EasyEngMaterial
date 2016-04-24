@@ -13,10 +13,12 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/Theme.Light.AppTheme" >
+
         <activity
             android:name=".AboutActivity"
             android:label="@string/title_activity_about" >
         </activity>
+
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings" >
@@ -24,35 +26,43 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".dictionary.DictionaryActivity" />
         </activity>
+
         <activity
             android:name=".dictionary.DictionaryActivity"
             android:label="@string/title_activity_dictionary" >
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
+
         <activity
             android:name=".vocabulary.VocabularyActivity"
             android:label="@string/title_activity_vocabulary" >
         </activity>
+
         <activity
             android:name=".grammar.GrammarActivity"
             android:label="@string/title_activity_grammar" >
         </activity>
+
         <activity
             android:name=".vocabulary.EditPackActivity"
             android:label="@string/title_activity_edit_pack" >
         </activity>
+
         <activity
             android:name=".vocabulary.LearnWordActivity"
             android:label="@string/title_activity_learn_word" >
         </activity>
+
         <activity
             android:name=".grammar.ExerciseActivity"
             android:label="@string/title_activity_exerrcise" >
         </activity>
+
         <activity
             android:name=".grammar.RuleActivity"
             android:label="@string/title_activity_rule" >
@@ -63,6 +73,7 @@
             android:enabled="true"
             android:exported="true" >
         </service>
+
         <service
             android:name=".service.DictInstallService"
             android:enabled="true"
@@ -79,6 +90,7 @@
             android:enabled="true"
             android:exported="true" >
         </service>
+
     </application>
 
 </manifest>
