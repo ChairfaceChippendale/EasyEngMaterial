@@ -137,6 +137,14 @@ class PacksListAdapter
         return 0;
     }
 
+    boolean isEmpty () {
+        if (getItemCount() > 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);

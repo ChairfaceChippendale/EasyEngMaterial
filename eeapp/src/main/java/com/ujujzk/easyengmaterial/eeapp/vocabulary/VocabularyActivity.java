@@ -125,6 +125,7 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
                         packListAdapter.removePacks(packListAdapter.getSelectedItems());
                         packListAdapter.clearSelection();
                         confirmPackRemove.dismiss();
+                        emptyStateTrigger(packListAdapter.isEmpty());
                     }
                 })
                 .onNegative(new MaterialDialog.SingleButtonCallback() {
@@ -239,7 +240,7 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
                 packListAdapter.updatePacks(packs);
                 progressBar.setVisibility(View.GONE);
                 packList.setVisibility(View.VISIBLE);
-                setEmptyOrFullDataState();
+                emptyStateTrigger(packListAdapter.isEmpty());
             }
         }.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
 
@@ -287,7 +288,7 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
         packListAdapter.addPackOnPosition(0,
                 Application.localStore.create(new Pack("New pack", new ArrayList<Card>()))
         );
-        setEmptyOrFullDataState();
+        emptyStateTrigger(false);
     }
 
     private void downloadPacksFromCloud () {
@@ -298,6 +299,7 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
                     super.onPreExecute();
                     packList.setVisibility(View.INVISIBLE);
                     progressBar.setVisibility(View.VISIBLE);
+                    emptyStateTrigger(false);
                 }
 
                 @Override
@@ -318,12 +320,13 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
                     }
                     packList.setVisibility(View.VISIBLE);
                     progressBar.setVisibility(View.GONE);
+                    emptyStateTrigger(packListAdapter.isEmpty());
                 }
             }.execute();
         } else {
             Toast.makeText(this, getResources().getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show();
         }
-        setEmptyOrFullDataState();
+
     }
 
     private void removeSelectedPacks () {
@@ -333,7 +336,7 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
         if (!runCardsFab.isHidden()) {
             runCardsFab.hide(true);
         }
-        setEmptyOrFullDataState();
+        emptyStateTrigger(packListAdapter.isEmpty());
     }
 
     private void runEditPack () {
@@ -406,13 +409,13 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
         startActivity(Intent.createChooser(email, getResources().getString(R.string.feed_back_title)));
     }
 
-    private void setEmptyOrFullDataState () {
-        if (packListAdapter.getItemCount() > 0) {
+    private void emptyStateTrigger (boolean switchOnEmptyState) {
+        if (switchOnEmptyState) {
+            withoutPacksView.setVisibility(View.VISIBLE);
+            withPacksView.setVisibility(View.GONE);
+        } else {
             withPacksView.setVisibility(View.VISIBLE);
             withoutPacksView.setVisibility(View.GONE);
-        } else {
-            withPacksView.setVisibility(View.GONE);
-            withoutPacksView.setVisibility(View.VISIBLE);
         }
     }
 
