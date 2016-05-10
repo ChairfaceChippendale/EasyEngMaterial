@@ -70,6 +70,11 @@ public class Article extends Base {
                 .replace("[/i]", "</i>")
                 .replace("[/u]", "</u>")
 
+                .replace("[sup]", "<sup>")
+                .replace("[sub]", "<sub>")
+                .replace("[/sup]", "</sup>")
+                .replace("[/sub]", "</sub>")
+
                 .replace("\\[", "[")
                 .replace("\\]", "]")
                 .replaceAll("\\[\\[t\\][^\\[]*\\[/t\\]\\],?", "");
