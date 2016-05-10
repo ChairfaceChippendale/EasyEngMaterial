@@ -2,12 +2,14 @@ package com.ujujzk.easyengmaterial.eeapp;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.os.Environment;
 import android.support.v4.util.Pair;
 import android.util.Log;
 import com.github.aleksandrsavosh.simplestore.SimpleStore;
 import com.github.aleksandrsavosh.simplestore.SimpleStoreManager;
 import com.ujujzk.easyengmaterial.eeapp.model.*;
 
+import java.io.File;
 import java.util.HashSet;
 
 public class Application extends android.app.Application {
@@ -65,6 +67,27 @@ public class Application extends android.app.Application {
 
         //Parse.initialize(this, "a2FaVXXRxCiY0r61U0nZ6hS6VhuSDcQfC32Vhium", "b2aaFgro20MWP8t1sRGbjdsRrJrwBBm78cSDKxD8");
         //ParseCrashReporting.enable(this);
+
+
+
+        createAppFolder();
+
+
+    }
+
+    private void createAppFolder() {
+
+        if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+
+            Log.d("Application", "SD-card is not accessible");
+            return;
+        }
+        File path = Environment.getExternalStorageDirectory();
+        path = new File(path.getAbsolutePath() + "/" + getResources().getString(R.string.app_name));
+
+        if (!path.exists()) {
+            path.mkdirs();
+        }
 
     }
 
