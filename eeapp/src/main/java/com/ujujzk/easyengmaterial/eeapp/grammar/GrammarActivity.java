@@ -156,7 +156,7 @@ public class GrammarActivity extends AppCompatActivity implements TopicListAdapt
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                        switch(drawerItem.getIdentifier()){
+                        switch((int)drawerItem.getIdentifier()){
                             case Application.IDENTIFIER_DICTIONARY:
                                 startActivity(new Intent(GrammarActivity.this, DictionaryActivity.class));
                                 finish();
@@ -187,6 +187,16 @@ public class GrammarActivity extends AppCompatActivity implements TopicListAdapt
                     }
                 })
                 .build();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(navigationDrawer.isDrawerOpen()){
+            navigationDrawer.closeDrawer();
+        }
+        else{
+            super.onBackPressed();
+        }
     }
 
     @Override

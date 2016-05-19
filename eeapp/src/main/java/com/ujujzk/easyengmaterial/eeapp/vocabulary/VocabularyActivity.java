@@ -46,8 +46,8 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
     private static final int GRIDS_ON_TABLET = 2;
     private static final int GRIDS_ON_PHONE = 1;
 
-    public static final String SELECTED_PACK_ID = "selectedPackId";
-    public static final String SELECTED_CARD_IDS = "selectedCardIds";
+    static final String SELECTED_PACK_ID = "selectedPackId";
+    static final String SELECTED_CARD_IDS = "selectedCardIds";
 
     private Toolbar toolBar;
     private Drawer navigationDrawer = null;
@@ -184,7 +184,7 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                        switch(drawerItem.getIdentifier()){
+                        switch((int)drawerItem.getIdentifier()){
                             case Application.IDENTIFIER_DICTIONARY:
                                 startActivity(new Intent(VocabularyActivity.this, DictionaryActivity.class));
                                 finish();
@@ -218,6 +218,16 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
     }
 
     @Override
+    public void onBackPressed() {
+        if(navigationDrawer.isDrawerOpen()){
+            navigationDrawer.closeDrawer();
+        }
+        else{
+            super.onBackPressed();
+        }
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
 
@@ -227,6 +237,7 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
                 super.onPreExecute();
                 progressBar.setVisibility(View.VISIBLE);
                 packList.setVisibility(View.GONE);
+                emptyStateTrigger(false);
             }
 
             @Override
@@ -377,13 +388,13 @@ public class VocabularyActivity extends AppCompatActivity implements PacksListAd
         return true;
     }
 
-    public static boolean isTablet(Context context) {
+    private static boolean isTablet(Context context) {
         return (context.getResources().getConfiguration().screenLayout
                 & Configuration.SCREENLAYOUT_SIZE_MASK)
                 >= Configuration.SCREENLAYOUT_SIZE_LARGE;
     }
 
-    public static boolean isLandScape (Context context){
+    private static boolean isLandScape (Context context){
         return (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE);
     }
 

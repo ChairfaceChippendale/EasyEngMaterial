@@ -1,5 +1,6 @@
 package com.ujujzk.easyengmaterial.eeapp.dictionary;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -13,9 +14,11 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
@@ -148,6 +151,8 @@ public class DictionaryActivity extends AppCompatActivity implements OnWordSelec
                 Intent intent = new Intent(PronunciationService.PRONUNCIATION_TASK);
                 intent.putExtra(PronunciationService.WORD, wordToPronounce);
                 sendBroadcast(intent);
+            } else {
+                Toast.makeText(this, getResources().getString(R.string.no_word_to_pronounce), Toast.LENGTH_SHORT).show();
             }
         } else {
             Toast.makeText(this, getResources().getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show();
@@ -217,6 +222,17 @@ public class DictionaryActivity extends AppCompatActivity implements OnWordSelec
                                 .withHeaderBackground(R.drawable.img_dict)
                                 .build()
                 )
+                .withOnDrawerListener(new Drawer.OnDrawerListener() {
+                    @Override
+                    public void onDrawerOpened(View drawerView) {
+                        InputMethodManager inputMethodManager = (InputMethodManager) DictionaryActivity.this.getSystemService(Activity.INPUT_METHOD_SERVICE);
+                        inputMethodManager.hideSoftInputFromWindow(DictionaryActivity.this.getCurrentFocus().getWindowToken(), 0);
+                    }
+                    @Override
+                    public void onDrawerClosed(View drawerView) {}
+                    @Override
+                    public void onDrawerSlide(View drawerView, float slideOffset) {}
+                })
                 .addDrawerItems(
                         new PrimaryDrawerItem()
                                 .withName(R.string.title_activity_dictionary)
@@ -251,7 +267,7 @@ public class DictionaryActivity extends AppCompatActivity implements OnWordSelec
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                        switch (drawerItem.getIdentifier()) {
+                        switch ((int)drawerItem.getIdentifier()) {
                             case Application.IDENTIFIER_DICTIONARY:
                                 break;
                             case Application.IDENTIFIER_VOCABULARY:
@@ -282,6 +298,16 @@ public class DictionaryActivity extends AppCompatActivity implements OnWordSelec
                     }
                 })
                 .build();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(navigationDrawer.isDrawerOpen()){
+            navigationDrawer.closeDrawer();
+        }
+        else{
+            super.onBackPressed();
+        }
     }
 
     private void sendSharingMassage(String massage) {
