@@ -73,61 +73,7 @@ public class DictionaryActivity extends AppCompatActivity implements OnWordSelec
 
 
 
-        historyDrawer = new DrawerBuilder()
-                .withActivity(this)
-                .withToolbar(toolBar)
-                .withTranslucentStatusBar(true)
-                .withAccountHeader(
-                        new AccountHeaderBuilder()
-                                .withActivity(this)
-                                .withHeaderBackground(R.drawable.dict_history_header) //TODO make background picture
-                                .withHeaderBackgroundScaleType(ImageView.ScaleType.CENTER_CROP)
-                                .withCompactStyle(true)
-                                .build()
-                )
-                .withOnDrawerListener(new Drawer.OnDrawerListener() {
-                    @Override
-                    public void onDrawerOpened(View drawerView) {
-                        InputMethodManager inputMethodManager = (InputMethodManager) DictionaryActivity.this.getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE);
-                        inputMethodManager.hideSoftInputFromWindow(DictionaryActivity.this.getCurrentFocus().getWindowToken(), 0);
-                    }
-                    @Override
-                    public void onDrawerClosed(View drawerView) {}
-                    @Override
-                    public void onDrawerSlide(View drawerView, float slideOffset) {}
-                })
-                .addDrawerItems(
-                        new PrimaryDrawerItem()
-                                .withName("first")
-                                .withIdentifier(48),
-                        new PrimaryDrawerItem()
-                                .withName("second")
-                                .withIdentifier(49)
-                )
-                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
-                    @Override
-                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                        if (drawerItem.getIdentifier() == Application.IDENTIFIER_CLEAR_HISTORY) {
-                            historyDrawer.removeAllItems();
-                        } else {
-                            //TODO handle word selection
-                            Toast.makeText(getBaseContext(), ((PrimaryDrawerItem) drawerItem).getName().getText(), Toast.LENGTH_SHORT).show();
-                        }
-                        historyDrawer.closeDrawer();
-                        historyDrawer.setSelection(-1);
-                        return true;
-                    }
-                })
-                .withSelectedItem(-1)
-                .withDrawerGravity(Gravity.END)
-                .append(navigationDrawer);
-        historyDrawer.addStickyFooterItem(
-                new SecondaryDrawerItem()
-                        .withName("Clear history")
-                        .withIcon(GoogleMaterial.Icon.gmd_delete)
-                        .withIdentifier(Application.IDENTIFIER_CLEAR_HISTORY)
-        );
-
+        historyDrawer = makeHistoryDrawer();
 
 
 
@@ -234,13 +180,14 @@ public class DictionaryActivity extends AppCompatActivity implements OnWordSelec
     }
 
     @Override
-    public void onWordSelected(long wordId) {
+    public void onWordSelected(long wordId, String wordName) {
         if (isPortrait(this)) {
             final int wordArticleFragmentPosition = ((ViewPagerAdapter) viewPager.getAdapter()).getFragmentPositionByTitle(getResources().getString(R.string.word_article_fragment_title));
             ((WordArticleFragment) ((ViewPagerAdapter) viewPager.getAdapter()).getItem(wordArticleFragmentPosition)).setSelectedWord(wordId);
         } else {
             ((WordArticleFragment) getSupportFragmentManager().findFragmentById(R.id.word_article_fragment)).setSelectedWord(wordId);
         }
+        addWordToHistory(wordName, wordId);
     }
 
     int getTabPositionByTitle(String title) {
@@ -374,6 +321,59 @@ public class DictionaryActivity extends AppCompatActivity implements OnWordSelec
                 .build();
     }
 
+    private Drawer makeHistoryDrawer() {
+        Drawer drawer = new DrawerBuilder()
+                .withActivity(this)
+                .withToolbar(toolBar)
+                .withTranslucentStatusBar(true)
+                .withAccountHeader(
+                        new AccountHeaderBuilder()
+                                .withActivity(this)
+                                .withHeaderBackground(R.drawable.dict_history_header)
+                                .withHeaderBackgroundScaleType(ImageView.ScaleType.CENTER_CROP)
+                                .withCompactStyle(true)
+                                .build()
+                )
+                .withOnDrawerListener(new Drawer.OnDrawerListener() {
+                    @Override
+                    public void onDrawerOpened(View drawerView) {
+                        InputMethodManager inputMethodManager = (InputMethodManager) DictionaryActivity.this.getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE);
+                        inputMethodManager.hideSoftInputFromWindow(DictionaryActivity.this.getCurrentFocus().getWindowToken(), 0);
+                    }
+                    @Override
+                    public void onDrawerClosed(View drawerView) {}
+                    @Override
+                    public void onDrawerSlide(View drawerView, float slideOffset) {}
+                })
+                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                        if (drawerItem.getIdentifier() == Application.IDENTIFIER_CLEAR_HISTORY) {
+                            historyDrawer.removeAllItems();
+                        } else {
+                            //TODO handle word selection
+                            Toast.makeText(getBaseContext(), ((PrimaryDrawerItem) drawerItem).getName().getText(), Toast.LENGTH_SHORT).show();
+                            onWordSelected(drawerItem.getIdentifier(), ((PrimaryDrawerItem) drawerItem).getName().toString());
+                        }
+                        historyDrawer.closeDrawer();
+                        historyDrawer.setSelection(-1);
+                        return true;
+                    }
+                })
+                .withSelectedItem(-1)
+                .withDrawerGravity(Gravity.END)
+                .append(navigationDrawer);
+        drawer.addStickyFooterItem(
+                new SecondaryDrawerItem()
+                        .withName("Clear history")
+                        .withIcon(GoogleMaterial.Icon.gmd_delete)
+                        .withIdentifier(Application.IDENTIFIER_CLEAR_HISTORY)
+        );
+
+        return drawer;
+
+    }
+
     @Override
     public void onBackPressed() {
         if(navigationDrawer.isDrawerOpen()){
@@ -414,5 +414,10 @@ public class DictionaryActivity extends AppCompatActivity implements OnWordSelec
 
     private static boolean isPortrait(Context context) {
         return (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT);
+    }
+
+
+    void addWordToHistory (String wordName, long wordId) {
+        historyDrawer.addItemAtPosition(new PrimaryDrawerItem().withIdentifier(wordId).withName(wordName),0);
     }
 }

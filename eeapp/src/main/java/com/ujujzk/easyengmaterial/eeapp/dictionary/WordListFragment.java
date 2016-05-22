@@ -102,7 +102,7 @@ public class WordListFragment extends Fragment implements
 
     @Override
     public void onItemClicked(int position) {
-        goToArticleTab(wordListAdapter.getWordId(position));
+        goToArticleTab(wordListAdapter.getWordId(position), wordListAdapter.getWordName(position));
     }
 
     @Override
@@ -136,13 +136,13 @@ public class WordListFragment extends Fragment implements
                 return true;
             }
 
-            goToArticleTab(replyWords.get(0).getLocalId());
+            goToArticleTab(replyWords.get(0).getLocalId(), replyWords.get(0).getWordName());
         }
         return true;
     }
 
-    private void goToArticleTab(Long wordLocalId) {
-        wordSelectedListener.onWordSelected(wordLocalId);
+    private void goToArticleTab(Long wordLocalId, String wordName) {
+        wordSelectedListener.onWordSelected(wordLocalId, wordName);
 
         if (context != null) {
             if (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {

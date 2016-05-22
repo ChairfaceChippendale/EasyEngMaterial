@@ -36,6 +36,17 @@ class WordListCursorAdapter extends CursorRecyclerViewAdapter<WordListCursorAdap
 
     }
 
+    String getWordName (int position) {
+        if (position < cursorSize) {
+
+            Cursor c = super.getCursor();
+            c.moveToPosition(position);
+
+            return c.getString(super.getCursor().getColumnIndex("wordName"));
+        }
+        return null;
+    }
+
     void setCursorSize (int size) {
         cursorSize = size;
     }
