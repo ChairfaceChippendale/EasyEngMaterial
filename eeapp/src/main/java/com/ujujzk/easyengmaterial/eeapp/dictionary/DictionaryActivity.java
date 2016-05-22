@@ -1,6 +1,6 @@
 package com.ujujzk.easyengmaterial.eeapp.dictionary;
 
-import android.app.Activity;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -10,6 +10,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -19,15 +20,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ImageView;
 import android.widget.Toast;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
-import com.mikepenz.materialdrawer.model.DividerDrawerItem;
-import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
-import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
+import com.mikepenz.materialdrawer.model.*;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.ujujzk.easyengmaterial.eeapp.*;
 import com.ujujzk.easyengmaterial.eeapp.grammar.GrammarActivity;
 import com.ujujzk.easyengmaterial.eeapp.service.PronunciationService;
@@ -46,6 +47,7 @@ public class DictionaryActivity extends AppCompatActivity implements OnWordSelec
 
     private Toolbar toolBar;
     private Drawer navigationDrawer = null;
+    private Drawer historyDrawer = null;
     private TabLayout tabLayout;
     private ViewPager viewPager;
 
@@ -61,15 +63,87 @@ public class DictionaryActivity extends AppCompatActivity implements OnWordSelec
         navigationDrawer = makeNavigationDrawer();
         navigationDrawer.setSelection(Application.IDENTIFIER_DICTIONARY);
 
-        if (isPortrait(this)) {
 
+
+
+
+
+
+
+
+
+
+        historyDrawer = new DrawerBuilder()
+                .withActivity(this)
+                .withToolbar(toolBar)
+                .withTranslucentStatusBar(true)
+                .withAccountHeader(
+                        new AccountHeaderBuilder()
+                                .withActivity(this)
+                                .withHeaderBackground(R.drawable.dict_history_header) //TODO make background picture
+                                .withHeaderBackgroundScaleType(ImageView.ScaleType.CENTER_CROP)
+                                .withCompactStyle(true)
+                                .build()
+                )
+                .withOnDrawerListener(new Drawer.OnDrawerListener() {
+                    @Override
+                    public void onDrawerOpened(View drawerView) {
+                        InputMethodManager inputMethodManager = (InputMethodManager) DictionaryActivity.this.getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE);
+                        inputMethodManager.hideSoftInputFromWindow(DictionaryActivity.this.getCurrentFocus().getWindowToken(), 0);
+                    }
+                    @Override
+                    public void onDrawerClosed(View drawerView) {}
+                    @Override
+                    public void onDrawerSlide(View drawerView, float slideOffset) {}
+                })
+                .addDrawerItems(
+                        new PrimaryDrawerItem()
+                                .withName("first")
+                                .withIdentifier(48),
+                        new PrimaryDrawerItem()
+                                .withName("second")
+                                .withIdentifier(49)
+                )
+                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                        if (drawerItem.getIdentifier() == Application.IDENTIFIER_CLEAR_HISTORY) {
+                            historyDrawer.removeAllItems();
+                        } else {
+                            //TODO handle word selection
+                            Toast.makeText(getBaseContext(), ((PrimaryDrawerItem) drawerItem).getName().getText(), Toast.LENGTH_SHORT).show();
+                        }
+                        historyDrawer.closeDrawer();
+                        historyDrawer.setSelection(-1);
+                        return true;
+                    }
+                })
+                .withSelectedItem(-1)
+                .withDrawerGravity(Gravity.END)
+                .append(navigationDrawer);
+        historyDrawer.addStickyFooterItem(
+                new SecondaryDrawerItem()
+                        .withName("Clear history")
+                        .withIcon(GoogleMaterial.Icon.gmd_delete)
+                        .withIdentifier(Application.IDENTIFIER_CLEAR_HISTORY)
+        );
+
+
+
+
+
+
+
+
+
+
+
+        if (isPortrait(this)) {
             viewPager = (ViewPager) findViewById(R.id.dict_act_viewpager);
             setupViewPager(viewPager);
-
             tabLayout = (TabLayout) findViewById(R.id.dict_act_tabs);
             tabLayout.setupWithViewPager(viewPager);
         }
-
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -225,7 +299,7 @@ public class DictionaryActivity extends AppCompatActivity implements OnWordSelec
                 .withOnDrawerListener(new Drawer.OnDrawerListener() {
                     @Override
                     public void onDrawerOpened(View drawerView) {
-                        InputMethodManager inputMethodManager = (InputMethodManager) DictionaryActivity.this.getSystemService(Activity.INPUT_METHOD_SERVICE);
+                        InputMethodManager inputMethodManager = (InputMethodManager) DictionaryActivity.this.getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE);
                         inputMethodManager.hideSoftInputFromWindow(DictionaryActivity.this.getCurrentFocus().getWindowToken(), 0);
                     }
                     @Override

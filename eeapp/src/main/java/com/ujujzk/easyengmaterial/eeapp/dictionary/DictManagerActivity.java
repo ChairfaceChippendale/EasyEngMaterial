@@ -15,23 +15,16 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.*;
-import android.widget.LinearLayout;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.github.aleksandrsavosh.simplestore.KeyValue;
 import com.github.clans.fab.FloatingActionButton;
-import com.ujujzk.easyengmaterial.eeapp.Application;
 import com.ujujzk.easyengmaterial.eeapp.R;
-import com.ujujzk.easyengmaterial.eeapp.model.Dictionary;
-import com.ujujzk.easyengmaterial.eeapp.model.Word;
-import com.ujujzk.easyengmaterial.eeapp.model.Article;
 import com.ujujzk.easyengmaterial.eeapp.service.DictInstallService;
 import com.ujujzk.easyengmaterial.eeapp.service.DictRemoveService;
 import com.ujujzk.easyengmaterial.eeapp.util.ActivityUtil;
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 
 import java.io.*;
-import java.nio.charset.Charset;
 import java.util.*;
 
 

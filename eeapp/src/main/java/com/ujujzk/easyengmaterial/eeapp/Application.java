@@ -16,6 +16,7 @@ public class Application extends android.app.Application {
 
     private static final String APPLICATION_TAG = "applicationTag";
 
+    //Navigation Drawer item identifiers
     public static final int IDENTIFIER_DICTIONARY = 1;
     public static final int IDENTIFIER_VOCABULARY = 2;
     public static final int IDENTIFIER_GRAMMAR = 3;
@@ -23,6 +24,7 @@ public class Application extends android.app.Application {
     public static final int IDENTIFIER_SHARE = 6;
     public static final int IDENTIFIER_FEEDBACK = 7;
     public static final int IDENTIFIER_SETTING = 5;
+    public static final int IDENTIFIER_CLEAR_HISTORY = 11;
 
     private static Context context;
 
