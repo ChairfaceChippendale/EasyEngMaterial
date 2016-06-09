@@ -62,27 +62,7 @@ public class DictionaryActivity extends AppCompatActivity implements OnWordSelec
         setSupportActionBar(toolBar);
         navigationDrawer = makeNavigationDrawer();
         navigationDrawer.setSelection(Application.IDENTIFIER_DICTIONARY);
-
-
-
-
-
-
-
-
-
-
-
         historyDrawer = makeHistoryDrawer();
-
-
-
-
-
-
-
-
-
 
         if (isPortrait(this)) {
             viewPager = (ViewPager) findViewById(R.id.dict_act_viewpager);
@@ -180,14 +160,14 @@ public class DictionaryActivity extends AppCompatActivity implements OnWordSelec
     }
 
     @Override
-    public void onWordSelected(long wordId, String wordName) {
+    public void onWordSelected(String wordName) {
         if (isPortrait(this)) {
             final int wordArticleFragmentPosition = ((ViewPagerAdapter) viewPager.getAdapter()).getFragmentPositionByTitle(getResources().getString(R.string.word_article_fragment_title));
-            ((WordArticleFragment) ((ViewPagerAdapter) viewPager.getAdapter()).getItem(wordArticleFragmentPosition)).setSelectedWord(wordId);
+            ((WordArticleFragment) ((ViewPagerAdapter) viewPager.getAdapter()).getItem(wordArticleFragmentPosition)).setSelectedWord(wordName);
         } else {
-            ((WordArticleFragment) getSupportFragmentManager().findFragmentById(R.id.word_article_fragment)).setSelectedWord(wordId);
+            ((WordArticleFragment) getSupportFragmentManager().findFragmentById(R.id.word_article_fragment)).setSelectedWord(wordName);
         }
-        addWordToHistory(wordName, wordId);
+        addWordToHistory(wordName);
     }
 
     int getTabPositionByTitle(String title) {
@@ -352,11 +332,12 @@ public class DictionaryActivity extends AppCompatActivity implements OnWordSelec
                             historyDrawer.removeAllItems();
                         } else {
                             //TODO handle word selection
-                            Toast.makeText(getBaseContext(), ((PrimaryDrawerItem) drawerItem).getName().getText(), Toast.LENGTH_SHORT).show();
-                            onWordSelected(drawerItem.getIdentifier(), ((PrimaryDrawerItem) drawerItem).getName().toString());
+                            //Toast.makeText(getBaseContext(), ((PrimaryDrawerItem) drawerItem).getName().getText(), Toast.LENGTH_SHORT).show();
+                            onWordSelected(((PrimaryDrawerItem) drawerItem).getName().toString());
                         }
                         historyDrawer.closeDrawer();
                         historyDrawer.setSelection(-1);
+
                         return true;
                     }
                 })
@@ -416,8 +397,9 @@ public class DictionaryActivity extends AppCompatActivity implements OnWordSelec
         return (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT);
     }
 
+    void addWordToHistory (String wordName) {
+        historyDrawer.addItemAtPosition(new PrimaryDrawerItem().withName(wordName),0);
+        historyDrawer.getRecyclerView().scrollToPosition(0);
 
-    void addWordToHistory (String wordName, long wordId) {
-        historyDrawer.addItemAtPosition(new PrimaryDrawerItem().withIdentifier(wordId).withName(wordName),0);
     }
 }

@@ -142,7 +142,7 @@ public class WordListFragment extends Fragment implements
     }
 
     private void goToArticleTab(Long wordLocalId, String wordName) {
-        wordSelectedListener.onWordSelected(wordLocalId, wordName);
+        wordSelectedListener.onWordSelected(wordName);
 
         if (context != null) {
             if (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {

@@ -1,6 +1,7 @@
 package com.ujujzk.easyengmaterial.eeapp.dictionary;
 
 
+import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -21,7 +22,7 @@ import com.ujujzk.easyengmaterial.eeapp.model.Word;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WordArticleFragment extends Fragment implements WordLinkClickListener{
+public class WordArticleFragment extends Fragment implements WordLinkClickListener {
 
     @SuppressWarnings("unused")
     private static final String TAG = WordArticleFragment.class.getSimpleName();
@@ -35,16 +36,12 @@ public class WordArticleFragment extends Fragment implements WordLinkClickListen
     public WordArticleFragment() {
     }
 
-    void setSelectedWord(Long wordId){
-
-        final Word selectedWord = Application.localStore.read(wordId, Word.class);
-        if (selectedWord != null) {
-            selectedWordName = selectedWord.getWordName();
-            updateArticleList(selectedWordName);
-        }
+    void setSelectedWord(String wordName) {
+        selectedWordName = wordName;
+        updateArticleList(wordName);
     }
 
-    String getSelectedWordName(){
+    String getSelectedWordName() {
         return selectedWordName;
     }
 
@@ -77,6 +74,10 @@ public class WordArticleFragment extends Fragment implements WordLinkClickListen
     @Override
     public void onWordLinkClicked(String wordName) {
         selectedWordName = wordName;
+        Activity parentActivity = getActivity();
+        if (parentActivity instanceof DictionaryActivity) {
+            ((DictionaryActivity) parentActivity).addWordToHistory(wordName);
+        }
         updateArticleList(selectedWordName);
     }
 
@@ -91,7 +92,7 @@ public class WordArticleFragment extends Fragment implements WordLinkClickListen
 
             @Override
             protected List<Article> doInBackground(String... params) {
-                return Application.localStore.readBy(Article.class, new KeyValue("wordName",params[0]));
+                return Application.localStore.readBy(Article.class, new KeyValue("wordName", params[0]));
             }
 
             @Override
