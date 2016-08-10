@@ -5,13 +5,13 @@
 
     <item android:id="@+id/dict_act_action_pronunciation"
           android:title="@string/action_pronunciation"
-          android:icon="@drawable/ic_volume_up_white_48dp"
+          android:icon="@drawable/ic_volume_up_24px"
           android:orderInCategory="300"
           app:showAsAction="always"/>
 
     <item android:id="@+id/dict_act_action_manager"
           android:title="@string/action_manager"
-          android:icon="@drawable/ic_library_books_white_48dp"
+          android:icon="@drawable/ic_library_books_24px"
           android:orderInCategory="100"
           app:showAsAction="always"/>
 

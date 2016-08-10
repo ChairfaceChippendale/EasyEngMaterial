@@ -95,7 +95,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
                     android:background="@drawable/circle"
-                    android:src="@drawable/ic_lightbulb_white_24dp"
+                    android:src="@drawable/ic_lightbulb_24px"
                     android:tint="@android:color/white"/>
 
         </com.github.fafaldo.fabtoolbar.widget.FABContainer>
