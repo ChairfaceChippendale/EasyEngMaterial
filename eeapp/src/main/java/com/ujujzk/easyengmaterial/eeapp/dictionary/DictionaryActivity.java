@@ -359,8 +359,9 @@ public class DictionaryActivity extends AppCompatActivity implements OnWordSelec
     public void onBackPressed() {
         if(navigationDrawer.isDrawerOpen()){
             navigationDrawer.closeDrawer();
-        }
-        else{
+        } else if (historyDrawer.isDrawerOpen()) {
+            historyDrawer.closeDrawer();
+        } else {
             super.onBackPressed();
         }
     }
@@ -400,6 +401,5 @@ public class DictionaryActivity extends AppCompatActivity implements OnWordSelec
     void addWordToHistory (String wordName) {
         historyDrawer.addItemAtPosition(new PrimaryDrawerItem().withName(wordName),0);
         historyDrawer.getRecyclerView().scrollToPosition(0);
-
     }
 }
