@@ -20,22 +20,44 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-        <LinearLayout
+        <FrameLayout
                 android:id="@+id/learn_word_act_top_i_know"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:background="@drawable/left_end"
                 android:layout_weight="1.2"
                 >
-            <TextView
+
+            <FrameLayout
+                android:layout_width="@dimen/learn_word_act_progress_size"
+                android:layout_height="@dimen/learn_word_act_progress_size"
+                android:layout_marginBottom="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_gravity="bottom">
+
+                <com.github.rahatarmanahmed.cpv.CircularProgressView
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/learn_word_act_progress_bar"
+                    android:layout_width="@dimen/learn_word_act_progress_size"
+                    android:layout_height="@dimen/learn_word_act_progress_size"
+                    app:cpv_thickness="3dp"
+                    app:cpv_animAutostart="true"
+                    app:cpv_indeterminate="false"
+                    app:cpv_progress="80"/>
+
+                <TextView
+                    android:id="@+id/learn_word_act_cards_left"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:textSize="@dimen/learn_word_act_cards_left_text_size"
                     android:textColor="#FFFFFF"
-                    android:textSize="@dimen/learn_word_act_end_text_size"
-                    android:text=""
-                    />
-        </LinearLayout>
+                    android:textStyle="bold"
+                    android:text="24"/>
+
+            </FrameLayout>
+
+        </FrameLayout>
 
         <FrameLayout
                 android:layout_width="0dp"
@@ -50,13 +72,7 @@
                 android:background="@drawable/right_end"
                 android:layout_weight="1.2"
                 >
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:textColor="#FFFFFF"
-                    android:textSize="@dimen/learn_word_act_end_text_size"
-                    android:text=""/>
+
         </FrameLayout>
 
     </LinearLayout>

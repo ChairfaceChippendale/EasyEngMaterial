@@ -13,7 +13,7 @@
             android:paddingLeft="30dp"
             android:gravity="center"
             android:textSize="@dimen/learn_word_act_tv_word_text_size"
-            android:text="WORD"/>
+            tools:text="WORD"/>
 
     <LinearLayout
             android:layout_width="match_parent"
@@ -56,6 +56,37 @@
                     android:textColor="#FFFFFF"
                     android:textSize="@dimen/learn_word_act_end_text_size"
                     android:text="@string/learn_word_act_bottom_end"/>
+
+            <FrameLayout
+                android:layout_width="@dimen/learn_word_act_progress_size"
+                android:layout_height="@dimen/learn_word_act_progress_size"
+                android:layout_marginBottom="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_gravity="bottom">
+
+                <com.github.rahatarmanahmed.cpv.CircularProgressView
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/learn_word_act_progress_bar"
+                    android:layout_width="@dimen/learn_word_act_progress_size"
+                    android:layout_height="@dimen/learn_word_act_progress_size"
+                    app:cpv_animAutostart="true"
+                    app:cpv_indeterminate="false"
+                    app:cpv_thickness="3dp"
+                    app:cpv_progress="80"/>
+
+                <TextView
+                    android:id="@+id/learn_word_act_cards_left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textSize="@dimen/learn_word_act_cards_left_text_size"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    tools:text="140"/>
+
+            </FrameLayout>
+
+
         </FrameLayout>
 
     </LinearLayout>
@@ -67,9 +98,7 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="?android:actionBarSize"
-            android:transitionName="toolBar"
             android:background="#00000000"
-
             app:theme="?attr/mToolBarTheme"
             app:popupTheme="?attr/mPopupTheme"
             >

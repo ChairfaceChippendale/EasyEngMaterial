@@ -16,6 +16,8 @@ import android.view.animation.TranslateAnimation;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.github.rahatarmanahmed.cpv.CircularProgressView;
 import com.ujujzk.easyengmaterial.eeapp.Application;
 import com.ujujzk.easyengmaterial.eeapp.R;
 import com.ujujzk.easyengmaterial.eeapp.model.Card;
@@ -43,6 +45,7 @@ public class LearnWordActivity extends AppCompatActivity implements View.OnTouch
 
     private static final String CURRENT_CARD_NUMBER_KEY = "currentCardNumberKeyEasyEnglish";
     private static final String CARDS_TO_LEARN_KEY = "cardsToLearnKeyEasyEnglish";
+    private static final String TOTAL_CARDS_NUMBER_KEY = "totalCardNumber";
 
     private int currentCardSide;
     private int currentCardNumber;
@@ -53,6 +56,10 @@ public class LearnWordActivity extends AppCompatActivity implements View.OnTouch
     private int moveY;
     private int moveX;
     private Point screenSize;
+
+    private TextView wordCounter;
+    private CircularProgressView wordCounterProgress;
+    int totalCardNumber;
 
     private List<Card> cardsToLearn;
     private List<Long> cardIds;
@@ -72,6 +79,9 @@ public class LearnWordActivity extends AppCompatActivity implements View.OnTouch
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        wordCounter = (TextView) findViewById(R.id.learn_word_act_cards_left);
+        wordCounterProgress = (CircularProgressView) findViewById(R.id.learn_word_act_progress_bar);
+
         cardsToLearn = new ArrayList<Card>();
         Intent intent = getIntent();
         cardIds = (List<Long>)intent.getSerializableExtra(VocabularyActivity.SELECTED_CARD_IDS);
@@ -79,6 +89,8 @@ public class LearnWordActivity extends AppCompatActivity implements View.OnTouch
             cardsToLearn.add(Application.localStore.readWithRelations(cardId, Card.class));
         }
         Collections.shuffle(cardsToLearn);
+
+        totalCardNumber = cardsToLearn.size();
 
         screenSize = new Point();
         getWindowManager().getDefaultDisplay().getSize(screenSize);
@@ -123,6 +135,8 @@ public class LearnWordActivity extends AppCompatActivity implements View.OnTouch
 
         savedInstanceState.putSerializable(CARDS_TO_LEARN_KEY, (ArrayList<Card>)cardsToLearn);
         savedInstanceState.putInt(CURRENT_CARD_NUMBER_KEY, currentCardNumber);
+        savedInstanceState.putInt(TOTAL_CARDS_NUMBER_KEY, totalCardNumber);
+
     }
 
     @Override
@@ -131,6 +145,7 @@ public class LearnWordActivity extends AppCompatActivity implements View.OnTouch
 
         cardsToLearn = (List<Card>)savedInstanceState.getSerializable(CARDS_TO_LEARN_KEY);
         currentCardNumber = savedInstanceState.getInt(CURRENT_CARD_NUMBER_KEY);
+        totalCardNumber = savedInstanceState.getInt(TOTAL_CARDS_NUMBER_KEY);
         showWordCard();
     }
 
@@ -221,7 +236,6 @@ public class LearnWordActivity extends AppCompatActivity implements View.OnTouch
                 onBackPressed();
                 overridePendingTransition(R.animator.activity_appear_alpha, R.animator.activity_disappear_to_right); //custom activity transition animation
             }
-
         }
         wordViewParams.topMargin = screenSize.y/4;
         wordView.setLayoutParams(wordViewParams);
@@ -236,6 +250,18 @@ public class LearnWordActivity extends AppCompatActivity implements View.OnTouch
                 wordView.setText(R.string.all_words_have_been_learned);
                 wordView.setTextColor(ContextCompat.getColor(this, R.color.accent_light));
             }
+        }
+        setProgress();
+    }
+
+    private void setProgress () {
+        int cardsLeft = cardsToLearn.size() - currentCardNumber;
+        wordCounter.setText(String.valueOf(cardsLeft));
+        float progressPercent = 100f - ((float)cardsLeft / (float)totalCardNumber)*100f;
+        wordCounterProgress.setProgress(progressPercent);
+        if (cardsLeft < 1) {
+            wordCounterProgress.setVisibility(View.GONE);
+            wordCounter.setVisibility(View.GONE);
         }
     }
 
