@@ -1,42 +1,41 @@
-<android.support.design.widget.CoordinatorLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.ujujzk.easyengmaterial.eeapp.dictionary.DictionaryActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/dict_act_app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="?android:actionBarSize"
+            android:background="@color/toolbar_bgr_light"
+            android:orientation="vertical"
+            android:transitionName="toolBar"
+            app:layout_scrollFlags="scroll|enterAlways|snap"
+            app:popupTheme="?attr/mPopupTheme"
+            app:theme="?attr/mToolBarTheme" />
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/dict_act_tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/toolbar_bgr_light"
+            app:tabGravity="fill"
+            app:tabMaxWidth="0dp"
+            app:tabMode="fixed"
+            app:tabSelectedTextColor="@color/toolbar_text_light"
+            app:tabTextColor="@color/toolbar_text_light" />
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/dict_act_viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.ujujzk.easyengmaterial.eeapp.dictionary.DictionaryActivity">
-
-        <android.support.design.widget.AppBarLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-            <android.support.v7.widget.Toolbar
-                    android:id="@+id/dict_act_app_bar"
-                    android:orientation="vertical"
-                    android:background="@color/toolbar_bgr_light"
-                    android:layout_width="match_parent"
-                    android:layout_height="?android:actionBarSize"
-                    android:transitionName="toolBar"
-                    app:theme="?attr/mToolBarTheme"
-                    app:popupTheme="?attr/mPopupTheme"
-                    app:layout_scrollFlags="scroll|enterAlways"/>
-
-            <android.support.design.widget.TabLayout
-                    android:id="@+id/dict_act_tabs"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:tabMode="fixed"
-                    android:background="@color/toolbar_bgr_light"
-                    app:tabTextColor="@color/toolbar_text_light"
-                    app:tabSelectedTextColor="@color/toolbar_text_light"
-                    app:tabGravity="fill"
-                    app:tabMaxWidth="0dp"/>
-        </android.support.design.widget.AppBarLayout>
-
-        <android.support.v4.view.ViewPager
-                android:id="@+id/dict_act_viewpager"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 </android.support.design.widget.CoordinatorLayout>

@@ -1,55 +1,53 @@
-<android.support.design.widget.CoordinatorLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context="com.ujujzk.easyengmaterial.eeapp.dictionary.DictManagerActivity">
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.ujujzk.easyengmaterial.eeapp.dictionary.DictManagerActivity">
 
     <android.support.design.widget.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <android.support.v7.widget.Toolbar
-                android:id="@+id/dict_manager_act_app_bar"
-                android:orientation="vertical"
-                android:background="@color/toolbar_bgr_light"
-                android:layout_width="match_parent"
-                android:layout_height="?android:actionBarSize"
-                app:theme="?attr/mToolBarTheme"
-                app:popupTheme="?attr/mPopupTheme"
-                android:elevation="@dimen/tool_bar_elevation"
-                app:layout_scrollFlags="scroll|enterAlways"/>
+            android:id="@+id/dict_manager_act_app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="?android:actionBarSize"
+            android:background="@color/toolbar_bgr_light"
+            android:elevation="@dimen/tool_bar_elevation"
+            android:orientation="vertical"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:popupTheme="?attr/mPopupTheme"
+            app:theme="?attr/mToolBarTheme" />
 
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v7.widget.RecyclerView
-            android:id="@+id/dict_manager_act_rv_dic_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/dic_manager_act_app_bar"
-            android:visibility="visible"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        android:id="@+id/dict_manager_act_rv_dic_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/dic_manager_act_app_bar"
+        android:visibility="visible"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/dict_manager_act_fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|bottom"
-            android:layout_marginBottom="8dp"
-            android:layout_marginRight="8dp"
-            android:src="@drawable/ic_refresh_24px"
-            app:fab_colorNormal="@color/accent_light"
-            app:fab_colorPressed="@color/accent_light"
-            app:fab_colorRipple="#99FFFFFF"
-            app:fab_showShadow="true"
-            app:fab_shadowColor="#66000000"
-            app:fab_shadowRadius="4dp"
-            app:fab_shadowXOffset="1dp"
-            app:fab_shadowYOffset="3dp"
-            app:fab_showAnimation="@animator/fab_show_from_bottom"
-            app:fab_hideAnimation="@animator/fab_hide_to_bottom"
-            app:layout_behavior="com.ujujzk.easyengmaterial.eeapp.dictionary.FABBehavior"
-        />
+        android:id="@+id/dict_manager_act_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_marginBottom="8dp"
+        android:layout_marginRight="8dp"
+        android:src="@drawable/ic_refresh_24px"
+        app:fab_colorNormal="@color/accent_light"
+        app:fab_colorPressed="@color/accent_light"
+        app:fab_colorRipple="#99FFFFFF"
+        app:fab_hideAnimation="@animator/fab_hide_to_bottom"
+        app:fab_shadowColor="#66000000"
+        app:fab_shadowRadius="4dp"
+        app:fab_shadowXOffset="1dp"
+        app:fab_shadowYOffset="3dp"
+        app:fab_showAnimation="@animator/fab_show_from_bottom"
+        app:fab_showShadow="true"
+        app:layout_behavior="com.ujujzk.easyengmaterial.eeapp.dictionary.FABBehavior" />
 
 </android.support.design.widget.CoordinatorLayout>
