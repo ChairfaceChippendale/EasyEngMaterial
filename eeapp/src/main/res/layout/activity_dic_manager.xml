@@ -49,7 +49,7 @@
             app:fab_shadowYOffset="3dp"
             app:fab_showAnimation="@animator/fab_show_from_bottom"
             app:fab_hideAnimation="@animator/fab_hide_to_bottom"
-            android:visibility="visible"
-            app:layout_behavior="com.ujujzk.easyengmaterial.eeapp.dictionary.FABBehavior"/>
+            app:layout_behavior="com.ujujzk.easyengmaterial.eeapp.dictionary.FABBehavior"
+        />
 
 </android.support.design.widget.CoordinatorLayout>

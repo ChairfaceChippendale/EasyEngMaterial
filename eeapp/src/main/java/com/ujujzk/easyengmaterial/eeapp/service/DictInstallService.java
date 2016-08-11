@@ -19,13 +19,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class DictInstallService extends Service{
+public class DictInstallService extends Service {
 
     private static final String TAG = DictInstallService.class.getSimpleName();
 
     private static final String DICTIONARY_NAME_TAG_IN_FILE = "#NAME";
     private static final int DICTIONARY_NAME_SEARCHING_ROW_NUMBER = 10;
     private static final int BUFFER_SIZE = 1000;//5000 - is too much
+
+    private static boolean isRun;
 
     public static final String DICT_FILE_PATHS = "dictFilesToInstall";
 
@@ -38,11 +40,16 @@ public class DictInstallService extends Service{
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        isRun = true;
 
         List<String> dictFilePaths = intent.getStringArrayListExtra(DICT_FILE_PATHS);
         addAllDictToDataBase(dictFilePaths);
 
         return super.onStartCommand(intent, flags, startId);
+    }
+
+    public static boolean isRun() {
+        return isRun;
     }
 
     private void addAllDictToDataBase (final List<String> dictFilePaths) {
@@ -67,6 +74,7 @@ public class DictInstallService extends Service{
                         }
                     }
                 }
+                isRun = false;
                 stopSelf();
             }
         });
@@ -176,6 +184,7 @@ public class DictInstallService extends Service{
     private String getWordNameFromRawArticle(String rawArticle) {
         return rawArticle.substring(0, rawArticle.indexOf("\t"))
                 .trim()
+                .replaceAll("\\{[^\\{]*\\}", "") //remove stress tags from word
                 .replaceAll("[{}()]", ""); //it removes brackets {} () from word
     }
 }

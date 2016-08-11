@@ -355,6 +355,11 @@ public class DictionaryActivity extends AppCompatActivity implements OnWordSelec
 
     }
 
+    void addWordToHistory (String wordName) {
+        historyDrawer.addItemAtPosition(new PrimaryDrawerItem().withName(wordName),0);
+        historyDrawer.getRecyclerView().scrollToPosition(0);
+    }
+
     @Override
     public void onBackPressed() {
         if(navigationDrawer.isDrawerOpen()){
@@ -396,10 +401,5 @@ public class DictionaryActivity extends AppCompatActivity implements OnWordSelec
 
     private static boolean isPortrait(Context context) {
         return (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT);
-    }
-
-    void addWordToHistory (String wordName) {
-        historyDrawer.addItemAtPosition(new PrimaryDrawerItem().withName(wordName),0);
-        historyDrawer.getRecyclerView().scrollToPosition(0);
     }
 }

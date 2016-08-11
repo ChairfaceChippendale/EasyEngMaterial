@@ -15,6 +15,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.*;
+import android.widget.Toast;
+
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.clans.fab.FloatingActionButton;
@@ -41,6 +43,8 @@ public class DictManagerActivity extends AppCompatActivity implements Dictionary
     private LinearLayoutManager dictionaryListManager;
     private DictionaryListAdapter dictionaryListAdapter;
     private MaterialDialog confirmDictionaryRemove;
+
+    BroadcastReceiver dictInstallBroadcastReceiver;
 
 
     @Override
@@ -74,6 +78,22 @@ public class DictManagerActivity extends AppCompatActivity implements Dictionary
         });
 
         makeDictInstallBroadcastReceiver ();
+        if (DictInstallService.isRun()) {
+            installNewDictionariesFab.hide(false);
+            Toast.makeText(this, "Running", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(dictInstallBroadcastReceiver);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
     }
 
     @Override
@@ -94,22 +114,34 @@ public class DictManagerActivity extends AppCompatActivity implements Dictionary
     }
 
     private void makeDictInstallBroadcastReceiver () {
-        BroadcastReceiver dictInstallBroadcastReceiver = new BroadcastReceiver() {
+        dictInstallBroadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 String dictName = intent.getStringExtra(DICTIONARY_IN_PROCESS);
                 dictionaryListAdapter.setDictInProcess(dictName);
-                dictionaryListAdapter.notifyDataSetChanged();
                 Log.d(TAG, "" + dictName);
+                fabVisibility(dictName);
             }
         };
         registerReceiver(dictInstallBroadcastReceiver, new IntentFilter(DICT_INSTALL_SERVICE_STATUS) );
     }
 
+    private void fabVisibility (String dictName) {
+        if(dictName.isEmpty() || dictName.equalsIgnoreCase("no")){
+            if (installNewDictionariesFab.isHidden()) {
+                installNewDictionariesFab.show(true);
+            }
+        } else {
+            if (!installNewDictionariesFab.isHidden()) {
+                installNewDictionariesFab.hide(true);
+            }
+        }
+    }
+
     private MaterialDialog getDictionaryRemoveDialog(final int dictPosition) {
         final String dictName = dictionaryListAdapter.getDictionary(dictPosition).getDictionaryName();
         return new MaterialDialog.Builder(this)
-                .content(getResources().getString(R.string.dict_manager_act_dictionary_remove_confirm_question) + " " + dictName + "?")
+                .content(getResources().getString(R.string.dict_manager_act_dictionary_remove_confirm_question) + "\n" + dictName + "?")
                 .positiveText(R.string.dict_manager_act_dictionary_remove_confirm_btn)
                 .negativeText(R.string.dict_manager_act_dictionary_remove_cancel_btn)
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
@@ -131,7 +163,6 @@ public class DictManagerActivity extends AppCompatActivity implements Dictionary
     private void removeDictionary(int dictPosition) {
 
         Long dictToRemoveId = dictionaryListAdapter.getDictionary(dictPosition).getLocalId();
-
 
         Intent intent = new Intent(DictManagerActivity.this, DictRemoveService.class);
         intent.putExtra(DictRemoveService.DICT_TO_REMOVE_ID, dictToRemoveId.longValue());
@@ -196,6 +227,7 @@ public class DictManagerActivity extends AppCompatActivity implements Dictionary
         Intent intent = new Intent(DictManagerActivity.this, DictInstallService.class);
         intent.putStringArrayListExtra(DictInstallService.DICT_FILE_PATHS, dictFilePaths);
         startService(intent);
+
 
         //dictionaryList.setVisibility(View.GONE);
         installNewDictionariesFab.hide(true);
