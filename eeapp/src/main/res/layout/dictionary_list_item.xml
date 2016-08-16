@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        >
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
 
     <TextView
             android:id="@+id/dictionary_list_item_title"
@@ -20,7 +20,7 @@
             android:singleLine="true"
             android:ellipsize="end"
             android:textSize="@dimen/dictionary_list_item_text_size"
-            android:text="Dictionary"/>
+            tools:text="Dictionary"/>
 
 
     <ImageButton
@@ -30,7 +30,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             style="?android:attr/borderlessButtonStyle"
-            android:visibility="visible"/>
+            android:visibility="visible" />
 
     <com.github.rahatarmanahmed.cpv.CircularProgressView
             xmlns:app="http://schemas.android.com/apk/res-auto"

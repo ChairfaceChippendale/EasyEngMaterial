@@ -19,7 +19,7 @@
             android:clickable="true"
             android:textSize="@dimen/edit_pack_act_pack_title_text_size"
             android:textColor="@color/edit_pack_act_title_light"
-            android:text="Title"/>
+            tools:text="Title"/>
 
     <android.support.v7.widget.RecyclerView
             android:id="@+id/edit_pack_act_card_list"

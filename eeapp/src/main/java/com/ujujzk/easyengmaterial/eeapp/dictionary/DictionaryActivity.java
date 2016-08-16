@@ -331,8 +331,6 @@ public class DictionaryActivity extends AppCompatActivity implements OnWordSelec
                         if (drawerItem.getIdentifier() == Application.IDENTIFIER_CLEAR_HISTORY) {
                             historyDrawer.removeAllItems();
                         } else {
-                            //TODO handle word selection
-                            //Toast.makeText(getBaseContext(), ((PrimaryDrawerItem) drawerItem).getName().getText(), Toast.LENGTH_SHORT).show();
                             onWordSelected(((PrimaryDrawerItem) drawerItem).getName().toString());
                         }
                         historyDrawer.closeDrawer();
@@ -346,7 +344,7 @@ public class DictionaryActivity extends AppCompatActivity implements OnWordSelec
                 .append(navigationDrawer);
         drawer.addStickyFooterItem(
                 new SecondaryDrawerItem()
-                        .withName("Clear history")
+                        .withName(getString(R.string.history_drawer_clear))
                         .withIcon(GoogleMaterial.Icon.gmd_delete)
                         .withIdentifier(Application.IDENTIFIER_CLEAR_HISTORY)
         );

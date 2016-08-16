@@ -25,7 +25,7 @@
             android:layout_above="@+id/about_act_version"
             android:textColor="@color/toolbar_text_light"
             android:textSize="@dimen/about_act_app_name_text_size"
-            android:text="ET"/>
+            tools:text="ET"/>
 
     <TextView
             android:id="@+id/about_act_version"

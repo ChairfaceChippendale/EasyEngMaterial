@@ -56,6 +56,7 @@
 
     <string name="navigation_drawer_open">drawer open</string>
     <string name="navigation_drawer_close">drawer close</string>
+    <string name="history_drawer_clear">Clear history</string>
 
     <string name="word_list_fragment_title">WORD</string>
     <string name="word_article_fragment_title">TRANSLATION</string>

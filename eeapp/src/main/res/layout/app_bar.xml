@@ -6,7 +6,6 @@
         android:background="@color/toolbar_bgr_light"
         android:layout_width="match_parent"
         android:layout_height="?android:actionBarSize"
-        android:transitionName="toolBar"
         app:theme="?attr/mToolBarTheme"
         app:popupTheme="?attr/mPopupTheme"
         android:elevation="@dimen/tool_bar_elevation">

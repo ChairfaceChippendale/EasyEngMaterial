@@ -15,7 +15,6 @@
             android:layout_height="?android:actionBarSize"
             android:background="@color/toolbar_bgr_light"
             android:orientation="vertical"
-            android:transitionName="toolBar"
             app:layout_scrollFlags="scroll|enterAlways|snap"
             app:popupTheme="?attr/mPopupTheme"
             app:theme="?attr/mToolBarTheme" />
