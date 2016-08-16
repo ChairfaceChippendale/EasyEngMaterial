@@ -356,8 +356,8 @@ public class DictionaryActivity extends AppCompatActivity implements OnWordSelec
     }
 
     void addWordToHistory (String wordName) {
-        historyDrawer.addItemAtPosition(new PrimaryDrawerItem().withName(wordName),0);
-        historyDrawer.getRecyclerView().scrollToPosition(0);
+        historyDrawer.addItemAtPosition(new PrimaryDrawerItem().withName(wordName), 1);
+        historyDrawer.getRecyclerView().scrollToPosition(1);
     }
 
     @Override
