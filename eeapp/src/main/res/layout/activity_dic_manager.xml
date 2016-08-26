@@ -16,7 +16,7 @@
             android:background="@color/toolbar_bgr_light"
             android:elevation="@dimen/tool_bar_elevation"
             android:orientation="vertical"
-            app:layout_scrollFlags="scroll|enterAlways"
+            app:layout_scrollFlags="scroll|enterAlways|snap"
             app:popupTheme="?attr/mPopupTheme"
             app:theme="?attr/mToolBarTheme" />
 

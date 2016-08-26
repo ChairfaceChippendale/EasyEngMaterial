@@ -20,7 +20,7 @@
             android:layout_height="?android:actionBarSize"
             app:theme="?attr/mToolBarTheme"
             app:popupTheme="?attr/mPopupTheme"
-            app:layout_scrollFlags="scroll|enterAlways"
+            app:layout_scrollFlags="scroll|enterAlways|snap"
             android:elevation="@dimen/tool_bar_elevation"/>
 
 
