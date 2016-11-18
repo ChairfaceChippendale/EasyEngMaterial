@@ -1,6 +1,5 @@
 package com.ujujzk.easyengmaterial.eeapp.dictionary;
 
-
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;

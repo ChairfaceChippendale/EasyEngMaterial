@@ -61,8 +61,4 @@ public class FABBehavior extends CoordinatorLayout.Behavior<FloatingActionButton
         return toolbarHeight;
     }
 
-
-
-
-
 }

@@ -14,7 +14,7 @@ import java.util.HashSet;
 
 public class Application extends android.app.Application {
 
-    private static final String APPLICATION_TAG = "applicationTag";
+    private static final String TAG = Application.class.getSimpleName();
 
     //Navigation Drawer item identifiers
     public static final int IDENTIFIER_DICTIONARY = 1;
@@ -41,7 +41,7 @@ public class Application extends android.app.Application {
     public void onCreate() {
         super.onCreate();
 
-        Log.d(APPLICATION_TAG, "Application was created");
+        Log.d(TAG, "Application was created");
 
         storeManager = SimpleStoreManager.instance(this, new HashSet<Class>(){{
             add(Card.class);
@@ -81,12 +81,13 @@ public class Application extends android.app.Application {
 
         if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
 
-            Log.d("Application", "SD-card is not accessible");
+            Log.d(TAG, "SD-card is not accessible");
             return;
         }
         File path = Environment.getExternalStorageDirectory();
-        path = new File(path.getAbsolutePath() + "/" + getResources().getString(R.string.app_name));
 
+        path = new File(path.getAbsolutePath() + "/" + getResources().getString(R.string.app_name));
+        Log.d(TAG, path.getAbsolutePath());
         if (!path.exists()) {
             path.mkdirs();
         }

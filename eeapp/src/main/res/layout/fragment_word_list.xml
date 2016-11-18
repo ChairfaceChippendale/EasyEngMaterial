@@ -13,7 +13,8 @@
         android:layout_margin="@dimen/word_list_fr_search_margin"
         android:background="#FFF"
         android:elevation="@dimen/word_list_fr_search_elevation"
-        android:queryHint="@string/word_list_fr_search_hint">
+        android:queryHint="@string/word_list_fr_search_hint"
+    >
 
 </android.support.v7.widget.SearchView>
 
