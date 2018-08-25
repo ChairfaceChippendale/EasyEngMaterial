@@ -56,3 +56,6 @@ captures/
 
 
 eeapp/build/
+libs/
+src/main/java/com/ujujzk/domain/executor/
+src/main/java/com/ujujzk/domain/model/

@@ -1,1 +1,1 @@
-include ':eeapp'
+include ':eeapp', ':domain'
