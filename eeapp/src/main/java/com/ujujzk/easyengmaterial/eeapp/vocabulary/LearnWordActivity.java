@@ -18,9 +18,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
-import com.ujujzk.easyengmaterial.eeapp.Application;
 import com.ujujzk.easyengmaterial.eeapp.R;
-import com.ujujzk.easyengmaterial.eeapp.model.Card;
+import com.ujujzk.ee.domain.usecase.voc.model.Card;
 import com.ujujzk.easyengmaterial.eeapp.service.PronunciationService;
 import com.ujujzk.easyengmaterial.eeapp.util.ActivityUtil;
 

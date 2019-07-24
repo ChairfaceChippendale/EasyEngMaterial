@@ -9,7 +9,6 @@ import android.support.annotation.NonNull;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.*;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,8 +29,8 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.ujujzk.easyengmaterial.eeapp.*;
 import com.ujujzk.easyengmaterial.eeapp.dictionary.DictionaryActivity;
 import com.ujujzk.easyengmaterial.eeapp.grammar.GrammarActivity;
-import com.ujujzk.easyengmaterial.eeapp.model.Card;
-import com.ujujzk.easyengmaterial.eeapp.model.Pack;
+import com.ujujzk.ee.domain.usecase.voc.model.Card;
+import com.ujujzk.ee.domain.usecase.voc.model.Pack;
 import com.ujujzk.easyengmaterial.eeapp.util.ActivityUtil;
 
 import java.util.ArrayList;

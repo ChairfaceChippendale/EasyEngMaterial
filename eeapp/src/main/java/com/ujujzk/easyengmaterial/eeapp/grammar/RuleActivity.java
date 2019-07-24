@@ -12,7 +12,6 @@ import android.view.View;
 import android.webkit.WebView;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
-import com.ujujzk.easyengmaterial.eeapp.Application;
 import com.ujujzk.easyengmaterial.eeapp.R;
 import com.ujujzk.easyengmaterial.eeapp.model.Rule;
 import com.ujujzk.easyengmaterial.eeapp.model.Topic;

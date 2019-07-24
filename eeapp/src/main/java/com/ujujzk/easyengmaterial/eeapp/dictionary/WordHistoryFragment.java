@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
 import com.ujujzk.easyengmaterial.eeapp.R;
-import com.ujujzk.easyengmaterial.eeapp.model.Word;
+import com.ujujzk.ee.domain.usecase.dic.model.Word;
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 
 import java.util.ArrayList;

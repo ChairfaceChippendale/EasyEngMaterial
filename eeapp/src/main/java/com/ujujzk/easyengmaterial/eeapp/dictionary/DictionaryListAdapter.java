@@ -12,9 +12,7 @@ import android.widget.TextView;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
-import com.ujujzk.easyengmaterial.eeapp.Application;
 import com.ujujzk.easyengmaterial.eeapp.R;
-import com.ujujzk.easyengmaterial.eeapp.model.Dictionary;
 
 import java.util.ArrayList;
 import java.util.List;

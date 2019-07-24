@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.*;
 import com.github.fafaldo.fabtoolbar.widget.FABToolbarLayout;
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
-import com.ujujzk.easyengmaterial.eeapp.Application;
 import com.ujujzk.easyengmaterial.eeapp.R;
 import com.ujujzk.easyengmaterial.eeapp.model.Answer;
 import com.ujujzk.easyengmaterial.eeapp.model.Task;

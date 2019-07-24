@@ -5,10 +5,8 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
 import com.github.aleksandrsavosh.simplestore.KeyValue;
-import com.ujujzk.easyengmaterial.eeapp.Application;
-import com.ujujzk.easyengmaterial.eeapp.model.Article;
-import com.ujujzk.easyengmaterial.eeapp.model.Dictionary;
-import com.ujujzk.easyengmaterial.eeapp.model.Word;
+import com.ujujzk.ee.domain.usecase.dic.model.Article;
+import com.ujujzk.ee.domain.usecase.dic.model.Word;
 
 public class DictRemoveService extends Service {
 

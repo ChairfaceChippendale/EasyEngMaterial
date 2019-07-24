@@ -16,18 +16,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.github.aleksandrsavosh.simplestore.KeyValue;
-import com.github.aleksandrsavosh.simplestore.SimpleStoreManager;
 import com.github.aleksandrsavosh.simplestore.sqlite.SimpleStoreUtil;
-import com.github.rahatarmanahmed.cpv.CircularProgressView;
-import com.ujujzk.easyengmaterial.eeapp.Application;
 import com.ujujzk.easyengmaterial.eeapp.R;
-import com.ujujzk.easyengmaterial.eeapp.model.Article;
-import com.ujujzk.easyengmaterial.eeapp.model.Word;
+import com.ujujzk.ee.domain.usecase.dic.model.Word;
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ThreadPoolExecutor;
 
 public class WordListFragment extends Fragment implements
         WordListCursorAdapter.WordViewHolder.ClickListener,

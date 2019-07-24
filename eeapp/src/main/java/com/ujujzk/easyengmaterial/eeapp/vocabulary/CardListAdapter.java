@@ -5,7 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.*;
 import android.widget.TextView;
 import com.ujujzk.easyengmaterial.eeapp.R;
-import com.ujujzk.easyengmaterial.eeapp.model.Card;
+import com.ujujzk.ee.domain.usecase.voc.model.Card;
 
 import java.util.ArrayList;
 import java.util.List;

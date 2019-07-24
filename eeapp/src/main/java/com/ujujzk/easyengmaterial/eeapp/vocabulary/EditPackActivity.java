@@ -20,11 +20,9 @@ import com.github.clans.fab.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import com.ujujzk.easyengmaterial.eeapp.Application;
 import com.ujujzk.easyengmaterial.eeapp.R;
-import com.ujujzk.easyengmaterial.eeapp.model.Card;
-import com.ujujzk.easyengmaterial.eeapp.model.GlosbeResponse;
-import com.ujujzk.easyengmaterial.eeapp.model.Pack;
+import com.ujujzk.ee.domain.usecase.voc.model.Card;
+import com.ujujzk.ee.domain.usecase.voc.model.Pack;
 import com.ujujzk.easyengmaterial.eeapp.util.ActivityUtil;
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 
