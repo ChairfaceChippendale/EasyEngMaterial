@@ -6,7 +6,6 @@ android {
     compileSdkVersion rootProject.ext.androidCompileSdk
     buildToolsVersion rootProject.ext.androidBuildTools
 
-
     defaultConfig {
         minSdkVersion rootProject.ext.androidMinSdk
         targetSdkVersion rootProject.ext.androidTargetSdk
@@ -14,7 +13,6 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
     }
 
     buildTypes {
@@ -38,7 +36,6 @@ android {
             jvmArgs '-noverify'
         }
     }
-
 }
 
 kapt {
@@ -47,10 +44,32 @@ kapt {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'com.android.support:appcompat-v7:28.0.0'
+    def dataDeps = rootProject.ext.dataDeps
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(':domain')
+
+    implementation dataDeps.kotlin
+    implementation dataDeps.rxKotlin
+    implementation dataDeps.koin
+//  implementation dataDeps.koinScope
+
+    implementation dataDeps.gson
+    implementation dataDeps.okhttp
+    implementation dataDeps.okhttpInterceptor
+    implementation dataDeps.retrofit
+    implementation dataDeps.retrofitGson
+    implementation dataDeps.retrofitRx
+    debugImplementation dataDeps.chuckDebug//HTTP inspector
+    releaseImplementation dataDeps.chuckRelease
+
+    implementation dataDeps.binaryPref
+    implementation dataDeps.room
+    kapt dataDeps.roomCompiler
+    implementation dataDeps.roomRx
+
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 }
