@@ -1,4 +1,4 @@
-package com.ujujzk.domain.executor
+package com.ujujzk.ee.domain.executor
 
 import io.reactivex.Scheduler
 
