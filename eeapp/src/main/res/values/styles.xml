@@ -1,105 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-
-
-    <style name="Theme.Light.AppTheme" parent="Theme.Light">
-        <!-- Customize your theme here. -->
-    </style>
-
-    <style name="Theme.Dark.AppTheme" parent="Theme.Dark">
-        <!-- Customize your theme here. -->
-    </style>
-
-
-
-
-    <style
-            name="Theme.Light"
-            parent="Theme.AppCompat.Light.NoActionBar">
-
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/toolbar_bgr_light</item>
         <item name="colorPrimaryDark">@color/status_bar_bgr_light</item>
         <item name="colorAccent">@color/accent_light</item>
-        <item name="android:windowBackground">@color/main_window_bgr_light</item>
-
-        <item name="mToolBarTheme">@style/ToolBarTheme.Light</item>
-        <item name="mPopupTheme">@style/PopupTheme.Light</item>
-
-
     </style>
-
-    <style
-            name="Theme.Dark"
-            parent="Theme.AppCompat.NoActionBar">
-
-        <item name="colorPrimary">@color/toolbar_bgr_dark</item>
-        <item name="colorPrimaryDark">@color/status_bar_bgr_dark</item>
-        <item name="colorAccent">@color/accent_dark</item>
-        <item name="android:windowBackground">@color/main_window_bgr_dark</item>
-
-        <item name="mToolBarTheme">@style/ToolBarTheme.Dark</item>
-        <item name="mPopupTheme">@style/PopupTheme.Dark</item>
-
-
-    </style>
-
-
-
-
-    <declare-styleable name="CustomToolBarTheme">
-        <attr name="mToolBarTheme" format="reference"/>
-    </declare-styleable>
-    
-    <style
-            name="ToolBarTheme" perent="ThemeOverlay.AppCompat.Dark">
-    </style>
-    
-    <style name="ToolBarTheme.Light" parent="ToolBarTheme">
-
-        <item name="android:textColorPrimary">@color/toolbar_text_light</item>
-        <item name="android:textColorSecondary">@color/toolbar_icons_light</item>
-    </style>
-    
-    <style name="ToolBarTheme.Dark" parent="ToolBarTheme">
-
-        <item name="android:textColorPrimary">@color/toolbar_text_dark</item>
-        <item name="android:textColorSecondary">@color/toolbar_icons_dark</item>
-    </style>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <declare-styleable name="CustomPopupTheme">
-        <attr name="mPopupTheme" format="reference"/>
-    </declare-styleable>
-
-    <style
-            name="PopupTheme" perent="ThemeOverlay.AppCompat">
-    </style>
-    
-    <style name="PopupTheme.Light" parent="PopupTheme">
-        
-        <item name="android:textColor">@color/popup_text_light</item>
-        <item name="android:background">@color/popup_bgr_light</item>
-    </style>
-    
-    <style name="PopupTheme.Dark" parent="PopupTheme">
-
-        <item name="android:textColor">@color/popup_text_dark</item>
-        <item name="android:background">@color/popup_bgr_dark</item>
-    </style>
-
-
 
 </resources>
