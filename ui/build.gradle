@@ -21,7 +21,9 @@ android {
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt')
+//            proguardFiles(file('./proguard').listFiles())
+            consumerProguardFiles(file('./proguard').listFiles())
         }
     }
 
@@ -77,7 +79,7 @@ dependencies {
     implementation uiDeps.glide
     implementation uiDeps.glideCompiler
 //    implementation uiDeps.glideOkhttp3
-    
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
