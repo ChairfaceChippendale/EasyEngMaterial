@@ -12,7 +12,6 @@ ext {
     androidXVer = "1.1.0-beta01"
     ktxVer = '1.2.0-alpha03'
     constraintVer = '2.0.0-beta2'
-    multidexVer = '2.0.1'
 
     //arch
     archComponentVer = '1.1.1'
