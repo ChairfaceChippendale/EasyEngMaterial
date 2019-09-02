@@ -3,6 +3,7 @@ package com.ujujzk.easyengmaterial.eeapp.koin
 import com.ujujzk.easyengmaterial.eeapp.tools.Looog
 import com.ujujzk.ee.data.di.dataModule
 import com.ujujzk.ee.domain.di.domainModule
+import com.ujujzk.ee.ui.di.navigationModule
 import io.reactivex.disposables.CompositeDisposable
 import org.koin.core.module.Module
 import org.koin.core.qualifier.named
@@ -14,7 +15,9 @@ val appModules: List<Module>
 
         domainModule,
 
-        dataModule/*,
+        dataModule,
+
+        navigationModule/*,
 
         viewModelModule,
         presentationModule*/
