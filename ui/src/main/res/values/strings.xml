@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Ui</string>
+
+    <string name="dictionary_title">Dictionary</string>
+    <string name="vocabulary_title">Vocabulary</string>
+    <string name="grammar_title">Grammar</string>
 </resources>

@@ -10,4 +10,13 @@
     <color name="appDarkBlue">#303F9F</color>
     <color name="appWhite">#FFFFFF</color>
 
+    <color name="appGrey">#455C65</color>
+    <color name="appGreen">#00886A</color>
+    <color name="appBrown">#8B6B62</color>
+
+
+    <color name="dicTab">@color/appGrey</color>
+    <color name="vocTab">@color/appGreen</color>
+    <color name="gramTab">@color/appBrown</color>
+
 </resources>

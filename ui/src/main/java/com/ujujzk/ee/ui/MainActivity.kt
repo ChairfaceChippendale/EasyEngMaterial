@@ -3,6 +3,8 @@ package com.ujujzk.ee.ui
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import com.aurelhubert.ahbottomnavigation.AHBottomNavigation
+import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem
 import com.ujujzk.ee.ui.di.KOIN_NAV_MAIN_CICERONE
 import com.ujujzk.ee.ui.di.KOIN_NAV_MAIN_ROUTER
 import com.ujujzk.ee.ui.dictionary.DictionaryParent
@@ -37,16 +39,32 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             tabRouter.switchFragment(dicFlow)
         }
 
-        findViewById<Button>(R.id.dic).apply {
-            setOnClickListener {
-                tabRouter.switchFragment(dicFlow)
-            }
-        }
+        setupBottomMenu()
 
-        findViewById<Button>(R.id.voc).apply {
-            setOnClickListener {
-                tabRouter.switchFragment(vocFlow)
+    }
+
+    private fun setupBottomMenu(){
+        val menu = findViewById<AHBottomNavigation>(R.id.bottom_navigation)
+
+        val dicTab = AHBottomNavigationItem(R.string.dictionary_title, R.drawable.ic_dictionary_black_24dp, R.color.dicTab)
+        val vocTab = AHBottomNavigationItem(R.string.vocabulary_title, R.drawable.ic_vocabulary_black_24dp, R.color.vocTab)
+        val grmTab = AHBottomNavigationItem(R.string.grammar_title, R.drawable.ic_grammar_black_24dp, R.color.gramTab)
+
+        menu.addItem(dicTab)
+        menu.addItem(vocTab)
+        menu.addItem(grmTab)
+
+        menu.disableItemAtPosition(2)
+
+        menu.isColored = true
+        menu.setCurrentItem(0, false)
+
+        menu.setOnTabSelectedListener { position, _ ->
+            when (position){
+                0 -> tabRouter.switchFragment(dicFlow)
+                1 -> tabRouter.switchFragment(vocFlow)
             }
+            true
         }
 
     }
