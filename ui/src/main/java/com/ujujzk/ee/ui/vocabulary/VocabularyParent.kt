@@ -1,5 +1,6 @@
-package com.ujujzk.ee.ui.dictionary
+package com.ujujzk.ee.ui.vocabulary
 
+import android.app.Activity
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
@@ -8,30 +9,30 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.ujujzk.ee.ui.R
-import com.ujujzk.ee.ui.di.KOIN_NAV_DIC
-import com.ujujzk.ee.ui.dictionary.translate.TranslateFragment
+import com.ujujzk.ee.ui.di.KOIN_NAV_VOC
 import com.ujujzk.ee.ui.navigation.TabFragment
+import com.ujujzk.ee.ui.vocabulary.packs.PacksFragment
 import org.koin.android.ext.android.inject
 import org.koin.core.qualifier.named
 import ru.terrakok.cicerone.Cicerone
 import ru.terrakok.cicerone.Router
 import ru.terrakok.cicerone.android.support.SupportAppNavigator
 
-class DictionaryParent: TabFragment(DIC_TAG_TAB) {
+class VocabularyParent : TabFragment(VOC_TAG_TAB) {
 
-    private val cicerone  by inject<Cicerone<Router>>(named(KOIN_NAV_DIC))
+    private val cicerone by inject<Cicerone<Router>>(named(KOIN_NAV_VOC))
     private lateinit var navigator: SupportAppNavigator
 
     companion object {
-        const val DIC_TAG_TAB = "DictionaryFlow"
-        fun inst(): DictionaryParent = DictionaryParent()
+        const val VOC_TAG_TAB = "VocabularyFlow"
+        fun inst(): VocabularyParent = VocabularyParent()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val root = inflater.inflate(R.layout.fragment_parent, container, false)
         val title = root.findViewById<TextView>(R.id.title)
-        title.text = "Dictionary"
-        root.setBackgroundColor(Color.GRAY)
+        title.text = "Vocabulary"
+        root.setBackgroundColor(Color.GREEN)
         return root
     }
 
@@ -39,6 +40,7 @@ class DictionaryParent: TabFragment(DIC_TAG_TAB) {
         super.onAttach(context)
         navigator = SupportAppNavigator(activity, childFragmentManager, R.id.container)
     }
+
 
     override fun onResume() {
         super.onResume()
@@ -54,7 +56,7 @@ class DictionaryParent: TabFragment(DIC_TAG_TAB) {
         super.onActivityCreated(savedInstanceState)
 
         if (childFragmentManager.findFragmentById(R.id.container) == null) {
-            cicerone.router.replaceScreen(TranslateFragment.Screen())
+            cicerone.router.replaceScreen(PacksFragment.Screen())
         }
     }
 }
