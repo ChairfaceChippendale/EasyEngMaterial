@@ -6,35 +6,40 @@ import org.koin.dsl.module
 import ru.terrakok.cicerone.Cicerone
 import ru.terrakok.cicerone.Router
 
-const val KOIN_NAV_MAIN = "nav_main"
-const val KOIN_NAV_DIC = "nav_dic"
-const val KOIN_NAV_VOC = "nav_voc"
+const val KOIN_NAV_MAIN_ROUTER = "KOIN_NAV_MAIN_ROUTER"
+const val KOIN_NAV_MAIN_CICERONE = "KOIN_NAV_MAIN_CICERONE"
+
+const val KOIN_NAV_DIC_ROUTER = "KOIN_NAV_DIC_ROUTER"
+const val KOIN_NAV_DIC_CICERONE = "KOIN_NAV_DIC_CICERONE"
+
+const val KOIN_NAV_VOC_ROUTER  = "KOIN_NAV_VOC_ROUTER"
+const val KOIN_NAV_VOC_CICERONE  = "KOIN_NAV_VOC_CICERONE"
+
 
 
 val navigationModule = module {
 
-    single<SwitchRouter>(named(KOIN_NAV_MAIN)) {
-        get<Cicerone<SwitchRouter>>(named(KOIN_NAV_MAIN)).router
-    }
-
-    single<Cicerone<SwitchRouter>>(named(KOIN_NAV_MAIN)) {
+    single<Cicerone<SwitchRouter>>(named(KOIN_NAV_MAIN_CICERONE)) {
         Cicerone.create(SwitchRouter())
     }
 
-    single<Router>(named(KOIN_NAV_DIC)){
-        get<Cicerone<Router>>(named(KOIN_NAV_DIC)).router
+    single<SwitchRouter>(named(KOIN_NAV_MAIN_ROUTER)) {
+        get<Cicerone<SwitchRouter>>(named(KOIN_NAV_MAIN_CICERONE)).router
     }
 
-    single<Cicerone<Router>>(named(KOIN_NAV_DIC)){
+    single<Cicerone<Router>>(named(KOIN_NAV_DIC_CICERONE)){
         Cicerone.create()
     }
 
-    single<Router>(named(KOIN_NAV_VOC)){
-        get<Cicerone<Router>>(named(KOIN_NAV_VOC)).router
+    single<Router>(named(KOIN_NAV_DIC_ROUTER)){
+        get<Cicerone<Router>>(named(KOIN_NAV_DIC_CICERONE)).router
     }
 
-    single<Cicerone<Router>>(named(KOIN_NAV_VOC)){
+    single<Cicerone<Router>>(named(KOIN_NAV_VOC_CICERONE)){
         Cicerone.create()
     }
 
+    single<Router>(named(KOIN_NAV_VOC_ROUTER)){
+        get<Cicerone<Router>>(named(KOIN_NAV_VOC_CICERONE)).router
+    }
 }

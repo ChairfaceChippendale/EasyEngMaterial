@@ -34,7 +34,7 @@ class SwitchNavigator(
                 hide(it)
                 //since hide doesn't trigger onPause, we use this instead to let the fragment know it is not visible
                 //equivalent to `it.userVisibleHint = false`
-                setMaxLifecycle(targetFragment, Lifecycle.State.STARTED)
+                setMaxLifecycle(it, Lifecycle.State.STARTED)
             }
 
             targetFragment.let {
@@ -44,7 +44,8 @@ class SwitchNavigator(
                 } else {
                     add(containerId, it, it.tabTag)
                 }
-                setMaxLifecycle(targetFragment, Lifecycle.State.RESUMED)
+                //equivalent to `it.userVisibleHint = true`
+                setMaxLifecycle(it, Lifecycle.State.RESUMED)
             }
             commit()
         }

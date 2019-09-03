@@ -62,7 +62,7 @@ dependencies {
     implementation uiDeps.support
 
     implementation uiDeps.lcExtensions
-    implementation uiDeps.lcCompiler
+    kapt uiDeps.lcCompiler
     implementation uiDeps.lcStream
 
     implementation uiDeps.rxKotlin
@@ -77,7 +77,7 @@ dependencies {
     implementation uiDeps.koinViewModel
 
     implementation uiDeps.glide
-    implementation uiDeps.glideCompiler
+    kapt uiDeps.glideCompiler
 //    implementation uiDeps.glideOkhttp3
 
     implementation uiDeps.cicerone

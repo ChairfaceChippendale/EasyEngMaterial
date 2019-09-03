@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.ujujzk.ee.ui.R
-import com.ujujzk.ee.ui.di.KOIN_NAV_DIC
+import com.ujujzk.ee.ui.di.KOIN_NAV_DIC_CICERONE
 import com.ujujzk.ee.ui.dictionary.translate.TranslateFragment
 import com.ujujzk.ee.ui.navigation.TabFragment
 import org.koin.android.ext.android.inject
@@ -19,7 +19,7 @@ import ru.terrakok.cicerone.android.support.SupportAppNavigator
 
 class DictionaryParent: TabFragment(DIC_TAG_TAB) {
 
-    private val cicerone  by inject<Cicerone<Router>>(named(KOIN_NAV_DIC))
+    private val cicerone  by inject<Cicerone<Router>>(named(KOIN_NAV_DIC_CICERONE))
     private lateinit var navigator: SupportAppNavigator
 
     companion object {
