@@ -8,7 +8,7 @@ import android.widget.Button
 import androidx.fragment.app.Fragment
 import com.ujujzk.ee.ui.R
 import com.ujujzk.ee.ui.di.KOIN_NAV_DIC_ROUTER
-import com.ujujzk.ee.ui.dictionary.catalogue.CatalogueFragment
+import com.ujujzk.ee.ui.dictionary.catalog.CatalogFragment
 import com.ujujzk.ee.ui.navigation.BackButtonListener
 import com.ujujzk.ee.ui.navigation.FragmentScreen
 import org.koin.android.ext.android.inject
@@ -24,7 +24,7 @@ class TranslateFragment : Fragment(), BackButtonListener {
 
         root.findViewById<Button>(R.id.catalogueBtn).apply {
             setOnClickListener {
-                router.navigateTo(CatalogueFragment.Screen())
+                router.navigateTo(CatalogFragment.Screen())
             }
         }
 

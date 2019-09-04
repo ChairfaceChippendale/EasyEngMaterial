@@ -1,6 +1,5 @@
 package com.ujujzk.ee.ui.vocabulary
 
-import android.app.Activity
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
@@ -11,7 +10,7 @@ import android.widget.TextView
 import com.ujujzk.ee.ui.R
 import com.ujujzk.ee.ui.di.KOIN_NAV_VOC_CICERONE
 import com.ujujzk.ee.ui.navigation.TabFragment
-import com.ujujzk.ee.ui.vocabulary.packs.PacksFragment
+import com.ujujzk.ee.ui.vocabulary.store.StoreFragment
 import org.koin.android.ext.android.inject
 import org.koin.core.qualifier.named
 import ru.terrakok.cicerone.Cicerone
@@ -56,7 +55,7 @@ class VocabularyParent : TabFragment(VOC_TAG_TAB) {
         super.onActivityCreated(savedInstanceState)
 
         if (childFragmentManager.findFragmentById(R.id.container) == null) {
-            cicerone.router.replaceScreen(PacksFragment.Screen())
+            cicerone.router.replaceScreen(StoreFragment.Screen())
         }
     }
 }
