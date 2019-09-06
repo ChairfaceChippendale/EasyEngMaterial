@@ -1,32 +1,22 @@
 package com.ujujzk.ee.ui.vocabulary.learn
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import com.ujujzk.ee.ui.R
-import com.ujujzk.ee.ui.di.KOIN_NAV_VOC_ROUTER
+import com.ujujzk.ee.ui.base.BaseFragment
+import com.ujujzk.ee.ui.databinding.FragmentLearnBinding
 import com.ujujzk.ee.ui.navigation.BackButtonListener
 import com.ujujzk.ee.ui.navigation.FragmentScreen
-import org.koin.android.ext.android.inject
-import org.koin.core.qualifier.named
-import ru.terrakok.cicerone.Router
 
-class LearnFragment:  Fragment(), BackButtonListener {
 
-    private val router: Router by inject(named(KOIN_NAV_VOC_ROUTER))
+class LearnFragment:
+    BaseFragment<FragmentLearnBinding, LearnViewModel>(R.layout.fragment_learn, LearnViewModel::class),
+    BackButtonListener {
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val root = inflater.inflate(R.layout.fragment_learn, container, false)
-
-        return root
+    override fun bindViewModel() {
+        binding.viewModel = viewModel
     }
 
-    override fun onBackPressed(): Boolean {
-        router.exit()
-        return true
-    }
+    override fun onBackPressed(): Boolean =
+        viewModel.onBackPressed()
 
     class Screen : FragmentScreen({ LearnFragment() })
 }

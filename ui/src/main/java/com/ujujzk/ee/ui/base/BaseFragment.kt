@@ -25,7 +25,7 @@ abstract class BaseFragment<BINDING : ViewDataBinding, out VIEW_MODEL : BaseView
         get() = LifecycleAwareDisposables(registry)
 
     protected lateinit var binding: BINDING
-    protected val viewModel : VIEW_MODEL by viewModel(viewModelClass)
+    protected val viewModel: VIEW_MODEL by viewModel(viewModelClass)
 
     protected abstract fun bindViewModel()
 
