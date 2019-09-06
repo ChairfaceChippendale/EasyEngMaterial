@@ -27,7 +27,7 @@ class SwitchNavigator(
     }
 
     //we could also use attach() and detach() instead of show() and hide().
-    private fun changeTab(targetFragment: TabFragment) {
+    private fun changeTab(targetFragment: FlowFragment) {
         with(fragmentManager.beginTransaction()) {
 
             fragmentManager.fragments.filter{ it != targetFragment }.forEach {
@@ -51,5 +51,5 @@ class SwitchNavigator(
         }
     }
 
-    class SwitchFragment(val fr: TabFragment) : Command
+    class SwitchFragment(val fr: FlowFragment) : Command
 }

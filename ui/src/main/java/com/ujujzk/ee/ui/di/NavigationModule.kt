@@ -6,6 +6,7 @@ import org.koin.dsl.module
 import ru.terrakok.cicerone.Cicerone
 import ru.terrakok.cicerone.Router
 
+
 const val KOIN_NAV_MAIN_ROUTER = "KOIN_NAV_MAIN_ROUTER"
 const val KOIN_NAV_MAIN_CICERONE = "KOIN_NAV_MAIN_CICERONE"
 
@@ -14,8 +15,6 @@ const val KOIN_NAV_DIC_CICERONE = "KOIN_NAV_DIC_CICERONE"
 
 const val KOIN_NAV_VOC_ROUTER  = "KOIN_NAV_VOC_ROUTER"
 const val KOIN_NAV_VOC_CICERONE  = "KOIN_NAV_VOC_CICERONE"
-
-
 
 val navigationModule = module {
 

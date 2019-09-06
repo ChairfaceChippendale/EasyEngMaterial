@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.ujujzk.ee.ui.R
 import com.ujujzk.ee.ui.di.KOIN_NAV_VOC_CICERONE
-import com.ujujzk.ee.ui.navigation.TabFragment
+import com.ujujzk.ee.ui.navigation.FlowFragment
 import com.ujujzk.ee.ui.vocabulary.store.StoreFragment
 import org.koin.android.ext.android.inject
 import org.koin.core.qualifier.named
@@ -17,7 +17,7 @@ import ru.terrakok.cicerone.Cicerone
 import ru.terrakok.cicerone.Router
 import ru.terrakok.cicerone.android.support.SupportAppNavigator
 
-class VocabularyParent : TabFragment(VOC_TAG_TAB) {
+class VocabularyParent : FlowFragment(VOC_TAG_TAB) {
 
     private val cicerone by inject<Cicerone<Router>>(named(KOIN_NAV_VOC_CICERONE))
     private lateinit var navigator: SupportAppNavigator

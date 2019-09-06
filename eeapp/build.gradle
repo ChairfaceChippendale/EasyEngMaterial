@@ -43,6 +43,10 @@ android {
             jvmArgs '-noverify'
         }
     }
+
+    dataBinding {
+        enabled = true
+    }
 }
 
 kapt {

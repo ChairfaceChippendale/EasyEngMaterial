@@ -3,6 +3,7 @@ package com.ujujzk.easyengmaterial.eeapp.koin
 import com.ujujzk.easyengmaterial.eeapp.tools.Looog
 import com.ujujzk.ee.data.di.dataModule
 import com.ujujzk.ee.domain.di.domainModule
+import com.ujujzk.ee.ui.di.LOG_UI
 import com.ujujzk.ee.ui.di.navigationModule
 import com.ujujzk.ee.ui.di.viewModelModule
 import io.reactivex.disposables.CompositeDisposable
@@ -34,5 +35,6 @@ val coreModule = module {
     single(named("log_ex_data")){ Looog.ex(tag = "DATA")}
     single(named("log_ex_storage")){ Looog.ex(tag = "STORE")}
     single(named("log_ex_pref")){ Looog.th(tag = "STORE")}
+    single(named(LOG_UI)){ Looog.i(tag = "UI")}
 
 }

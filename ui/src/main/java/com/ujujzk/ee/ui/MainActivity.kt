@@ -9,7 +9,6 @@ import com.ujujzk.ee.ui.di.KOIN_NAV_MAIN_CICERONE
 import com.ujujzk.ee.ui.di.KOIN_NAV_MAIN_ROUTER
 import com.ujujzk.ee.ui.dictionary.DictionaryParent
 import com.ujujzk.ee.ui.dictionary.DictionaryParent.Companion.DIC_TAG_TAB
-import com.ujujzk.ee.ui.dictionary.translate.TranslateFragment
 import com.ujujzk.ee.ui.navigation.BackButtonListener
 import com.ujujzk.ee.ui.navigation.SwitchNavigator
 import com.ujujzk.ee.ui.navigation.SwitchRouter
