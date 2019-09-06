@@ -9,7 +9,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleRegistry
-import io.reactivex.disposables.Disposable
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.reflect.KClass
 
@@ -18,11 +17,7 @@ abstract class BaseFragment<BINDING : ViewDataBinding, out VIEW_MODEL : BaseView
     viewModelClass: KClass<VIEW_MODEL>
 ) : Fragment() {
 
-    private val registry: LifecycleRegistry
-        get() = LifecycleRegistry(this)
-
-    private val disposables: LifecycleAwareDisposables
-        get() = LifecycleAwareDisposables(registry)
+    private val disposables: LifecycleAwareDisposables by lazy { LifecycleAwareDisposables(LifecycleRegistry(this)) }
 
     protected lateinit var binding: BINDING
     protected val viewModel: VIEW_MODEL by viewModel(viewModelClass)
@@ -33,19 +28,11 @@ abstract class BaseFragment<BINDING : ViewDataBinding, out VIEW_MODEL : BaseView
         return if (layout > 0) {
             binding = DataBindingUtil.inflate(inflater, layout, container, false)
             binding.lifecycleOwner = this
+            bindViewModel()
             binding.root
         } else {
             throw IllegalArgumentException("Layout for ${binding.javaClass} is not specified!")
         }
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        bindViewModel()
-    }
-
-    protected fun addDisposable(disposable: Disposable) {
-        disposables.add(disposable)
     }
 
 }

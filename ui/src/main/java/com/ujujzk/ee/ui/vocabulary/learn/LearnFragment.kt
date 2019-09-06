@@ -8,11 +8,15 @@ import com.ujujzk.ee.ui.navigation.FragmentScreen
 
 
 class LearnFragment:
-    BaseFragment<FragmentLearnBinding, LearnViewModel>(R.layout.fragment_learn, LearnViewModel::class),
+    BaseFragment<FragmentLearnBinding, LearnViewModel>(
+        R.layout.fragment_learn,
+        LearnViewModel::class
+    ),
     BackButtonListener {
 
     override fun bindViewModel() {
         binding.viewModel = viewModel
+        binding.executePendingBindings()
     }
 
     override fun onBackPressed(): Boolean =
