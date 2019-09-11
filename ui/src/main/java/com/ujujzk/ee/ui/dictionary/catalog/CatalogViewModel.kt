@@ -10,8 +10,14 @@ class CatalogViewModel(
     private val router: Router
 ): BaseViewModel(disposables) {
 
+    init {
+
+    }
+
     fun onBackPressed() : Boolean {
         router.exit()
         return true
     }
+
+
 }

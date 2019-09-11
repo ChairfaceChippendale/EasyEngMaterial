@@ -28,7 +28,7 @@ abstract class UseCaseFlowable<T, in Params>(
     fun executeBy(@NonNull params: Params,
                   onNext: (t: T) -> Unit,
                   onError: (e: Throwable) -> Unit,
-                  onComplete: () -> Unit) {
+                  onComplete: () -> Unit = {}) {
 
         val observable = this.buildUseCase(params)
             .subscribeOn(Schedulers.from(threadExecutor))

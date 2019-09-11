@@ -6,7 +6,12 @@ import com.ujujzk.ee.data.AppDatabase
 import com.ujujzk.ee.data.JobExecutor
 import com.ujujzk.ee.data.source.dic.DicGatewayImpl
 import com.ujujzk.ee.data.source.dic.local.DicStorageRoom
+import com.ujujzk.ee.data.source.dic.local.model.DictionariesFromRoomToDomain
+import com.ujujzk.ee.data.source.dic.local.model.DictionaryFromRoomToDomain
+import com.ujujzk.ee.data.source.dic.local.model.DictionaryRoom
+import com.ujujzk.ee.data.tools.mapper.MapperDelegate
 import com.ujujzk.ee.domain.executor.ThreadExecutor
+import com.ujujzk.ee.domain.usecase.dic.model.Dictionary
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -25,7 +30,23 @@ val dataModule = module {
 
 
     single { DicGatewayImpl(get()) }
-    single { DicStorageRoom(get()) }
+    single { DicStorageRoom(get(), get()) }
     single { get<AppDatabase>().getDictionaryDao() }
+
+
+    single {
+        MapperDelegate.Builder()
+            .registerConverter(
+                object : MapperDelegate.TypeRef<DictionaryRoom>(){},
+                object : MapperDelegate.TypeRef<Dictionary>(){},
+                DictionaryFromRoomToDomain
+            )
+            .registerConverter(
+                object : MapperDelegate.TypeRef<List<DictionaryRoom>>(){},
+                object : MapperDelegate.TypeRef<List<Dictionary>>(){},
+                DictionariesFromRoomToDomain
+            )
+            .build()
+    }
 
 }
