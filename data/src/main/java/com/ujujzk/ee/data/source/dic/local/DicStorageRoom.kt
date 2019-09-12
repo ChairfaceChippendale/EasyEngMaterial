@@ -10,6 +10,7 @@ import io.reactivex.Flowable
 
 class DicStorageRoom(
     private val dicDao: DictionaryDao,
+    private val articleDao: ArticleDao,
     private val mapper: MapperDelegate
 ) : DicStorage {
 

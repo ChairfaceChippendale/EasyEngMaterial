@@ -2,6 +2,7 @@ package com.ujujzk.ee.data.source.dic.local
 
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.ujujzk.ee.data.source.dic.local.model.DictionaryRoom
 import io.reactivex.Flowable
@@ -9,7 +10,7 @@ import io.reactivex.Flowable
 @Dao
 interface DictionaryDao {
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(dic: DictionaryRoom)
 
     @Query("SELECT * FROM dictionaryroom")
