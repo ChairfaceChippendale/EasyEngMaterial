@@ -1,10 +1,10 @@
 package com.ujujzk.ee.domain.di
 
+import com.ujujzk.ee.domain.usecase.dic.ObserveDictionariesUseCase
 import org.koin.dsl.module
 
 val domainModule = module {
 
-//    factory { GetCatUseCase(get(), get(), get(), get()) }
-
+    factory { ObserveDictionariesUseCase(get(), get(), get(), get()) }
 
 }

@@ -5,6 +5,7 @@ import com.ujujzk.ee.data.di.dataModule
 import com.ujujzk.ee.domain.di.domainModule
 import com.ujujzk.ee.ui.di.LOG_UI
 import com.ujujzk.ee.ui.di.navigationModule
+import com.ujujzk.ee.ui.di.presentationModule
 import com.ujujzk.ee.ui.di.viewModelModule
 import io.reactivex.disposables.CompositeDisposable
 import org.koin.core.module.Module
@@ -21,8 +22,8 @@ val appModules: List<Module>
 
         navigationModule,
 
-        viewModelModule/*,
-        presentationModule*/
+        viewModelModule,
+        presentationModule
     )
 
 val coreModule = module {

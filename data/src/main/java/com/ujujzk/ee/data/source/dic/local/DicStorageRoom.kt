@@ -15,7 +15,9 @@ class DicStorageRoom(
 
     override fun observeDictionaries(): Flowable<List<Dictionary>> {
 
-        return dicDao.observeAll().map { mapper.convert<List<DictionaryRoom>, List<Dictionary>>(it) }
+        return Flowable.just(listOf(DictionaryRoom("id1", "Dic1"), DictionaryRoom("id2", "Dic2"), DictionaryRoom("id3", "Dic3"))).map { mapper.convert<List<DictionaryRoom>, List<Dictionary>>(it)  }
+
+//        return dicDao.observeAll().map { mapper.convert<List<DictionaryRoom>, List<Dictionary>>(it) }
     }
 
 }

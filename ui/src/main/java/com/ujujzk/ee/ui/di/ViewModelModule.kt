@@ -13,7 +13,7 @@ const val LOG_UI  = "LOG_UI"
 
 val viewModelModule = module {
 
-    viewModel { CatalogViewModel(get(), get(named(LOG_UI)), get(named(KOIN_NAV_DIC_ROUTER))) }
+    viewModel { CatalogViewModel(get(), get(named(LOG_UI)), get(named(KOIN_NAV_DIC_ROUTER)), get()) }
     viewModel { TranslateViewModel(get(), get(named(LOG_UI)), get(named(KOIN_NAV_DIC_ROUTER))) }
 
 
