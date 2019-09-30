@@ -5,10 +5,11 @@ import com.ujujzk.ee.ui.base.BaseFragment
 import com.ujujzk.ee.ui.databinding.FragmentCatalogBinding
 import com.ujujzk.ee.ui.navigation.BackButtonListener
 import com.ujujzk.ee.ui.navigation.FragmentScreen
+import org.koin.core.qualifier.Qualifier
 
 
-class CatalogFragment :
-    BaseFragment<FragmentCatalogBinding, CatalogViewModel>(R.layout.fragment_catalog, CatalogViewModel::class),
+class CatalogFragment(qualifier: Qualifier) :
+    BaseFragment<FragmentCatalogBinding, CatalogViewModel>(R.layout.fragment_catalog, CatalogViewModel::class, qualifier),
     BackButtonListener
 {
 
@@ -19,5 +20,5 @@ class CatalogFragment :
     override fun onBackPressed(): Boolean =
         viewModel.onBackPressed()
 
-    class Screen : FragmentScreen({ CatalogFragment() })
+    class Screen(qualifier: Qualifier) : FragmentScreen({ CatalogFragment(qualifier) })
 }
