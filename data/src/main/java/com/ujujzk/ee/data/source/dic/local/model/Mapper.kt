@@ -1,5 +1,6 @@
 package com.ujujzk.ee.data.source.dic.local.model
 
+import android.util.Log
 import com.ujujzk.ee.data.tools.mapper.DataMapper
 import com.ujujzk.ee.data.tools.mapper.MapperDelegate
 import com.ujujzk.ee.domain.usecase.dic.model.Article

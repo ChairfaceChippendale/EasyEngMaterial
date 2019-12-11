@@ -35,6 +35,7 @@ class CatalogViewModel(
         test.executeBy(
             TestArticleDefinitionUseCase.Params.get(),
             onSuccess = {
+                logger(it.wordDefinition)
                 arttext.value = Html.fromHtml(it.wordDefinition)
             },
             onError = {

@@ -13,6 +13,12 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        externalNativeBuild {
+            cmake {
+                cppFlags "-std=c++11"
+            }
+        }
     }
 
     buildTypes {
@@ -21,6 +27,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt')
 //            proguardFiles(file('./proguard').listFiles())
             consumerProguardFiles(file('./proguard').listFiles())
+        }
+    }
+
+    externalNativeBuild {
+        cmake {
+            path 'CMakeLists.txt'
         }
     }
 

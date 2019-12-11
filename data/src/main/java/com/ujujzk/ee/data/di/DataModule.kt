@@ -30,7 +30,7 @@ val dataModule = module {
     }
 
 
-    single<DicGateway> { DicGatewayImpl(get(), get()) }
+    single<DicGateway> { DicGatewayImpl(get(), get(), get(named("log_data"))) }
     single<DicStorage> { DicStorageRoom(get(), get(), get()) }
     single { get<AppDatabase>().getDictionaryDao() }
     single { get<AppDatabase>().getArticleDao() }
