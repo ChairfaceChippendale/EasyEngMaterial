@@ -1,0 +1,34 @@
+{
+  "buildFiles": [
+    "/home/olexander/Android/Projects/sample/EasyEngMaterial/data/src/main/jni/Android.mk",
+    "/home/olexander/Android/Projects/sample/EasyEngMaterial/data/src/main/jni/Application.mk"
+  ],
+  "cleanCommands": [
+    "/home/olexander/Android/Sdk/ndk-bundle/ndk-build NDK_PROJECT_PATH\u003dnull APP_BUILD_SCRIPT\u003d/home/olexander/Android/Projects/sample/EasyEngMaterial/data/src/main/jni/Android.mk NDK_APPLICATION_MK\u003d/home/olexander/Android/Projects/sample/EasyEngMaterial/data/src/main/jni/Application.mk APP_ABI\u003dx86_64 NDK_ALL_ABIS\u003dx86_64 NDK_DEBUG\u003d1 APP_PLATFORM\u003dandroid-21 NDK_OUT\u003d/home/olexander/Android/Projects/sample/EasyEngMaterial/data/build/intermediates/ndkBuild/debug/obj NDK_LIBS_OUT\u003d/home/olexander/Android/Projects/sample/EasyEngMaterial/data/build/intermediates/ndkBuild/debug/lib clean"
+  ],
+  "buildTargetsCommand": "/home/olexander/Android/Sdk/ndk-bundle/ndk-build NDK_PROJECT_PATH\u003dnull APP_BUILD_SCRIPT\u003d/home/olexander/Android/Projects/sample/EasyEngMaterial/data/src/main/jni/Android.mk NDK_APPLICATION_MK\u003d/home/olexander/Android/Projects/sample/EasyEngMaterial/data/src/main/jni/Application.mk APP_ABI\u003dx86_64 NDK_ALL_ABIS\u003dx86_64 NDK_DEBUG\u003d1 APP_PLATFORM\u003dandroid-21 NDK_OUT\u003d/home/olexander/Android/Projects/sample/EasyEngMaterial/data/build/intermediates/ndkBuild/debug/obj NDK_LIBS_OUT\u003d/home/olexander/Android/Projects/sample/EasyEngMaterial/data/build/intermediates/ndkBuild/debug/lib {LIST_OF_TARGETS_TO_BUILD}",
+  "libraries": {
+    "keys-debug-x86_64": {
+      "buildCommand": "/home/olexander/Android/Sdk/ndk-bundle/ndk-build NDK_PROJECT_PATH\u003dnull APP_BUILD_SCRIPT\u003d/home/olexander/Android/Projects/sample/EasyEngMaterial/data/src/main/jni/Android.mk NDK_APPLICATION_MK\u003d/home/olexander/Android/Projects/sample/EasyEngMaterial/data/src/main/jni/Application.mk APP_ABI\u003dx86_64 NDK_ALL_ABIS\u003dx86_64 NDK_DEBUG\u003d1 APP_PLATFORM\u003dandroid-21 NDK_OUT\u003d/home/olexander/Android/Projects/sample/EasyEngMaterial/data/build/intermediates/ndkBuild/debug/obj NDK_LIBS_OUT\u003d/home/olexander/Android/Projects/sample/EasyEngMaterial/data/build/intermediates/ndkBuild/debug/lib /home/olexander/Android/Projects/sample/EasyEngMaterial/data/build/intermediates/ndkBuild/debug/obj/local/x86_64/libkeys.so",
+      "toolchain": "toolchain-x86_64",
+      "abi": "x86_64",
+      "artifactName": "keys",
+      "files": [
+        {
+          "src": "/home/olexander/Android/Projects/sample/EasyEngMaterial/data/src/main/jni/keys.c",
+          "flags": "-target x86_64-none-linux-android21 -fdata-sections -ffunction-sections -fstack-protector-strong -funwind-tables -no-canonical-prefixes --sysroot /home/olexander/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/sysroot -g -Wno-invalid-command-line-argument -Wno-unused-command-line-argument -fno-addrsig -fPIC -O0 -UNDEBUG -fno-limit-debug-info -I/home/olexander/Android/Projects/sample/EasyEngMaterial/data/src/main/jni -DANDROID -Wa,--noexecstack -Wformat -Werror\u003dformat-security"
+        }
+      ],
+      "output": "/home/olexander/Android/Projects/sample/EasyEngMaterial/data/build/intermediates/ndkBuild/debug/obj/local/x86_64/libkeys.so"
+    }
+  },
+  "toolchains": {
+    "toolchain-x86_64": {
+      "cCompilerExecutable": "/home/olexander/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin/clang"
+    }
+  },
+  "cFileExtensions": [
+    "c"
+  ],
+  "cppFileExtensions": []
+}

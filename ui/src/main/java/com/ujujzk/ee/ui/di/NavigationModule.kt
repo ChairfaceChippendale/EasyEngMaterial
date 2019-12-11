@@ -16,6 +16,11 @@ const val KOIN_NAV_DIC_CICERONE = "KOIN_NAV_DIC_CICERONE"
 const val KOIN_NAV_VOC_ROUTER  = "KOIN_NAV_VOC_ROUTER"
 const val KOIN_NAV_VOC_CICERONE  = "KOIN_NAV_VOC_CICERONE"
 
+enum class Flow {
+    DICTIONARY,
+    VOCABULARY
+}
+
 val navigationModule = module {
 
     single<Cicerone<SwitchRouter>>(named(KOIN_NAV_MAIN_CICERONE)) {

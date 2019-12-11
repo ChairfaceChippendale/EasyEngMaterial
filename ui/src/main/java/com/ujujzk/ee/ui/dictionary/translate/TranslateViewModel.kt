@@ -1,9 +1,9 @@
 package com.ujujzk.ee.ui.dictionary.translate
 
 import com.ujujzk.ee.ui.base.BaseViewModel
+import com.ujujzk.ee.ui.di.Flow
 import com.ujujzk.ee.ui.dictionary.catalog.CatalogFragment
 import io.reactivex.disposables.CompositeDisposable
-import org.koin.core.qualifier.named
 import ru.terrakok.cicerone.Router
 
 class TranslateViewModel(
@@ -13,7 +13,7 @@ class TranslateViewModel(
 ): BaseViewModel(disposables) {
 
     fun onCatalogClick(){
-        router.navigateTo(CatalogFragment.Screen(named("CatalogForDic")))
+        router.navigateTo(CatalogFragment.Screen(Flow.DICTIONARY))
     }
 
     fun onBackPressed(): Boolean {

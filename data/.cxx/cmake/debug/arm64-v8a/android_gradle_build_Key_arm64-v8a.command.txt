@@ -1,0 +1,8 @@
+Executable : /home/olexander/Android/Sdk/cmake/3.6.4111459/bin/cmake
+arguments : 
+--build
+/home/olexander/Android/Projects/sample/EasyEngMaterial/data/.cxx/cmake/debug/arm64-v8a
+--target
+Key
+jvmArgs : 
+

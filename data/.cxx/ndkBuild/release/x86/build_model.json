@@ -1,0 +1,60 @@
+{
+  "variant": {
+    "module": {
+      "rootBuildGradleFolder": "/home/olexander/Android/Projects/sample/EasyEngMaterial",
+      "sdkFolder": "/home/olexander/Android/Sdk",
+      "isNativeCompilerSettingsCacheEnabled": false,
+      "isBuildOnlyTargetAbiEnabled": true,
+      "splitsAbiFilterSet": [],
+      "intermediatesFolder": "/home/olexander/Android/Projects/sample/EasyEngMaterial/data/build/intermediates",
+      "gradleModulePathName": ":data",
+      "moduleRootFolder": "/home/olexander/Android/Projects/sample/EasyEngMaterial/data",
+      "makeFile": "/home/olexander/Android/Projects/sample/EasyEngMaterial/data/src/main/jni/Android.mk",
+      "buildSystem": "NDK_BUILD",
+      "compilerSettingsCacheFolder": "/home/olexander/Android/Projects/sample/EasyEngMaterial/.cxx",
+      "cxxFolder": "/home/olexander/Android/Projects/sample/EasyEngMaterial/data/.cxx",
+      "ndkFolder": "/home/olexander/Android/Sdk/ndk-bundle",
+      "ndkVersion": "20.1.5948944",
+      "ndkSupportedAbiList": [
+        "ARMEABI_V7A",
+        "ARM64_V8A",
+        "X86",
+        "X86_64"
+      ],
+      "ndkDefaultAbiList": [
+        "ARMEABI_V7A",
+        "ARM64_V8A",
+        "X86",
+        "X86_64"
+      ],
+      "cmakeToolchainFile": "."
+    },
+    "buildSystemArgumentList": [],
+    "cFlagList": [],
+    "cppFlagsList": [],
+    "variantName": "release",
+    "soFolder": "/home/olexander/Android/Projects/sample/EasyEngMaterial/data/build/intermediates/ndkBuild/release/lib",
+    "objFolder": "/home/olexander/Android/Projects/sample/EasyEngMaterial/data/build/intermediates/ndkBuild/release/obj/local",
+    "jsonFolder": "/home/olexander/Android/Projects/sample/EasyEngMaterial/data/.cxx/ndkBuild/release",
+    "gradleBuildOutputFolder": "/home/olexander/Android/Projects/sample/EasyEngMaterial/data/.cxx/cxx/release",
+    "isDebuggableEnabled": false,
+    "validAbiList": [
+      "ARMEABI_V7A",
+      "ARM64_V8A",
+      "X86",
+      "X86_64"
+    ],
+    "buildTargetSet": []
+  },
+  "abi": "X86",
+  "abiPlatformVersion": 21,
+  "cxxBuildFolder": "/home/olexander/Android/Projects/sample/EasyEngMaterial/data/.cxx/ndkBuild/release/x86",
+  "jsonFile": "/home/olexander/Android/Projects/sample/EasyEngMaterial/data/.cxx/ndkBuild/release/x86/android_gradle_build.json",
+  "gradleBuildOutputFolder": "/home/olexander/Android/Projects/sample/EasyEngMaterial/data/.cxx/cxx/release/x86",
+  "objFolder": "/home/olexander/Android/Projects/sample/EasyEngMaterial/data/build/intermediates/ndkBuild/release/obj/local/x86",
+  "buildCommandFile": "/home/olexander/Android/Projects/sample/EasyEngMaterial/data/.cxx/ndkBuild/release/x86/build_command.txt",
+  "buildOutputFile": "/home/olexander/Android/Projects/sample/EasyEngMaterial/data/.cxx/ndkBuild/release/x86/build_output.txt",
+  "modelOutputFile": "/home/olexander/Android/Projects/sample/EasyEngMaterial/data/.cxx/ndkBuild/release/x86/build_model.json",
+  "jsonGenerationLoggingRecordFile": "/home/olexander/Android/Projects/sample/EasyEngMaterial/data/.cxx/ndkBuild/release/x86/json_generation_record.json",
+  "compileCommandsJsonFile": "/home/olexander/Android/Projects/sample/EasyEngMaterial/data/.cxx/ndkBuild/release/x86/compile_commands.json"
+}

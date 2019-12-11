@@ -1,6 +1,7 @@
 package com.ujujzk.ee.ui.base
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,19 +11,23 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleRegistry
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 import org.koin.core.qualifier.Qualifier
+import org.koin.core.qualifier.named
 import kotlin.reflect.KClass
 
 abstract class BaseFragment<BINDING : ViewDataBinding, out VIEW_MODEL : BaseViewModel>(
     @LayoutRes private val layout: Int,
-    viewModelClass: KClass<VIEW_MODEL>,
-    viewModelQualifier: Qualifier? = null
+    viewModelClass: KClass<VIEW_MODEL>
 ) : Fragment() {
 
     private val disposables: LifecycleAwareDisposables by lazy { LifecycleAwareDisposables(LifecycleRegistry(this)) }
 
     protected lateinit var binding: BINDING
-    protected val viewModel: VIEW_MODEL by viewModel(viewModelClass, viewModelQualifier)
+    protected val viewModel: VIEW_MODEL by viewModel(viewModelClass){
+        //is used in case of reuse Fragment in different flows
+        parametersOf(arguments?.getSerializable(EXTRA_FLOW_QUALIFIER))
+    }
 
     protected abstract fun bindViewModel()
 
@@ -35,6 +40,10 @@ abstract class BaseFragment<BINDING : ViewDataBinding, out VIEW_MODEL : BaseView
         } else {
             throw IllegalArgumentException("Layout for ${binding.javaClass} is not specified!")
         }
+    }
+
+    companion object {
+        const val EXTRA_FLOW_QUALIFIER = "EXTRA_FLOW_QUALIFIER"
     }
 
 }
