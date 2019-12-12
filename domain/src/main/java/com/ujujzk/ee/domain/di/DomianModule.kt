@@ -6,7 +6,14 @@ import org.koin.dsl.module
 
 val domainModule = module {
 
-    factory { ObserveDictionariesUseCase(get(), get(), get(), get()) }
+    factory {
+        ObserveDictionariesUseCase(
+            threadExecutor = get(),
+            postExecutionThread = get(),
+            disposable = get(),
+            dicGateway = get()
+        )
+    }
 
     //TODO TEMP
     factory { TestArticleDefinitionUseCase(get(), get(), get(), get()) }
