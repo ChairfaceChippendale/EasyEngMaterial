@@ -99,11 +99,14 @@ val dataModule = module {
     single<OkHttpClient> {
 
         val level =
-            if (getProperty("debug")) LoggingInterceptor.Level.BODY else LoggingInterceptor.Level.NONE
+            if (getProperty("debug")) LoggingInterceptor.Level.HEADERS_BODY else LoggingInterceptor.Level.NONE
 
         OkHttpClient
             .Builder()
-            .addInterceptor(LoggingInterceptor(level, get(named(LOG_NET)), true).apply { redactHeader("header-two") })
+            .addInterceptor(LoggingInterceptor(level, get(named(LOG_NET)), true).apply {
+                redactHeader("header-two")
+                redactHeader("Refresh-token")
+            })
             .addInterceptor(get<MockInterceptor>()) //must be the last
             .build()
     }
