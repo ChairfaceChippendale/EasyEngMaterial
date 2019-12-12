@@ -12,8 +12,8 @@ import org.json.JSONException
 import org.json.JSONObject
 import java.io.EOFException
 import java.io.IOException
-import java.nio.charset.Charset
 import java.util.concurrent.TimeUnit
+import kotlin.text.Charsets.UTF_8
 
 /**
  * Created by ujujzk on 12.04.2018
@@ -29,8 +29,6 @@ class LoggingInterceptor(
     companion object {
         const val JSON_INDENT = 2
     }
-
-    private val UTF8: Charset = Charset.forName("UTF-8")
 
     enum class Level { NONE, BASIC, HEADERS, BODY }
 
@@ -83,7 +81,7 @@ class LoggingInterceptor(
                 val buffer = Buffer()
                 requestBody.writeTo(buffer)
 
-                val charset = requestBody.contentType()?.charset(UTF8) ?: UTF8
+                val charset = requestBody.contentType()?.charset(UTF_8) ?: UTF_8
 
                 message.append('\n')
                 if (isPlaintext(buffer)) {
@@ -131,7 +129,7 @@ class LoggingInterceptor(
                 source.request(Long.MAX_VALUE)
                 val buffer = source.buffer
 
-                val charset = responseBody.contentType()?.charset(UTF8) ?: UTF8
+                val charset = responseBody.contentType()?.charset(UTF_8) ?: UTF_8
 
                 if (!isPlaintext(buffer)) {
                     message.append("\n<-- END HTTP (binary ${buffer.size()}-byte body omitted)\n")
