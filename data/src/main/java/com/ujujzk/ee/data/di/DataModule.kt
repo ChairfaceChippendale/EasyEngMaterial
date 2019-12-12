@@ -17,6 +17,16 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
+
+const val LOG_DATA = "LOG_DATA"
+const val LOG_ROOM = "LOG_ROOM"
+const val LOG_NET = "LOG_NET"
+const val LOG_DATA_EX = "LOG_DATA_EX"
+const val LOG_STORAGE_EX = "LOG_STORAGE_EX"
+const val LOG_PREF_EX = "LOG_PREF_EX"
+
+const val DB_NAME = "easy_eng_db"
+
 val dataModule = module {
 
     single<ThreadExecutor> { JobExecutor() }
@@ -24,11 +34,10 @@ val dataModule = module {
     single(named("gson")) { Gson() }
 
     single {
-        Room.databaseBuilder(androidContext(), AppDatabase::class.java, "easy_eng_db")
+        Room.databaseBuilder(androidContext(), AppDatabase::class.java, DB_NAME)
             .fallbackToDestructiveMigration()
             .build()
     }
-
 
     single<DicGateway> { DicGatewayImpl(get(), get()) }
     single<DicStorage> { DicStorageRoom(get(), get(), get()) }
