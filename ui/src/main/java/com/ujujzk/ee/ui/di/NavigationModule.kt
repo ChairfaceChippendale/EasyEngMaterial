@@ -16,28 +16,24 @@ const val KOIN_NAV_DIC_CICERONE = "KOIN_NAV_DIC_CICERONE"
 const val KOIN_NAV_VOC_ROUTER  = "KOIN_NAV_VOC_ROUTER"
 const val KOIN_NAV_VOC_CICERONE  = "KOIN_NAV_VOC_CICERONE"
 
+enum class Flow {
+    DICTIONARY,
+    VOCABULARY
+}
+
 val navigationModule = module {
 
-    single<Cicerone<SwitchRouter>>(named(KOIN_NAV_MAIN_CICERONE)) {
-        Cicerone.create(SwitchRouter())
-    }
-
+    single<Cicerone<SwitchRouter>>(named(KOIN_NAV_MAIN_CICERONE)) { Cicerone.create(SwitchRouter()) }
     single<SwitchRouter>(named(KOIN_NAV_MAIN_ROUTER)) {
         get<Cicerone<SwitchRouter>>(named(KOIN_NAV_MAIN_CICERONE)).router
     }
 
-    single<Cicerone<Router>>(named(KOIN_NAV_DIC_CICERONE)){
-        Cicerone.create()
-    }
-
+    single<Cicerone<Router>>(named(KOIN_NAV_DIC_CICERONE)){ Cicerone.create() }
     single<Router>(named(KOIN_NAV_DIC_ROUTER)){
         get<Cicerone<Router>>(named(KOIN_NAV_DIC_CICERONE)).router
     }
 
-    single<Cicerone<Router>>(named(KOIN_NAV_VOC_CICERONE)){
-        Cicerone.create()
-    }
-
+    single<Cicerone<Router>>(named(KOIN_NAV_VOC_CICERONE)){ Cicerone.create() }
     single<Router>(named(KOIN_NAV_VOC_ROUTER)){
         get<Cicerone<Router>>(named(KOIN_NAV_VOC_CICERONE)).router
     }

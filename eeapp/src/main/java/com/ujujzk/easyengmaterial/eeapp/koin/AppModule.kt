@@ -1,7 +1,7 @@
 package com.ujujzk.easyengmaterial.eeapp.koin
 
 import com.ujujzk.easyengmaterial.eeapp.tools.Looog
-import com.ujujzk.ee.data.di.dataModule
+import com.ujujzk.ee.data.di.*
 import com.ujujzk.ee.domain.di.domainModule
 import com.ujujzk.ee.ui.di.LOG_UI
 import com.ujujzk.ee.ui.di.navigationModule
@@ -30,12 +30,12 @@ val coreModule = module {
 
     factory { CompositeDisposable() }
 
-    single(named("log_net")){ Looog.i(tag = "NET")}
-    single(named("log_room")){ Looog.d(tag = "ROOM")}
-    single(named("log_data")){ Looog.d(tag = "DATA")}
-    single(named("log_ex_data")){ Looog.ex(tag = "DATA")}
-    single(named("log_ex_storage")){ Looog.ex(tag = "STORE")}
-    single(named("log_ex_pref")){ Looog.th(tag = "STORE")}
+    single(named(LOG_NET)){ Looog.i(tag = "NET")}
+    single(named(LOG_ROOM)){ Looog.d(tag = "ROOM")}
+    single(named(LOG_DATA)){ Looog.d(tag = "DATA")}
+    single(named(LOG_DATA_EX)){ Looog.ex(tag = "DATA")}
+    single(named(LOG_STORAGE_EX)){ Looog.ex(tag = "STORE")}
+    single(named(LOG_PREF_EX)){ Looog.th(tag = "STORE")}
     single(named(LOG_UI)){ Looog.i(tag = "UI")}
 
 }

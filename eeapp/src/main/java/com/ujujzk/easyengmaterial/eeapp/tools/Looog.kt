@@ -18,7 +18,7 @@ object Looog {
     fun init() {
         val strategy = PrettyFormatStrategy.newBuilder()
             .methodCount(0)
-            .tag("STAT")
+            .tag(DEFAULT_TAG)
             .logStrategy(object : LogStrategy {
                 override fun log(priority: Int, tag: String?, message: String) {
                     Log.println(priority, randomKey() + tag, message)
