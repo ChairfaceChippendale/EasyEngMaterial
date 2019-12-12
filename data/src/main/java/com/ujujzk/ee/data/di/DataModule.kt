@@ -4,18 +4,29 @@ import androidx.room.Room
 import com.google.gson.Gson
 import com.ujujzk.ee.data.AppDatabase
 import com.ujujzk.ee.data.JobExecutor
+import com.ujujzk.ee.data.interceptor.LoggingInterceptor
+import com.ujujzk.ee.data.interceptor.MockInterceptor
 import com.ujujzk.ee.data.source.dic.DicGatewayImpl
 import com.ujujzk.ee.data.source.dic.DicStorage
 import com.ujujzk.ee.data.source.dic.local.DicStorageRoom
 import com.ujujzk.ee.data.source.dic.local.model.*
+import com.ujujzk.ee.data.source.voc.VocGatewayImpl
+import com.ujujzk.ee.data.source.voc.VocRemote
+import com.ujujzk.ee.data.source.voc.remote.VocApi
+import com.ujujzk.ee.data.source.voc.remote.VocRemoteRest
 import com.ujujzk.ee.data.tools.mapper.MapperDelegate
 import com.ujujzk.ee.domain.executor.ThreadExecutor
 import com.ujujzk.ee.domain.gateway.DicGateway
+import com.ujujzk.ee.domain.gateway.VocGateway
 import com.ujujzk.ee.domain.usecase.dic.model.Article
 import com.ujujzk.ee.domain.usecase.dic.model.Dictionary
+import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
+import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import retrofit2.converter.gson.GsonConverterFactory
 
 
 const val LOG_DATA = "LOG_DATA"
@@ -44,30 +55,59 @@ val dataModule = module {
     single { get<AppDatabase>().getDictionaryDao() }
     single { get<AppDatabase>().getArticleDao() }
 
+    single<VocGateway> { VocGatewayImpl(get()) }
+    single<VocRemote> { VocRemoteRest(get()) }
+
 
     single {
         MapperDelegate.Builder()
             .registerConverter(
-                object : MapperDelegate.TypeRef<DictionaryRoom>(){},
-                object : MapperDelegate.TypeRef<Dictionary>(){},
+                object : MapperDelegate.TypeRef<DictionaryRoom>() {},
+                object : MapperDelegate.TypeRef<Dictionary>() {},
                 DictionaryFromRoomToDomain
             )
             .registerConverter(
-                object : MapperDelegate.TypeRef<List<DictionaryRoom>>(){},
-                object : MapperDelegate.TypeRef<List<Dictionary>>(){},
+                object : MapperDelegate.TypeRef<List<DictionaryRoom>>() {},
+                object : MapperDelegate.TypeRef<List<Dictionary>>() {},
                 DictionariesFromRoomToDomain
             )
             .registerConverter(
-                object : MapperDelegate.TypeRef<ArticleRoom>(){},
-                object : MapperDelegate.TypeRef<Article>(){},
+                object : MapperDelegate.TypeRef<ArticleRoom>() {},
+                object : MapperDelegate.TypeRef<Article>() {},
                 ArticleFromRoomToDomain
             )
             .registerConverter(
-                object : MapperDelegate.TypeRef<List<ArticleRoom>>(){},
-                object : MapperDelegate.TypeRef<List<Article>>(){},
+                object : MapperDelegate.TypeRef<List<ArticleRoom>>() {},
+                object : MapperDelegate.TypeRef<List<Article>>() {},
                 ArticlesFromRoomToDomain
             )
             .build()
     }
+
+    single<VocApi> { get<Retrofit>().create(VocApi::class.java) }
+
+    single {
+        Retrofit
+            .Builder()
+            .client(get<OkHttpClient>())
+            .baseUrl("https://ujujzk.com/")
+            .addConverterFactory(GsonConverterFactory.create(get(named("gson"))))
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .build()
+    }
+
+    single<OkHttpClient> {
+
+        val level =
+            if (getProperty("debug")) LoggingInterceptor.Level.BODY else LoggingInterceptor.Level.NONE
+
+        OkHttpClient
+            .Builder()
+            .addInterceptor(LoggingInterceptor(level, get(named(LOG_NET)), true).apply { redactHeader("header-two") })
+            .addInterceptor(get<MockInterceptor>()) //must be the last
+            .build()
+    }
+
+    single { MockInterceptor(getProperty("debug")) }
 
 }

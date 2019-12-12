@@ -50,7 +50,8 @@ val viewModelModule = module {
                 Flow.VOCABULARY -> get(named(KOIN_NAV_VOC_ROUTER))
             },
             observeDictionariesUseCase = get(),
-            test = get()
+            test = get(),
+            getPackUseCase = get()
         )
     }
 
