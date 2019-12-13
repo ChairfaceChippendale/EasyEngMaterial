@@ -23,11 +23,25 @@ class DicGatewayImpl (
         return Single.just(mapperDelegate.convert<ArticleRoom, Article>(
             ArticleRoom(
                 id = "1",
-                squareBracketText = "[com]\\\\(ˈ)a|ränik, -e|-, -aa|-, -ā|-\\\\[/com] [i][c][com]adjective[/com][/c][/i]\n" +
-                        " [m1][com][*][b]Usage:[/b] usually capitalized[/*][/com][/m]\n" +
-                        " [m1][com][*][b]Etymology:[/b] [i]Aaron fl ab [/i]1200 B.C. Jewish patriarch & high priest, brother of Moses + English [i]-ic[/i][/*][/com][/m]\n" +
-                        " [m1][b][c darkslategray]1.[/c][/b] [trn] [b]:[/b] of or stemming from Aaron the Levite, the first high priest of the Hebrews[/trn][/m]\n" +
-                        " [m1][b][c darkslategray]2.[/c][/b] [trn] [b]:[/b] of, belonging to, or being the lesser order of priesthood in the Mormon church comprising the grades of deacon, teacher, and priest[/trn] — compare [ref]melchizedek[/ref][/m]",
+                squareBracketText = "   [s]Qualität.wav[/s]\n" +
+                        "   [m1][p][i][c][com]f[/p] [p]=[/i][/p], [lang id=32775]-en[/lang][/com][/c][/m]\n" +
+                        "   [m1]1) [trn]качество, свойство[/trn][/m]\n" +
+                        "   [m2][*][ex][lang id=32775]Qualität I. \\[erster\\] Wahl[/lang] — качество первого сорта[/ex][/*][/m]\n" +
+                        "   [m1]2) [trn]качество, достоинство[/trn][/m]\n" +
+                        "   [m2][*][ex][lang id=32775]er hat in der Stunde der Gefahr seine Qualitäten bewiesen[/lang] — в момент опасности он проявил свои достоинства \\[свои лучшие качества\\][/ex][/*][/m]\n" +
+                        "   [m2][*][ex][lang id=32775]ein Mann von Qualitäten[/lang] — человек с большими достоинствами[/ex][/*][/m]\n" +
+                        "   [m1]3) [trn][com]([p][i]сокр.[/p] [lang id=32775]Q[/i])[/lang][/com] (высшее) качество; [p]ком.[/p] сорт[/trn][/m]\n" +
+                        "   [m2][*][ex][lang id=32775]beste Qualität[/lang] — высший сорт[/ex][/*][/m]\n" +
+                        "   [m2][*][ex][lang id=32775]diese Ware ist Qualität[/lang] — это товар высшего качества[/ex][/*][/m]\n" +
+                        "   [m2][p][*][ex][lang id=32775]etw.[/p] auf die Qualität überprüfen[/lang] — проверить \\[определить\\] качество \\[добротность\\] [p]чего-л.[/ex][/*][/p][/m]\n" +
+                        "   [m2][*][ex][lang id=32775]von guter Qualität[/lang] — доброкачественный [com]([i]о товаре[/i])[/com][/ex][/*][/m]\n" +
+                        "   [m2][*][ex][lang id=32775]von schlechter Qualität[/lang] — недоброкачественный [com]([i]о товаре[/i])[/com][/ex][/*][/m]\n" +
+                        "   [m2][*][ex][lang id=32775]um hohe Qualität wetteifern[/lang] — бороться за высокое качество[/ex][/*][/m]\n" +
+                        "   [m1]4) [trn]титул, звание, ранг[/trn][/m]\n" +
+                        "   [m1]5) [trn]качество, уровень[/trn][/m]\n" +
+                        "   [m2][*][ex][lang id=32775]erfinderische Qualität[/lang] — уровень изобретения[/ex][/*][/m]\n" +
+                        "   [m1]6) [trn]класс [com]([i]машин[/i])[/com][/trn][/m]\n" +
+                        "   [m1]7) [p][trn]фон.[/p] окраска, качество тембра [com]([i]гласного[/i])[/com][/trn][/m]",
                 wordName = "wardname",
                 dictionaryId = "1",
                 dictionaryName = "dic1"
