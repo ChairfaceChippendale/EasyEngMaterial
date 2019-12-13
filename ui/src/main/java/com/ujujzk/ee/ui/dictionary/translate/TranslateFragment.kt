@@ -9,7 +9,10 @@ import com.ujujzk.ee.ui.vocabulary.VocabularyParent
 
 
 class TranslateFragment :
-    BaseFragment<FragmentTranslateBinding, TranslateViewModel>(R.layout.fragment_translate, TranslateViewModel::class),
+    BaseFragment<FragmentTranslateBinding, TranslateViewModel>(
+        R.layout.fragment_translate,
+        TranslateViewModel::class
+    ),
     BackButtonListener
 {
 
