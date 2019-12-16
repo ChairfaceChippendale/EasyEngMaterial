@@ -1,8 +1,11 @@
 package com.ujujzk.ee.ui
 
+import android.os.Build
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem
 import com.ujujzk.ee.ui.di.KOIN_NAV_MAIN_CICERONE
@@ -37,6 +40,24 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         if (savedInstanceState == null) {
             tabRouter.switchFragment(dicFlow)
         }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.apply {
+                decorView.systemUiVisibility =
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+                            View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    decorView.systemUiVisibility = decorView.systemUiVisibility or
+                            View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR or
+                            View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+                }
+
+                statusBarColor = ContextCompat.getColor(context, R.color.colorStatusBar)
+                navigationBarColor = ContextCompat.getColor(context, R.color.colorNavBar)
+            }
+        }
+
 
         setupBottomMenu()
 
