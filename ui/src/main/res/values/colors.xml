@@ -4,11 +4,15 @@
     <color name="colorPrimary">@color/appWhite</color>
     <color name="colorPrimaryDark">@color/appDarkBlue</color>
     <color name="colorAccent">@color/appBlue</color>
+    <color name="colorStatusBar">@color/appWhite_50</color>
+    <color name="colorNavBar">@color/appWhite_50</color>
 
     <color name="appOrange">#FF5722</color>
     <color name="appBlue">#3F51B5</color>
     <color name="appDarkBlue">#303F9F</color>
     <color name="appWhite">#FFFFFF</color>
+    <color name="appWhite_50">#80ffffff</color>
+
 
     <color name="appGrey">#455C65</color>
     <color name="appGreen">#00886A</color>

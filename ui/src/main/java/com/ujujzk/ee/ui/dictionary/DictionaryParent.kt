@@ -11,6 +11,7 @@ import com.ujujzk.ee.ui.R
 import com.ujujzk.ee.ui.di.KOIN_NAV_DIC_CICERONE
 import com.ujujzk.ee.ui.dictionary.translate.TranslateFragment
 import com.ujujzk.ee.ui.navigation.FlowFragment
+import com.ujujzk.ee.ui.tools.addSystemTopPadding
 import org.koin.android.ext.android.inject
 import org.koin.core.qualifier.named
 import ru.terrakok.cicerone.Cicerone
@@ -31,6 +32,7 @@ class DictionaryParent: FlowFragment(DIC_TAG_TAB) {
         val root = inflater.inflate(R.layout.fragment_parent, container, false)
         val title = root.findViewById<TextView>(R.id.title)
         title.text = "Dictionary"
+        title.addSystemTopPadding()
         root.setBackgroundColor(Color.GRAY)
         return root
     }
