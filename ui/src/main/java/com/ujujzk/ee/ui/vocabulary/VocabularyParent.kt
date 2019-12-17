@@ -10,6 +10,7 @@ import android.widget.TextView
 import com.ujujzk.ee.ui.R
 import com.ujujzk.ee.ui.di.KOIN_NAV_VOC_CICERONE
 import com.ujujzk.ee.ui.navigation.FlowFragment
+import com.ujujzk.ee.ui.tools.addSystemTopPadding
 import com.ujujzk.ee.ui.vocabulary.store.StoreFragment
 import org.koin.android.ext.android.inject
 import org.koin.core.qualifier.named
@@ -31,6 +32,7 @@ class VocabularyParent : FlowFragment(VOC_TAG_TAB) {
         val root = inflater.inflate(R.layout.fragment_parent, container, false)
         val title = root.findViewById<TextView>(R.id.title)
         title.text = "Vocabulary"
+        title.addSystemTopPadding()
         root.setBackgroundColor(Color.GREEN)
         return root
     }

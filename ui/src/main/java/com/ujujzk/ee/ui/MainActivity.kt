@@ -1,9 +1,11 @@
 package com.ujujzk.ee.ui
 
+import android.annotation.TargetApi
 import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation
@@ -15,6 +17,7 @@ import com.ujujzk.ee.ui.dictionary.DictionaryParent.Companion.DIC_TAG_TAB
 import com.ujujzk.ee.ui.navigation.BackButtonListener
 import com.ujujzk.ee.ui.navigation.SwitchNavigator
 import com.ujujzk.ee.ui.navigation.SwitchRouter
+import com.ujujzk.ee.ui.tools.addSystemBottomPadding
 import com.ujujzk.ee.ui.vocabulary.VocabularyParent
 import com.ujujzk.ee.ui.vocabulary.VocabularyParent.Companion.VOC_TAG_TAB
 import org.koin.android.ext.android.inject
@@ -41,26 +44,27 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             tabRouter.switchFragment(dicFlow)
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.apply {
-                decorView.systemUiVisibility =
-                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
-                            View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    decorView.systemUiVisibility = decorView.systemUiVisibility or
-                            View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR or
-                            View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-                }
-
-                statusBarColor = ContextCompat.getColor(context, R.color.colorStatusBar)
-                navigationBarColor = ContextCompat.getColor(context, R.color.colorNavBar)
-            }
-        }
-
-
+        setupEdgeToEdge()
         setupBottomMenu()
 
+    }
+
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    private fun setupEdgeToEdge(){
+        window.apply {
+            decorView.systemUiVisibility =
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+                        View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                decorView.systemUiVisibility = decorView.systemUiVisibility or
+                        View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR or
+                        View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+            }
+
+            statusBarColor = ContextCompat.getColor(context, R.color.colorStatusBar)
+            navigationBarColor = ContextCompat.getColor(context, R.color.colorNavBar)
+        }
     }
 
     private fun setupBottomMenu(){
@@ -87,6 +91,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             true
         }
 
+        menu.addSystemBottomPadding()
     }
 
     override fun onResumeFragments() {
