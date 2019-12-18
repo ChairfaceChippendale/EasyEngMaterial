@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="colorPrimary">@color/appWhite</color>
+    <color name="colorPrimary">@color/appBlue</color>
     <color name="colorPrimaryDark">@color/appDarkBlue</color>
-    <color name="colorAccent">@color/appBlue</color>
+    <color name="colorAccent">@color/appOrange</color>
     <color name="colorStatusBar">@color/appWhite_50</color>
-    <color name="colorNavBar">@color/appWhite_50</color>
+    <color name="colorNavBar">@color/appBlack_80</color>
 
     <color name="appOrange">#FF5722</color>
     <color name="appBlue">#3F51B5</color>
@@ -19,12 +19,8 @@
     <color name="appBrown">#8B6B62</color>
 
     <color name="appLightBlack">#de000000</color>
+    <color name="appBlack_80">#CC000000</color>
     <color name="appIconGrey">#6E6E6E</color>
-
-
-    <color name="dicTab">@color/appGrey</color>
-    <color name="vocTab">@color/appGreen</color>
-    <color name="gramTab">@color/appBrown</color>
 
     <color name="dicItemText">@color/appLightBlack</color>
 

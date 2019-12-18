@@ -63,7 +63,7 @@ dependencies {
     implementation uiDeps.ktx
     implementation uiDeps.constraint
     implementation uiDeps.recyclerview
-    implementation uiDeps.support
+    implementation uiDeps.material
 
     implementation uiDeps.lcExtensions
     kapt uiDeps.lcCompiler
@@ -85,8 +85,6 @@ dependencies {
 //    implementation uiDeps.glideOkhttp3
 
     implementation uiDeps.cicerone
-
-    implementation uiDeps.bottomNav
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
