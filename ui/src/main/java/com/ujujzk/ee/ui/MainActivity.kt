@@ -1,16 +1,11 @@
 package com.ujujzk.ee.ui
 
-import android.annotation.TargetApi
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.aurelhubert.ahbottomnavigation.AHBottomNavigation
-import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.ujujzk.ee.ui.di.KOIN_NAV_MAIN_CICERONE
 import com.ujujzk.ee.ui.di.KOIN_NAV_MAIN_ROUTER
 import com.ujujzk.ee.ui.dictionary.DictionaryParent
@@ -21,6 +16,7 @@ import com.ujujzk.ee.ui.navigation.SwitchRouter
 import com.ujujzk.ee.ui.tools.addSystemBottomPadding
 import com.ujujzk.ee.ui.vocabulary.VocabularyParent
 import com.ujujzk.ee.ui.vocabulary.VocabularyParent.Companion.VOC_TAG_TAB
+import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.ext.android.inject
 import org.koin.core.qualifier.named
 import ru.terrakok.cicerone.BaseRouter
@@ -71,39 +67,16 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     }
 
     private fun setupBottomMenu(){
-        val menu = findViewById<BottomNavigationView>(R.id.bottom_navigation)
 
-        menu.setOnNavigationItemSelectedListener {
+        bottom_navigation.setOnNavigationItemSelectedListener {
             when(it.itemId){
                 R.id.navigation_dictionary -> tabRouter.switchFragment(dicFlow)
                 R.id.navigation_vocabulary -> tabRouter.switchFragment(vocFlow)
-
             }
             true
         }
-//
-//        val dicTab = AHBottomNavigationItem(R.string.dictionary_title, R.drawable.ic_dictionary_black_24dp, R.color.dicTab)
-//        val vocTab = AHBottomNavigationItem(R.string.vocabulary_title, R.drawable.ic_vocabulary_black_24dp, R.color.vocTab)
-//        val grmTab = AHBottomNavigationItem(R.string.grammar_title, R.drawable.ic_grammar_black_24dp, R.color.gramTab)
-//
-//        menu.addItem(dicTab)
-//        menu.addItem(vocTab)
-//        menu.addItem(grmTab)
-//
-//        menu.disableItemAtPosition(2)
-//
-//        menu.isColored = true
-//        menu.setCurrentItem(0, false)
-//
-//        menu.setOnTabSelectedListener { position, _ ->
-//            when (position){
-//                0 -> tabRouter.switchFragment(dicFlow)
-//                1 -> tabRouter.switchFragment(vocFlow)
-//            }
-//            true
-//        }
 
-        menu.addSystemBottomPadding()
+        bottom_navigation.addSystemBottomPadding()
     }
 
     override fun onResumeFragments() {
