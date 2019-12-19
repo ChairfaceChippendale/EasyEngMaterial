@@ -1,15 +1,17 @@
 package com.ujujzk.ee.data.interceptor
 
 import okhttp3.*
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.ResponseBody.Companion.toResponseBody
 
 class MockInterceptor(
-    val isDebugBuild: Boolean
+    private val isDebugBuild: Boolean
 ) : Interceptor {
 
 
     override fun intercept(chain: Interceptor.Chain): Response {
         if (isDebugBuild) {
-            val uri = chain.request().url().uri().toString()
+            val uri = chain.request().url.toUri().toString()
             val responseString = when {
                 uri.endsWith("voc") -> getListOfReposBeingStarredJson2
                 else -> ""
@@ -21,10 +23,9 @@ class MockInterceptor(
                 .protocol(Protocol.HTTP_2)
                 .message("Mock message")
                 .body(
-                    ResponseBody.create(
-                        MediaType.parse("application/json"),
-                        responseString.toByteArray()
-                    )
+                    responseString
+                        .toByteArray()
+                        .toResponseBody("application/json".toMediaTypeOrNull())
                 )
                 .addHeader("content-type", "application/json")
                 .addHeader("header-one", "value-one")
