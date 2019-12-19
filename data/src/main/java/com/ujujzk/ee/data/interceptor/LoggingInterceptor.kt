@@ -3,9 +3,8 @@ package com.ujujzk.ee.data.interceptor
 import okhttp3.Headers
 import okhttp3.Interceptor
 import okhttp3.Response
-import okhttp3.internal.http.HttpHeaders
+import okhttp3.internal.http.promisesBody
 import okhttp3.internal.platform.Platform
-import okhttp3.internal.platform.Platform.INFO
 import okio.Buffer
 import okio.GzipSource
 import org.json.JSONArray
@@ -25,7 +24,7 @@ import kotlin.text.Charsets.UTF_8
  */
 class LoggingInterceptor(
     private val level: Level = Level.NONE,
-    val logger: (String) -> Unit = { message -> Platform.get().log(INFO, message, null) },
+    val logger: (String) -> Unit = { message -> Platform.get().log(Platform.INFO, message, null) },
     private val inlineBody: Boolean = false
 ): Interceptor {
 
@@ -57,9 +56,9 @@ class LoggingInterceptor(
         val logBody = level == Level.HEADERS_BODY || level == Level.BODY
         val logHeaders = level == Level.HEADERS_BODY || level == Level.HEADERS
 
-        val requestBody = request.body()
+        val requestBody = request.body
 
-        message.append("--> ${request.method()} ${request.url()}")
+        message.append("--> ${request.method} ${request.url}")
             .append(chain.connection()?.protocol() ?: "")
         if (!logHeaders && requestBody != null) {
             message.append(" (${requestBody.contentLength()}-byte body)")
@@ -76,9 +75,9 @@ class LoggingInterceptor(
                 }
             }
 
-            val headers = request.headers()
+            val headers = request.headers
             var headerName: String
-            for (i in 0 until headers.size()) {
+            for (i in 0 until headers.size) {
                 headerName = headers.name(i)
                 if (!headerName.equals("Content-Type", true) &&
                     !headerName.equals("Content-Length", true)) {
@@ -89,9 +88,9 @@ class LoggingInterceptor(
             }
         }
         if (!logBody || requestBody == null) {
-            message.append("--> END ${request.method()}\n")
-        } else if (bodyEncoded(request.headers())) {
-            message.append("--> END ${request.method()} encoded body omitted)\n")
+            message.append("--> END ${request.method}\n")
+        } else if (bodyEncoded(request.headers)) {
+            message.append("--> END ${request.method} encoded body omitted)\n")
         } else {
             val buffer = Buffer()
             requestBody.writeTo(buffer)
@@ -103,9 +102,9 @@ class LoggingInterceptor(
                 val body = if (inlineBody) buffer.clone().readString(charset) else formatJson(
                     buffer.clone().readString(charset)
                 )
-                message.append("$body\n--> END ${request.method()} (${requestBody.contentLength()}-byte body)\n")
+                message.append("$body\n--> END ${request.method} (${requestBody.contentLength()}-byte body)\n")
             } else {
-                message.append("--> END ${request.method()} (binary ${requestBody.contentLength()} -byte body omitted)\n")
+                message.append("--> END ${request.method} (binary ${requestBody.contentLength()} -byte body omitted)\n")
             }
         }
 
@@ -123,21 +122,22 @@ class LoggingInterceptor(
 
         val tookMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNs)
 
-        val responseBody = response.body()
+        val responseBody = response.body
         val contentLength = responseBody?.contentLength() ?: -1L
         val bodySize = if (contentLength != -1L) "$contentLength-byte" else "unknown-length"
-        message.append("<-- ${response.code()} ${response.message()} ${response.request().url()} ($tookMs ms, $bodySize body)\n")
+        message.append("<-- ${response.code} ${response.message} ${response.request.url} ($tookMs ms, $bodySize body)\n")
 
-        val headers = response.headers()
+        val headers = response.headers
         if (logHeaders) {
-            for (i in 0 until headers.size()) {
+            for (i in 0 until headers.size) {
                 val value = if (headers.name(i) in headersToRedact) "██████" else headers.value(i)
                 message.append("${headers.name(i)}: ${value}\n")
             }
         }
-        if (!logBody || !HttpHeaders.hasBody(response)) {
+
+        if (!logBody || !response.promisesBody()) {
             message.append("<-- END HTTP\n")
-        } else if (bodyEncoded(response.headers())) {
+        } else if (bodyEncoded(response.headers)) {
             message.append("<-- END HTTP (encoded body omitted)\n")
         } else if (responseBody == null) {
             message.append("<-- END HTTP (body = null)\n")
@@ -149,7 +149,7 @@ class LoggingInterceptor(
 
             var gzippedLength: Long? = null
             if ("gzip".equals(headers["Content-Encoding"], ignoreCase = true)) {
-                gzippedLength = buffer.size()
+                gzippedLength = buffer.size
                 GzipSource(buffer.clone()).use { gzippedResponseBody ->
                     buffer = Buffer()
                     buffer.writeAll(gzippedResponseBody)
@@ -159,7 +159,7 @@ class LoggingInterceptor(
             val charset = responseBody.contentType()?.charset(UTF_8) ?: UTF_8
 
             if (!isProbablyUtf8(buffer)) {
-                message.append("\n<-- END HTTP (binary ${buffer.size()}-byte body omitted)\n")
+                message.append("\n<-- END HTTP (binary ${buffer.size}-byte body omitted)\n")
                 logger(message.toString())
                 return response
             }
@@ -172,9 +172,9 @@ class LoggingInterceptor(
             }
 
             if (gzippedLength != null) {
-                message.append("<-- END HTTP (${buffer.size()}-byte, $gzippedLength-gzipped-byte body)\n")
+                message.append("<-- END HTTP (${buffer.size}-byte, $gzippedLength-gzipped-byte body)\n")
             } else {
-                message.append("<-- END HTTP (${buffer.size()}-byte body)\n")
+                message.append("<-- END HTTP (${buffer.size}-byte body)\n")
             }
         }
         logger(message.toString())
@@ -186,7 +186,7 @@ class LoggingInterceptor(
     private fun isProbablyUtf8(buffer: Buffer): Boolean {
         return try {
             val prefix = Buffer()
-            val byteCount = buffer.size().coerceAtMost(64)
+            val byteCount = buffer.size.coerceAtMost(64)
             buffer.copyTo(prefix, 0, byteCount)
             for (i in 0 until 16) {
                 if (prefix.exhausted()) {

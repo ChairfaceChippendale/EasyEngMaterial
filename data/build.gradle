@@ -59,7 +59,7 @@ dependencies {
 
     implementation dataDeps.gson
     implementation dataDeps.okhttp
-    implementation dataDeps.okhttpInterceptor
+//    implementation dataDeps.okhttpInterceptor
     implementation dataDeps.retrofit
     implementation dataDeps.retrofitGson
     implementation dataDeps.retrofitRx
