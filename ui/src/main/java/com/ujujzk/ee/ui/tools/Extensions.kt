@@ -11,7 +11,7 @@ fun View.updatePadding(
     right: Int = paddingRight,
     bottom: Int = paddingBottom
 ) {
-    post { setPadding(left, top, right, bottom) }
+     setPadding(left, top, right, bottom)
 }
 
 fun View.addSystemTopPadding(
