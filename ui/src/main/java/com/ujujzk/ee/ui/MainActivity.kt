@@ -11,9 +11,11 @@ import com.ujujzk.ee.ui.di.KOIN_NAV_MAIN_ROUTER
 import com.ujujzk.ee.ui.dictionary.DictionaryParent
 import com.ujujzk.ee.ui.dictionary.DictionaryParent.Companion.DIC_TAG_TAB
 import com.ujujzk.ee.ui.navigation.BackButtonListener
+import com.ujujzk.ee.ui.navigation.NavBarOwner
 import com.ujujzk.ee.ui.navigation.SwitchNavigator
 import com.ujujzk.ee.ui.navigation.SwitchRouter
 import com.ujujzk.ee.ui.tools.addSystemBottomPadding
+import com.ujujzk.ee.ui.tools.visible
 import com.ujujzk.ee.ui.vocabulary.VocabularyParent
 import com.ujujzk.ee.ui.vocabulary.VocabularyParent.Companion.VOC_TAG_TAB
 import kotlinx.android.synthetic.main.activity_main.*
@@ -22,7 +24,7 @@ import org.koin.core.qualifier.named
 import ru.terrakok.cicerone.BaseRouter
 import ru.terrakok.cicerone.Cicerone
 
-class MainActivity : AppCompatActivity(R.layout.activity_main) {
+class MainActivity : AppCompatActivity(R.layout.activity_main), NavBarOwner {
 
     private val dicFlow: DictionaryParent by lazy {
         supportFragmentManager.findFragmentByTag(DIC_TAG_TAB) as? DictionaryParent ?: DictionaryParent.inst()
@@ -95,5 +97,13 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 finish()
         }
 
+    }
+
+    override fun hideNaveBar() {
+       bottom_navigation.visible(false)
+    }
+
+    override fun showNavBar() {
+        bottom_navigation.visible(true)
     }
 }

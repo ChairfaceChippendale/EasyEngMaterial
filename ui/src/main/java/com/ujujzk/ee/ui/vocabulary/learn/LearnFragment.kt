@@ -14,6 +14,8 @@ class LearnFragment:
     ),
     BackButtonListener {
 
+    override val displayNavBar: Boolean = true
+
     override fun bindViewModel() {
         binding.viewModel = viewModel
         binding.executePendingBindings()

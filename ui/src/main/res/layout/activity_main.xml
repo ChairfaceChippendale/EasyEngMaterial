@@ -24,6 +24,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:background="?android:attr/windowBackground"
+        android:visibility="gone"
         app:itemIconTint="@drawable/selector_bottom_menu_icon_color"
         app:itemTextColor="@drawable/selector_bottom_menu_icon_color"
         app:menu="@menu/bottom_menu_nav" />
