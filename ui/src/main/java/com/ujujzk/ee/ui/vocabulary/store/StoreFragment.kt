@@ -1,5 +1,10 @@
 package com.ujujzk.ee.ui.vocabulary.store
 
+import android.os.Bundle
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import com.ujujzk.ee.ui.R
 import com.ujujzk.ee.ui.base.BaseFragment
 import com.ujujzk.ee.ui.databinding.FragmentStoreBinding
@@ -13,6 +18,8 @@ class StoreFragment :
         StoreViewModel::class
     ),
     BackButtonListener {
+
+    override val displayNavBar: Boolean = true
 
     override fun bindViewModel() {
         binding.viewModel = viewModel

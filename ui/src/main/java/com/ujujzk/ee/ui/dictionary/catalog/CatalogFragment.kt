@@ -17,6 +17,7 @@ class CatalogFragment :
     ),
     BackButtonListener {
 
+    override val displayNavBar: Boolean = false
 
     override fun bindViewModel() {
         binding.viewModel = viewModel

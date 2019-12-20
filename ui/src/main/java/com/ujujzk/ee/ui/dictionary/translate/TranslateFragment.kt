@@ -9,9 +9,13 @@ import com.ujujzk.ee.ui.vocabulary.VocabularyParent
 
 
 class TranslateFragment :
-    BaseFragment<FragmentTranslateBinding, TranslateViewModel>(R.layout.fragment_translate, TranslateViewModel::class),
-    BackButtonListener
-{
+    BaseFragment<FragmentTranslateBinding, TranslateViewModel>(
+        R.layout.fragment_translate,
+        TranslateViewModel::class
+    ),
+    BackButtonListener {
+
+    override val displayNavBar: Boolean = true
 
     override fun bindViewModel() {
         binding.viewModel = viewModel

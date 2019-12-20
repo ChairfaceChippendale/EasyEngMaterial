@@ -5,6 +5,13 @@ import android.view.View
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
+
+fun View.visible(visible: Boolean) {
+    this.visibility = if (visible) View.VISIBLE else View.GONE
+}
+
+
+
 fun View.updatePadding(
     left: Int = paddingLeft,
     top: Int = paddingTop,
