@@ -2,8 +2,9 @@ package com.ujujzk.ee.ui.tools
 
 import android.graphics.Rect
 import android.view.View
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.*
 
 
 fun View.visible(visible: Boolean) {
@@ -44,7 +45,6 @@ fun View.addSystemTopPadding(
     }
 }
 
-
 fun View.addSystemBottomPadding(
     targetView: View = this,
     isConsumed: Boolean = false
@@ -68,6 +68,45 @@ fun View.addSystemBottomPadding(
     }
 }
 
+fun View.addSystemBottomMargin(
+    targetView: View = this,
+    isConsumed: Boolean = false
+) {
+    doOnMarginApplyWindowInsets { _, insets, initialMargin ->
+
+        val params = targetView.layoutParams as ViewGroup.MarginLayoutParams
+        params.setMargins(
+            initialMargin.left,
+            initialMargin.top,
+            initialMargin.right,
+            initialMargin.top + insets.systemWindowInsetBottom
+        )
+        targetView.layoutParams = params
+
+        if (isConsumed) {
+            insets.replaceSystemWindowInsets(
+                Rect(
+                    insets.systemWindowInsetLeft,
+                    insets.systemWindowInsetTop,
+                    insets.systemWindowInsetRight,
+                    0
+                )
+            )
+        } else {
+            insets
+        }
+    }
+}
+
+fun View.doOnMarginApplyWindowInsets(block: (View, insets: WindowInsetsCompat, initialMargin: Rect) -> WindowInsetsCompat) {
+
+    val initialMargin = Rect(marginLeft, marginTop, marginRight, marginBottom)
+
+    ViewCompat.setOnApplyWindowInsetsListener(this) { v, insets ->
+        block(v, insets, initialMargin)
+    }
+    requestApplyInsetsWhenAttached()
+}
 
 fun View.doOnApplyWindowInsets(block: (View, insets: WindowInsetsCompat, initialPadding: Rect) -> WindowInsetsCompat) {
     val initialPadding = recordInitialPaddingForView(this)

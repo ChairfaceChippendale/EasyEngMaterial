@@ -10,17 +10,18 @@
             android:paddingEnd="@dimen/common_padding">
 
         <CheckBox
-                android:id="@+id/checkBox"
+                android:id="@+id/selectCb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="true"
                 android:text="@null"
+                android:backgroundTint="@color/colorPrimary"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/common_padding"
@@ -31,7 +32,7 @@
                 android:ellipsize="end"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/deleteBtn"
-                app:layout_constraintStart_toEndOf="@+id/checkBox"
+                app:layout_constraintStart_toEndOf="@+id/selectCb"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Dictionary" />
 

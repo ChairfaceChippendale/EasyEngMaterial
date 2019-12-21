@@ -10,22 +10,21 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/root"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@android:color/white">
 
-        <TextView
-                android:id="@+id/title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-
-                android:text="Dictionaries"
-                android:textSize="30sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/view_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:backClick="@{() -> viewModel.onBackPressed()}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:title="@{viewModel.title}" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/dictionaries"
@@ -34,21 +33,22 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar"
             tools:listitem="@layout/item_dictionary"/>
 
-
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/addBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_add_white_24dp"
+            android:focusable="true"
+            android:clickable="true"
             android:layout_margin="16dp"
-            app:rippleColor="@android:color/holo_orange_light"
+            android:backgroundTint="@color/colorPrimary"
+            app:borderWidth="0dp"
+            app:elevation="6dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
-
-
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

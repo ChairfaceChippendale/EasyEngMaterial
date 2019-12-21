@@ -20,7 +20,11 @@ class CatalogViewModel(
 
     val arttext: MutableLiveData<CharSequence> by lazy { MutableLiveData<CharSequence>() }
 
+    val title: MutableLiveData<String> by lazy { MutableLiveData<String>() }
+
     init {
+
+        title.value = "Dictionaries"
 
         //TODO TEMP
         observeDictionariesUseCase.executeBy(
@@ -45,15 +49,15 @@ class CatalogViewModel(
         )
 
         //TODO TEMP TEST LOGGING interceptor
-        getPackUseCase.executeBy(
-            GetPackUseCase.Params.get(),
-            onComplete = {
-                logger("Voc test Complete")
-            },
-            onError = {
-                it.printStackTrace()
-            }
-        )
+//        getPackUseCase.executeBy(
+//            GetPackUseCase.Params.get(),
+//            onComplete = {
+//                logger("Voc test Complete")
+//            },
+//            onError = {
+//                it.printStackTrace()
+//            }
+//        )
     }
 
     fun onBackPressed() : Boolean {
