@@ -53,9 +53,6 @@ class VocabularyParent : FlowFragment(VOC_TAG_TAB) {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        title.addSystemTopPadding()
-        title.text = "Vocabulary"
-
         if (childFragmentManager.findFragmentById(R.id.container) == null) {
             cicerone.router.replaceScreen(StoreFragment.Screen())
         }
