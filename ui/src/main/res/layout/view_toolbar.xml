@@ -22,13 +22,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorToolbar"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
+        android:paddingStart="@dimen/common_padding"
+        android:paddingEnd="@dimen/common_padding"
         >
 
         <ImageView
             android:id="@+id/backBtn"
-            android:layout_width="wrap_content"
+            android:layout_width="24dp"
             android:layout_height="?android:attr/actionBarSize"
             android:onClick="@{() -> backClick.invoke()}"
             android:tint="?android:attr/textColorSecondary"
@@ -44,7 +44,7 @@
             style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="32dp"
             android:maxLines="1"
             android:text="@{title}"
             app:layout_constraintBottom_toBottomOf="parent"

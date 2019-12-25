@@ -1,15 +1,21 @@
 package com.ujujzk.ee.ui.tools
 
 import android.graphics.Rect
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.annotation.LayoutRes
 import androidx.core.view.*
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 
 
 fun View.visible(visible: Boolean) {
     this.visibility = if (visible) View.VISIBLE else View.GONE
 }
+
+fun <T: ViewDataBinding> ViewGroup.inflate(@LayoutRes layoutRes: Int): T =
+    DataBindingUtil.inflate<T>(LayoutInflater.from(context), layoutRes, this, false)
 
 
 
@@ -44,7 +50,12 @@ fun View.addSystemTopPadding(
         }
     }
 }
-
+/**
+ * @param isConsumed    {@code true} - it will handle inset and other views will not receive it,
+ *                      {@code false} - it will handle inset and other views will also receive it
+ * @param targetView    the view that will handle insets first??
+ *
+ */
 fun View.addSystemBottomPadding(
     targetView: View = this,
     isConsumed: Boolean = false
@@ -68,6 +79,30 @@ fun View.addSystemBottomPadding(
     }
 }
 
+fun View.addSystemTopBottomPadding(
+    targetView: View = this,
+    isConsumed: Boolean = false
+) {
+    doOnApplyWindowInsets { _, insets, initialPadding ->
+        targetView.updatePadding(
+            bottom = initialPadding.bottom + insets.systemWindowInsetBottom,
+            top = initialPadding.top + insets.systemWindowInsetTop
+        )
+        if (isConsumed) {
+            insets.replaceSystemWindowInsets(
+                Rect(
+                    insets.systemWindowInsetLeft,
+                    0,
+                    insets.systemWindowInsetRight,
+                    0
+                )
+            )
+        } else {
+            insets
+        }
+    }
+}
+
 fun View.addSystemBottomMargin(
     targetView: View = this,
     isConsumed: Boolean = false
@@ -79,7 +114,7 @@ fun View.addSystemBottomMargin(
             initialMargin.left,
             initialMargin.top,
             initialMargin.right,
-            initialMargin.top + insets.systemWindowInsetBottom
+            initialMargin.bottom + insets.systemWindowInsetBottom
         )
         targetView.layoutParams = params
 
@@ -95,6 +130,37 @@ fun View.addSystemBottomMargin(
         } else {
             insets
         }
+    }
+}
+
+fun View.addSystemTopMargin(
+    targetView: View = this,
+    isConsumed: Boolean = false
+) {
+    doOnMarginApplyWindowInsets { _, insets, initialMargin ->
+
+        val params = targetView.layoutParams as ViewGroup.MarginLayoutParams
+        params.setMargins(
+            initialMargin.left,
+            initialMargin.top + insets.systemWindowInsetTop,
+            initialMargin.right,
+            initialMargin.bottom
+        )
+        targetView.layoutParams = params
+
+        if (isConsumed){
+            insets.replaceSystemWindowInsets(
+                Rect(
+                    insets.systemWindowInsetLeft,
+                    0,
+                    insets.stableInsetRight,
+                    insets.systemWindowInsetBottom
+                )
+            )
+        } else{
+            insets
+        }
+
     }
 }
 

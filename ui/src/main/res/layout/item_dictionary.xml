@@ -3,6 +3,15 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools">
 
+
+    <data>
+        <import type="android.view.View"/>
+
+        <variable
+            name="dictionary"
+            type="com.ujujzk.ee.ui.model.VDictionary" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/list_item_height_narrow"
@@ -13,9 +22,7 @@
                 android:id="@+id/selectCb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:checked="true"
-                android:text="@null"
-                android:backgroundTint="@color/colorPrimary"
+                android:checked="@{dictionary.enabledForSearch}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -26,10 +33,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/common_padding"
                 android:layout_marginEnd="@dimen/common_padding"
-                android:textColor="@color/dicItemText"
+                android:textColor="?android:textColorPrimary"
                 android:textSize="16sp"
                 android:maxLines="1"
                 android:ellipsize="end"
+                android:text="@{dictionary.dictionaryName}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/deleteBtn"
                 app:layout_constraintStart_toEndOf="@+id/selectCb"
@@ -44,6 +52,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_delete_black_24dp"
+                android:visibility="@{dictionary.installationProgress == 100 ? View.VISIBLE : View.GONE}"
                 tools:ignore="ContentDescription" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

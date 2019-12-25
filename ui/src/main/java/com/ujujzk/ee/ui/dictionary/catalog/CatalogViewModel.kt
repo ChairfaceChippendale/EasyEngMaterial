@@ -6,6 +6,7 @@ import com.ujujzk.ee.domain.usecase.dic.ObserveDictionariesUseCase
 import com.ujujzk.ee.domain.usecase.dic.TestArticleDefinitionUseCase
 import com.ujujzk.ee.domain.usecase.voc.GetPackUseCase
 import com.ujujzk.ee.ui.base.BaseViewModel
+import com.ujujzk.ee.ui.model.VDictionary
 import io.reactivex.disposables.CompositeDisposable
 import ru.terrakok.cicerone.Router
 
@@ -22,6 +23,8 @@ class CatalogViewModel(
 
     val title: MutableLiveData<String> by lazy { MutableLiveData<String>() }
 
+    val dicListAdapter: MutableLiveData<DicAdapter> by lazy { MutableLiveData<DicAdapter>() }
+
     init {
 
         title.value = "Dictionaries"
@@ -29,8 +32,11 @@ class CatalogViewModel(
         //TODO TEMP
         observeDictionariesUseCase.executeBy(
             ObserveDictionariesUseCase.Params.get(),
-            onNext = {
-                it.size
+            onNext = {dictionaries ->
+
+                dicListAdapter.value =
+                    DicAdapter().also { it.data = dictionaries.map { VDictionary(it.id, it.dictionaryName) } }
+
             },
             onError = {
                 it.printStackTrace()

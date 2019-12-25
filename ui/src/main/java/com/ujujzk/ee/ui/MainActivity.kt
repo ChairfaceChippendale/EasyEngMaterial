@@ -78,7 +78,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), NavBarOwner {
             true
         }
 
-        bottom_navigation.addSystemBottomPadding()
+        bottom_navigation.addSystemBottomPadding(isConsumed = true)
     }
 
     override fun onResumeFragments() {
