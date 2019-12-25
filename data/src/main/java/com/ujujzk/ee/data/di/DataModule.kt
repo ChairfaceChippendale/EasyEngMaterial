@@ -8,6 +8,7 @@ import com.ujujzk.ee.data.interceptor.LoggingInterceptor
 import com.ujujzk.ee.data.interceptor.MockInterceptor
 import com.ujujzk.ee.data.source.dic.DicGatewayImpl
 import com.ujujzk.ee.data.source.dic.DicStorage
+import com.ujujzk.ee.data.source.dic.local.DicStorageFake
 import com.ujujzk.ee.data.source.dic.local.DicStorageRoom
 import com.ujujzk.ee.data.source.dic.local.model.*
 import com.ujujzk.ee.data.source.voc.VocGatewayImpl
@@ -51,7 +52,8 @@ val dataModule = module {
     }
 
     single<DicGateway> { DicGatewayImpl(get(), get()) }
-    single<DicStorage> { DicStorageRoom(get(), get(), get()) }
+//    single<DicStorage> { DicStorageRoom(get(), get(), get()) }
+    single<DicStorage> { DicStorageFake() }
     single { get<AppDatabase>().getDictionaryDao() }
     single { get<AppDatabase>().getArticleDao() }
 

@@ -11,6 +11,7 @@ ext {
     ktxVer = '1.2.0-rc01'
     constraintVer = '2.0.0-beta4'
     materialVer = '1.0.0'
+    fragmentVer = '1.2.0-rc01'
 
     //arch
     archComponentVer = '1.1.1'
@@ -63,6 +64,8 @@ ext {
             constraint   : "androidx.constraintlayout:constraintlayout:${constraintVer}",
             recyclerview : "androidx.recyclerview:recyclerview:${androidXVer}",
             material     : "com.google.android.material:material:${materialVer}",
+            fragment     : "androidx.fragment:fragment-ktx:${fragmentVer}",
+            fragmentTest : "androidx.fragment:fragment-testing:${fragmentVer}",
             lcExtensions : "androidx.lifecycle:lifecycle-extensions:${lifecycleVer}",
             lcCompiler   : "androidx.lifecycle:lifecycle-compiler:${lifecycleVer}",
             lcStream     : "androidx.lifecycle:lifecycle-reactivestreams:${lifecycleVer}",

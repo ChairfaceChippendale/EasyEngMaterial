@@ -30,7 +30,7 @@ class DictionaryParent: FlowFragment(DIC_TAG_TAB) {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val root = inflater.inflate(R.layout.fragment_parent, container, false)
-        root.setBackgroundColor(Color.GRAY)
+        root.setBackgroundColor(Color.CYAN)
         return root
     }
 
@@ -52,8 +52,6 @@ class DictionaryParent: FlowFragment(DIC_TAG_TAB) {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        title.text = "Dictionary"
-        title.addSystemTopPadding()
 
         if (childFragmentManager.findFragmentById(R.id.container) == null) {
             cicerone.router.replaceScreen(TranslateFragment.Screen())

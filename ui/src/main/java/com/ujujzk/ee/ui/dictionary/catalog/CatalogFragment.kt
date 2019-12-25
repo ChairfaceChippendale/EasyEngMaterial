@@ -2,12 +2,17 @@ package com.ujujzk.ee.ui.dictionary.catalog
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.ujujzk.ee.ui.R
 import com.ujujzk.ee.ui.base.BaseFragment
 import com.ujujzk.ee.ui.databinding.FragmentCatalogBinding
 import com.ujujzk.ee.ui.di.Flow
 import com.ujujzk.ee.ui.navigation.BackButtonListener
 import com.ujujzk.ee.ui.navigation.FragmentScreen
+import com.ujujzk.ee.ui.tools.*
+import kotlinx.android.synthetic.main.fragment_catalog.*
 
 
 class CatalogFragment :
@@ -26,11 +31,35 @@ class CatalogFragment :
     override fun onBackPressed(): Boolean =
         viewModel.onBackPressed()
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        toolbar.addSystemTopMargin()
+        addBtn.addSystemBottomMargin()
+        dictionaries.addSystemTopBottomPadding()
+
+        dictionaries.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if(!recyclerView.canScrollVertically(-1)) {
+                    // we have reached the top of the list
+                    toolbar.elevation = 0f
+                } else {
+                    // we are not at the top yet
+                    toolbar.elevation = resources.getDimensionPixelSize(R.dimen.toolbar_elevation).toFloat()
+                }
+
+                if (dy > 0){
+                    addBtn.hide()
+                } else {
+                    addBtn.show()
+                }
+            }
+        })
+    }
+
     class Screen(flowName: Flow) : FragmentScreen({
         CatalogFragment().apply {
             arguments = Bundle().apply { putSerializable(EXTRA_FLOW_QUALIFIER, flowName)}
         }
     })
-
-
 }
