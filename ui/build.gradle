@@ -68,6 +68,7 @@ dependencies {
     implementation uiDeps.constraint
     implementation uiDeps.recyclerview
     implementation uiDeps.material
+    implementation uiDeps.fragment
 
     implementation uiDeps.lcExtensions
     kapt uiDeps.lcCompiler
