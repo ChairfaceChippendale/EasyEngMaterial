@@ -1,10 +1,7 @@
 package com.ujujzk.ee.ui.dictionary.catalog
 
 import android.os.Bundle
-import android.util.Log
-import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.ujujzk.ee.ui.R
 import com.ujujzk.ee.ui.base.BaseFragment
 import com.ujujzk.ee.ui.databinding.FragmentCatalogBinding
@@ -40,6 +37,7 @@ class CatalogFragment :
 
         dictionaries.addOnScrollListener(object : RecyclerView.OnScrollListener(){
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                //rise toolbar to scroll list "behind" it
                 if(!recyclerView.canScrollVertically(-1)) {
                     // we have reached the top of the list
                     toolbar.elevation = 0f
@@ -47,7 +45,7 @@ class CatalogFragment :
                     // we are not at the top yet
                     toolbar.elevation = resources.getDimensionPixelSize(R.dimen.toolbar_elevation).toFloat()
                 }
-
+                //hide add FAB on scroll list down
                 if (dy > 0){
                     addBtn.hide()
                 } else {

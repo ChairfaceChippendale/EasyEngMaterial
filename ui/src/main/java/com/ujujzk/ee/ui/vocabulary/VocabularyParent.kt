@@ -9,9 +9,7 @@ import android.view.ViewGroup
 import com.ujujzk.ee.ui.R
 import com.ujujzk.ee.ui.di.KOIN_NAV_VOC_CICERONE
 import com.ujujzk.ee.ui.navigation.FlowFragment
-import com.ujujzk.ee.ui.tools.addSystemTopPadding
 import com.ujujzk.ee.ui.vocabulary.store.StoreFragment
-import kotlinx.android.synthetic.main.fragment_parent.*
 import org.koin.android.ext.android.inject
 import org.koin.core.qualifier.named
 import ru.terrakok.cicerone.Cicerone

@@ -10,8 +10,6 @@ import com.ujujzk.ee.ui.R
 import com.ujujzk.ee.ui.di.KOIN_NAV_DIC_CICERONE
 import com.ujujzk.ee.ui.dictionary.translate.TranslateFragment
 import com.ujujzk.ee.ui.navigation.FlowFragment
-import com.ujujzk.ee.ui.tools.addSystemTopPadding
-import kotlinx.android.synthetic.main.fragment_parent.*
 import org.koin.android.ext.android.inject
 import org.koin.core.qualifier.named
 import ru.terrakok.cicerone.Cicerone

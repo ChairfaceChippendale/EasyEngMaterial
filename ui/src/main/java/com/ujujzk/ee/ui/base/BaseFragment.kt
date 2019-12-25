@@ -1,7 +1,6 @@
 package com.ujujzk.ee.ui.base
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,8 +12,6 @@ import androidx.lifecycle.LifecycleRegistry
 import com.ujujzk.ee.ui.navigation.NavBarOwner
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
-import org.koin.core.qualifier.Qualifier
-import org.koin.core.qualifier.named
 import kotlin.reflect.KClass
 
 abstract class BaseFragment<BINDING : ViewDataBinding, out VIEW_MODEL : BaseViewModel>(

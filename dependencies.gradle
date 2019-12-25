@@ -11,7 +11,7 @@ ext {
     ktxVer = '1.2.0-rc01'
     constraintVer = '2.0.0-beta4'
     materialVer = '1.0.0'
-    fragmentVer = '1.2.0-rc01'
+    fragmentVer = '1.2.0-rc04'
 
     //arch
     archComponentVer = '1.1.1'
