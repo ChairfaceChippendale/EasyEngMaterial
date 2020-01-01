@@ -50,7 +50,6 @@
             android:focusable="true"
             android:clickable="true"
             android:layout_margin="16dp"
-            android:backgroundTint="@color/colorPrimary"
             app:borderWidth="0dp"
             app:elevation="6dp"
             app:layout_constraintBottom_toBottomOf="parent"

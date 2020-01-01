@@ -2,9 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
         package="com.ujujzk.ee.ui">
 
-    <application>
+    <application
+        android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
+        >
 
-        <!--`adjustResize` must be for single activity app-->
+        <!--`android:windowSoftInputMode="adjustResize"` must be for single activity app-->
         <activity
                 android:name=".MainActivity"
                 android:windowSoftInputMode="adjustResize">
