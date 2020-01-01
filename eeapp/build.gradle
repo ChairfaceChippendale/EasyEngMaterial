@@ -64,7 +64,8 @@ dependencies {
     implementation project(':data')
 
     implementation appDeps.kotlin
-    implementation appDeps.appcompat
+//    implementation appDeps.appcompat
+    implementation appDeps.material
     implementation appDeps.rxKotlin
     implementation appDeps.rxAndroid
     implementation appDeps.koin
