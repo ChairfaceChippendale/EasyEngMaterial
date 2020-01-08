@@ -31,6 +31,9 @@ class CatalogFragment :
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        toolbar.outlineProvider = TransparentOutlineProvider()
+        toolbar.clipToOutline = true
+
         toolbar.addSystemTopMargin()
         addBtn.addSystemBottomMargin()
         dictionaries.addSystemTopBottomPadding()
