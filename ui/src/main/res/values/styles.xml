@@ -7,9 +7,9 @@
         <item name="colorAccent">@color/colorSecondary</item>
         <item name="colorSecondary">@color/colorSecondary</item>
 
-        <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:windowTranslucentNavigation">true</item>
-        <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
+<!--        <item name="android:windowTranslucentStatus">true</item>-->
+<!--        <item name="android:windowTranslucentNavigation">true</item>-->
+<!--        <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>-->
 <!--        <item name="android:statusBarColor">@color/colorStatusBar</item>-->
 <!--        <item name="android:navigationBarColor">@color/colorNavBar</item>-->
     </style>
