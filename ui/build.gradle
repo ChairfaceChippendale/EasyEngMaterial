@@ -13,16 +13,12 @@ android {
         targetSdkVersion rootProject.ext.androidTargetSdk
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
     }
 
     buildTypes {
         release {
-            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt')
-//            proguardFiles(file('./proguard').listFiles())
             consumerProguardFiles(file('./proguard').listFiles())
         }
     }
@@ -53,12 +49,12 @@ android {
 
 kapt {
     correctErrorTypes = true
-    generateStubs = true
 }
 
 dependencies {
-
     def uiDeps = rootProject.ext.uiDeps
+    def testDeps = rootProject.ext.testDeps
+
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':domain')
@@ -76,7 +72,6 @@ dependencies {
 
     implementation uiDeps.rxKotlin
     implementation uiDeps.rxAndroid
-    implementation uiDeps.rxBinding
 
     implementation uiDeps.kotlin
     implementation uiDeps.rxKotlin
@@ -91,7 +86,7 @@ dependencies {
 
     implementation uiDeps.cicerone
 
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    testImplementation testDeps.junit
+    androidTestImplementation testDeps.runner
+    androidTestImplementation testDeps.espresso
 }

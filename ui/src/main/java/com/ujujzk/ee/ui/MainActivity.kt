@@ -10,10 +10,7 @@ import com.ujujzk.ee.ui.di.KOIN_NAV_MAIN_CICERONE
 import com.ujujzk.ee.ui.di.KOIN_NAV_MAIN_ROUTER
 import com.ujujzk.ee.ui.dictionary.DictionaryParent
 import com.ujujzk.ee.ui.dictionary.DictionaryParent.Companion.DIC_TAG_TAB
-import com.ujujzk.ee.ui.navigation.BackButtonListener
-import com.ujujzk.ee.ui.navigation.NavBarOwner
-import com.ujujzk.ee.ui.navigation.SwitchNavigator
-import com.ujujzk.ee.ui.navigation.SwitchRouter
+import com.ujujzk.ee.ui.navigation.*
 import com.ujujzk.ee.ui.tools.addSystemBottomPadding
 import com.ujujzk.ee.ui.tools.visible
 import com.ujujzk.ee.ui.vocabulary.VocabularyParent
@@ -26,11 +23,11 @@ import ru.terrakok.cicerone.Cicerone
 
 class MainActivity : AppCompatActivity(R.layout.activity_main), NavBarOwner {
 
-    private val dicFlow: DictionaryParent by lazy {
-        supportFragmentManager.findFragmentByTag(DIC_TAG_TAB) as? DictionaryParent ?: DictionaryParent.inst()
+    private val dicFlow: FlowFragment by lazy {
+        supportFragmentManager.findFragmentByTag(DIC_TAG_TAB) as? FlowFragment ?: DictionaryParent.inst()
     }
-    private val vocFlow: VocabularyParent by lazy {
-        supportFragmentManager.findFragmentByTag(VOC_TAG_TAB) as? VocabularyParent ?: VocabularyParent.inst()
+    private val vocFlow: FlowFragment by lazy {
+        supportFragmentManager.findFragmentByTag(VOC_TAG_TAB) as? FlowFragment ?: VocabularyParent.inst()
     }
 
     private val mainCicerone : Cicerone<BaseRouter> by inject(named(KOIN_NAV_MAIN_CICERONE))

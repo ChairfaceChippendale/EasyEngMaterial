@@ -2,12 +2,15 @@ apply plugin: 'kotlin'
 
 dependencies {
     def domainDeps = rootProject.ext.domainDeps
+    def testDeps = rootProject.ext.testDeps
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation domainDeps.rxJava
     implementation domainDeps.rxKotlin
     implementation domainDeps.koin
+
+    testImplementation testDeps.junit
 }
 
 sourceCompatibility = "7"

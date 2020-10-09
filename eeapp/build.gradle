@@ -1,7 +1,13 @@
+plugins { id "com.jraska.module.graph.assertion" }
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
+
+moduleGraphAssert {
+    //https://github.com/jraska/modules-graph-assert
+    maxHeight = 4
+}
 
 android {
     compileSdkVersion rootProject.ext.androidCompileSdk
@@ -34,8 +40,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility 1.8
-        targetCompatibility 1.8
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     testOptions {
@@ -51,28 +57,28 @@ android {
 
 kapt {
     correctErrorTypes = true
-    generateStubs = true
 }
 
 
 
 dependencies {
     def appDeps = rootProject.ext.appDeps
+    def testDeps = rootProject.ext.testDeps
+
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':ui')
     implementation project(':domain')
     implementation project(':data')
 
     implementation appDeps.kotlin
-//    implementation appDeps.appcompat
     implementation appDeps.material
     implementation appDeps.rxKotlin
     implementation appDeps.rxAndroid
     implementation appDeps.koin
     implementation appDeps.logger
 
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    testImplementation testDeps.junit
+    androidTestImplementation testDeps.runner
+    androidTestImplementation testDeps.espresso
 
 }
