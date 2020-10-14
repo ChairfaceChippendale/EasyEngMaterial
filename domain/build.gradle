@@ -4,13 +4,19 @@ dependencies {
     def domainDeps = rootProject.ext.domainDeps
     def testDeps = rootProject.ext.testDeps
 
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-
-    implementation domainDeps.rxJava
-    implementation domainDeps.rxKotlin
+    implementation domainDeps.coroutines
     implementation domainDeps.koin
 
     testImplementation testDeps.junit
+}
+
+compileKotlin {
+    kotlinOptions {
+        freeCompilerArgs += [
+                "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi",
+                "-Xuse-experimental=kotlinx.coroutines.ObsoleteCoroutinesApi"
+        ]
+    }
 }
 
 sourceCompatibility = "7"

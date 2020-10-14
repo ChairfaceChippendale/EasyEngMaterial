@@ -1,0 +1,30 @@
+apply plugin: 'kotlin'
+
+dependencies {
+    def networkDeps = rootProject.ext.networkDeps
+
+    implementation project(':domain')
+//    implementation project(':data')
+
+    implementation networkDeps.coroutines
+    implementation networkDeps.koin
+
+    implementation networkDeps.gson
+    implementation networkDeps.json
+
+    implementation networkDeps.okhttp
+    implementation networkDeps.retrofit
+    implementation networkDeps.retrofitGson
+}
+
+compileKotlin {
+    kotlinOptions {
+        freeCompilerArgs += [
+                "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi",
+                "-Xuse-experimental=kotlinx.coroutines.ObsoleteCoroutinesApi"
+        ]
+    }
+}
+
+sourceCompatibility = "7"
+targetCompatibility = "7"

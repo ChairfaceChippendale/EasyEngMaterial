@@ -50,8 +50,8 @@ android {
         }
     }
 
-    dataBinding {
-        enabled = true
+    buildFeatures {
+        viewBinding = true
     }
 }
 
@@ -66,9 +66,19 @@ dependencies {
     def testDeps = rootProject.ext.testDeps
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(':ui')
     implementation project(':domain')
+    implementation project(':presentation')
+    implementation project(':flow:main')
+    implementation project(':flow:dic')
+    implementation project(':flow:catalog')
+    implementation project(':flow:translate')
+    implementation project(':flow:vocabulary')
+    implementation project(':flow:pack')
+    implementation project(':flow:store')
+    implementation project(':flow:learn')
     implementation project(':data')
+    implementation project(':source:local:dictionary')
+
 
     implementation appDeps.kotlin
     implementation appDeps.material

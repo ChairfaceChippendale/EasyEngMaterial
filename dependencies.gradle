@@ -19,6 +19,7 @@ ext {
 
     //network
     gsonVer = '2.8.6'
+    jsonVer = '20190722'
     okhttpVer = '4.2.2'
     retrofitVer = '2.9.0'
     glideVer = '4.11.0'
@@ -64,7 +65,8 @@ ext {
             fragment     : "androidx.fragment:fragment-ktx:${fragmentVer}",
             fragmentTest : "androidx.fragment:fragment-testing:${fragmentVer}",
             lcExtensions : "androidx.lifecycle:lifecycle-extensions:${lifecycleVer}",
-            lcCompiler   : "androidx.lifecycle:lifecycle-compiler:${lifecycleVer}",
+            lcCommon     : "androidx.lifecycle:lifecycle-common-java8:${lifecycleVer}",
+//            lcCompiler   : "androidx.lifecycle:lifecycle-compiler:${lifecycleVer}",
             lcStream     : "androidx.lifecycle:lifecycle-reactivestreams:${lifecycleVer}",
             rxKotlin     : "io.reactivex.rxjava2:rxkotlin:${rxKotlinVer}",
             rxAndroid    : "io.reactivex.rxjava2:rxandroid:${rxAndroidVer}",
@@ -96,6 +98,7 @@ ext {
 //            koinScope    : "org.koin:koin-androidx-scope:${koinVer}",
 
             gson             : "com.google.code.gson:gson:${gsonVer}",
+            json             : "org.json:json:${jsonVer}",
             okhttp           : "com.squareup.okhttp3:okhttp:${okhttpVer}",
 //            okhttpInterceptor: "com.squareup.okhttp3:logging-interceptor:${okhttpVer}",
             retrofit         : "com.squareup.retrofit2:retrofit:${retrofitVer}",
@@ -109,6 +112,20 @@ ext {
             roomCompiler     : "androidx.room:room-compiler:${roomVer}",
             roomKtx          : "androidx.room:room-ktx:${roomVer}",
             roomRx           : "androidx.room:room-rxjava2:${roomVer}"
+    ]
+
+    networkDeps = [
+            kotlin           : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${kotlinVer}",
+            coroutines       : "org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutinesVer}",
+
+            koin             : "org.koin:koin-android:${koinVer}",
+
+            gson             : "com.google.code.gson:gson:${gsonVer}",
+            json             : "org.json:json:${jsonVer}",
+            okhttp           : "com.squareup.okhttp3:okhttp:${okhttpVer}",
+//            okhttpInterceptor: "com.squareup.okhttp3:logging-interceptor:${okhttpVer}",
+            retrofit         : "com.squareup.retrofit2:retrofit:${retrofitVer}",
+            retrofitGson     : "com.squareup.retrofit2:converter-gson:${retrofitVer}",
     ]
 
     testDeps = [

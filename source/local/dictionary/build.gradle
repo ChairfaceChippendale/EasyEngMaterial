@@ -1,0 +1,67 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion rootProject.ext.androidCompileSdk
+    buildToolsVersion rootProject.ext.androidBuildTools
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.androidMinSdk
+        targetSdkVersion rootProject.ext.androidTargetSdk
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt')
+//            consumerProguardFiles(file('./proguard').listFiles())
+        }
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
+    testOptions {
+        unitTests.all {
+            jvmArgs '-noverify'
+        }
+    }
+}
+
+kapt {
+    correctErrorTypes = true
+}
+
+dependencies {
+    def dataDeps = rootProject.ext.dataDeps
+
+    implementation project(':domain')
+    implementation project(':data')
+
+    implementation dataDeps.kotlin
+    implementation dataDeps.coroutines
+    implementation dataDeps.koin
+    implementation dataDeps.binaryPref
+    implementation dataDeps.gson
+    implementation dataDeps.room
+    kapt dataDeps.roomCompiler
+    implementation dataDeps.roomKtx
+
+    testImplementation testDeps.junit
+    androidTestImplementation testDeps.runner
+    androidTestImplementation testDeps.espresso
+}

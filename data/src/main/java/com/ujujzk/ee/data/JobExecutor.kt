@@ -21,7 +21,7 @@ class JobExecutor: ThreadExecutor {
             JobThreadFactory())
     }
 
-    override fun execute(command: Runnable?) =
+    override fun execute(command: Runnable) =
         threadPoolExecutor.execute(command)
 
     private class JobThreadFactory : ThreadFactory {

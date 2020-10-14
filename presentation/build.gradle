@@ -1,0 +1,92 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion rootProject.ext.androidCompileSdk
+    buildToolsVersion rootProject.ext.androidBuildTools
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.androidMinSdk
+        targetSdkVersion rootProject.ext.androidTargetSdk
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt')
+            consumerProguardFiles(file('./proguard').listFiles())
+        }
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
+    testOptions {
+        unitTests.all {
+            jvmArgs '-noverify'
+        }
+    }
+
+    buildFeatures {
+        viewBinding = true
+    }
+}
+
+kapt {
+    correctErrorTypes = true
+}
+
+dependencies {
+    def uiDeps = rootProject.ext.uiDeps
+    def testDeps = rootProject.ext.testDeps
+
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(':domain')
+
+    implementation uiDeps.kotlin
+    implementation uiDeps.rxKotlin
+
+    implementation uiDeps.appcompat
+    implementation uiDeps.ktx
+    implementation uiDeps.constraint
+    implementation uiDeps.recyclerview
+    implementation uiDeps.material
+    implementation uiDeps.fragment
+
+    implementation uiDeps.lcCommon
+    implementation uiDeps.lcExtensions
+//    kapt uiDeps.lcCompiler
+    implementation uiDeps.lcStream
+
+    implementation uiDeps.rxKotlin
+    implementation uiDeps.rxAndroid
+
+    implementation uiDeps.koin
+//    implementation uiDeps.koinScope
+    implementation uiDeps.koinViewModel
+
+    implementation uiDeps.glide
+    kapt uiDeps.glideCompiler
+//    implementation uiDeps.glideOkhttp3
+
+    implementation uiDeps.cicerone
+
+    testImplementation testDeps.junit
+    androidTestImplementation testDeps.runner
+    androidTestImplementation testDeps.espresso
+}

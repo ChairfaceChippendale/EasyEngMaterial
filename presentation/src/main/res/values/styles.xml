@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorSecondary</item>
+        <item name="colorSecondary">@color/colorSecondary</item>
+
+<!--        <item name="android:windowTranslucentStatus">true</item>-->
+<!--        <item name="android:windowTranslucentNavigation">true</item>-->
+<!--        <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>-->
+<!--        <item name="android:statusBarColor">@color/colorStatusBar</item>-->
+<!--        <item name="android:navigationBarColor">@color/colorNavBar</item>-->
+    </style>
+
+    <style name="BottomNavigationAppStyle">
+        <item name="android:background">?colorSurface</item>
+        <item name="itemBackground">?selectableItemBackground</item>
+        <item name="itemTextColor">@drawable/selector_bottom_menu_icon_color</item>
+        <item name="itemIconTint">@drawable/selector_bottom_menu_icon_color</item>
+    </style>
+
+</resources>

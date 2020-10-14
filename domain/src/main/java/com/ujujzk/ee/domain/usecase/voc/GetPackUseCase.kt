@@ -1,21 +1,17 @@
 package com.ujujzk.ee.domain.usecase.voc
 
-import com.ujujzk.ee.domain.executor.PostExecutionThread
-import com.ujujzk.ee.domain.executor.ThreadExecutor
-import com.ujujzk.ee.domain.gateway.VocGateway
-import com.ujujzk.ee.domain.usecase.UseCaseCompletable
-import io.reactivex.Completable
-import io.reactivex.disposables.CompositeDisposable
+import com.ujujzk.ee.domain.exceptions.ErrorConverter
+import com.ujujzk.ee.domain.gateway.VocabularyGateway
+import com.ujujzk.ee.domain.usecase.UseCaseCoroutine
+import kotlin.coroutines.CoroutineContext
 
 class GetPackUseCase(
-    threadExecutor: ThreadExecutor,
-    postExecutionThread: PostExecutionThread,
-    disposable: CompositeDisposable,
-    private val vocGateway: VocGateway
-): UseCaseCompletable<GetPackUseCase.Params>(threadExecutor, postExecutionThread, disposable) {
+    executionContext: CoroutineContext,
+    errorConverter: ErrorConverter,
+    private val vocGateway: VocabularyGateway
+): UseCaseCoroutine<Unit, GetPackUseCase.Params>(executionContext, errorConverter) {
 
-
-    override fun buildUseCase(params: Params): Completable {
+    override suspend fun executeOnBackground(params: Params) {
         return vocGateway.testVoc()
     }
 

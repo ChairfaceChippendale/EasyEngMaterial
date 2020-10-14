@@ -1,74 +1,27 @@
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
-apply plugin: 'kotlin-android-extensions'
-
-android {
-    compileSdkVersion rootProject.ext.androidCompileSdk
-    buildToolsVersion rootProject.ext.androidBuildTools
-
-    defaultConfig {
-        minSdkVersion rootProject.ext.androidMinSdk
-        targetSdkVersion rootProject.ext.androidTargetSdk
-        versionCode 1
-        versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-    }
-
-    buildTypes {
-        release {
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt')
-            consumerProguardFiles(file('./proguard').listFiles())
-        }
-    }
-
-    lintOptions {
-        abortOnError false
-    }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-
-    testOptions {
-        unitTests.all {
-            jvmArgs '-noverify'
-        }
-    }
-}
-
-kapt {
-    correctErrorTypes = true
-}
+apply plugin: 'kotlin'
 
 dependencies {
     def dataDeps = rootProject.ext.dataDeps
-    def testDeps = rootProject.ext.testDeps
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':domain')
 
-    implementation dataDeps.kotlin
-    implementation dataDeps.rxKotlin
+    implementation dataDeps.coroutines
     implementation dataDeps.koin
-//  implementation dataDeps.koinScope
 
     implementation dataDeps.gson
+    implementation dataDeps.json
     implementation dataDeps.okhttp
-//    implementation dataDeps.okhttpInterceptor
-    implementation dataDeps.retrofit
-    implementation dataDeps.retrofitGson
-    implementation dataDeps.retrofitRx
-    debugImplementation dataDeps.chuckDebug//HTTP inspector
-    releaseImplementation dataDeps.chuckRelease
-
-    implementation dataDeps.binaryPref
-    implementation dataDeps.room
-    kapt dataDeps.roomCompiler
-    implementation dataDeps.roomRx
-
-    testImplementation testDeps.junit
-    androidTestImplementation testDeps.runner
-    androidTestImplementation testDeps.espresso
 }
+
+compileKotlin {
+    kotlinOptions {
+        freeCompilerArgs += [
+                "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi",
+                "-Xuse-experimental=kotlinx.coroutines.ObsoleteCoroutinesApi"
+        ]
+    }
+}
+
+sourceCompatibility = "7"
+targetCompatibility = "7"
