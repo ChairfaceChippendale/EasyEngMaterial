@@ -17,7 +17,6 @@ import com.ujujzk.ee.store.di.storeModule
 import com.ujujzk.ee.translate.di.translateModule
 import com.ujujzk.ee.vocabulary.di.vocabularyModule
 import com.ujujzk.main.di.mainModule
-import io.reactivex.disposables.CompositeDisposable
 import org.koin.core.module.Module
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -46,9 +45,7 @@ val appModules: List<Module>
     )
 
 val coreModule = module {
-
-    factory { CompositeDisposable() }
-
+    
 //    single(named(LOG_NET)){ Looog.i(tag = "NET")}
 //    single(named(LOG_ROOM)){ Looog.d(tag = "ROOM")}
     single(named(LOG_DATA)) { Looog.d(tag = "DATA") }

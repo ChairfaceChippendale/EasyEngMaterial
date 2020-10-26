@@ -63,6 +63,7 @@ dependencies {
     implementation uiDeps.constraint
     implementation uiDeps.material
     implementation uiDeps.fragment
+    implementation uiDeps.inset
 
     implementation uiDeps.kotlin
     implementation uiDeps.coroutines
