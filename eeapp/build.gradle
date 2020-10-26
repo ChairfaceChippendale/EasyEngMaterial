@@ -59,8 +59,6 @@ kapt {
     correctErrorTypes = true
 }
 
-
-
 dependencies {
     def appDeps = rootProject.ext.appDeps
     def testDeps = rootProject.ext.testDeps
