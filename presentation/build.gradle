@@ -59,7 +59,6 @@ dependencies {
     implementation project(':domain')
 
     implementation uiDeps.kotlin
-    implementation uiDeps.rxKotlin
 
     implementation uiDeps.appcompat
     implementation uiDeps.ktx
@@ -72,9 +71,6 @@ dependencies {
     implementation uiDeps.lcExtensions
 //    kapt uiDeps.lcCompiler
     implementation uiDeps.lcStream
-
-    implementation uiDeps.rxKotlin
-    implementation uiDeps.rxAndroid
 
     implementation uiDeps.koin
 //    implementation uiDeps.koinScope

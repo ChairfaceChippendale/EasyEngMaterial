@@ -82,8 +82,6 @@ dependencies {
 
     implementation appDeps.kotlin
     implementation appDeps.material
-    implementation appDeps.rxKotlin
-    implementation appDeps.rxAndroid
     implementation appDeps.koin
     implementation appDeps.logger
 
