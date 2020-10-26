@@ -3,6 +3,8 @@ package com.ujujzk.main
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import com.github.terrakok.cicerone.BaseRouter
+import com.github.terrakok.cicerone.Cicerone
 import com.ujujzk.ee.presentation.base.BaseFragment
 import com.ujujzk.ee.presentation.base.InitViews
 import com.ujujzk.ee.presentation.base.VMObserver
@@ -10,18 +12,13 @@ import com.ujujzk.ee.presentation.base.viewBinding
 import com.ujujzk.ee.presentation.di.*
 import com.ujujzk.ee.presentation.navigation.BackButtonListener
 import com.ujujzk.ee.presentation.navigation.FlowFragment
-import com.ujujzk.ee.presentation.navigation.ScreenFactory
 import com.ujujzk.ee.presentation.navigation.switchnav.NavBarOwner
 import com.ujujzk.ee.presentation.navigation.switchnav.SwitchNavigator
-import com.ujujzk.ee.presentation.tools.onClick
 import com.ujujzk.ee.presentation.tools.visible
 import com.ujujzk.main.databinding.FragmentMainBinding
-
 import org.koin.android.ext.android.getKoin
 import org.koin.android.ext.android.inject
 import org.koin.core.qualifier.named
-import ru.terrakok.cicerone.BaseRouter
-import ru.terrakok.cicerone.Cicerone
 import java.lang.IllegalArgumentException
 
 class MainParent :
@@ -102,11 +99,11 @@ class MainParent :
 
     override fun onResume() {
         super.onResume()
-        cicerone.navigatorHolder.setNavigator(tabNavigator)
+        cicerone.getNavigatorHolder().setNavigator(tabNavigator)
     }
 
     override fun onPause() {
-        cicerone.navigatorHolder.removeNavigator()
+        cicerone.getNavigatorHolder().removeNavigator()
         super.onPause()
     }
 

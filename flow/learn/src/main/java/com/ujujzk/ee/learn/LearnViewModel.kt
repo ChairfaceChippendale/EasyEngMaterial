@@ -1,7 +1,7 @@
 package com.ujujzk.ee.learn
 
+import com.github.terrakok.cicerone.Router
 import com.ujujzk.ee.presentation.base.BaseViewModel
-import ru.terrakok.cicerone.Router
 
 class LearnViewModel(
     private val logger: (String) -> Unit,

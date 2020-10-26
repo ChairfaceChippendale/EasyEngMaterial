@@ -1,5 +1,6 @@
 package com.ujujzk.ee.presentation.navigation
 
+import com.github.terrakok.cicerone.androidx.FragmentScreen
 import com.ujujzk.ee.presentation.di.*
 import org.koin.core.KoinComponent
 import org.koin.core.get

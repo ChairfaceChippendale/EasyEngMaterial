@@ -32,7 +32,7 @@ ext {
     roomVer = '2.2.5'
 
     //navigation
-    ciceroneVer = "5.0.0"
+    ciceroneVer = "6.1"
 
     //ui
 
@@ -79,7 +79,7 @@ ext {
             glideCompiler: "com.github.bumptech.glide:compiler:${glideVer}",
 //            glideOkhttp3 : "com.github.bumptech.glide:okhttp3-integration:${glideVer}"
 
-            cicerone     : "ru.terrakok.cicerone:cicerone:${ciceroneVer}",
+            cicerone     : "com.github.terrakok:cicerone:${ciceroneVer}",
     ]
 
     domainDeps = [

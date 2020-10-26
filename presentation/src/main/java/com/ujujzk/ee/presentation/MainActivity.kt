@@ -5,20 +5,20 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.github.terrakok.cicerone.Cicerone
+import com.github.terrakok.cicerone.Router
+import com.github.terrakok.cicerone.androidx.AppNavigator
 import com.ujujzk.ee.presentation.di.KOIN_NAV_APP_CICERONE
 import com.ujujzk.ee.presentation.navigation.BackButtonListener
 import com.ujujzk.ee.presentation.navigation.ScreenFactory
-import com.ujujzk.ee.presentation.navigation.switchnav.SwitchNavigator
 import org.koin.android.ext.android.inject
 import org.koin.core.qualifier.named
-import ru.terrakok.cicerone.Cicerone
-import ru.terrakok.cicerone.Router
-import ru.terrakok.cicerone.android.support.SupportAppNavigator
+
 
 class MainActivity: AppCompatActivity(R.layout.activity_main) {
 
     private val cicerone : Cicerone<Router> by inject(named(KOIN_NAV_APP_CICERONE))
-    private val appNavigator by lazy { SupportAppNavigator(this, supportFragmentManager, R.id.container) }
+    private val appNavigator by lazy { AppNavigator(this, R.id.container, supportFragmentManager) }
     private val screens: ScreenFactory by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,11 +51,11 @@ class MainActivity: AppCompatActivity(R.layout.activity_main) {
 
     override fun onResumeFragments() {
         super.onResumeFragments()
-        cicerone.navigatorHolder.setNavigator(appNavigator)
+        cicerone.getNavigatorHolder().setNavigator(appNavigator)
     }
 
     override fun onPause() {
-        cicerone.navigatorHolder.removeNavigator()
+        cicerone.getNavigatorHolder().removeNavigator()
         super.onPause()
     }
 

@@ -6,7 +6,6 @@ import com.ujujzk.ee.presentation.base.InitViews
 import com.ujujzk.ee.presentation.base.VMObserver
 import com.ujujzk.ee.presentation.base.viewBinding
 import com.ujujzk.ee.presentation.navigation.BackButtonListener
-import com.ujujzk.ee.presentation.navigation.FragmentScreen
 import com.ujujzk.ee.presentation.navigation.switchnav.NavBarOwner
 import com.ujujzk.ee.presentation.tools.onClick
 

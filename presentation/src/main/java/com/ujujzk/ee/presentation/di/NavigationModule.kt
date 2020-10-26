@@ -1,10 +1,11 @@
 package com.ujujzk.ee.presentation.di
 
+import com.github.terrakok.cicerone.Cicerone
+import com.github.terrakok.cicerone.Router
 import com.ujujzk.ee.presentation.navigation.switchnav.SwitchRouter
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
-import ru.terrakok.cicerone.Cicerone
-import ru.terrakok.cicerone.Router
+
 
 const val PARENT_MAIN = "PARENT_MAIN"
 

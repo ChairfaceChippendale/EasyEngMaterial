@@ -1,7 +1,7 @@
 package com.ujujzk.ee.presentation.navigation.switchnav
 
+import com.github.terrakok.cicerone.BaseRouter
 import com.ujujzk.ee.presentation.navigation.FlowFragment
-import ru.terrakok.cicerone.BaseRouter
 
 class SwitchRouter : BaseRouter() {
     fun switchFragment(fr: FlowFragment) {

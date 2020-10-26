@@ -2,11 +2,11 @@ package com.ujujzk.ee.catalog.di
 
 import android.os.Bundle
 import androidx.core.os.bundleOf
+import com.github.terrakok.cicerone.androidx.FragmentScreen
 import com.ujujzk.ee.catalog.CatalogFragment
 import com.ujujzk.ee.catalog.CatalogFragment.Companion.EXTRA_FLOW_QUALIFIER
 import com.ujujzk.ee.catalog.CatalogViewModel
 import com.ujujzk.ee.presentation.di.*
-import com.ujujzk.ee.presentation.navigation.FragmentScreen
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -30,7 +30,7 @@ val catalogModule = module {
     }
 
     factory(named(SCREEN_CATALOG)) { (flowQualifier: FlowQualifier) ->
-        FragmentScreen {
+        FragmentScreen(SCREEN_CATALOG) {
             CatalogFragment().apply {
                 arguments = bundleOf(
                     EXTRA_FLOW_QUALIFIER to flowQualifier

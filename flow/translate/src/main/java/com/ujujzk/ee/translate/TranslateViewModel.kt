@@ -1,9 +1,9 @@
 package com.ujujzk.ee.translate
 
+import com.github.terrakok.cicerone.Router
 import com.ujujzk.ee.presentation.base.BaseViewModel
 import com.ujujzk.ee.presentation.di.FlowQualifier
 import com.ujujzk.ee.presentation.navigation.ScreenFactory
-import ru.terrakok.cicerone.Router
 
 
 class TranslateViewModel(

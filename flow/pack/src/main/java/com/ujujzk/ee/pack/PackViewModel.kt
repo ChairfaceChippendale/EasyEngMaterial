@@ -1,7 +1,7 @@
 package com.ujujzk.ee.pack
 
+import com.github.terrakok.cicerone.Router
 import com.ujujzk.ee.presentation.base.BaseViewModel
-import ru.terrakok.cicerone.Router
 
 
 class PackViewModel(

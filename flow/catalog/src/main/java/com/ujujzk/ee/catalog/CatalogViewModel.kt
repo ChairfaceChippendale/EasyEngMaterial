@@ -1,12 +1,12 @@
 package com.ujujzk.ee.catalog
 
 import androidx.lifecycle.MutableLiveData
+import com.github.terrakok.cicerone.Router
 import com.ujujzk.ee.domain.usecase.dic.ObserveDictionariesUseCase
 import com.ujujzk.ee.domain.usecase.dic.TestArticleDefinitionUseCase
 import com.ujujzk.ee.domain.usecase.voc.GetPackUseCase
 import com.ujujzk.ee.presentation.base.BaseViewModel
 import com.ujujzk.ee.presentation.model.VDictionary
-import ru.terrakok.cicerone.Router
 
 class CatalogViewModel(
     private val logger: (String) -> Unit,

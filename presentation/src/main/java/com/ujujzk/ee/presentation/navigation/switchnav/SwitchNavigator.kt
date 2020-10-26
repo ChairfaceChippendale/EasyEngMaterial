@@ -3,10 +3,11 @@ package com.ujujzk.ee.presentation.navigation.switchnav
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
+import com.github.terrakok.cicerone.Back
+import com.github.terrakok.cicerone.Command
+import com.github.terrakok.cicerone.Navigator
 import com.ujujzk.ee.presentation.navigation.FlowFragment
-import ru.terrakok.cicerone.Navigator
-import ru.terrakok.cicerone.commands.Back
-import ru.terrakok.cicerone.commands.Command
+
 
 /**
  * Custom [Navigator], designed to work with the Bottom navigation.
@@ -18,10 +19,8 @@ class SwitchNavigator(
     private val containerId: Int
 ): Navigator {
 
-    override fun applyCommands(commands: Array<out Command>?) {
-        commands?.let {
-            for (command in commands) applyCommand(command)
-        }
+    override fun applyCommands(commands: Array<out Command>) {
+        for (command in commands) applyCommand(command)
     }
 
     private fun applyCommand(command: Command) {

@@ -1,9 +1,10 @@
 package com.ujujzk.main
 
+import com.github.terrakok.cicerone.Router
 import com.ujujzk.ee.presentation.base.BaseViewModel
 import com.ujujzk.ee.presentation.navigation.FlowFragment
 import com.ujujzk.ee.presentation.navigation.switchnav.SwitchRouter
-import ru.terrakok.cicerone.Router
+
 
 class MainViewModel(
     private val logger: (String) -> Unit,
