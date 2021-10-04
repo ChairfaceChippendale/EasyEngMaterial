@@ -5,8 +5,9 @@ import com.ujujzk.ee.data.gateway.dic.DicLocal
 import com.ujujzk.ee.local.dictionary.DicStorageFake
 import com.ujujzk.ee.local.dictionary.DicStorageRoom
 import com.ujujzk.ee.local.dictionary.DictionaryDatabase
-import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.module
+import org.koin.android.ext.koin.androidApplication
+
 
 const val DICTIONARY_DATABASE_NAME = "easy-english-dictionary-database"
 

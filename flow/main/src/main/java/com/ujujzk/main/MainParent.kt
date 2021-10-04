@@ -16,6 +16,7 @@ import com.ujujzk.ee.presentation.navigation.switchnav.NavBarOwner
 import com.ujujzk.ee.presentation.navigation.switchnav.SwitchNavigator
 import com.ujujzk.ee.presentation.tools.visible
 import com.ujujzk.main.databinding.FragmentMainBinding
+import org.koin.android.ext.android.get
 import org.koin.android.ext.android.getKoin
 import org.koin.android.ext.android.inject
 import org.koin.core.qualifier.named
@@ -40,11 +41,11 @@ class MainParent :
 
     private val dictionaryFlow: FlowFragment by lazy {
         childFragmentManager.findFragmentByTag(DICTIONARY_TAG_TAB) as? FlowFragment
-            ?: getKoin().get(named(PARENT_DICTIONARY))
+            ?: get(named(PARENT_DICTIONARY))
     }
     private val vocabularyFlow: FlowFragment by lazy {
         childFragmentManager.findFragmentByTag(VOCABULARY_TAG_TAB) as? FlowFragment
-            ?: getKoin().get(named(PARENT_VOCABULARY))
+            ?: get(named(PARENT_VOCABULARY))
     }
 
 //    private val grammarFlow: FlowFragment by lazy {
@@ -79,7 +80,7 @@ class MainParent :
     }
 
     private fun initBottomNavigation(navigationViewId: Int) {
-        binding.bnMenu.setOnNavigationItemSelectedListener { //todo move to viewModel
+        binding.bnMenu.setOnItemSelectedListener { //todo move to viewModel
             when (it.itemId) {
                 R.id.navigation_dictionary -> {
                     viewModel.onDictionaryClick(dictionaryFlow)

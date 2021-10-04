@@ -16,7 +16,7 @@ class App : Application() {
         startKoin{
             androidContext(this@App)
             properties(mapOf(
-                "debug" to BuildConfig.DEBUG //"debug" property let us know app build type in any module
+                "debug" to BuildConfig.DEBUG.toString() //"debug" property let us know app build type in any module
 
             ))
             modules(appModules)

@@ -23,7 +23,7 @@ abstract class BaseFragment<BINDING : ViewBinding, VIEW_MODEL : BaseViewModel>(
 ): Fragment(layout), BackButtonListener {
 
     protected abstract val binding: BINDING
-    protected val viewModel: VIEW_MODEL by viewModel(viewModelClass){
+    protected val viewModel: VIEW_MODEL by viewModel(clazz = viewModelClass){
         //use Fragment arguments as a parameters for ViewModel constructor
         parametersOf(arguments)
     }

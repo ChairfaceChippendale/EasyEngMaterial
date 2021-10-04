@@ -4,13 +4,10 @@ apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion rootProject.ext.androidCompileSdk
-    buildToolsVersion rootProject.ext.androidBuildTools
 
     defaultConfig {
         minSdkVersion rootProject.ext.androidMinSdk
         targetSdkVersion rootProject.ext.androidTargetSdk
-        versionCode 1
-        versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -51,12 +48,13 @@ dependencies {
     implementation project(':domain')
     implementation project(':data')
 
-    implementation dataDeps.kotlin
     implementation dataDeps.coroutines
-    implementation dataDeps.koin
+    implementation dataDeps.koinAndroid
     implementation dataDeps.binaryPref
     implementation dataDeps.gson
     implementation dataDeps.room
+    implementation dataDeps.roomKtx
+
     kapt dataDeps.roomCompiler
 
     testImplementation testDeps.junit

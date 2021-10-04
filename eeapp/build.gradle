@@ -9,13 +9,12 @@ moduleGraphAssert {
 }
 
 android {
-    compileSdkVersion rootProject.ext.androidCompileSdk
-    buildToolsVersion rootProject.ext.androidBuildTools
+    compileSdk rootProject.ext.androidCompileSdk
 
     defaultConfig {
         applicationId "com.ujujzk.easyengmaterial.eeapp"
-        minSdkVersion rootProject.ext.androidMinSdk
-        targetSdkVersion rootProject.ext.androidTargetSdk
+        minSdk rootProject.ext.androidMinSdk
+        targetSdk rootProject.ext.androidTargetSdk
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
@@ -33,16 +32,9 @@ android {
             minifyEnabled false
         }
     }
-
     lintOptions {
         abortOnError false
     }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-
     testOptions {
         unitTests.all {
             jvmArgs '-noverify'
@@ -50,7 +42,7 @@ android {
     }
 
     buildFeatures {
-        viewBinding = true
+        viewBinding true
     }
 }
 
@@ -77,9 +69,8 @@ dependencies {
     implementation project(':source:local:dictionary')
 
 
-    implementation appDeps.kotlin
     implementation appDeps.material
-    implementation appDeps.koin
+    implementation appDeps.koinAndroid
     implementation appDeps.logger
 
     testImplementation testDeps.junit

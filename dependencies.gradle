@@ -1,85 +1,83 @@
 ext {
-    kotlinVer = '1.4.31'
-    coroutinesVer = '1.3.3'
-
     androidMinSdk = 23
-    androidCompileSdk = 30
-    androidTargetSdk = 30
-    androidBuildTools = '29.0.3'
+    androidCompileSdk = 31
+    androidTargetSdk = 31
+
+    coroutinesVer = '1.5.2-native-mt'
 
     //jetpack
-    materialVer = '1.2.1'
-    fragmentVer = '1.3.0-beta01'
-    lifecycleVer = '2.2.0'
+    materialVer = '1.4.0'
+    fragmentVer = '1.3.6'
+    activityVer = '1.3.1'
+    lifecycleVer = '2.3.1'
 
     //network
-    gsonVer = '2.8.6'
+    gsonVer = '2.8.8'
     jsonVer = '20190722'
     okhttpVer = '4.2.2'
     retrofitVer = '2.9.0'
-    glideVer = '4.11.0'
+    glideVer = '4.12.0'
     chuckVer = '1.1.0'
 
     //utils
-    koinVer = '2.0.1'
+    koinVer = '3.1.2'
 
     //storage
-    roomVer = '2.2.5'
+    roomVer = '2.3.0'
 
 
     appDeps = [
-            kotlin   : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${kotlinVer}",
             coroutines  : "org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutinesVer}",
             corotinnesAndoid    : "org.jetbrains.kotlinx:kotlinx-coroutines-android:${coroutinesVer}",
 
             material     : "com.google.android.material:material:${materialVer}",
 
-            koin     : "org.koin:koin-android:${koinVer}",
-//            koinScope    : "org.koin:koin-androidx-scope:${koinVer}",
+            koinAndroid  : "io.insert-koin:koin-android:$koinVer",
 
-            logger   : "com.orhanobut:logger:2.2.0"
+            logger       : "com.orhanobut:logger:2.2.0"
     ]
 
     uiDeps = [
-            kotlin       : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${kotlinVer}",
             coroutines   : "org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutinesVer}",
             corotinnesAndoid    : "org.jetbrains.kotlinx:kotlinx-coroutines-android:${coroutinesVer}",
 
-            appcompat    : "androidx.appcompat:appcompat:1.3.0-alpha02",
-            ktx          : "androidx.core:core-ktx:1.5.0-alpha04",
-            constraint   : "androidx.constraintlayout:constraintlayout:2.0.2",
-            recyclerview : "androidx.recyclerview:recyclerview:1.2.0-alpha06",
+            appcompat    : "androidx.appcompat:appcompat:1.3.1",
+            ktx          : "androidx.core:core-ktx:1.7.0-beta02",
+            constraint   : "androidx.constraintlayout:constraintlayout:2.1.1",
+            recyclerview : "androidx.recyclerview:recyclerview:1.2.1",
             material     : "com.google.android.material:material:${materialVer}",
+
+            activity     : "androidx.activity:activity:${activityVer}",
+            activityKtx  : "androidx.activity:activity-ktx:${activityVer}",
             fragment     : "androidx.fragment:fragment-ktx:${fragmentVer}",
+            fragmentKtx  : "androidx.fragment:fragment-ktx:${fragmentVer}",
             fragmentTest : "androidx.fragment:fragment-testing:${fragmentVer}",
-            lcExtensions : "androidx.lifecycle:lifecycle-extensions:${lifecycleVer}",
-            lcCommon     : "androidx.lifecycle:lifecycle-common-java8:${lifecycleVer}",
-//            lcCompiler   : "androidx.lifecycle:lifecycle-compiler:${lifecycleVer}",
-            lcStream     : "androidx.lifecycle:lifecycle-reactivestreams:${lifecycleVer}",
+
+            lcViewModel          : "androidx.lifecycle:lifecycle-viewmodel-ktx:${lifecycleVer}",
+            lcLiveData           : "androidx.lifecycle:lifecycle-livedata-ktx:${lifecycleVer}",
+            lcRuntime            : "androidx.lifecycle:lifecycle-runtime-ktx:${lifecycleVer}",
+            lcCommon             : "androidx.lifecycle:lifecycle-common-java8:${lifecycleVer}",
             inset        : "dev.chrisbanes:insetter-ktx:0.3.1",
 
-            koin         : "org.koin:koin-android:${koinVer}",
-//            koinScope    : "org.koin:koin-androidx-scope:${koinVer}",
-            koinViewModel: "org.koin:koin-androidx-viewmodel:${koinVer}",
+            koinAndroid  : "io.insert-koin:koin-android:$koinVer",
 
             glide        : "com.github.bumptech.glide:glide:${glideVer}",
             glideCompiler: "com.github.bumptech.glide:compiler:${glideVer}",
 //            glideOkhttp3 : "com.github.bumptech.glide:okhttp3-integration:${glideVer}"
 
-            cicerone     : "com.github.terrakok:cicerone:6.1"
+            cicerone     : "com.github.terrakok:cicerone:6.5"
     ]
 
     domainDeps = [
             coroutines  : "org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutinesVer}",
-            koin        : "org.koin:koin-core:${koinVer}"
+            koin        : "io.insert-koin:koin-core:$koinVer"
     ]
 
     dataDeps = [
-            kotlin           : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${kotlinVer}",
             coroutines       : "org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutinesVer}",
 
-            koin             : "org.koin:koin-android:${koinVer}",
-//            koinScope    : "org.koin:koin-androidx-scope:${koinVer}",
+            koin             : "io.insert-koin:koin-core:$koinVer",
+            koinAndroid      : "io.insert-koin:koin-android:$koinVer",
 
             gson             : "com.google.code.gson:gson:${gsonVer}",
             json             : "org.json:json:${jsonVer}",
@@ -92,14 +90,14 @@ ext {
 
             binaryPref       : "com.github.iamironz:binaryprefs:1.0.1",
             room             : "androidx.room:room-runtime:${roomVer}",
+            roomKtx          : "androidx.room:room-ktx:${roomVer}",
             roomCompiler     : "androidx.room:room-compiler:${roomVer}",
     ]
 
     networkDeps = [
-            kotlin           : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${kotlinVer}",
             coroutines       : "org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutinesVer}",
 
-            koin             : "org.koin:koin-android:${koinVer}",
+            koin             : "io.insert-koin:koin-core:$koinVer",
 
             gson             : "com.google.code.gson:gson:${gsonVer}",
             json             : "org.json:json:${jsonVer}",
@@ -111,7 +109,7 @@ ext {
 
     testDeps = [
             junit            : "junit:junit:4.13.2",
-            runner           : "androidx.test:runner:1.3.0",
-            espresso         : "androidx.test.espresso:espresso-core:3.3.0"
+            runner           : "androidx.test:runner:1.4.0",
+            espresso         : "androidx.test.espresso:espresso-core:3.4.0"
     ]
 }

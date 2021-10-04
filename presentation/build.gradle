@@ -4,13 +4,10 @@ apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion rootProject.ext.androidCompileSdk
-    buildToolsVersion rootProject.ext.androidBuildTools
 
     defaultConfig {
         minSdkVersion rootProject.ext.androidMinSdk
         targetSdkVersion rootProject.ext.androidTargetSdk
-        versionCode 1
-        versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -57,7 +54,6 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':domain')
 
-    implementation uiDeps.kotlin
 
     implementation uiDeps.appcompat
     implementation uiDeps.ktx
@@ -67,13 +63,8 @@ dependencies {
     implementation uiDeps.fragment
 
     implementation uiDeps.lcCommon
-    implementation uiDeps.lcExtensions
-//    kapt uiDeps.lcCompiler
-    implementation uiDeps.lcStream
 
-    implementation uiDeps.koin
-//    implementation uiDeps.koinScope
-    implementation uiDeps.koinViewModel
+    implementation uiDeps.koinAndroid
 
     implementation uiDeps.glide
     kapt uiDeps.glideCompiler

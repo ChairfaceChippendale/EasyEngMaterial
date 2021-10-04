@@ -3,14 +3,11 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion rootProject.ext.androidCompileSdk
-    buildToolsVersion rootProject.ext.androidBuildTools
+    compileSdk rootProject.ext.androidCompileSdk
 
     defaultConfig {
-        minSdkVersion rootProject.ext.androidMinSdk
-        targetSdkVersion rootProject.ext.androidTargetSdk
-        versionCode 1
-        versionName "1.0"
+        minSdk rootProject.ext.androidMinSdk
+        targetSdk rootProject.ext.androidTargetSdk
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -25,16 +22,6 @@ android {
     lintOptions {
         abortOnError false
     }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
-    }
-
     testOptions {
         unitTests.all {
             jvmArgs '-noverify'
@@ -42,7 +29,7 @@ android {
     }
 
     buildFeatures {
-        viewBinding = true
+        viewBinding true
     }
 }
 
@@ -64,13 +51,11 @@ dependencies {
     implementation uiDeps.material
     implementation uiDeps.fragment
 
-    implementation uiDeps.kotlin
     implementation uiDeps.coroutines
     implementation uiDeps.corotinnesAndoid
 
-    implementation uiDeps.koin
-    implementation uiDeps.koinViewModel
-
+    implementation uiDeps.koinAndroid
+\
     implementation uiDeps.cicerone
 
     testImplementation testDeps.junit
