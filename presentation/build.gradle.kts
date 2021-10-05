@@ -32,9 +32,7 @@ android {
             it.jvmArgs("-noverify")
         }
     }
-    buildFeatures {
-        viewBinding = true
-    }
+    buildFeatures.viewBinding = true
 }
 
 kapt {
