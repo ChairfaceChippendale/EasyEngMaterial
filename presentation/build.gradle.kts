@@ -1,7 +1,6 @@
 plugins {
     id("com.android.library")
-    id("kotlin-android")
-    id("kotlin-kapt")
+    kotlin("android")
 }
 
 
@@ -35,10 +34,6 @@ android {
     buildFeatures.viewBinding = true
 }
 
-kapt {
-    correctErrorTypes = true
-}
-
 dependencies {
 
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
@@ -56,8 +51,6 @@ dependencies {
     implementation(Deps.koinAndroid)
 
     implementation(Deps.glide)
-    kapt(Deps.glideCompiler)
-//    implementation(Deps.glideOkhttp3
 
     implementation(Deps.cicerone)
 

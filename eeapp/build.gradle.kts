@@ -2,7 +2,6 @@ plugins {
     id("com.jraska.module.graph.assertion")
     id("com.android.application")
     kotlin("android")
-    id("kotlin-kapt")
 }
 
 
@@ -49,10 +48,6 @@ android {
     }
     buildFeatures.viewBinding = true
 
-}
-
-kapt {
-    correctErrorTypes = true
 }
 
 dependencies {

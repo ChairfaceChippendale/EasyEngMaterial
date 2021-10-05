@@ -1,7 +1,6 @@
 plugins {
     id("com.android.library")
-    id("kotlin-android")
-    id("kotlin-kapt")
+    kotlin("android")
 }
 
 android {
@@ -31,10 +30,6 @@ android {
         }
     }
     buildFeatures.viewBinding = true
-}
-
-kapt {
-    correctErrorTypes = true
 }
 
 dependencies {
