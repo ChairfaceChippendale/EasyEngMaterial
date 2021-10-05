@@ -1,45 +1,47 @@
+object Android {
+    const val minSdk = 23
+    const val compileSdk = 31
+    const val targetSdk = 31
+}
+
 object Deps {
-    const val androidMinSdk = 23
-    const val androidCompileSdk = 31
-    const val androidTargetSdk = 31
 
     const val coroutinesVer = "1.5.2-native-mt"
 
     //jetpack
-    const val materialVer = "1.4.0"
-    const val fragmentVer = "1.3.6"
-    const val activityVer = "1.3.1"
-    const val lifecycleVer = "2.3.1"
+    private const val materialVer = "1.4.0"
+    private const val fragmentVer = "1.3.6"
+    private const val activityVer = "1.3.1"
+    private const val lifecycleVer = "2.3.1"
 
     //network
-    const val gsonVer = "2.8.8"
-    const val jsonVer = "20190722"
-    const val okhttpVer = "4.2.2"
-    const val retrofitVer = "2.9.0"
-    const val glideVer = "4.12.0"
-    const val chuckVer = "1.1.0"
+    private const val gsonVer = "2.8.8"
+    private const val jsonVer = "20190722"
+    private const val okhttpVer = "4.2.2"
+    private const val retrofitVer = "2.9.0"
+    private const val glideVer = "4.12.0"
+    private const val chuckVer = "1.1.0"
 
     //utils
-    const val koinVer = "3.1.2"
+    private const val koinVer = "3.1.2"
 
     //storage
-    const val roomVer = "2.3.0"
+    private const val roomVer = "2.3.0"
 
+    const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVer"
+    const val corotinesAndoid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVer"
 
-    const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutinesVer}"
-    const val corotinesAndoid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${coroutinesVer}"
-
-    const val material = "com.google.android.material:material:${materialVer}"
+    const val material = "com.google.android.material:material:$materialVer"
     const val appcompat = "androidx.appcompat:appcompat:1.3.1"
     const val ktx = "androidx.core:core-ktx:1.7.0-beta02"
     const val constraint = "androidx.constraintlayout:constraintlayout:2.1.1"
     const val recyclerview = "androidx.recyclerview:recyclerview:1.2.1"
 
-    const val activity = "androidx.activity:activity:${activityVer}"
-    const val activityKtx = "androidx.activity:activity-ktx:${activityVer}"
-    const val fragment = "androidx.fragment:fragment-ktx:${fragmentVer}"
-    const val fragmentKtx = "androidx.fragment:fragment-ktx:${fragmentVer}"
-    const val fragmentTest = "androidx.fragment:fragment-testing:${fragmentVer}"
+    const val activity = "androidx.activity:activity:$activityVer"
+    const val activityKtx = "androidx.activity:activity-ktx:$activityVer"
+    const val fragment = "androidx.fragment:fragment-ktx:$fragmentVer"
+    const val fragmentKtx = "androidx.fragment:fragment-ktx:$fragmentVer"
+    const val fragmentTest = "androidx.fragment:fragment-testing:$fragmentVer"
 
     const val lcViewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVer"
     const val lcLiveData = "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVer"

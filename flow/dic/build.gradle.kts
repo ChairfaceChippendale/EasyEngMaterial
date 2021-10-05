@@ -5,31 +5,31 @@ plugins {
 }
 
 android {
-    compileSdk = Deps.androidCompileSdk
+    compileSdk = Android.compileSdk
 
     defaultConfig {
-        minSdk = Deps.androidMinSdk
-        targetSdk = Deps.androidTargetSdk
+        minSdk = Android.minSdk
+        targetSdk = Android.targetSdk
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
-        named("release") {
+        release {
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-        //            consumerProguardFiles(file('./proguard').listFiles())
+            //            consumerProguardFiles(file('./proguard').listFiles())
         }
     }
-
-    lintOptions {
+    lint {
+        isCheckDependencies = true
         isAbortOnError = false
     }
     testOptions {
         unitTests.all {
-            it.jvmArgs = listOf("-noverify")
+            it.jvmArgs("-noverify")
         }
     }
     buildFeatures {
@@ -44,8 +44,8 @@ kapt {
 dependencies {
 
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-    implementation (project(path = ":domain"))
-    implementation (project(path = ":presentation"))
+    implementation(project(path = ":domain"))
+    implementation(project(path = ":presentation"))
 
     implementation(Deps.appcompat)
     implementation(Deps.ktx)

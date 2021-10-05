@@ -5,44 +5,34 @@ plugins {
 }
 
 android {
-    compileSdk = Deps.androidCompileSdk
+    compileSdk = Android.compileSdk
 
     defaultConfig {
-        minSdk = Deps.androidMinSdk
-        targetSdk = Deps.androidTargetSdk
+        minSdk = Android.minSdk
+        targetSdk = Android.targetSdk
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
-        named("release") {
+        release {
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-        //            consumerProguardFiles(file('./proguard').listFiles())
+            //            consumerProguardFiles(file('./proguard').listFiles())
         }
     }
 
-    lintOptions {
+    lint {
+        isCheckDependencies = true
         isAbortOnError = false
     }
-
     testOptions {
         unitTests.all {
-            it.jvmArgs = listOf("-noverify")
+            it.jvmArgs("-noverify")
         }
     }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
-    }
-
 }
 
 kapt {
@@ -55,7 +45,7 @@ dependencies {
     implementation(project(":domain"))
     implementation(project(":data"))
 
-    implementation (Deps.coroutines)
+    implementation(Deps.coroutines)
     implementation(Deps.koinAndroid)
     implementation(Deps.binaryPref)
     implementation(Deps.gson)

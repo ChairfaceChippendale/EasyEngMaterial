@@ -12,12 +12,12 @@ moduleGraphAssert {
 }
 
 android {
-    compileSdk = Deps.androidCompileSdk
+    compileSdk = Android.compileSdk
 
     defaultConfig {
         applicationId = "com.ujujzk.easyengmaterial.eeapp"
-        minSdk = Deps.androidMinSdk
-        targetSdk = Deps.androidTargetSdk
+        minSdk = Android.minSdk
+        targetSdk = Android.targetSdk
         versionCode = 1
         versionName = "1.0"
         multiDexEnabled = true
@@ -25,7 +25,7 @@ android {
     }
 
     buildTypes {
-        getByName("release") {
+        release {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(
@@ -34,11 +34,12 @@ android {
             )
 //            proguardFiles(file("./proguard").listFiles())
         }
-        getByName("debug") {
+        debug {
             isMinifyEnabled = false
         }
     }
-    lintOptions {
+    lint {
+        isCheckDependencies = true
         isAbortOnError = false
     }
     testOptions {
@@ -46,7 +47,6 @@ android {
             it.jvmArgs("-noverify")
         }
     }
-
     buildFeatures {
         viewBinding = true
     }
